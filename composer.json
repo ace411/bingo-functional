@@ -1,0 +1,36 @@
+{
+    "name": "chemem/bingo-functional",
+    "description": "A simple functional programming library.",
+    "type": "library",
+    "license": "Apache 2.0",
+    "authors": [
+        {
+            "name": "Lochemem Bruno Michael",
+            "email": "lochbm@gmail.com"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require-dev": {
+        "phpunit/phpunit": "^5.7"
+    },
+    "autoload": {
+        "psr-4": {
+            "Chemem\\Bingo\\Functional\\": "src/"
+        },
+        "files": [
+            "src/Algorithms/Identity.php",
+            "src/Algorithms/Compose.php",
+            "src/Algorithms/Curry.php",
+            "src/Algorithms/CurryN.php",
+            "src/Algorithms/Pick.php",
+            "src/Algorithms/Pluck.php",
+            "src/Algorithms/Zip.php",
+            "src/Algorithms/Unzip.php",
+            "src/Algorithms/Partial.php",
+            "src/Algorithms/Extend.php",
+            "src/Algorithms/Memoize.php",
+            "src/Algorithms/ConstantFunction.php",
+            "src/Common/Callbacks/Errors.php"
+        ]
+    }
+}
