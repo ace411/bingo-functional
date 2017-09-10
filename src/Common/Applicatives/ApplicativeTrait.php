@@ -10,7 +10,7 @@
 
 namespace Chemem\Bingo\Functional\Common\Applicatives;
 
-use Chemem\Bingo\Functional\Functors\Maybe\{Either, Left, Right};
+use Chemem\Bingo\Functional\Functors\Either\{Either, Left, Right};
 use Chemem\Bingo\Functional\Functors\Applicatives\CollectionApplicative;
 
 trait ApplicativeTrait
