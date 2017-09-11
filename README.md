@@ -12,7 +12,7 @@ PHP lacks the organic support for functional programming multiple functional pro
 
 ## Documentation
 
-Please check out the documentation for more knowledge on how to use this library.
+Please check out the [documentation](https://github.com/ace411/bingo-functional/blob/master/docs/main.md) for more knowledge on how to use this library.
 
 ## Dealing with problems
 

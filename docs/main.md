@@ -154,6 +154,17 @@ $const = A\constantFunction(1);
 $const(); //should return 1
 ```
 
+### Extend
+
+The extend function is inspired by a similar bilby.js functional library. This helper is, in essence, used on arrays and allows one to append elements to them.
+
+```php
+$players = ['PG' => 'Dragic', 'SG' => 'Winslow'];
+
+$extended = A\extend($players, ['SF' => 'Durant', 'PG' => 'Curry']);
+//should return ['PG' => 'Curry', 'SG' => 'Winslow', 'SF' => 'Durant']
+```
+
 ## Functors
 
 A functor is an entity derived from Category Mathematics. Functors allow one to map functions to one or more values defined in their context. Functors are, therefore, the data structures that form the basis for Monads, Applicatives, Just/Nothing types, and Left/Right types.
