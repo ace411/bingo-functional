@@ -154,7 +154,6 @@ $const = A\constantFunction(1);
 $const(); //should return 1
 ```
 
-<<<<<<< HEAD
 ### Extend
 
 The extend function is inspired by a similar bilby.js functional library. This helper is, in essence, used on arrays and allows one to append elements to them.
@@ -164,7 +163,7 @@ $players = ['PG' => 'Dragic', 'SG' => 'Winslow'];
 
 $extended = A\extend($players, ['SF' => 'Durant', 'PG' => 'Curry']);
 //should return ['PG' => 'Curry', 'SG' => 'Winslow', 'SF' => 'Durant']
-=======
+```
 ### Head function
 
 The output of the head function is the first value of an array.
@@ -192,7 +191,6 @@ The partition function one which can be used to create a multidimensional array 
 ```php
 $partitioned = A\partition(2, [1, 2, 3, 4]);
 //returns [[1, 2], [3, 4]]
->>>>>>> new-functions
 ```
 
 ## Functors
