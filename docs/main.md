@@ -154,6 +154,35 @@ $const = A\constantFunction(1);
 $const(); //should return 1
 ```
 
+### Head function
+
+The output of the head function is the first value of an array.
+
+```php
+
+$head = A\head([1, 2, 3, 4]);
+//returns 1
+```
+
+### Tail function
+
+Contrary to the head function, the tail function returns the second to last values in an array.
+
+```php
+
+$tail = A\tail([1, 2, 3, 4]);
+//returns [2, 3, 4]
+```
+
+### Partitioning
+
+The partition function one which can be used to create a multidimensional array expressed as a collection of smaller arrays of a defined size.
+
+```php
+$partitioned = A\partition(2, [1, 2, 3, 4]);
+//returns [[1, 2], [3, 4]]
+```
+
 ## Functors
 
 A functor is an entity derived from Category Mathematics. Functors allow one to map functions to one or more values defined in their context. Functors are, therefore, the data structures that form the basis for Monads, Applicatives, Just/Nothing types, and Left/Right types.

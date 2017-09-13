@@ -18,6 +18,9 @@ class ComposerStaticInit0371d2a24e8c01320ccd9b3afe4bbda9
         '2adb56b19cda1e6b108c5b4d87b1003b' => __DIR__ . '/../..' . '/src/Algorithms/Partial.php',
         '70971cc2dc09d0c4977e4bc49cf19a87' => __DIR__ . '/../..' . '/src/Algorithms/Extend.php',
         '0cbfd8e86bc532b8fe032044941a4b9d' => __DIR__ . '/../..' . '/src/Algorithms/Memoize.php',
+        '8875d6f052270e95dbad6c2bb1b93a9b' => __DIR__ . '/../..' . '/src/Algorithms/Tail.php',
+        '6c803725e82df88e20a66ef842761893' => __DIR__ . '/../..' . '/src/Algorithms/Head.php',
+        '465d0e0689aecb1c57b6b954347ab79a' => __DIR__ . '/../..' . '/src/Algorithms/Partition.php',
         'a64e2c46128a2ff0560dc9efaa329585' => __DIR__ . '/../..' . '/src/Algorithms/ConstantFunction.php',
         '902c5a7b9a1ba727a4bf3245b0f27f69' => __DIR__ . '/../..' . '/src/Common/Callbacks/Errors.php',
     );
