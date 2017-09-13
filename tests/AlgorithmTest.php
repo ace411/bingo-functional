@@ -91,8 +91,52 @@ class AlgorithmTest extends TestCase
             return $a + $b;
         };
         $partial = A\partial($fn, 1);
-        
+
         $this->assertInstanceOf(Closure::class, $partial);
         $this->assertEquals($partial(2), 3);
+    }
+
+    public function testHeadReturnsFirstItemInArray()
+    {
+        $array = [1, 2, 3, 4];
+        $this->assertEquals(A\head($array), 1);
+    }
+
+    public function testTailReturnsSecondToLastArrayItems()
+    {
+        $array = [1, 2, 3, 4];
+        $this->assertEquals(
+            A\tail($array),
+            [2, 3, 4]
+        );
+    }
+
+    public function testPartitionSubDividesArray()
+    {
+        $array = [1, 2, 3, 4];
+        $this->assertEquals(
+            A\partition(2, $array),
+            [[1, 2], [3, 4]]
+        );
+    }
+
+    public function testExtendAppendsElementsOntoArray()
+    {
+        $array = ['foo' => 'bar', 'baz' => 12];
+        $extended = A\extend($array, ['foo' => 9, 'bar' => 19]);
+        $this->assertEquals(
+            $extended,
+            [
+                'foo' => 9,
+                'baz' => 12,
+                'bar' => 19
+            ]
+        );
+    }
+
+    public function testConstantFunctionAlwaysReturnsFirstArgumentSupplied()
+    {
+        $const = A\constantFunction(12);
+        $this->assertEquals($const(), 12);
     }
 }
