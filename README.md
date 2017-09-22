@@ -14,6 +14,8 @@ PHP lacks the organic support for functional programming multiple functional pro
 
 Please check out the [documentation](https://github.com/ace411/bingo-functional/blob/master/docs/main.md) for more knowledge on how to use this library.
 
+Also, a [change log](https://github.com/ace411/bingo-functional/blob/master/docs/changes.md) exists and can be used to track changes made to the project.
+
 ## Dealing with problems
 
 Endeavor to create an issue on GitHub when the need arises or send an email to lochbm@gmail.com
