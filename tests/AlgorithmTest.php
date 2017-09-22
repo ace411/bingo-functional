@@ -139,4 +139,23 @@ class AlgorithmTest extends TestCase
         $const = A\constantFunction(12);
         $this->assertEquals($const(), 12);
     }
+
+    public function testIsArrayOfReturnsArrayType()
+    {
+        $arr = [1, 2, 3, 4];
+        $arrTwo = ['foo', 'bar', 13, 14];
+
+        $this->assertEquals(A\isArrayOf($arr), 'integer');
+        $this->assertEquals(A\isArrayOf($arrTwo), 'mixed');
+    }
+
+    public function testPartialRightReversesParameterOrder()
+    {
+        $divide = function (int $a, int $b) {
+            return $a / $b;
+        };
+
+        $partialRight = A\partialRight($divide, 6)(3);
+        $this->assertEquals($partialRight, 2);
+    }
 }
