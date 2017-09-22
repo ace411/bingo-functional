@@ -26,12 +26,14 @@
             "src/Algorithms/Pluck.php",
             "src/Algorithms/Zip.php",
             "src/Algorithms/Unzip.php",
-            "src/Algorithms/Partial.php",
+            "src/Algorithms/PartialLeft.php",
             "src/Algorithms/Extend.php",
             "src/Algorithms/Memoize.php",
             "src/Algorithms/Tail.php",
             "src/Algorithms/Head.php",
             "src/Algorithms/Partition.php",
+            "src/Algorithms/IsArrayOf.php",
+            "src/Algorithms/PartialRight.php",
             "src/Algorithms/ConstantFunction.php",
             "src/Common/Callbacks/Errors.php"
         ]
