@@ -5,13 +5,9 @@ use Chemem\Bingo\Functional\Functors\Either\{Either, Left, Right};
 
 class EitherTypeTest extends TestCase
 {
-    const ERR_MSG = "An error occurred";
-
-    const ERR_MSG_STR = ERR_MSG . "Invalid String";
-
     public function testEitherTypeLeftMethodReturnsLeftType()
     {
-        $error = Either::left(self::ERR_MSG);
+        $error = Either::left($GLOBALS['ERROR_MSG']);
         $this->assertInstanceOf(Left::class, $error);
     }
 
@@ -50,7 +46,7 @@ class EitherTypeTest extends TestCase
 
     public function testEitherLeftTypeValueIsLeft()
     {
-        $error = Either::left(self::ERR_MSG);
+        $error = Either::left($GLOBALS['ERROR_MSG']);
 
         $this->assertTrue($error->isLeft());
         $this->assertFalse($error->isRight());
@@ -66,9 +62,9 @@ class EitherTypeTest extends TestCase
 
     public function testEitherLeftTypeGetLeftMethodReturnsLeftValue()
     {
-        $error = Either::left(self::ERR_MSG);
+        $error = Either::left($GLOBALS['ERROR_MSG']);
 
-        $this->assertEquals($error->getLeft(), self::ERR_MSG);
+        $this->assertEquals($error->getLeft(), $GLOBALS['ERROR_MSG']);
         $this->assertEquals($error->getRight(), null);
     }
 
@@ -101,7 +97,7 @@ class EitherTypeTest extends TestCase
                 function (string $str) : bool {
                     return is_string($str);
                 },
-                self::ERR_MSG_STR
+                $GLOBALS['ERROR_MSG']
             );
         $this->assertInstanceOf(Right::class, $value);
         $this->assertEquals($value->getRight(), 'foo');
@@ -114,20 +110,20 @@ class EitherTypeTest extends TestCase
                 function (int $val) : bool {
                     return is_string($val);
                 },
-                self::ERR_MSG_STR
+                $GLOBALS['ERROR_MSG']
             );
         $this->assertInstanceOf(Left::class, $value);
-        $this->assertEquals($value->getLeft(), self::ERR_MSG_STR);
+        $this->assertEquals($value->getLeft(), $GLOBALS['ERROR_MSG']);
     }
 
     public function testMapFlatMapFilterMethodsHaveNoEffectOnLeftValue()
     {
-        $error = Either::left(self::ERR_MSG)
+        $error = Either::left($GLOBALS['ERROR_MSG'])
             ->filter(
                 function (string $val) : bool {
                     return is_string($val);
                 },
-                self::ERR_MSG_STR
+                $GLOBALS['ERROR_MSG']
             )
             ->map(
                 function (string $val) {
@@ -139,6 +135,6 @@ class EitherTypeTest extends TestCase
                     return $val . '..';
                 }
             );
-        $this->assertEquals($error, self::ERR_MSG);
+        $this->assertEquals($error, $GLOBALS['ERROR_MSG']);
     }
 }

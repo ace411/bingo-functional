@@ -85,12 +85,12 @@ class AlgorithmTest extends TestCase
         $this->assertTrue(is_array($unzipped));
     }
 
-    public function testPartialReturnsAPartiallyAppliedFunction()
+    public function testPartialLeftReturnsAPartiallyAppliedFunction()
     {
         $fn = function (int $a, int $b) : int {
             return $a + $b;
         };
-        $partial = A\partial($fn, 1);
+        $partial = A\partialLeft($fn, 1);
 
         $this->assertInstanceOf(Closure::class, $partial);
         $this->assertEquals($partial(2), 3);
@@ -142,11 +142,8 @@ class AlgorithmTest extends TestCase
 
     public function testIsArrayOfReturnsArrayType()
     {
-        $arr = [1, 2, 3, 4];
-        $arrTwo = ['foo', 'bar', 13, 14];
-
-        $this->assertEquals(A\isArrayOf($arr), 'integer');
-        $this->assertEquals(A\isArrayOf($arrTwo), 'mixed');
+        $this->assertEquals(A\isArrayOf([1, 2, 3, 4]), 'integer');
+        $this->assertEquals(A\isArrayOf(['foo', 'bar', 1, 2]), 'mixed');
     }
 
     public function testPartialRightReversesParameterOrder()
@@ -155,7 +152,7 @@ class AlgorithmTest extends TestCase
             return $a / $b;
         };
 
-        $partialRight = A\partialRight($divide, 6)(3);
+        $partialRight = A\partialRight($divide, 3)(6);
         $this->assertEquals($partialRight, 2);
     }
 }
