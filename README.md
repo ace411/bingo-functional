@@ -2,6 +2,8 @@
 
 A simple functional programming library for PHP.
 
+[![Build Status](https://travis-ci.org/ace411/bingo-functional.svg?branch=master)
+
 ## Requirement(s)
 
 - PHP 7 or higher
