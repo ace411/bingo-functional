@@ -43,3 +43,11 @@
 ### New Functor features
 
 - TransientMutatorTrait ```TransientMutatorTrait```
+
+## v1.2.1
+
+### Fixed the following problems
+
+- the error message shown when a mixed array (array containing more than one type) is supplied to the isArray() function.
+
+- the partialRight() behavior of partialLeft()
