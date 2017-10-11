@@ -1,5 +1,7 @@
 # Bingo Functional
 
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7c30c744fd0142d58dd210fd961ea842)](https://www.codacy.com/app/ace411/bingo-functional?utm_source=github.com&utm_medium=referral&utm_content=ace411/bingo-functional&utm_campaign=badger)
+
 A simple functional programming library for PHP.
 
 [![Build Status](https://travis-ci.org/ace411/bingo-functional.svg?branch=master)
