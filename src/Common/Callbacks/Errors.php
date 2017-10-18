@@ -107,6 +107,15 @@ function invalidArrayKey($key) : InvalidArgumentException
     );
 }
 
+const emptyArrayError = "Chemem\\Bingo\\Functional\\Common\\Callbacks\\emptyArrayError";
+
+function emptyArrayError() : InvalidArgumentException
+{
+    return new InvalidArgumentException(
+        "The array is empty."
+    );
+}
+
 /**
  * memoizationFailure function
  * asserts that a function cannot be memoized

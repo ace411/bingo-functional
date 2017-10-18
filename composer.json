@@ -13,6 +13,9 @@
     "require-dev": {
         "phpunit/phpunit": "^5.7"
     },
+    "require": {
+        "php": ">=7.0.0"
+    },
     "autoload": {
         "psr-4": {
             "Chemem\\Bingo\\Functional\\": "src/"
@@ -26,12 +29,14 @@
             "src/Algorithms/Pluck.php",
             "src/Algorithms/Zip.php",
             "src/Algorithms/Unzip.php",
-            "src/Algorithms/Partial.php",
+            "src/Algorithms/PartialLeft.php",
             "src/Algorithms/Extend.php",
             "src/Algorithms/Memoize.php",
             "src/Algorithms/Tail.php",
             "src/Algorithms/Head.php",
             "src/Algorithms/Partition.php",
+            "src/Algorithms/IsArrayOf.php",
+            "src/Algorithms/PartialRight.php",
             "src/Algorithms/ConstantFunction.php",
             "src/Common/Callbacks/Errors.php"
         ]

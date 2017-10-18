@@ -2,6 +2,8 @@
 
 A simple functional programming library for PHP.
 
+[![Build Status](https://travis-ci.org/ace411/bingo-functional.svg?branch=master)
+
 ## Requirement(s)
 
 - PHP 7 or higher
@@ -13,6 +15,8 @@ PHP lacks the organic support for functional programming multiple functional pro
 ## Documentation
 
 Please check out the [documentation](https://github.com/ace411/bingo-functional/blob/master/docs/main.md) for more knowledge on how to use this library.
+
+Also, a [change log](https://github.com/ace411/bingo-functional/blob/master/docs/changes.md) exists and can be used to track changes made to the project.
 
 ## Dealing with problems
 

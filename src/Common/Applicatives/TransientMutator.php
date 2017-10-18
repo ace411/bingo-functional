@@ -1,15 +1,41 @@
 <?php
 
+/**
+ * TransientMutator trait
+ *
+ * @package bingo-functional
+ * @author Lochemem Bruno Michael
+ * @license Apache 2.0
+ */
+
 namespace Chemem\Bingo\Functional\Common\Applicatives;
 
 trait TransientMutator
 {
+    /**
+     * @access private
+     * @var bool $mutable
+     */
+
     private $mutable = false;
+
+    /**
+     * isMutable method
+     *
+     * @return bool
+     */
 
     public function isMutable() : bool
     {
         return $this->mutable;
     }
+
+    /**
+     * triggerMutation method
+     *
+     * @param callable $fn
+     * @return object
+     */
 
     public function triggerMutation(callable $fn)
     {

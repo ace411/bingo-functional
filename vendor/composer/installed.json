@@ -492,32 +492,30 @@
         "source": {
             "type": "git",
             "url": "https://github.com/doctrine/instantiator.git",
-            "reference": "185b8868aa9bf7159f5f953ed5afb2d7fcdc3bda"
+            "reference": "7af8066e48b8a4cbd90849bbe9234ab444057968"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/doctrine/instantiator/zipball/185b8868aa9bf7159f5f953ed5afb2d7fcdc3bda",
-            "reference": "185b8868aa9bf7159f5f953ed5afb2d7fcdc3bda",
+            "url": "https://api.github.com/repos/doctrine/instantiator/zipball/7af8066e48b8a4cbd90849bbe9234ab444057968",
+            "reference": "7af8066e48b8a4cbd90849bbe9234ab444057968",
             "shasum": ""
         },
         "require": {
             "php": "^7.1"
         },
         "require-dev": {
-            "athletic/athletic": "~0.1.8",
             "ext-pdo": "*",
             "ext-phar": "*",
-            "phpunit/phpunit": "^6.2.3",
-            "squizlabs/php_codesniffer": "^3.0.2"
+            "phpunit/phpunit": "^6.2.3"
         },
-        "time": "2017-07-22T11:58:36+00:00",
+        "time": "2017-09-19T12:41:22+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
                 "dev-master": "1.2.x-dev"
             }
         },
-        "installation-source": "dist",
+        "installation-source": "source",
         "autoload": {
             "psr-4": {
                 "Doctrine\\Instantiator\\": "src/Doctrine/Instantiator/"
@@ -1312,12 +1310,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/yaml.git",
-            "reference": "c076a2d6f809130a84f99616b425b9665b3ce0a5"
+            "reference": "a0e15688972f012156cf1ffa076fe1203bce6bc9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/yaml/zipball/c076a2d6f809130a84f99616b425b9665b3ce0a5",
-            "reference": "c076a2d6f809130a84f99616b425b9665b3ce0a5",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/a0e15688972f012156cf1ffa076fe1203bce6bc9",
+            "reference": "a0e15688972f012156cf1ffa076fe1203bce6bc9",
             "shasum": ""
         },
         "require": {
@@ -1332,7 +1330,7 @@
         "suggest": {
             "symfony/console": "For validating YAML files using the lint command"
         },
-        "time": "2017-09-04T13:18:59+00:00",
+        "time": "2017-09-17T10:10:45+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {

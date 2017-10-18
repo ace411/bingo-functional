@@ -1,0 +1,13 @@
+engine:
+    phpmd
+    enabled: true
+    config:
+        languages:
+        - php
+ratings:
+    paths:
+    - "**.php"
+exclude_paths:
+- "vendor/"
+- "tests/"
+- "docs/"
