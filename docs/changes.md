@@ -51,3 +51,10 @@
 - the error message shown when a mixed array (array containing more than one type) is supplied to the isArray() function.
 
 - the partialRight() behavior of partialLeft()
+
+## v1.3.0
+
+### Added the following functions to the Monad functor
+
+- filter()
+- flatMap()
