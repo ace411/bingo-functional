@@ -191,3 +191,24 @@ function nothingValueException(Nothing $value, callable $caller) : InvalidArgume
         $value . $caller
     );
 }
+
+/**
+ * valueFilterException function
+ * thrown when a filter function returns a value other than the expected one
+ *
+ * @param callable $fn Filter function
+ * @param mixed $value The value to be filtered
+ * @return object InvalidArgumentException
+ */
+
+const valueFilterException = "Chemem\\Bingo\\Functional\\Common\\Callbacks\\valueFilterException";
+
+function valueFilterException(callable $fn, $value) : InvalidArgumentException
+{
+    $functionName = (new ReflectionFunction($fn))
+        ->getShortName();
+
+    return new InvalidArgumentException(
+        'Function ' . $functionName . 'cannot be used to filter the value ' . $value
+    );
+}
