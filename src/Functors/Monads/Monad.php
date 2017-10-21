@@ -16,7 +16,7 @@ final class Monad extends MonadAbstract
 
     public function filter(callable $fn) : MonadAbstract
     {
-        return $fn($this->value) ? new static($this->value) : null;
+        return $fn($this->value) ? new static($this->value) : new static(null);
     }
 
     public function flatMap(callable $fn)
