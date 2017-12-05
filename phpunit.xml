@@ -4,8 +4,8 @@
             verbose="true"
             bootstrap="vendor/autoload.php">
         <php>
-            <var name="FOO" value="bar" />
-            <var name="BAZ" value="foobar" />
+            <var name="ERR_MSG" value="An error occurred" />
+            <var name="ERR_MSG_STR" value="Invalid String" />
         </php>
         <testsuites>
             <testsuite name="Bingo Functional Testsuite">

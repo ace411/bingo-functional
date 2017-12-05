@@ -30,12 +30,14 @@
             "src/Algorithms/Extend.php",
             "src/Algorithms/Memoize.php",
             "src/Algorithms/Tail.php",
+            "src/Algorithms/Concat.php",
+            "src/Algorithms/Throttle.php",
             "src/Algorithms/Head.php",
             "src/Algorithms/Partition.php",
             "src/Algorithms/IsArrayOf.php",
             "src/Algorithms/PartialRight.php",
             "src/Algorithms/ConstantFunction.php",
-            "src/Common/Callbacks/Errors.php"
+            "src/Common/Callbacks/functions.php"
         ]
     }
 }

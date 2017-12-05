@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 namespace phpDocumentor\Reflection;
 
 interface DocBlockFactoryInterface
@@ -7,17 +8,11 @@ interface DocBlockFactoryInterface
      * Factory method for easy instantiation.
      *
      * @param string[] $additionalTags
-     *
-     * @return DocBlockFactory
      */
-    public static function createInstance(array $additionalTags = []);
+    public static function createInstance(array $additionalTags = []): DocBlockFactory;
 
     /**
-     * @param string $docblock
-     * @param Types\Context $context
-     * @param Location $location
-     *
-     * @return DocBlock
+     * @param string|object $docblock
      */
-    public function create($docblock, Types\Context $context = null, Location $location = null);
+    public function create($docblock, ?Types\Context $context = null, ?Location $location = null): DocBlock;
 }

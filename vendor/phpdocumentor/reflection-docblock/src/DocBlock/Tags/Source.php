@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -29,9 +30,9 @@ final class Source extends BaseTag implements Factory\StaticMethod
     private $startingLine = 1;
 
     /** @var int|null The number of lines, relative to the starting line. NULL means "to the end". */
-    private $lineCount = null;
+    private $lineCount;
 
-    public function __construct($startingLine, $lineCount = null, Description $description = null)
+    public function __construct($startingLine, $lineCount = null, ?Description $description = null)
     {
         Assert::integerish($startingLine);
         Assert::nullOrIntegerish($lineCount);
@@ -44,8 +45,11 @@ final class Source extends BaseTag implements Factory\StaticMethod
     /**
      * {@inheritdoc}
      */
-    public static function create($body, DescriptionFactory $descriptionFactory = null, TypeContext $context = null)
-    {
+    public static function create(
+        string $body,
+        ?DescriptionFactory $descriptionFactory = null,
+        ?TypeContext $context = null
+    ) {
         Assert::stringNotEmpty($body);
         Assert::notNull($descriptionFactory);
 
@@ -59,6 +63,7 @@ final class Source extends BaseTag implements Factory\StaticMethod
             if (isset($matches[2]) && $matches[2] !== '') {
                 $lineCount = (int)$matches[2];
             }
+
             $description = $matches[3];
         }
 
@@ -71,7 +76,7 @@ final class Source extends BaseTag implements Factory\StaticMethod
      * @return int The starting line, relative to the structural element's
      *     location.
      */
-    public function getStartingLine()
+    public function getStartingLine(): int
     {
         return $this->startingLine;
     }
@@ -82,12 +87,12 @@ final class Source extends BaseTag implements Factory\StaticMethod
      * @return int|null The number of lines, relative to the starting line. NULL
      *     means "to the end".
      */
-    public function getLineCount()
+    public function getLineCount(): ?int
     {
         return $this->lineCount;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->startingLine
         . ($this->lineCount !== null ? ' ' . $this->lineCount : '')

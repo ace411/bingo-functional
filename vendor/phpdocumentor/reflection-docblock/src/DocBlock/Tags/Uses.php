@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -27,15 +28,12 @@ final class Uses extends BaseTag implements Factory\StaticMethod
     protected $name = 'uses';
 
     /** @var Fqsen */
-    protected $refers = null;
+    protected $refers;
 
     /**
      * Initializes this tag.
-     *
-     * @param Fqsen       $refers
-     * @param Description $description
      */
-    public function __construct(Fqsen $refers, Description $description = null)
+    public function __construct(Fqsen $refers, ?Description $description = null)
     {
         $this->refers      = $refers;
         $this->description = $description;
@@ -45,38 +43,33 @@ final class Uses extends BaseTag implements Factory\StaticMethod
      * {@inheritdoc}
      */
     public static function create(
-        $body,
-        FqsenResolver $resolver = null,
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
+        string $body,
+        ?FqsenResolver $resolver = null,
+        ?DescriptionFactory $descriptionFactory = null,
+        ?TypeContext $context = null
     ) {
-        Assert::string($body);
         Assert::allNotNull([$resolver, $descriptionFactory]);
 
         $parts = preg_split('/\s+/Su', $body, 2);
 
         return new static(
             $resolver->resolve($parts[0], $context),
-            $descriptionFactory->create(isset($parts[1]) ? $parts[1] : '', $context)
+            $descriptionFactory->create($parts[1] ?? '', $context)
         );
     }
 
     /**
      * Returns the structural element this tag refers to.
-     *
-     * @return Fqsen
      */
-    public function getReference()
+    public function getReference(): Fqsen
     {
         return $this->refers;
     }
 
     /**
      * Returns a string representation of this tag.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->refers . ' ' . $this->description->render();
     }

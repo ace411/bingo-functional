@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -21,16 +22,16 @@ final class DocBlock
     private $summary = '';
 
     /** @var DocBlock\Description The actual description for this docblock. */
-    private $description = null;
+    private $description;
 
     /** @var Tag[] An array containing all the tags in this docblock; except inline. */
-    private $tags = array();
+    private $tags = [];
 
-    /** @var Types\Context Information about the context of this DocBlock. */
-    private $context = null;
+    /** @var Types\Context|null Information about the context of this DocBlock. */
+    private $context;
 
-    /** @var Location Information about the location of this DocBlock. */
-    private $location = null;
+    /** @var Location|null Information about the location of this DocBlock. */
+    private $location;
 
     /** @var bool Is this DocBlock (the start of) a template? */
     private $isTemplateStart = false;
@@ -39,27 +40,19 @@ final class DocBlock
     private $isTemplateEnd = false;
 
     /**
-     * @param string $summary
-     * @param DocBlock\Description $description
      * @param DocBlock\Tag[] $tags
      * @param Types\Context $context The context in which the DocBlock occurs.
      * @param Location $location The location within the file that this DocBlock occurs in.
-     * @param bool $isTemplateStart
-     * @param bool $isTemplateEnd
      */
     public function __construct(
-        $summary = '',
-        DocBlock\Description $description = null,
+        string $summary = '',
+        ?DocBlock\Description $description = null,
         array $tags = [],
-        Types\Context $context = null,
-        Location $location = null,
-        $isTemplateStart = false,
-        $isTemplateEnd = false
-    )
-    {
-        Assert::string($summary);
-        Assert::boolean($isTemplateStart);
-        Assert::boolean($isTemplateEnd);
+        ?Types\Context $context = null,
+        ?Location $location = null,
+        bool $isTemplateStart = false,
+        bool $isTemplateEnd = false
+    ) {
         Assert::allIsInstanceOf($tags, Tag::class);
 
         $this->summary = $summary;
@@ -75,38 +68,28 @@ final class DocBlock
         $this->isTemplateStart = $isTemplateStart;
     }
 
-    /**
-     * @return string
-     */
-    public function getSummary()
+    public function getSummary(): string
     {
         return $this->summary;
     }
 
-    /**
-     * @return DocBlock\Description
-     */
-    public function getDescription()
+    public function getDescription(): DocBlock\Description
     {
         return $this->description;
     }
 
     /**
      * Returns the current context.
-     *
-     * @return Types\Context
      */
-    public function getContext()
+    public function getContext(): ?Types\Context
     {
         return $this->context;
     }
 
     /**
      * Returns the current location.
-     *
-     * @return Location
      */
-    public function getLocation()
+    public function getLocation(): ?Location
     {
         return $this->location;
     }
@@ -129,10 +112,8 @@ final class DocBlock
      * elements that follow until another DocBlock is found that contains the closing marker (`#@-`).
      *
      * @see self::isTemplateEnd() for the check whether a closing marker was provided.
-     *
-     * @return boolean
      */
-    public function isTemplateStart()
+    public function isTemplateStart(): bool
     {
         return $this->isTemplateStart;
     }
@@ -141,10 +122,8 @@ final class DocBlock
      * Returns whether this DocBlock is the end of a Template section.
      *
      * @see self::isTemplateStart() for a more complete description of the Docblock Template functionality.
-     *
-     * @return boolean
      */
-    public function isTemplateEnd()
+    public function isTemplateEnd(): bool
     {
         return $this->isTemplateEnd;
     }
@@ -167,15 +146,13 @@ final class DocBlock
      *
      * @return Tag[]
      */
-    public function getTagsByName($name)
+    public function getTagsByName(string $name)
     {
-        Assert::string($name);
-
-        $result = array();
+        $result = [];
 
         /** @var Tag $tag */
         foreach ($this->getTags() as $tag) {
-            if ($tag->getName() != $name) {
+            if ($tag->getName() !== $name) {
                 continue;
             }
 
@@ -189,16 +166,12 @@ final class DocBlock
      * Checks if a tag of a certain type is present in this DocBlock.
      *
      * @param string $name Tag name to check for.
-     *
-     * @return bool
      */
-    public function hasTag($name)
+    public function hasTag(string $name): bool
     {
-        Assert::string($name);
-
         /** @var Tag $tag */
         foreach ($this->getTags() as $tag) {
-            if ($tag->getName() == $name) {
+            if ($tag->getName() === $name) {
                 return true;
             }
         }
@@ -207,13 +180,26 @@ final class DocBlock
     }
 
     /**
+     * Remove a tag from this DocBlock.
+     *
+     * @param Tag $tagToRemove The tag to remove.
+     */
+    public function removeTag(Tag $tagToRemove): void
+    {
+        foreach ($this->tags as $key => $tag) {
+            if ($tag === $tagToRemove) {
+                unset($this->tags[$key]);
+                break;
+            }
+        }
+    }
+
+    /**
      * Adds a tag to this DocBlock.
      *
      * @param Tag $tag The tag to add.
-     *
-     * @return void
      */
-    private function addTag(Tag $tag)
+    private function addTag(Tag $tag): void
     {
         $this->tags[] = $tag;
     }

@@ -11,41 +11,11 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-use Chemem\Bingo\Functional\Functors\Maybe\{Maybe, Just, Nothing};
-use Chemem\Bingo\Functional\Common\Callbacks as C;
-
 const pluck = "Chemem\\Bingo\\Functional\\Algorithms\\pluck";
 
-function pluck(array $values, $search)
+function pluck(array $values, $search, callable $callback)
 {
-    $value = Maybe::fromValue($values)
-        ->filter(
-            function ($arr) {
-                return is_array($arr);
-            }
-        )
-        ->map(
-            function ($arr) use ($search) {
-                return array_reduce(
-                    array_filter(
-                        $arr,
-                        function ($val) use ($search) {
-                            return is_object($val) ?
-                                 $val == $search :
-                                 $val === $search;
-                        }
-                    ),
-                    function ($carry, $val) {
-                        return is_object($val) ? $val : $carry . $val;
-                    },
-                    ''
-                );
-            }
-        );
-        
-    return $value->isJust() ?
-        $value->getJust() :
-        C\extractErrorMessage(
-            C\invalidArrayElement($search)
-        );
+    return array_key_exists($search, $values) ? 
+        $values[$search] :
+        call_user_func($callback, $search);
 }

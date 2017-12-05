@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -12,9 +13,10 @@
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
 
-use phpDocumentor\Reflection\Types\Context as TypeContext;
 use phpDocumentor\Reflection\DocBlock\Description;
 use phpDocumentor\Reflection\DocBlock\DescriptionFactory;
+use phpDocumentor\Reflection\DocBlock\Tag;
+use phpDocumentor\Reflection\Types\Context as TypeContext;
 use Webmozart\Assert\Assert;
 
 /**
@@ -28,7 +30,7 @@ final class Since extends BaseTag implements Factory\StaticMethod
      * PCRE regular expression matching a version vector.
      * Assumes the "x" modifier.
      */
-    const REGEX_VECTOR = '(?:
+    public const REGEX_VECTOR = '(?:
         # Normal release vectors.
         \d\S*
         |
@@ -43,7 +45,7 @@ final class Since extends BaseTag implements Factory\StaticMethod
     /** @var string The version vector. */
     private $version = '';
 
-    public function __construct($version = null, Description $description = null)
+    public function __construct($version = null, ?Description $description = null)
     {
         Assert::nullOrStringNotEmpty($version);
 
@@ -51,12 +53,11 @@ final class Since extends BaseTag implements Factory\StaticMethod
         $this->description = $description;
     }
 
-    /**
-     * @return static
-     */
-    public static function create($body, DescriptionFactory $descriptionFactory = null, TypeContext $context = null)
-    {
-        Assert::nullOrString($body);
+    public static function create(
+        ?string $body,
+        ?DescriptionFactory $descriptionFactory = null,
+        ?TypeContext $context = null
+    ): ?self {
         if (empty($body)) {
             return new static();
         }
@@ -68,26 +69,22 @@ final class Since extends BaseTag implements Factory\StaticMethod
 
         return new static(
             $matches[1],
-            $descriptionFactory->create(isset($matches[2]) ? $matches[2] : '', $context)
+            $descriptionFactory->create($matches[2] ?? '', $context)
         );
     }
 
     /**
      * Gets the version section of the tag.
-     *
-     * @return string
      */
-    public function getVersion()
+    public function getVersion(): ?string
     {
         return $this->version;
     }
 
     /**
      * Returns a string representation for this tag.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->version . ($this->description ? ' ' . $this->description->render() : '');
     }

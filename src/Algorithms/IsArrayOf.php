@@ -15,7 +15,7 @@ use Chemem\Bingo\Functional\Common\Callbacks as C;
 
 const isArrayOf = "Chemem\\Bingo\\Functional\\Algorithms\\isArrayOf";
 
-function isArrayOf(array $values) : string
+function isArrayOf(array $values, callable $callback) : string
 {
     $types = array_map(
         function ($el) {
@@ -28,8 +28,6 @@ function isArrayOf(array $values) : string
     return $typeCount > 1 ?
         'mixed' :
         $typeCount < 1 ?
-            C\extractErrorMessage(
-                C\emptyArrayError()
-            ) :
+            call_user_func($callback) :
             implode('', $commonType);
 }

@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -23,16 +24,12 @@ class ExampleFinder
     private $sourceDirectory = '';
 
     /** @var string[] */
-    private $exampleDirectories = array();
+    private $exampleDirectories = [];
 
     /**
      * Attempts to find the example contents for the given descriptor.
-     *
-     * @param Example $example
-     *
-     * @return string
      */
-    public function find(Example $example)
+    public function find(Example $example): string
     {
         $filename = $example->getFilePath();
 
@@ -46,22 +43,16 @@ class ExampleFinder
 
     /**
      * Registers the project's root directory where an 'examples' folder can be expected.
-     *
-     * @param string $directory
-     *
-     * @return void
      */
-    public function setSourceDirectory($directory = '')
+    public function setSourceDirectory(string $directory = ''): void
     {
         $this->sourceDirectory = $directory;
     }
 
     /**
      * Returns the project's root directory where an 'examples' folder can be expected.
-     *
-     * @return string
      */
-    public function getSourceDirectory()
+    public function getSourceDirectory(): string
     {
         return $this->sourceDirectory;
     }
@@ -71,7 +62,7 @@ class ExampleFinder
      *
      * @param string[] $directories
      */
-    public function setExampleDirectories(array $directories)
+    public function setExampleDirectories(array $directories): void
     {
         $this->exampleDirectories = $directories;
     }
@@ -96,12 +87,8 @@ class ExampleFinder
      * 2. Checks the source folder for the given filename
      * 3. Checks the 'examples' folder in the current working directory for examples
      * 4. Checks the path relative to the current working directory for the given filename
-     *
-     * @param string $filename
-     *
-     * @return string|null
      */
-    private function getExampleFileContents($filename)
+    private function getExampleFileContents(string $filename): ?string
     {
         $normalizedPath = null;
 
@@ -128,37 +115,24 @@ class ExampleFinder
 
     /**
      * Get example filepath based on the example directory inside your project.
-     *
-     * @param string $file
-     *
-     * @return string
      */
-    private function getExamplePathFromExampleDirectory($file)
+    private function getExamplePathFromExampleDirectory(string $file): string
     {
         return getcwd() . DIRECTORY_SEPARATOR . 'examples' . DIRECTORY_SEPARATOR . $file;
     }
 
     /**
      * Returns a path to the example file in the given directory..
-     *
-     * @param string $directory
-     * @param string $file
-     *
-     * @return string
      */
-    private function constructExamplePath($directory, $file)
+    private function constructExamplePath(string $directory, string $file): string
     {
         return rtrim($directory, '\\/') . DIRECTORY_SEPARATOR . $file;
     }
 
     /**
      * Get example filepath based on sourcecode.
-     *
-     * @param string $file
-     *
-     * @return string
      */
-    private function getExamplePathFromSource($file)
+    private function getExamplePathFromSource(string $file): string
     {
         return sprintf(
             '%s%s%s',

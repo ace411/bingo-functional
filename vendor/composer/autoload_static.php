@@ -7,6 +7,7 @@ namespace Composer\Autoload;
 class ComposerStaticInit0371d2a24e8c01320ccd9b3afe4bbda9
 {
     public static $files = array (
+        '6124b4c8570aa390c21fafd04a26c69f' => __DIR__ . '/..' . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
         '343316e3a6080c41e6236a79416d99e9' => __DIR__ . '/../..' . '/src/Algorithms/Identity.php',
         '459ee6352e4b724bfb29922e38f8bf65' => __DIR__ . '/../..' . '/src/Algorithms/Compose.php',
         '55340b21441fa16f0b1994d9b1473bd0' => __DIR__ . '/../..' . '/src/Algorithms/Curry.php',
@@ -19,12 +20,14 @@ class ComposerStaticInit0371d2a24e8c01320ccd9b3afe4bbda9
         '70971cc2dc09d0c4977e4bc49cf19a87' => __DIR__ . '/../..' . '/src/Algorithms/Extend.php',
         '0cbfd8e86bc532b8fe032044941a4b9d' => __DIR__ . '/../..' . '/src/Algorithms/Memoize.php',
         '8875d6f052270e95dbad6c2bb1b93a9b' => __DIR__ . '/../..' . '/src/Algorithms/Tail.php',
+        '0c4acf4364500a516415a399eb87a8cf' => __DIR__ . '/../..' . '/src/Algorithms/Concat.php',
+        'd0be2d0a7a85a32efe24f24d890ae4c6' => __DIR__ . '/../..' . '/src/Algorithms/Throttle.php',
         '6c803725e82df88e20a66ef842761893' => __DIR__ . '/../..' . '/src/Algorithms/Head.php',
         '465d0e0689aecb1c57b6b954347ab79a' => __DIR__ . '/../..' . '/src/Algorithms/Partition.php',
         '62a28e5b17c39803605aa5fa6d8790da' => __DIR__ . '/../..' . '/src/Algorithms/IsArrayOf.php',
         '314247cb52434efef3ec5a5f35a06fdc' => __DIR__ . '/../..' . '/src/Algorithms/PartialRight.php',
         'a64e2c46128a2ff0560dc9efaa329585' => __DIR__ . '/../..' . '/src/Algorithms/ConstantFunction.php',
-        '902c5a7b9a1ba727a4bf3245b0f27f69' => __DIR__ . '/../..' . '/src/Common/Callbacks/Errors.php',
+        '32ebf5e0c55f2b62bfda5425d777fe84' => __DIR__ . '/../..' . '/src/Common/Callbacks/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (

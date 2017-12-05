@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -33,19 +34,18 @@ final class Example extends BaseTag
     private $isURI = false;
 
     /**
-     * @var
+     * @var int
      */
     private $startingLine;
 
     /**
-     * @var
+     * @var int
      */
     private $lineCount;
 
-    public function __construct($filePath, $isURI, $startingLine, $lineCount, $description)
+    public function __construct(string $filePath, bool $isURI, int $startingLine, $lineCount, $description)
     {
         Assert::notEmpty($filePath);
-        Assert::integer($startingLine);
         Assert::greaterThanEq($startingLine, 0);
 
         $this->filePath = $filePath;
@@ -53,7 +53,7 @@ final class Example extends BaseTag
         $this->lineCount = $lineCount;
         $this->name = 'example';
         if ($description !== null) {
-            $this->description = trim($description);
+            $this->description = trim((string) $description);
         }
 
         $this->isURI = $isURI;
@@ -81,7 +81,7 @@ final class Example extends BaseTag
     /**
      * {@inheritdoc}
      */
-    public static function create($body)
+    public static function create(string $body)
     {
         // File component: File path in quotes or File URI / Source information
         if (! preg_match('/^(?:\"([^\"]+)\"|(\S+))(?:\s+(.*))?$/sux', $body, $matches)) {
@@ -131,45 +131,33 @@ final class Example extends BaseTag
      * @return string Path to a file to use as an example.
      *     May also be an absolute URI.
      */
-    public function getFilePath()
+    public function getFilePath(): string
     {
         return $this->filePath;
     }
 
     /**
      * Returns a string representation for this tag.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return $this->filePath . ($this->description ? ' ' . $this->description : '');
     }
 
     /**
      * Returns true if the provided URI is relative or contains a complete scheme (and thus is absolute).
-     *
-     * @param string $uri
-     *
-     * @return bool
      */
-    private function isUriRelative($uri)
+    private function isUriRelative(string $uri): bool
     {
         return false === strpos($uri, ':');
     }
 
-    /**
-     * @return int
-     */
-    public function getStartingLine()
+    public function getStartingLine(): int
     {
         return $this->startingLine;
     }
 
-    /**
-     * @return int
-     */
-    public function getLineCount()
+    public function getLineCount(): int
     {
         return $this->lineCount;
     }

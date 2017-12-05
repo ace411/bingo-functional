@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Chemem\Bingo\Functional\Algorithms as A;
+use Chemem\Bingo\Functional\Common\Callbacks as CB;
 
 class AlgorithmTest extends TestCase
 {
@@ -27,17 +28,17 @@ class AlgorithmTest extends TestCase
 
     public function testPickGetsArrayIndexValue()
     {
-        $toPick = ['foo' => 'bar', 'baz' => 12];
+        $toPick = ['bar', 'foo'];
 
-        $picked = A\pick($toPick, 'foo');
-        $this->assertEquals($picked, 'bar');
+        $picked = A\pick($toPick, 'foo', CB\invalidArrayKey);
+        $this->assertEquals($picked, 'foo');
     }
 
     public function testPluckReturnsArrayValue()
     {
-        $toPluck = ['foo', 'bar', 'baz'];
+        $toPluck = ['foo' => 'bar', 'baz' => 'foo-bar'];
 
-        $plucked = A\pluck($toPluck, 'bar');
+        $plucked = A\pluck($toPluck, 'foo', CB\invalidArrayValue);
         $this->assertEquals($plucked, 'bar');
     }
 
@@ -85,15 +86,14 @@ class AlgorithmTest extends TestCase
         $this->assertTrue(is_array($unzipped));
     }
 
-    public function testPartialReturnsAPartiallyAppliedFunction()
+    public function testPartialLeftAppliesArgumentsFromLeftToRight()
     {
         $fn = function (int $a, int $b) : int {
             return $a + $b;
         };
-        $partial = A\partial($fn, 1);
+        $partial = A\partialLeft($fn, 2)(2);
 
-        $this->assertInstanceOf(Closure::class, $partial);
-        $this->assertEquals($partial(2), 3);
+        $this->assertEquals($partial, 4);
     }
 
     public function testHeadReturnsFirstItemInArray()
@@ -142,11 +142,10 @@ class AlgorithmTest extends TestCase
 
     public function testIsArrayOfReturnsArrayType()
     {
-        $arr = [1, 2, 3, 4];
-        $arrTwo = ['foo', 'bar', 13, 14];
+        $array = [1, 2, 3, 4];
+        $type = A\isArrayOf($array, CB\emptyArray);
 
-        $this->assertEquals(A\isArrayOf($arr), 'integer');
-        $this->assertEquals(A\isArrayOf($arrTwo), 'mixed');
+        $this->assertEquals($type, 'integer');
     }
 
     public function testPartialRightReversesParameterOrder()
@@ -156,6 +155,21 @@ class AlgorithmTest extends TestCase
         };
 
         $partialRight = A\partialRight($divide, 6)(3);
-        $this->assertEquals($partialRight, 2);
+        $this->assertEquals($partialRight, 0.5);
+    }
+
+    public function testThrottleFunctionReturnsSuppliedFunctionReturnValue()
+    {
+        $toThrottle = A\constantFunction(12);
+
+        $this->assertEquals(A\throttle($toThrottle, 5), 12);
+    }
+
+    public function testConcatFunctionConcatenatesStrings()
+    {
+        $wildcard = '/';
+        $testsPath = A\concat($wildcard, 'path', 'to', 'tests');
+
+        $this->assertEquals($testsPath, 'path/to/tests');
     }
 }

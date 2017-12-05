@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -29,7 +30,7 @@ class Generic extends BaseTag implements Factory\StaticMethod
      * @param string $name Name of the tag.
      * @param Description $description The contents of the given tag.
      */
-    public function __construct($name, Description $description = null)
+    public function __construct(string $name, ?Description $description = null)
     {
         $this->validateTagName($name);
 
@@ -40,20 +41,15 @@ class Generic extends BaseTag implements Factory\StaticMethod
     /**
      * Creates a new tag that represents any unknown tag type.
      *
-     * @param string             $body
-     * @param string             $name
-     * @param DescriptionFactory $descriptionFactory
-     * @param TypeContext        $context
      *
      * @return static
      */
     public static function create(
-        $body,
-        $name = '',
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
+        string $body,
+        string $name = '',
+        ?DescriptionFactory $descriptionFactory = null,
+        ?TypeContext $context = null
     ) {
-        Assert::string($body);
         Assert::stringNotEmpty($name);
         Assert::notNull($descriptionFactory);
 
@@ -64,22 +60,16 @@ class Generic extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns the tag as a serialized string
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
-        return ($this->description ? $this->description->render() : '');
+        return $this->description ? $this->description->render() : '';
     }
 
     /**
      * Validates if the tag name matches the expected format, otherwise throws an exception.
-     *
-     * @param string $name
-     *
-     * @return void
      */
-    private function validateTagName($name)
+    private function validateTagName(string $name): void
     {
         if (! preg_match('/^' . StandardTagFactory::REGEX_TAGNAME . '$/u', $name)) {
             throw new \InvalidArgumentException(

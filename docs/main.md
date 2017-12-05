@@ -183,6 +183,17 @@ $partitioned = A\partition(2, [1, 2, 3, 4]);
 //returns [[1, 2], [3, 4]]
 ```
 
+### Throttle function
+
+The throttle function is used to defer function processing.
+
+```php
+$constDigit = A\constantFunction(12);
+
+echo A\throttle($constDigit, 10);
+//prints the digit 12 after 10 seconds
+```
+
 ## Functors
 
 A functor is an entity derived from Category Mathematics. Functors allow one to map functions to one or more values defined in their context. Functors are, therefore, the data structures that form the basis for Monads, Applicatives, Just/Nothing types, and Left/Right types.

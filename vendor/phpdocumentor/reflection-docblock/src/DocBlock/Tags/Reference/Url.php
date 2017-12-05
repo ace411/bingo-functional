@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -33,7 +34,7 @@ final class Url implements Reference
         $this->uri = $uri;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->uri;
     }

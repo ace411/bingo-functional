@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -27,21 +28,14 @@ class Property extends BaseTag implements Factory\StaticMethod
     /** @var string */
     protected $name = 'property';
 
-    /** @var Type */
+    /** @var Type|null */
     private $type;
 
     /** @var string */
     protected $variableName = '';
 
-    /**
-     * @param string      $variableName
-     * @param Type        $type
-     * @param Description $description
-     */
-    public function __construct($variableName, Type $type = null, Description $description = null)
+    public function __construct(string $variableName, ?Type $type = null, ?Description $description = null)
     {
-        Assert::string($variableName);
-
         $this->variableName = $variableName;
         $this->type = $type;
         $this->description = $description;
@@ -51,10 +45,10 @@ class Property extends BaseTag implements Factory\StaticMethod
      * {@inheritdoc}
      */
     public static function create(
-        $body,
-        TypeResolver $typeResolver = null,
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
+        string $body,
+        ?TypeResolver $typeResolver = null,
+        ?DescriptionFactory $descriptionFactory = null,
+        ?TypeContext $context = null
     ) {
         Assert::stringNotEmpty($body);
         Assert::allNotNull([$typeResolver, $descriptionFactory]);
@@ -70,7 +64,7 @@ class Property extends BaseTag implements Factory\StaticMethod
         }
 
         // if the next item starts with a $ or ...$ it must be the variable name
-        if (isset($parts[0]) && (strlen($parts[0]) > 0) && ($parts[0][0] == '$')) {
+        if (isset($parts[0]) && (strlen($parts[0]) > 0) && ($parts[0][0] === '$')) {
             $variableName = array_shift($parts);
             array_shift($parts);
 
@@ -86,30 +80,24 @@ class Property extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns the variable's name.
-     *
-     * @return string
      */
-    public function getVariableName()
+    public function getVariableName(): string
     {
         return $this->variableName;
     }
 
     /**
      * Returns the variable's type or null if unknown.
-     *
-     * @return Type|null
      */
-    public function getType()
+    public function getType(): ?Type
     {
         return $this->type;
     }
 
     /**
      * Returns a string representation for this tag.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return ($this->type ? $this->type . ' ' : '')
         . '$' . $this->variableName

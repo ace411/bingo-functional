@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -14,5 +15,5 @@ namespace phpDocumentor\Reflection\DocBlock\Tags\Factory;
 
 interface Strategy
 {
-    public function create($body);
+    public function create($body): void;
 }

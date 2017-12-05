@@ -1,4 +1,5 @@
-<?php
+<?php declare(strict_types=1);
+
 /**
  * This file is part of phpDocumentor.
  *
@@ -27,7 +28,7 @@ final class Param extends BaseTag implements Factory\StaticMethod
     /** @var string */
     protected $name = 'param';
 
-    /** @var Type */
+    /** @var Type|null */
     private $type;
 
     /** @var string */
@@ -36,17 +37,8 @@ final class Param extends BaseTag implements Factory\StaticMethod
     /** @var bool determines whether this is a variadic argument */
     private $isVariadic = false;
 
-    /**
-     * @param string $variableName
-     * @param Type $type
-     * @param bool $isVariadic
-     * @param Description $description
-     */
-    public function __construct($variableName, Type $type = null, $isVariadic = false, Description $description = null)
+    public function __construct(string $variableName, ?Type $type = null, bool $isVariadic = false, ?Description $description = null)
     {
-        Assert::string($variableName);
-        Assert::boolean($isVariadic);
-
         $this->variableName = $variableName;
         $this->type = $type;
         $this->isVariadic = $isVariadic;
@@ -57,10 +49,10 @@ final class Param extends BaseTag implements Factory\StaticMethod
      * {@inheritdoc}
      */
     public static function create(
-        $body,
-        TypeResolver $typeResolver = null,
-        DescriptionFactory $descriptionFactory = null,
-        TypeContext $context = null
+        string $body,
+        ?TypeResolver $typeResolver = null,
+        ?DescriptionFactory $descriptionFactory = null,
+        ?TypeContext $context = null
     ) {
         Assert::stringNotEmpty($body);
         Assert::allNotNull([$typeResolver, $descriptionFactory]);
@@ -77,7 +69,7 @@ final class Param extends BaseTag implements Factory\StaticMethod
         }
 
         // if the next item starts with a $ or ...$ it must be the variable name
-        if (isset($parts[0]) && (strlen($parts[0]) > 0) && ($parts[0][0] == '$' || substr($parts[0], 0, 4) === '...$')) {
+        if (isset($parts[0]) && (strlen($parts[0]) > 0) && ($parts[0][0] === '$' || substr($parts[0], 0, 4) === '...$')) {
             $variableName = array_shift($parts);
             array_shift($parts);
 
@@ -98,40 +90,32 @@ final class Param extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns the variable's name.
-     *
-     * @return string
      */
-    public function getVariableName()
+    public function getVariableName(): string
     {
         return $this->variableName;
     }
 
     /**
      * Returns the variable's type or null if unknown.
-     *
-     * @return Type|null
      */
-    public function getType()
+    public function getType(): ?Type
     {
         return $this->type;
     }
 
     /**
      * Returns whether this tag is variadic.
-     *
-     * @return boolean
      */
-    public function isVariadic()
+    public function isVariadic(): bool
     {
         return $this->isVariadic;
     }
 
     /**
      * Returns a string representation for this tag.
-     *
-     * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return ($this->type ? $this->type . ' ' : '')
         . ($this->isVariadic() ? '...' : '')
