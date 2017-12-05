@@ -13,6 +13,9 @@
     "require-dev": {
         "phpunit/phpunit": "^5.7"
     },
+    "require": {
+        "php": ">=7.0.0"
+    },
     "autoload": {
         "psr-4": {
             "Chemem\\Bingo\\Functional\\": "src/"

@@ -68,6 +68,40 @@ abstract class Either
     }
 
     /**
+     * lift method
+     *
+     * @param callable $fn
+     * @param Left $left
+     * @return callable
+     */
+
+    public static function lift(callable $fn, Left $left) : callable
+    {
+        return function () use ($fn, $left) {
+            if (
+                array_reduce(
+                    func_get_args($fn),
+                    function (bool $status, Either $val) {
+                        return $val->isLeft() ? false : $status;
+                    },
+                    true
+                )
+            ) {
+                $args = array_map(
+                    function (Either $either) {
+                        return $either
+                            ->orElse(Either::right(null))
+                            ->getRight();
+                    },
+                    func_get_args()
+                );
+                return self::right(call_user_func($fn, ...$args));
+            }
+            return $left;
+        };
+    }
+
+    /**
      * getLeft method
      *
      * @abstract

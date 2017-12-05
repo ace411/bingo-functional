@@ -154,6 +154,16 @@ $const = A\constantFunction(1);
 $const(); //should return 1
 ```
 
+### Extend
+
+The extend function is inspired by a similar bilby.js functional library. This helper is, in essence, used on arrays and allows one to append elements to them.
+
+```php
+$players = ['PG' => 'Dragic', 'SG' => 'Winslow'];
+
+$extended = A\extend($players, ['SF' => 'Durant', 'PG' => 'Curry']);
+//should return ['PG' => 'Curry', 'SG' => 'Winslow', 'SF' => 'Durant']
+```
 ### Head function
 
 The output of the head function is the first value of an array.
@@ -280,24 +290,6 @@ $anotherVal = Maybe::fromValue(null); //returns Nothing - a null value
 $yetAnotherVal = Maybe::fromValue(9, 9); //returns Nothing as the Just value and Nothing value cannot be the same
 ```
 
-- **lift()**
-
-The ```lift()``` function allows functions expressed in point-free style or otherwise to accept Maybe type values as arguments.
-
-```php
-function add(int $a, int $b) : int
-{
-    return $a + $b;
-}
-
-$lifted = Maybe::lift('add');
-
-$lifted(
-    Maybe::just(1),
-    Maybe::just(2)
-); //returns 3 encapsulated in a Just type object
-```
-
 - **isJust() and isNothing()**
 
 The ```isJust()``` and ```isNothing()``` methods simply return boolean values to indicate whether values are either of the Just type or the Nothing type.
@@ -395,4 +387,29 @@ $user = Either::right(get_current_user())
     ->orElse(
         Either::right('foo')
     ); //returns foo if the current script owner is not defined
+```
+
+- **lift()**
+
+The ```lift()``` function allows functions expressed in point-free style or otherwise to accept Maybe type values or Either values as arguments.
+
+```php
+function add(int $a, int $b) : int
+{
+    return $a + $b;
+}
+
+$maybeLifted = Maybe::lift('add');
+$eitherLifted = Either::lift('add', Either::left('Invalid Operation'));
+
+$maybeLifted(
+    Maybe::just(1),
+    Maybe::just(2)
+); //returns 3 encapsulated in a Just type object
+
+$eitherLifted(
+    Either::right(1),
+    Either::right(2)
+);
+//returns 3 encapsulated in a Right type object
 ```

@@ -13,4 +13,14 @@ final class Monad extends MonadAbstract
     {
         return self::return($fn($this->getValue()));
     }
+
+    public function filter(callable $fn) : MonadAbstract
+    {
+        return $fn($this->value) ? new static($this->value) : new static(null);
+    }
+
+    public function flatMap(callable $fn)
+    {
+        return $fn($this->getValue());
+    }
 }

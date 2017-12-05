@@ -19,8 +19,8 @@ function partialLeft(callable $fn, ...$args)
         return call_user_func_array(
             $fn,
             array_merge(
-                func_get_args(),
-                $args
+                $args,
+                func_get_args()
             )
         );
     };
