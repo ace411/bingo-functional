@@ -86,9 +86,12 @@ $curryied(2)(3); //should return 5
 Picking is a means of selecting an item from a list. This list, is, usually an array.
 
 ```php
+use Chemem\Bingo\Functional\Common\Callbacks as CB;
+
 $list = ['Spurs', 'Rockets', 'Heat', 'Pelicans'];
 
-$picked = A\pick($list, 'Heat'); //Returns Heat
+$picked = A\pick($list, 'Heat', CB\invalidArrayValue); //modified to accept a callback parameter
+//returns 'Heat'
 ```
 
 ### Plucking
@@ -96,9 +99,12 @@ $picked = A\pick($list, 'Heat'); //Returns Heat
 Like picking, plucking is a means of selecting an item from a list. The difference is in the means of selection. Plucking selects an item by index.
 
 ```php
+use Chemem\Bingo\Functional\Common\Callbacks as CB;
+
 $list = ['PG' => 'Dragic', 'SG' => 'Reddick', 'SF' => 'Durant'];
 
-$plucked = A\pluck($list, 'SF'); //Returns Durant
+$plucked = A\pluck($list, 'SF', CB\invalidArrayKey); //also modified to accept a callback parameter
+//returns 'Durant'
 ```
 
 ### Zipping
@@ -202,6 +208,30 @@ $constDigit = A\constantFunction(12);
 
 echo A\throttle($constDigit, 10);
 //prints the digit 12 after 10 seconds
+```
+
+### isArrayOf function
+
+Returns a string identifying the predominant type of the array. Arrays with more than one type are considered mixed.
+
+```php
+use Chemem\Bingo\Functional\Common\Callbacks as CB;
+
+$integers = [1, 2, 3, 4];
+
+echo A\isArrayOf($integers, CB\emptyArray);
+//prints 'integer'
+```
+
+### concat function
+
+The concat() function concatenates strings. It appends strings onto each other sequentially. It requires a wildcard separator though.
+
+```php 
+$wildcard = ' ';
+
+echo A\concat($wildcard, 'Kampala', 'is', 'hot');
+//should print 'Kampala is hot'
 ```
 
 ## Functors

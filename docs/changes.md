@@ -58,3 +58,23 @@
 
 - filter()
 - flatMap()
+
+## v1.4.0
+
+### Made the following changes
+
+- the ```pluck()```, ```pick()```, ```isArrayOf()```, and ```memoize()``` functions have been given callback signatures.
+
+- the ```extractErrorMessage()``` function and all other related callback functions have been replaced.
+
+### New helper functions
+
+- concat()
+- throttle()
+
+### New callback functions
+
+- invalidArrayKey()
+- invalidArrayValue()
+- emptyArray()
+- memoizationError() 
