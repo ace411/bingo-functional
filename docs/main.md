@@ -234,6 +234,20 @@ echo A\concat($wildcard, 'Kampala', 'is', 'hot');
 //should print 'Kampala is hot'
 ```
 
+### Callback signatures
+
+These are essential for proper functioning of the the following helper functions: ```pluck()```, ```pick()```, ```memoize()```, as well as ```isArrayOf()```. The following callback signatures correspond to the functions listed:
+
+- ```invalidArrayKey :: key -> errMsg```
+
+- ```invalidArrayValue :: key -> errMsg```
+
+- ```memoizationError :: Callable fn -> errMsg```
+
+- ```emptyArray :: Nothing -> errMsg``` 
+
+**Note:** You can write your own callbacks provided they adhere to the signatures listed above.
+
 ## Functors
 
 A functor is an entity derived from Category Mathematics. Functors allow one to map functions to one or more values defined in their context. Functors are, therefore, the data structures that form the basis for Monads, Applicatives, Just/Nothing types, and Left/Right types.
@@ -301,6 +315,95 @@ $val = Monad::return(10)
 
 ***Monads*** map functions onto values stored inside their contexts whereas ***Applicatives*** bind values to the functions stored inside theirs.
 
+**Note:** As of version 1.4.0, the Monad class will not be available. Refer to the [change log](https://github.com/ace411/bingo-functional/blob/master/docs/changes.md) for more details.
+
+#### The IO Monad
+
+The IO monad is one built purposely for handling impure operations. Impure operations are those that break referential transparency and immutability. Database interactions, Web service interaction, as well as external file reads are impediments to referential transparency.
+
+```php
+use Chemem\Bingo\Functional\Functors\Monads\IO;
+
+$readFromFile = function () : string {
+    return file_get_contents('path/to/file');
+};
+
+$io = IO::of($readFromFile)
+    ->map('strtoupper')
+    ->bind('var_dump')
+    ->exec();
+//should output the contents of a text file in uppercase
+``` 
+
+#### The Writer Monad
+
+The Writer monad is designed to make tracking state changes less cumbersome. Unique in its design are a logging mechanism and state transformation helper functions.
+
+```php
+use Chemem\Bingo\Functional\Functors\Monads\Writer;
+
+list($result, $log) = Writer::of(2, 'Initialize')
+    ->bind(
+        function (int $x) : int {
+            return $x + 2;
+        },
+        'Add 2 to x val'
+    )
+    ->run();
+
+echo $log;
+//should output messages 'Initialize' and 'Add 2 to x val'
+```
+
+#### The Reader Monad
+
+Environment variables, like impure operations, break referential transparency. The Reader monad is a solution to the problem of interacting with an external environment. The monad localizes state changes to ensure that functions are kept pure.
+
+```php
+function ask(string $content) : Reader
+{
+    return Reader::of(
+        function (string $name) use ($content) {
+            return $content . ($name === 'World' ? '' : ' How are you?'); 
+        }
+    );
+}
+
+function sayHello(string $name) : string
+{
+    return 'Hello ' . $name;
+}
+
+$reader = Reader::of('sayHello')
+    ->withReader('ask')
+    ->run('World');
+
+echo $reader; //should output Hello World
+```
+
+#### The State Monad
+
+Similar to the Reader monad is the State monad which works best in situations which require both the transformed and initial states.
+
+```php
+function addThree(int $val) : int
+{
+    return $val + 3;
+}
+
+function multiplyByTen(int $val) : int
+{
+    return $val * 10;
+}
+
+list($original, $finalState) = State::of(2)
+    ->evalState('addThree')
+    ->map('multiplyByTen')
+    ->exec();
+
+echo $original; //should output 2
+echo $finalState; //should output 50
+```
 
 ### Maybe Left/Nothing types
 

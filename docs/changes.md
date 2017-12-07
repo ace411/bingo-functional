@@ -67,6 +67,8 @@
 
 - the ```extractErrorMessage()``` function and all other related callback functions have been replaced.
 
+- the Monad class has been replaced with new Monads: IO, Reader, Writer, and State.
+
 ### New helper functions
 
 - concat()
@@ -78,3 +80,10 @@
 - invalidArrayValue()
 - emptyArray()
 - memoizationError() 
+
+### New monads
+
+- State monad
+- IO monad
+- Reader monad
+- Writer monad

@@ -162,7 +162,7 @@ class AlgorithmTest extends TestCase
     {
         $toThrottle = A\constantFunction(12);
 
-        $this->assertEquals(A\throttle($toThrottle, 5), 12);
+        $this->assertEquals(A\throttle($toThrottle, 2), 12);
     }
 
     public function testConcatFunctionConcatenatesStrings()

@@ -1,53 +1,75 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Chemem\Bingo\Functional\Common\Monads\MonadAbstract;
-use Chemem\Bingo\Functional\Functors\Monads\Monad;
-use Chemem\Bingo\Functional\Functors\Applicatives\Applicative;
+use Chemem\Bingo\Functional\Functors\Monads\{IO, Writer, Reader, State};
 
 class MonadTest extends TestCase
 {
-    public function testMonadReturnIsSimilarToApplicativePure()
+    public function testIOMonadHandlesIOProperly()
     {
-        $val = Monad::return(12);
-        $this->assertSame(
-            $val->getValue(),
-            Applicative::pure(12)->getValue()
-        );
+        $readFromFile = function () : string {
+            return file_get_contents(dirname(__DIR__) . '/io.test.txt');
+        };
+
+        $io = IO::of($readFromFile)
+            ->map('strtoupper')
+            ->exec();
+        
+        $this->assertEquals($io, 'THIS IS AN IO MONAD TEST FILE.');
     }
 
-    public function testMonadBindMapsFunctionOntoMonadValue()
+    public function testWriterMonadLogsEfficiently()
+    {
+        list($result, $log) = Writer::of(2, 'initialize')
+            ->bind(
+                function ($val) : int {
+                    return $val + 2;
+                },
+                'add 2 to x val'
+            )
+            ->run();
+        
+        $this->assertEquals($result, 4);
+        $this->assertEquals($log, 'initialize' . PHP_EOL . 'add 2 to x val');
+    }
+
+    public function testReaderMonadLazilyEvaluatesEnvironmentVariable()
+    {
+        $ask = function ($content) : Reader {
+            return Reader::of(
+                function ($name) use ($content) {
+                    return $content . ($name === 'world' ? '' : '. How are you?');
+                }
+            );
+        };
+
+        $sayHello = function ($name) : string {
+            return 'Hello ' . $name;
+        };
+
+        $reader = Reader::of($sayHello)
+            ->withReader($ask)
+            ->run('world');
+
+        $this->assertEquals($reader, 'Hello world');
+    }
+
+    public function testStateMonadEfficientlyHandlesState()
     {
         $addTen = function (int $val) : int {
             return $val + 10;
         };
-        $val = Monad::return(12)
-            ->bind($addTen);
 
-        $this->assertEquals($val->getValue(), 22);
-        $this->assertInstanceOf(MonadAbstract::class, $val);
-        $this->assertEquals($val, Monad::return(12)->map($addTen));
-    }
-
-    public function testFilterFunctionFiltersWrappedValue()
-    {
-        $val = Monad::return(12)
-            ->filter('is_int');
-
-        $this->assertEquals($val->getValue(), 12);
-        $this->assertInstanceOf(MonadAbstract::class, $val);
-    }
-
-    public function testFlatMapFunctionReturnsNonEncapsulatedValue()
-    {
-        $multiplyByTen = function (int $a) : int {
-            return $a * 10;
+        $multiplyByTen = function (int $val) : int {
+            return $val * 10;
         };
 
-        $val = Monad::return(5)
-            ->filter('is_int')
-            ->flatMap($multiplyByTen);
-
-        $this->assertEquals($val, 50);    
+        list($default, $state) = State::of(2)
+            ->evalState($addTen)
+            ->bind($multiplyByTen)
+            ->exec();
+        
+        $this->assertEquals($default, 2);
+        $this->assertEquals($state, 120);
     }
 }
