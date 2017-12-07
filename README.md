@@ -1,7 +1,6 @@
 # Bingo Functional
 
 [![Join the chat at https://gitter.im/bingo-functional/Lobby](https://badges.gitter.im/bingo-functional/Lobby.svg)](https://gitter.im/bingo-functional/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7c30c744fd0142d58dd210fd961ea842)](https://www.codacy.com/app/ace411/bingo-functional?utm_source=github.com&utm_medium=referral&utm_content=ace411/bingo-functional&utm_campaign=badger)
 [![Build Status](https://travis-ci.org/ace411/bingo-functional.svg?branch=master)](https://travis-ci.org/ace411/bingo-functional)
 
