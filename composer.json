@@ -16,6 +16,9 @@
     "require": {
         "php": ">=7.0.0"
     },
+    "suggest": {
+        "chemem/bingo-functional-repl": "A simple REPL for the bingo-functional library"
+    },
     "autoload": {
         "psr-4": {
             "Chemem\\Bingo\\Functional\\": "src/"
