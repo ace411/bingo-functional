@@ -16,6 +16,9 @@
     "require": {
         "php": ">=7.0.0"
     },
+    "suggest": {
+        "chemem/bingo-functional-repl": "A simple REPL for the bingo-functional library"
+    },
     "autoload": {
         "psr-4": {
             "Chemem\\Bingo\\Functional\\": "src/"
@@ -36,6 +39,9 @@
             "src/Algorithms/Concat.php",
             "src/Algorithms/Throttle.php",
             "src/Algorithms/Head.php",
+            "src/Algorithms/Map.php",
+            "src/Algorithms/Filter.php",
+            "src/Algorithms/Fold.php",
             "src/Algorithms/Partition.php",
             "src/Algorithms/IsArrayOf.php",
             "src/Algorithms/PartialRight.php",

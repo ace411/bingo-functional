@@ -234,6 +234,54 @@ echo A\concat($wildcard, 'Kampala', 'is', 'hot');
 //should print 'Kampala is hot'
 ```
 
+### Map function
+
+The map function transforms each entry in a collection. The requirements for this are a function whose return value dictates the transformation and an array of values.
+
+```php
+$collection = [2, 4, 6, 8];
+
+$squareOf = A\map(
+    function (int $val) : int {
+        return pow($val, 2);
+    }, 
+    $collection
+); //should evaluate to [4, 16, 36, 64]
+```
+
+### Filter function
+
+To filter is to make a selection based on a boolean predicate - the filter function, therefore, makes it possible to select array values based on a filter function's boolean return value.
+
+```php
+$collection = [1, 2, 3, 4, 5, 6];
+
+$even = A\filter(
+    function (int $val) : bool {
+        return $val % 2 === 0;
+    },
+    $collection
+);
+//should return [2, 4, 6]
+```
+
+### Fold/Reduce function
+
+The reduce function otherwise known as the fold function is one used purposely to transform a collection into a single value.
+
+```php 
+$collection = [1, 2, 3, 4, 5, 6];
+
+$sumOfEven = A\fold(
+    function (int $acc, int $val) : int {
+        return $val % 2 === 0 ? $acc + $val : $acc;
+    },
+    $collection,
+    0
+); 
+//should evaluate to 12
+```
+
 ### Callback signatures
 
 These are essential for proper functioning of the the following helper functions: ```pluck()```, ```pick()```, ```memoize()```, as well as ```isArrayOf()```. The following callback signatures correspond to the functions listed:

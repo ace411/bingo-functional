@@ -172,4 +172,53 @@ class AlgorithmTest extends TestCase
 
         $this->assertEquals($testsPath, 'path/to/tests');
     }
+
+    public function mapFunctionTransformsArrayElements()
+    {
+        $numbers = [1, 2, 3, 4, 5];
+
+        $transformed = A\map(
+            function ($val) {
+                return $val + 10;
+            },
+            $numbers
+        );
+
+        $this->assertEquals($transformed, [11, 12, 13, 14, 15]);
+    }
+
+    public function testFilterFunctionSelectsArrayElementsBasedOnBooleanPredicate()
+    {
+        $numbers = [1, 2, 3, 4, 5];
+
+        $filtered = A\filter(
+            function ($val) {
+                return $val < 4;
+            },
+            $numbers
+        );
+
+        $this->assertEquals($filtered, [1, 2, 3]);
+    }
+
+    public function testFoldFunctionTransformsCollectionIntoSingleValue()
+    {
+        $characters = [
+            ['name' => 'Tyrion', 'incest' => false],
+            ['name' => 'Cersei', 'incest' => true],
+            ['name' => 'Jaimie', 'incest' => true]
+        ];
+
+        $reduce = A\fold(
+            function ($acc, $val) {
+                return $val['incest'] === true ?
+                    $acc + 1 :
+                    $acc;
+            },
+            $characters,
+            0
+        );
+
+        $this->assertEquals($reduce, 2);
+    }
 }
