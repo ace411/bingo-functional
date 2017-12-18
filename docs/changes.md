@@ -87,3 +87,12 @@
 - IO monad
 - Reader monad
 - Writer monad
+
+## v1.5.0
+
+### New Helper functions
+
+- map()
+- filter()
+- fold()
+- reduce()
