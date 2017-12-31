@@ -492,12 +492,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/doctrine/instantiator.git",
-            "reference": "7af8066e48b8a4cbd90849bbe9234ab444057968"
+            "reference": "8520afa0d55f9b3aba1070a9bf65d4b0d9fb7727"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/doctrine/instantiator/zipball/7af8066e48b8a4cbd90849bbe9234ab444057968",
-            "reference": "7af8066e48b8a4cbd90849bbe9234ab444057968",
+            "url": "https://api.github.com/repos/doctrine/instantiator/zipball/8520afa0d55f9b3aba1070a9bf65d4b0d9fb7727",
+            "reference": "8520afa0d55f9b3aba1070a9bf65d4b0d9fb7727",
             "shasum": ""
         },
         "require": {
@@ -508,7 +508,7 @@
             "ext-phar": "*",
             "phpunit/phpunit": "^6.2.3"
         },
-        "time": "2017-09-19T12:41:22+00:00",
+        "time": "2017-12-22T05:44:00+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1015,67 +1015,18 @@
         ]
     },
     {
-        "name": "phpdocumentor/type-resolver",
-        "version": "0.4.0",
-        "version_normalized": "0.4.0.0",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/phpDocumentor/TypeResolver.git",
-            "reference": "9c977708995954784726e25d0cd1dddf4e65b0f7"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/9c977708995954784726e25d0cd1dddf4e65b0f7",
-            "reference": "9c977708995954784726e25d0cd1dddf4e65b0f7",
-            "shasum": ""
-        },
-        "require": {
-            "php": "^5.5 || ^7.0",
-            "phpdocumentor/reflection-common": "^1.0"
-        },
-        "require-dev": {
-            "mockery/mockery": "^0.9.4",
-            "phpunit/phpunit": "^5.2||^4.8.24"
-        },
-        "time": "2017-07-14T14:27:02+00:00",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0.x-dev"
-            }
-        },
-        "installation-source": "dist",
-        "autoload": {
-            "psr-4": {
-                "phpDocumentor\\Reflection\\": [
-                    "src/"
-                ]
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Mike van Riel",
-                "email": "me@mikevanriel.com"
-            }
-        ]
-    },
-    {
         "name": "phpspec/prophecy",
         "version": "dev-master",
         "version_normalized": "9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/phpspec/prophecy.git",
-            "reference": "3d0b3928bb1f6b1046a4547e96da9397a165f10e"
+            "reference": "9a84d1c09fbf7918e9d3cf998b83ecbf7555261d"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/phpspec/prophecy/zipball/3d0b3928bb1f6b1046a4547e96da9397a165f10e",
-            "reference": "3d0b3928bb1f6b1046a4547e96da9397a165f10e",
+            "url": "https://api.github.com/repos/phpspec/prophecy/zipball/9a84d1c09fbf7918e9d3cf998b83ecbf7555261d",
+            "reference": "9a84d1c09fbf7918e9d3cf998b83ecbf7555261d",
             "shasum": ""
         },
         "require": {
@@ -1087,9 +1038,9 @@
         },
         "require-dev": {
             "phpspec/phpspec": "^2.5|^3.2",
-            "phpunit/phpunit": "^4.8.35 || ^5.7"
+            "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.5"
         },
-        "time": "2017-12-07T16:59:59+00:00",
+        "time": "2017-12-21T16:59:48+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1135,18 +1086,18 @@
         "source": {
             "type": "git",
             "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-            "reference": "4ea190884db7a90912aa756f00b385beaeb2eb84"
+            "reference": "4595df959d534037c79eac662ea15b69383c14a9"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/4ea190884db7a90912aa756f00b385beaeb2eb84",
-            "reference": "4ea190884db7a90912aa756f00b385beaeb2eb84",
+            "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/4595df959d534037c79eac662ea15b69383c14a9",
+            "reference": "4595df959d534037c79eac662ea15b69383c14a9",
             "shasum": ""
         },
         "require": {
             "php": "^7.1",
             "phpdocumentor/reflection-common": "^1.0",
-            "phpdocumentor/type-resolver": "^0.4",
+            "phpdocumentor/type-resolver": "^0.5",
             "webmozart/assert": "^1.0"
         },
         "require-dev": {
@@ -1155,7 +1106,7 @@
             "phpstan/phpstan": "^0.9.0",
             "phpunit/phpunit": "^6.4"
         },
-        "time": "2017-12-07T20:29:55+00:00",
+        "time": "2017-12-28T21:17:47+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1187,12 +1138,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/symfony/yaml.git",
-            "reference": "5748d4fb717c4c7a427b1e45a450264a977198d8"
+            "reference": "bf50a3dddfe2a16ac5a32a8eb4a0973d766d318f"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/symfony/yaml/zipball/5748d4fb717c4c7a427b1e45a450264a977198d8",
-            "reference": "5748d4fb717c4c7a427b1e45a450264a977198d8",
+            "url": "https://api.github.com/repos/symfony/yaml/zipball/bf50a3dddfe2a16ac5a32a8eb4a0973d766d318f",
+            "reference": "bf50a3dddfe2a16ac5a32a8eb4a0973d766d318f",
             "shasum": ""
         },
         "require": {
@@ -1207,7 +1158,7 @@
         "suggest": {
             "symfony/console": "For validating YAML files using the lint command"
         },
-        "time": "2017-12-08T15:58:51+00:00",
+        "time": "2017-12-12T08:59:50+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1241,29 +1192,76 @@
         "homepage": "https://symfony.com"
     },
     {
+        "name": "phpdocumentor/type-resolver",
+        "version": "0.5.0",
+        "version_normalized": "0.5.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/phpDocumentor/TypeResolver.git",
+            "reference": "7159da1ff4ab5de0c033bab91c9d3f52dd9a7a02"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/phpDocumentor/TypeResolver/zipball/7159da1ff4ab5de0c033bab91c9d3f52dd9a7a02",
+            "reference": "7159da1ff4ab5de0c033bab91c9d3f52dd9a7a02",
+            "shasum": ""
+        },
+        "require": {
+            "php": "^7.0",
+            "phpdocumentor/reflection-common": "^1.0"
+        },
+        "require-dev": {
+            "mockery/mockery": "^1.0",
+            "phpunit/phpunit": "^6.4"
+        },
+        "time": "2017-11-15T21:30:06+00:00",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "phpDocumentor\\Reflection\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Mike van Riel",
+                "email": "me@mikevanriel.com"
+            }
+        ]
+    },
+    {
         "name": "myclabs/deep-copy",
         "version": "1.x-dev",
         "version_normalized": "1.9999999.9999999.9999999-dev",
         "source": {
             "type": "git",
             "url": "https://github.com/myclabs/DeepCopy.git",
-            "reference": "103e21127bc63462af5f5165064cdd960f95fa14"
+            "reference": "9f807201f6e6a8b7ab3582d815511d1807c9c202"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/103e21127bc63462af5f5165064cdd960f95fa14",
-            "reference": "103e21127bc63462af5f5165064cdd960f95fa14",
+            "url": "https://api.github.com/repos/myclabs/DeepCopy/zipball/9f807201f6e6a8b7ab3582d815511d1807c9c202",
+            "reference": "9f807201f6e6a8b7ab3582d815511d1807c9c202",
             "shasum": ""
         },
         "require": {
-            "php": "^5.6 || ^7.0"
+            "php": "^7.1"
         },
         "require-dev": {
             "doctrine/collections": "^1.0",
             "doctrine/common": "^2.6",
-            "phpunit/phpunit": "^5.7"
+            "phpunit/phpunit": "^6.4"
         },
-        "time": "2017-11-29T14:36:38+00:00",
+        "time": "2017-12-18T00:20:24+00:00",
         "type": "library",
         "extra": {
             "branch-alias": {
@@ -1299,12 +1297,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/sebastianbergmann/phpunit.git",
-            "reference": "ce4de31b6bcc5b2ff2774e599b0a0d59b08d7292"
+            "reference": "7444c28ef39f57a60c20a2ba9449d827cc287fae"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/ce4de31b6bcc5b2ff2774e599b0a0d59b08d7292",
-            "reference": "ce4de31b6bcc5b2ff2774e599b0a0d59b08d7292",
+            "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7444c28ef39f57a60c20a2ba9449d827cc287fae",
+            "reference": "7444c28ef39f57a60c20a2ba9449d827cc287fae",
             "shasum": ""
         },
         "require": {
@@ -1328,7 +1326,7 @@
             "sebastian/global-state": "^1.1",
             "sebastian/object-enumerator": "~2.0",
             "sebastian/resource-operations": "~1.0",
-            "sebastian/version": "~1.0.3|~2.0",
+            "sebastian/version": "^1.0.6|^2.0.1",
             "symfony/yaml": "~2.1|~3.0|~4.0"
         },
         "conflict": {
@@ -1341,7 +1339,7 @@
             "ext-xdebug": "*",
             "phpunit/php-invoker": "~1.1"
         },
-        "time": "2017-12-10T17:40:57+00:00",
+        "time": "2017-12-28T08:49:47+00:00",
         "bin": [
             "phpunit"
         ],

@@ -29,6 +29,7 @@ class ComposerStaticInit0371d2a24e8c01320ccd9b3afe4bbda9
         '465d0e0689aecb1c57b6b954347ab79a' => __DIR__ . '/../..' . '/src/Algorithms/Partition.php',
         '62a28e5b17c39803605aa5fa6d8790da' => __DIR__ . '/../..' . '/src/Algorithms/IsArrayOf.php',
         '314247cb52434efef3ec5a5f35a06fdc' => __DIR__ . '/../..' . '/src/Algorithms/PartialRight.php',
+        '9a6c189934c365118237d839fbc529aa' => __DIR__ . '/../..' . '/src/Algorithms/ArrayKeysExist.php',
         'a64e2c46128a2ff0560dc9efaa329585' => __DIR__ . '/../..' . '/src/Algorithms/ConstantFunction.php',
         '32ebf5e0c55f2b62bfda5425d777fe84' => __DIR__ . '/../..' . '/src/Common/Callbacks/functions.php',
     );
@@ -61,8 +62,8 @@ class ComposerStaticInit0371d2a24e8c01320ccd9b3afe4bbda9
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'Webmozart\\Assert\\' => 
         array (

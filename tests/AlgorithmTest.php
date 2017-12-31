@@ -221,4 +221,16 @@ class AlgorithmTest extends TestCase
 
         $this->assertEquals($reduce, 2);
     }
+
+    public function testArrayKeysExistFunctionDeterminesIfKeysExistInCollection()
+    {
+        $character = [
+            'name' => 'Tyrion',
+            'house' => 'Lannister'
+        ];
+
+        $testBasicInfoIsSet = A\arrayKeysExist($character, 'name', 'house');
+
+        $this->assertEquals($testBasicInfoIsSet, true);
+    }
 }

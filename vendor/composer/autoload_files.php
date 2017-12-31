@@ -28,6 +28,7 @@ return array(
     '465d0e0689aecb1c57b6b954347ab79a' => $baseDir . '/src/Algorithms/Partition.php',
     '62a28e5b17c39803605aa5fa6d8790da' => $baseDir . '/src/Algorithms/IsArrayOf.php',
     '314247cb52434efef3ec5a5f35a06fdc' => $baseDir . '/src/Algorithms/PartialRight.php',
+    '9a6c189934c365118237d839fbc529aa' => $baseDir . '/src/Algorithms/ArrayKeysExist.php',
     'a64e2c46128a2ff0560dc9efaa329585' => $baseDir . '/src/Algorithms/ConstantFunction.php',
     '32ebf5e0c55f2b62bfda5425d777fe84' => $baseDir . '/src/Common/Callbacks/functions.php',
 );

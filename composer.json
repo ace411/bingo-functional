@@ -45,6 +45,7 @@
             "src/Algorithms/Partition.php",
             "src/Algorithms/IsArrayOf.php",
             "src/Algorithms/PartialRight.php",
+            "src/Algorithms/ArrayKeysExist.php",
             "src/Algorithms/ConstantFunction.php",
             "src/Common/Callbacks/functions.php"
         ]
