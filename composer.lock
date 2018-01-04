@@ -169,12 +169,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpDocumentor/ReflectionDocBlock.git",
-                "reference": "4595df959d534037c79eac662ea15b69383c14a9"
+                "reference": "c8a91684d6446b6ab8f5bc0c1f730612be3abcf6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/4595df959d534037c79eac662ea15b69383c14a9",
-                "reference": "4595df959d534037c79eac662ea15b69383c14a9",
+                "url": "https://api.github.com/repos/phpDocumentor/ReflectionDocBlock/zipball/c8a91684d6446b6ab8f5bc0c1f730612be3abcf6",
+                "reference": "c8a91684d6446b6ab8f5bc0c1f730612be3abcf6",
                 "shasum": ""
             },
             "require": {
@@ -211,7 +211,7 @@
                 }
             ],
             "description": "With this component, a library can provide support for annotations via DocBlocks or otherwise retrieve information that is embedded in a DocBlock.",
-            "time": "2017-12-28T21:17:47+00:00"
+            "time": "2018-01-03T08:19:52+00:00"
         },
         {
             "name": "phpdocumentor/type-resolver",
@@ -487,7 +487,7 @@
                 "shasum": ""
             },
             "require": {
-                "php": "^5.3.3 || ^7.0"
+                "php": "^7.1"
             },
             "require-dev": {
                 "phpunit/phpunit": "^4.8.35 || ^5.7 || ^6.0"
@@ -576,12 +576,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "7444c28ef39f57a60c20a2ba9449d827cc287fae"
+                "reference": "4e8f3129f450973c6dda07297bab6919fbb9f81f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/7444c28ef39f57a60c20a2ba9449d827cc287fae",
-                "reference": "7444c28ef39f57a60c20a2ba9449d827cc287fae",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/4e8f3129f450973c6dda07297bab6919fbb9f81f",
+                "reference": "4e8f3129f450973c6dda07297bab6919fbb9f81f",
                 "shasum": ""
             },
             "require": {
@@ -650,7 +650,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2017-12-28T08:49:47+00:00"
+            "time": "2018-01-01T07:03:09+00:00"
         },
         {
             "name": "phpunit/phpunit-mock-objects",
@@ -1230,12 +1230,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/yaml.git",
-                "reference": "bf50a3dddfe2a16ac5a32a8eb4a0973d766d318f"
+                "reference": "e4284090d607b0b90dd456be6c4118f55afc8d9e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/yaml/zipball/bf50a3dddfe2a16ac5a32a8eb4a0973d766d318f",
-                "reference": "bf50a3dddfe2a16ac5a32a8eb4a0973d766d318f",
+                "url": "https://api.github.com/repos/symfony/yaml/zipball/e4284090d607b0b90dd456be6c4118f55afc8d9e",
+                "reference": "e4284090d607b0b90dd456be6c4118f55afc8d9e",
                 "shasum": ""
             },
             "require": {
@@ -1280,7 +1280,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "https://symfony.com",
-            "time": "2017-12-12T08:59:50+00:00"
+            "time": "2018-01-03T07:38:11+00:00"
         },
         {
             "name": "webmozart/assert",

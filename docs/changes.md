@@ -46,7 +46,7 @@
 
 ## v1.2.1
 
-### Fixed the following problems
+### Fixed the following problem(s)
 
 - the error message shown when a mixed array (array containing more than one type) is supplied to the isArray() function.
 
@@ -61,7 +61,7 @@
 
 ## v1.4.0
 
-### Made the following changes
+### Made the following change(s)
 
 - the ```pluck()```, ```pick()```, ```isArrayOf()```, and ```memoize()``` functions have been given callback signatures.
 
@@ -96,3 +96,19 @@
 - filter()
 - fold()
 - reduce()
+
+## v1.6.0
+
+### Made the following change(s)
+
+- Modified the ```filter()``` function to accurately filter values whenever a boolean predicate is defined.
+
+- Changed parameter order of the return value for the ```reduce()``` function.
+
+### New Helper Functions
+
+- arrayKeysExist()
+- dropLeft()
+- dropRight()
+- unique()
+- flatten()

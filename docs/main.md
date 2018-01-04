@@ -282,6 +282,60 @@ $sumOfEven = A\fold(
 //should evaluate to 12
 ```
 
+### Unique function
+
+The unique function removes duplicates from an array.
+
+```php
+$numbers = [1, 2, 3, 4, 1];
+
+$unique = A\unique($numbers); //should return [1, 2, 3, 4]
+```
+
+### Compact function
+
+The compact function purges an array of falsey values (null, false).
+
+```php
+$collection = [1, 2, 3, false, null];
+
+$numbers = A\compact($collection); //evaluates to [1, 2, 3]
+```
+
+### Drop function
+
+The drop functions remove items from a list. The ```dropLeft()``` function removes elements from the front of a collection. The ```dropRight()``` function, on the other hand, removes elements from the back of a list.
+
+```php
+$even = [2, 4, 6, 8, 10, 12];
+
+//dropLeft
+$leftDrop = A\dropLeft($even, 3); //evaluates to [8, 10, 12]
+
+//dropRight
+$rightDrop = A\dropRight($even, 3); //evaluates to [2, 4, 6]
+```
+
+### Flatten function
+
+The flatten function reduces an array level count by one.
+
+```php
+$collection = [[1, 2], 'foo', 'bar'];
+
+$flattened = A\flatten($collection); //evaluates to [1, 2, 'foo', 'bar']
+```
+
+### ArrayKeysExist function
+
+The arrayKeysExist function determines whether specified keys match the indexes of the values in an array and therefore exist in a collection.
+
+```php
+$attributes = ['username' => 'foo', 'password' => 'bar'];
+
+$keysExist = A\arrayKeysExist($attributes, 'username', 'password'); //should evaluate to true
+```
+
 ### Callback signatures
 
 These are essential for proper functioning of the the following helper functions: ```pluck()```, ```pick()```, ```memoize()```, as well as ```isArrayOf()```. The following callback signatures correspond to the functions listed:

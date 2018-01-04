@@ -233,4 +233,49 @@ class AlgorithmTest extends TestCase
 
         $this->assertEquals($testBasicInfoIsSet, true);
     }
+
+    public function testDropLeftFunctionRemovesArrayItemsFromTheFirstIndexOnwards()
+    {
+        $numbers = [1, 2, 3, 4, 5];
+
+        $modified = A\dropLeft($numbers, 2);
+
+        $this->assertEquals($modified, [3, 4, 5]);
+    }
+
+    public function testDropRightFunctionRemovesArrayItemsFromTheLastIndexBackwards()
+    {
+        $numbers = [1, 2, 3, 4, 5];
+
+        $modified = A\dropRight($numbers, 2);
+
+        $this->assertEquals($modified, [1, 2, 3]);
+    }
+
+    public function testUniqueFunctionRemovesDuplicateValuesInCollection()
+    {
+        $values = ['foo', 'bar', 'baz', 'foo'];
+
+        $unique = A\unique($values);
+
+        $this->assertEquals($unique, ['foo', 'bar', 'baz']);
+    }
+
+    public function testFlattenFunctionLowersArrayDimensionsByOneLevel()
+    {
+        $collection = [['foo', 'bar'], 1, 2, 3];
+
+        $flattened = A\flatten($collection);
+
+        $this->assertEquals($flattened, ['foo', 'bar', 1, 2, 3]);
+    }
+
+    public function testCompactFunctionPurgesCollectionOfFalseyValues()
+    {
+        $mixed = [1, 2, 'foo', false, null];
+
+        $purged = A\compact($mixed);
+
+        $this->assertEquals($purged, [1, 2, 'foo']);
+    }
 }
