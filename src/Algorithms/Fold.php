@@ -37,5 +37,5 @@ const reduce = "Chemem\\Bingo\\Functional\\Algorithms\\reduce";
 
 function reduce(callable $func, array $collection, $acc)
 {
-    return fold($collection, $func, $acc);
+    return fold($func, $collection, $acc);
 }

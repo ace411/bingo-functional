@@ -18,8 +18,10 @@ function filter(callable $func, array $collection, array $acc = []) : array
     $collection = array_values($collection);
 
     foreach ($collection as $value) {
-        $acc[] = call_user_func($func, $value) ? $value : null;
+        if (call_user_func($func, $value)) {
+            $acc[] = $value;
+        }
     }
 
-    return array_intersect($collection, $acc);
+    return $acc;
 }
