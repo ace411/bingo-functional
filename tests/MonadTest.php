@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Chemem\Bingo\Functional\Functors\Monads\{IO, Writer, Reader, State};
+use Chemem\Bingo\Functional\Functors\Monads\{IO, Writer, Reader, State, ListMonad};
 
 class MonadTest extends TestCase
 {
@@ -71,5 +71,18 @@ class MonadTest extends TestCase
         
         $this->assertEquals($default, 2);
         $this->assertEquals($state, 120);
+    }
+
+    public function testListMonadEnablesCollectionTransformation()
+    {
+        $multiplyByTwo = function (int $val) : int {
+            return $val * 2;
+        };
+
+        $transformed = ListMonad::of(1, 2, 3)
+            ->bind($multiplyByTwo)
+            ->extract();
+
+        $this->assertEquals($transformed, [2, 4, 6, 1, 2, 3]);
     }
 }
