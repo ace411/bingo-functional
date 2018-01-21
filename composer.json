@@ -2,7 +2,7 @@
     "name": "chemem/bingo-functional",
     "description": "A simple functional programming library.",
     "type": "library",
-    "license": "Apache 2.0",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Lochemem Bruno Michael",
