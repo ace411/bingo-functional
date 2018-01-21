@@ -462,6 +462,8 @@ echo $log;
 Environment variables, like impure operations, break referential transparency. The Reader monad is a solution to the problem of interacting with an external environment. The monad localizes state changes to ensure that functions are kept pure.
 
 ```php
+use Chemem\Bingo\Functional\Functors\Monads\Reader;
+
 function ask(string $content) : Reader
 {
     return Reader::of(
@@ -488,6 +490,8 @@ echo $reader; //should output Hello World
 Similar to the Reader monad is the State monad which works best in situations which require both the transformed and initial states.
 
 ```php
+use Chemem\Bingo\Functional\Functors\Monads\State;
+
 function addThree(int $val) : int
 {
     return $val + 3;
@@ -505,6 +509,24 @@ list($original, $finalState) = State::of(2)
 
 echo $original; //should output 2
 echo $finalState; //should output 50
+```
+
+#### The List Monad
+
+The List Monad is used to generate a set of values for a given collection - something akin to a zip list. The List Monad operates on the principle of [non-determinism](https://en.wikipedia.org/wiki/Nondeterministic_algorithm).
+
+```php
+use Chemem\Bingo\Functional\Functors\Monads\ListMonad;
+
+function multiplyByTwo(int $val) : int
+{
+    return $val * 2;
+}
+
+$list = ListMonad::of(1, 2, 3)
+    ->bind('multiplyByTwo')
+    ->extract();
+//should evaluate to [2, 4, 6, 1, 2, 3]
 ```
 
 ### Maybe Left/Nothing types
