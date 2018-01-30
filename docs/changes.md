@@ -112,3 +112,9 @@
 - dropRight()
 - unique()
 - flatten()
+
+## v1.7.0
+
+### New monad
+
+- ListMonad
