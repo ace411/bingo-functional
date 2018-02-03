@@ -54,5 +54,22 @@
             "src/Algorithms/ConstantFunction.php",
             "src/Common/Callbacks/functions.php"
         ]
-    }
+    },
+    "keywords": [
+        "functional",
+        "monads",
+        "immutability",
+        "IO monad",
+        "Reader monad",
+        "Writer monad",
+        "State monad",
+        "referential transparency",
+        "fp",
+        "functional programming",
+        "bingo",
+        "Either",
+        "Maybe",
+        "Applicative",
+        "Functor"
+    ]
 }
