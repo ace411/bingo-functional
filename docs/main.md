@@ -204,11 +204,17 @@ $partitioned = A\partition(2, [1, 2, 3, 4]);
 The throttle function is used to defer function processing.
 
 ```php
-$constDigit = A\constantFunction(12);
+$addTwelve = function (int $val) : int {
+    return $val + 12;
+};
 
-echo A\throttle($constDigit, 10);
+$throttle = A\throttle($addTwelve, 10);
+
+echo $throttle(0);
 //prints the digit 12 after 10 seconds
 ```
+
+**Note:** The throttle function as of v1.7.1 supports functions with multiple arguments.
 
 ### isArrayOf function
 

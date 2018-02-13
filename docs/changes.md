@@ -118,3 +118,13 @@
 ### New monad
 
 - ListMonad
+
+## v1.7.1
+
+### Made the following change(s)
+
+- Modified the ```throttle()``` function to accept multiple arguments
+
+- Added type signatures and doc blocks for functions without any
+
+- Added immutable const definition for ```concat()``` function
