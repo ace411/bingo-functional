@@ -160,9 +160,13 @@ class AlgorithmTest extends TestCase
 
     public function testThrottleFunctionReturnsSuppliedFunctionReturnValue()
     {
-        $toThrottle = A\constantFunction(12);
+        $action = function (int $val) {
+            return $val + 10;
+        };
 
-        $this->assertEquals(A\throttle($toThrottle, 2), 12);
+        $throttle = A\throttle($action, 5);
+
+        $this->assertEquals($throttle(2), 12);
     }
 
     public function testConcatFunctionConcatenatesStrings()
