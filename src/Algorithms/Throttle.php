@@ -13,8 +13,10 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const throttle = "Chemem\\Bingo\\Functional\\Algorithms\\throttle";
 
-function throttle(callable $fn, int $timeout)
+function throttle(callable $function, int $timeout)
 {
     sleep($timeout);
-    return call_user_func($fn);
+    return function (...$args) use ($function) {
+        return call_user_func_array($function, $args);
+    };
 }
