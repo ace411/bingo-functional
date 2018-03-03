@@ -64,6 +64,13 @@ class ListMonad
         return new static(A\extend($final, $original));
     }
 
+    public function flatMap(callable $function)
+    {
+        return $this
+            ->bind($function)
+            ->extract();
+    }
+
     /**
      * extract method
      * 
