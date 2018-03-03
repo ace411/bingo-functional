@@ -137,4 +137,26 @@ class EitherTypeTest extends TestCase
             );
         $this->assertEquals($error, $GLOBALS['ERR_MSG']);
     }
+
+    public function testOrElseMethodReturnsFinalEitherTypeResult()
+    {
+        $val = Either::right(12);
+
+        $mutated = $val
+            ->filter(
+                function ($val) {
+                    return $val > 20;
+                },
+                0
+            )
+            ->map(
+                function ($val) {
+                    return $val + 10;
+                }
+            )
+            ->orElse(Either::right(25));
+
+        $this->assertInstanceOf(Either::class, $mutated);
+        $this->assertEquals($mutated->getRight(), 25);
+    }
 }
