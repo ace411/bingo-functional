@@ -134,4 +134,26 @@ class MaybeTypeTest extends TestCase
             );
         $this->assertEquals($val, null);
     }
+
+    public function testOrElseMethodReturnsFinalMaybeTypeResult()
+    {
+        $val = Maybe::fromValue(12);
+
+        $mutated = $val
+            ->filter(
+                function ($val) {
+                    return $val > 20;
+                },
+                0
+            )
+            ->map(
+                function ($val) {
+                    return $val + 10;
+                }
+            )
+            ->orElse(Maybe::fromValue(25));
+
+        $this->assertInstanceOf(Maybe::class, $mutated);
+        $this->assertEquals($mutated->getJust(), 25);
+    }
 }
