@@ -92,8 +92,6 @@ final class Right extends Either implements FunctorInterface
 
     public function orElse(Either $either) : Either
     {
-        return isset($this->value) || ($this->value instanceof Left) == false ?
-            new static($this->getRight()) :
-            new static($either->getRight());
+        return !isset($this->value) ? $either : new static($this->value);  
     }
 }

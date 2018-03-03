@@ -97,8 +97,8 @@ final class Nothing extends Maybe implements FunctorInterface
      * @inheritdoc
      */
 
-    public function orElse(Maybe $value) : Maybe
+    public function orElse(Maybe $maybe) : Maybe
     {
-        return $this;
+        return $maybe;
     }
 }

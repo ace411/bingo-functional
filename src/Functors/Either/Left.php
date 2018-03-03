@@ -90,6 +90,6 @@ final class Left extends Either implements FunctorInterface
 
     public function orElse(Either $either) : Either
     {
-        return $this;
+        return $either;
     }
 }
