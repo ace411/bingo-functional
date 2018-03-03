@@ -99,10 +99,8 @@ final class Just extends Maybe implements FunctorInterface
      * @inheritdoc
      */
 
-    public function orElse(Maybe $value) : Maybe
+    public function orElse(Maybe $maybe) : Maybe
     {
-        return !is_null($this->value) || isset($this->value) ?
-            new static($this->getJust()) :
-            new static($value->getJust());
+        return !isset($this->value) ? $maybe : new static($this->value);
     }
 }

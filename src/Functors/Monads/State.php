@@ -76,6 +76,13 @@ class State
         return $this->evalState($function);
     }
 
+    public function flatMap(callable $function)
+    {
+        return $this
+            ->evalState($function)
+            ->exec();
+    }
+
     /**
      * bind method
      * 
