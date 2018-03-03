@@ -128,3 +128,11 @@
 - Added type signatures and doc blocks for functions without any
 
 - Added immutable const definition for ```concat()``` function
+
+## v1.7.2
+
+### Made the following change(s)
+
+- Modified the ```orElse()``` methods of the Left, Right, Nothing, and Just functors
+
+- Added the ```flatMap()``` method to the State and List monads
