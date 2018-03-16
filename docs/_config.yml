@@ -1,3 +1,4 @@
 theme: jekyll-theme-cayman
 markdown: kramdown
-navigation: 2
+navigation: 1
+baseurl: '/docs'
