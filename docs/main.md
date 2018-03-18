@@ -1,3 +1,8 @@
+---
+title: docs
+permalink: /docs/
+---
+
 # bingo-functional documentation
 
 The bingo-functional library is a functional programming library built in PHP for PHP users. Available in this library are monads, Just/Nothing types, Left/Right types, applicative functors, and function algorithms meant to ease the cognitive burden for those who intend to use them. The subsequent text is documentation of the library which should help you, the reader, understand how to go about using it.
