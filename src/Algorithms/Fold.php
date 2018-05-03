@@ -15,13 +15,25 @@ const fold = "Chemem\\Bingo\\Functional\\Algorithms\\fold";
 
 function fold(callable $func, array $collection, $acc)
 {
-    $collection = array_values($collection);
+    $arrCount = count($collection);
+    $colVals = array_values($collection);
 
-    foreach ($collection as $value) {
-        $acc = call_user_func_array($func, [$acc, $value]);
-    }
+    $recursiveFold = function (int $init = 0, $mult) use (
+        $func,
+        $colVals,
+        $arrCount,
+        &$recursiveFold
+    ) {
+        if ($init >= $arrCount) {
+            return $mult;
+        }
 
-    return $acc;
+        $mult = call_user_func_array($func, [$mult, $colVals[$init]]);
+
+        return $recursiveFold($init + 1, $mult);
+    };
+
+    return $recursiveFold(0, $acc);
 }
 
 /**

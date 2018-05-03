@@ -13,14 +13,25 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const map = "Chemem\\Bingo\\Functional\\Algorithms\\map";
 
-function map(callable $func, array $collection, $acc = []) : array
+function map(callable $func, array $collection) : array
 {
     $arrCount = count($collection); 
-    $collection = array_values($collection); 
+    $colVals = array_values($collection);
 
-    foreach ($collection as $item => $value) {
-        $acc[] = call_user_func($func, $value);
-    }
-    
-    return $acc;
+    $recursiveMap = function (int $init = 0, array $acc = []) use (
+        $func, 
+        $colVals, 
+        $arrCount, 
+        &$recursiveMap
+    ) {
+        if ($init >= $arrCount) {
+            return $acc;
+        }
+
+        $acc[] = $func($colVals[$init]);
+
+        return $recursiveMap($init + 1, $acc);
+    };
+
+    return $recursiveMap();
 }
