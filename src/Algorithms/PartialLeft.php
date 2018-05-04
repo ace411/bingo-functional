@@ -25,3 +25,10 @@ function partialLeft(callable $fn, ...$args)
         );
     };
 }
+
+const partial = "Chemem\\Bingo\\Functional\\Algorithms\\partial";
+
+function partial(callable $func, ...$args)
+{
+    return partialLeft($func, ...$args);
+}
