@@ -1,3 +1,8 @@
+---
+title: changes
+permalink: /changes/
+---
+
 # bingo-functional change log
 
 ## v1.0.0
