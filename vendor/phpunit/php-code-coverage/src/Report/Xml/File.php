@@ -15,17 +15,33 @@ class File
     /**
      * @var \DOMDocument
      */
-    protected $dom;
+    private $dom;
 
     /**
      * @var \DOMElement
      */
-    protected $contextNode;
+    private $contextNode;
 
     public function __construct(\DOMElement $context)
     {
         $this->dom         = $context->ownerDocument;
         $this->contextNode = $context;
+    }
+
+    /**
+     * @return \DOMElement
+     */
+    protected function getContextNode()
+    {
+        return $this->contextNode;
+    }
+
+    /**
+     * @return \DOMDocument
+     */
+    protected function getDomDocument()
+    {
+        return $this->dom;
     }
 
     public function getTotals()
@@ -35,7 +51,7 @@ class File
         if (!$totalsContainer) {
             $totalsContainer = $this->contextNode->appendChild(
                 $this->dom->createElementNS(
-                    'http://schema.phpunit.de/coverage/1.0',
+                    'https://schema.phpunit.de/coverage/1.0',
                     'totals'
                 )
             );
@@ -47,14 +63,14 @@ class File
     public function getLineCoverage($line)
     {
         $coverage = $this->contextNode->getElementsByTagNameNS(
-            'http://schema.phpunit.de/coverage/1.0',
+            'https://schema.phpunit.de/coverage/1.0',
             'coverage'
         )->item(0);
 
         if (!$coverage) {
             $coverage = $this->contextNode->appendChild(
                 $this->dom->createElementNS(
-                    'http://schema.phpunit.de/coverage/1.0',
+                    'https://schema.phpunit.de/coverage/1.0',
                     'coverage'
                 )
             );
@@ -62,7 +78,7 @@ class File
 
         $lineNode = $coverage->appendChild(
             $this->dom->createElementNS(
-                'http://schema.phpunit.de/coverage/1.0',
+                'https://schema.phpunit.de/coverage/1.0',
                 'line'
             )
         );

@@ -282,4 +282,18 @@ class AlgorithmTest extends TestCase
 
         $this->assertEquals($purged, [1, 2, 'foo']);
     }
+
+    public function testFillFunctionFillsArrayIndexesWithArbitraryValues()
+    {
+        $fill = A\fill([1, 2, 3, 4, 5, 6, 7], 'foo', 1, 4);
+
+        $this->assertEquals($fill, [1, 'foo', 'foo', 'foo', 'foo', 6, 7]);
+    }
+
+    public function testIndexOfFunctionComputesArrayValueIndex()
+    {
+        $index = A\indexOf([1, 2, 3, 4], 2);
+
+        $this->assertEquals($index, 1);
+    }
 }
