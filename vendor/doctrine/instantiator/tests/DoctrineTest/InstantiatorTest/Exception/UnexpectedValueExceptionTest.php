@@ -1,4 +1,5 @@
 <?php
+
 namespace DoctrineTest\InstantiatorTest\Exception;
 
 use Doctrine\Instantiator\Exception\UnexpectedValueException;
@@ -6,11 +7,10 @@ use DoctrineTest\InstantiatorTestAsset\AbstractClassAsset;
 use Exception;
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
+use function sprintf;
 
 /**
  * Tests for {@see \Doctrine\Instantiator\Exception\UnexpectedValueException}
- *
- * @author Marco Pivetta <ocramius@gmail.com>
  *
  * @covers \Doctrine\Instantiator\Exception\UnexpectedValueException
  */
@@ -22,11 +22,11 @@ class UnexpectedValueExceptionTest extends TestCase
         $previous        = new Exception();
         $exception       = UnexpectedValueException::fromSerializationTriggeredException($reflectionClass, $previous);
 
-        $this->assertInstanceOf(UnexpectedValueException::class, $exception);
-        $this->assertSame($previous, $exception->getPrevious());
-        $this->assertSame(
+        self::assertInstanceOf(UnexpectedValueException::class, $exception);
+        self::assertSame($previous, $exception->getPrevious());
+        self::assertSame(
             'An exception was raised while trying to instantiate an instance of "'
-            . __CLASS__  . '" via un-serialization',
+            . self::class . '" via un-serialization',
             $exception->getMessage()
         );
     }
@@ -36,8 +36,8 @@ class UnexpectedValueExceptionTest extends TestCase
         $reflection = new ReflectionClass(AbstractClassAsset::class);
         $exception  = UnexpectedValueException::fromUncleanUnSerialization($reflection, 'foo', 123, 'bar', 456);
 
-        $this->assertInstanceOf(UnexpectedValueException::class, $exception);
-        $this->assertSame(
+        self::assertInstanceOf(UnexpectedValueException::class, $exception);
+        self::assertSame(
             sprintf(
                 'Could not produce an instance of "%s" '
                 . 'via un-serialization, since an error was triggered in file "bar" at line "456"',
@@ -48,8 +48,8 @@ class UnexpectedValueExceptionTest extends TestCase
 
         $previous = $exception->getPrevious();
 
-        $this->assertInstanceOf('Exception', $previous);
-        $this->assertSame('foo', $previous->getMessage());
-        $this->assertSame(123, $previous->getCode());
+        self::assertInstanceOf(\Exception::class, $previous);
+        self::assertSame('foo', $previous->getMessage());
+        self::assertSame(123, $previous->getCode());
     }
 }

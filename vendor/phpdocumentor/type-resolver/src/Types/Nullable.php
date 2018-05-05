@@ -5,7 +5,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2017 Mike van Riel<mike@phpdoc.org>
+ * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
@@ -26,8 +26,6 @@ final class Nullable implements Type
 
     /**
      * Initialises this nullable type using the real type embedded
-     *
-     * @param Type $realType
      */
     public function __construct(Type $realType)
     {

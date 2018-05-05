@@ -99,7 +99,6 @@ final class Context
             $array[] = $key;
             $array[] = $this->objects;
         } else { /* cover the improbable case too */
-            // @codeCoverageIgnoreStart
             do {
                 $key = random_int(PHP_INT_MIN, PHP_INT_MAX);
             } while (isset($array[$key]));
@@ -111,7 +110,6 @@ final class Context
             } while (isset($array[$key]));
 
             $array[$key] = $this->objects;
-            // @codeCoverageIgnoreEnd
         }
 
         return $key;

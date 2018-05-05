@@ -1,10 +1,11 @@
 <?php
+
 namespace Doctrine\Instantiator;
+
+use Doctrine\Instantiator\Exception\ExceptionInterface;
 
 /**
  * Instantiator provides utility methods to build objects without invoking their constructors
- *
- * @author Marco Pivetta <ocramius@gmail.com>
  */
 interface InstantiatorInterface
 {
@@ -13,7 +14,7 @@ interface InstantiatorInterface
      *
      * @return object
      *
-     * @throws \Doctrine\Instantiator\Exception\ExceptionInterface
+     * @throws ExceptionInterface
      */
     public function instantiate($className);
 }
