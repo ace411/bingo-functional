@@ -50,27 +50,27 @@ class Totals
         $dom             = $container->ownerDocument;
 
         $this->linesNode = $dom->createElementNS(
-            'http://schema.phpunit.de/coverage/1.0',
+            'https://schema.phpunit.de/coverage/1.0',
             'lines'
         );
 
         $this->methodsNode = $dom->createElementNS(
-            'http://schema.phpunit.de/coverage/1.0',
+            'https://schema.phpunit.de/coverage/1.0',
             'methods'
         );
 
         $this->functionsNode = $dom->createElementNS(
-            'http://schema.phpunit.de/coverage/1.0',
+            'https://schema.phpunit.de/coverage/1.0',
             'functions'
         );
 
         $this->classesNode = $dom->createElementNS(
-            'http://schema.phpunit.de/coverage/1.0',
+            'https://schema.phpunit.de/coverage/1.0',
             'classes'
         );
 
         $this->traitsNode = $dom->createElementNS(
-            'http://schema.phpunit.de/coverage/1.0',
+            'https://schema.phpunit.de/coverage/1.0',
             'traits'
         );
 
@@ -95,7 +95,7 @@ class Totals
         $this->linesNode->setAttribute('executed', $executed);
         $this->linesNode->setAttribute(
             'percent',
-            Util::percent($executed, $executable, true)
+            $executable === 0 ? 0 : \sprintf('%01.2F', Util::percent($executed, $executable, false))
         );
     }
 
@@ -105,7 +105,7 @@ class Totals
         $this->classesNode->setAttribute('tested', $tested);
         $this->classesNode->setAttribute(
             'percent',
-            Util::percent($tested, $count, true)
+            $count === 0 ? 0 : \sprintf('%01.2F', Util::percent($tested, $count, false))
         );
     }
 
@@ -115,7 +115,7 @@ class Totals
         $this->traitsNode->setAttribute('tested', $tested);
         $this->traitsNode->setAttribute(
             'percent',
-            Util::percent($tested, $count, true)
+            $count === 0 ? 0 : \sprintf('%01.2F', Util::percent($tested, $count, false))
         );
     }
 
@@ -125,7 +125,7 @@ class Totals
         $this->methodsNode->setAttribute('tested', $tested);
         $this->methodsNode->setAttribute(
             'percent',
-            Util::percent($tested, $count, true)
+            $count === 0 ? 0 : \sprintf('%01.2F', Util::percent($tested, $count, false))
         );
     }
 
@@ -135,7 +135,7 @@ class Totals
         $this->functionsNode->setAttribute('tested', $tested);
         $this->functionsNode->setAttribute(
             'percent',
-            Util::percent($tested, $count, true)
+            $count === 0 ? 0 : \sprintf('%01.2F', Util::percent($tested, $count, false))
         );
     }
 }

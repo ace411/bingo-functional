@@ -5,7 +5,7 @@
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2015 Mike van Riel<mike@phpdoc.org>
+ * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
@@ -44,13 +44,14 @@ final class Context
     public function __construct($namespace, array $namespaceAliases = [])
     {
         $this->namespace = ('global' !== $namespace && 'default' !== $namespace)
-            ? trim((string)$namespace, '\\')
+            ? trim($namespace, '\\')
             : '';
 
         foreach ($namespaceAliases as $alias => $fqnn) {
             if ($fqnn[0] === '\\') {
                 $fqnn = substr($fqnn, 1);
             }
+
             if ($fqnn[strlen($fqnn) - 1] === '\\') {
                 $fqnn = substr($fqnn, 0, -1);
             }

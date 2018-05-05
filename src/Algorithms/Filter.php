@@ -13,15 +13,27 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const filter = "Chemem\\Bingo\\Functional\\Algorithms\\filter";
 
-function filter(callable $func, array $collection, array $acc = []) : array
+function filter(callable $func, array $collection) : array
 {
-    $collection = array_values($collection);
+    $arrCount = count($collection);
+    $colVals = array_values($collection);
 
-    foreach ($collection as $value) {
-        if (call_user_func($func, $value)) {
-            $acc[] = $value;
+    $recursiveFilter = function (int $init = 0, array $acc = []) use (
+        $func,
+        $colVals,
+        $arrCount,
+        &$recursiveFilter
+    ) {
+        if ($init >= $arrCount) {
+            return $acc;
         }
-    }
 
-    return $acc;
+        if ($func($colVals[$init])) {
+            $acc[] = $colVals[$init];
+        }
+        
+        return $recursiveFilter($init + 1, $acc);
+    };
+
+    return $recursiveFilter();
 }

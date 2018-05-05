@@ -11,7 +11,7 @@
     ],
     "minimum-stability": "dev",
     "require-dev": {
-        "phpunit/phpunit": "^5.7"
+        "phpunit/phpunit": "6.5.8"
     },
     "require": {
         "php": ">=7.0.0"
@@ -31,6 +31,7 @@
             "src/Algorithms/Pick.php",
             "src/Algorithms/Pluck.php",
             "src/Algorithms/Zip.php",
+            "src/Algorithms/Fill.php",
             "src/Algorithms/Unzip.php",
             "src/Algorithms/PartialLeft.php",
             "src/Algorithms/Extend.php",

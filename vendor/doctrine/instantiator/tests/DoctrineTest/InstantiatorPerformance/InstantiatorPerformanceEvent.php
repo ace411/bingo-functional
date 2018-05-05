@@ -1,33 +1,33 @@
 <?php
+
 namespace DoctrineTest\InstantiatorPerformance;
 
 use Doctrine\Instantiator\Instantiator;
+use DoctrineTest\InstantiatorTestAsset\SerializableArrayObjectAsset;
+use DoctrineTest\InstantiatorTestAsset\SimpleSerializableAsset;
+use DoctrineTest\InstantiatorTestAsset\UnCloneableAsset;
 use PhpBench\Benchmark\Metadata\Annotations\BeforeMethods;
 use PhpBench\Benchmark\Metadata\Annotations\Revs;
 
 /**
  * Performance tests for {@see \Doctrine\Instantiator\Instantiator}
  *
- * @author Marco Pivetta <ocramius@gmail.com>
- *
  * @BeforeMethods({"init"})
  */
 class InstantiatorPerformanceEvent
 {
-    /**
-     * @var \Doctrine\Instantiator\Instantiator
-     */
+    /** @var Instantiator */
     private $instantiator;
 
     public function init() : void
     {
         $this->instantiator = new Instantiator();
 
-        $this->instantiator->instantiate(__CLASS__);
-        $this->instantiator->instantiate('ArrayObject');
-        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\SimpleSerializableAsset');
-        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\SerializableArrayObjectAsset');
-        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\UnCloneableAsset');
+        $this->instantiator->instantiate(self::class);
+        $this->instantiator->instantiate(\ArrayObject::class);
+        $this->instantiator->instantiate(SimpleSerializableAsset::class);
+        $this->instantiator->instantiate(SerializableArrayObjectAsset::class);
+        $this->instantiator->instantiate(UnCloneableAsset::class);
     }
 
     /**
@@ -35,7 +35,7 @@ class InstantiatorPerformanceEvent
      */
     public function benchInstantiateSelf() : void
     {
-        $this->instantiator->instantiate(__CLASS__);
+        $this->instantiator->instantiate(self::class);
     }
 
     /**
@@ -43,7 +43,7 @@ class InstantiatorPerformanceEvent
      */
     public function benchInstantiateInternalClass() : void
     {
-        $this->instantiator->instantiate('ArrayObject');
+        $this->instantiator->instantiate(\ArrayObject::class);
     }
 
     /**
@@ -51,7 +51,7 @@ class InstantiatorPerformanceEvent
      */
     public function benchInstantiateSimpleSerializableAssetClass() : void
     {
-        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\SimpleSerializableAsset');
+        $this->instantiator->instantiate(SimpleSerializableAsset::class);
     }
 
     /**
@@ -59,7 +59,7 @@ class InstantiatorPerformanceEvent
      */
     public function benchInstantiateSerializableArrayObjectAsset() : void
     {
-        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\SerializableArrayObjectAsset');
+        $this->instantiator->instantiate(SerializableArrayObjectAsset::class);
     }
 
     /**
@@ -67,6 +67,6 @@ class InstantiatorPerformanceEvent
      */
     public function benchInstantiateUnCloneableAsset() : void
     {
-        $this->instantiator->instantiate('DoctrineTest\\InstantiatorTestAsset\\UnCloneableAsset');
+        $this->instantiator->instantiate(UnCloneableAsset::class);
     }
 }
