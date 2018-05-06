@@ -1,11 +1,11 @@
-<?php declare(strict_types=1);
+<?php
 /**
  * This file is part of phpDocumentor.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
+ * @copyright 2010-2015 Mike van Riel<mike@phpdoc.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
@@ -49,8 +49,10 @@ class FqsenResolver
      * (i.e. `\phpDocumentor\Reflection\DocBlock`) based on the Namespace and aliases mentioned in the Context.
      *
      * @param string $type
+     * @param Context $context
+     *
      * @return Fqsen
-     * @throws InvalidArgumentException when type is not a valid FQSEN.
+     * @throws \InvalidArgumentException when type is not a valid FQSEN.
      */
     private function resolvePartialStructuralElementName($type, Context $context)
     {

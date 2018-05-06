@@ -1,5 +1,4 @@
-<?php declare(strict_types=1);
-
+<?php
 /**
  * This file is part of phpDocumentor.
  *
@@ -43,9 +42,9 @@ final class Method extends BaseTag implements Factory\StaticMethod
     public function __construct(
         $methodName,
         array $arguments = [],
-        ?Type $returnType = null,
+        Type $returnType = null,
         $static = false,
-        ?Description $description = null
+        Description $description = null
     ) {
         Assert::stringNotEmpty($methodName);
         Assert::boolean($static);
@@ -65,11 +64,11 @@ final class Method extends BaseTag implements Factory\StaticMethod
      * {@inheritdoc}
      */
     public static function create(
-        string $body,
-        ?TypeResolver $typeResolver = null,
-        ?DescriptionFactory $descriptionFactory = null,
-        ?TypeContext $context = null
-    ): ?self {
+        $body,
+        TypeResolver $typeResolver = null,
+        DescriptionFactory $descriptionFactory = null,
+        TypeContext $context = null
+    ) {
         Assert::stringNotEmpty($body);
         Assert::allNotNull([ $typeResolver, $descriptionFactory ]);
 
@@ -123,9 +122,9 @@ final class Method extends BaseTag implements Factory\StaticMethod
             return null;
         }
 
-        [, $static, $returnType, $methodName, $arguments, $description] = $matches;
+        list(, $static, $returnType, $methodName, $arguments, $description) = $matches;
 
-        $static = $static === 'static';
+        $static      = $static === 'static';
 
         if ($returnType === '') {
             $returnType = 'void';
@@ -161,8 +160,10 @@ final class Method extends BaseTag implements Factory\StaticMethod
 
     /**
      * Retrieves the method name.
+     *
+     * @return string
      */
-    public function getMethodName(): string
+    public function getMethodName()
     {
         return $this->methodName;
     }
@@ -180,17 +181,20 @@ final class Method extends BaseTag implements Factory\StaticMethod
      *
      * @return bool TRUE if the method declaration is for a static method, FALSE otherwise.
      */
-    public function isStatic(): bool
+    public function isStatic()
     {
         return $this->isStatic;
     }
 
-    public function getReturnType(): Type
+    /**
+     * @return Type
+     */
+    public function getReturnType()
     {
         return $this->returnType;
     }
 
-    public function __toString(): string
+    public function __toString()
     {
         $arguments = [];
         foreach ($this->arguments as $argument) {

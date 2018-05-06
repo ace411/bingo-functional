@@ -1,5 +1,4 @@
-<?php declare(strict_types=1);
-
+<?php
 /**
  * This file is part of phpDocumentor.
  *
@@ -12,6 +11,8 @@
  */
 
 namespace phpDocumentor\Reflection\DocBlock\Tags;
+
+use Webmozart\Assert\Assert;
 
 /**
  * Reflection class for an {@}author tag in a Docblock.
@@ -29,9 +30,14 @@ final class Author extends BaseTag implements Factory\StaticMethod
 
     /**
      * Initializes this tag with the author name and e-mail.
+     *
+     * @param string $authorName
+     * @param string $authorEmail
      */
-    public function __construct(string $authorName, string $authorEmail)
+    public function __construct($authorName, $authorEmail)
     {
+        Assert::string($authorName);
+        Assert::string($authorEmail);
         if ($authorEmail && !filter_var($authorEmail, FILTER_VALIDATE_EMAIL)) {
             throw new \InvalidArgumentException('The author tag does not have a valid e-mail address');
         }
@@ -45,7 +51,7 @@ final class Author extends BaseTag implements Factory\StaticMethod
      *
      * @return string The author's name.
      */
-    public function getAuthorName(): string
+    public function getAuthorName()
     {
         return $this->authorName;
     }
@@ -55,24 +61,32 @@ final class Author extends BaseTag implements Factory\StaticMethod
      *
      * @return string The author's email.
      */
-    public function getEmail(): string
+    public function getEmail()
     {
         return $this->authorEmail;
     }
 
     /**
      * Returns this tag in string form.
+     *
+     * @return string
      */
-    public function __toString(): string
+    public function __toString()
     {
         return $this->authorName . (strlen($this->authorEmail) ? ' <' . $this->authorEmail . '>' : '');
     }
 
     /**
      * Attempts to create a new Author object based on †he tag body.
+     *
+     * @param string $body
+     *
+     * @return static
      */
-    public static function create(string $body): ?self
+    public static function create($body)
     {
+        Assert::string($body);
+
         $splitTagContent = preg_match('/^([^\<]*)(?:\<([^\>]*)\>)?$/u', $body, $matches);
         if (!$splitTagContent) {
             return null;

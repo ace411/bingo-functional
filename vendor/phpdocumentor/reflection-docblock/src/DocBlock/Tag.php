@@ -1,5 +1,4 @@
-<?php declare(strict_types=1);
-
+<?php
 /**
  * This file is part of phpDocumentor.
  *
@@ -17,14 +16,11 @@ use phpDocumentor\Reflection\DocBlock\Tags\Formatter;
 
 interface Tag
 {
-    public function getName(): string;
+    public function getName();
 
-    /**
-     * @return Tag|mixed Class that implements Tag
-     */
-    public static function create(string $body);
+    public static function create($body);
 
-    public function render(?Formatter $formatter = null): string;
+    public function render(Formatter $formatter = null);
 
-    public function __toString(): string;
+    public function __toString();
 }

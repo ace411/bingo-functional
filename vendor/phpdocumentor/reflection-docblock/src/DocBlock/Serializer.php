@@ -1,5 +1,4 @@
-<?php declare(strict_types=1);
-
+<?php
 /**
  * This file is part of phpDocumentor.
  *
@@ -14,6 +13,7 @@
 namespace phpDocumentor\Reflection\DocBlock;
 
 use phpDocumentor\Reflection\DocBlock;
+use Webmozart\Assert\Assert;
 
 /**
  * Converts a DocBlock back from an object to a complete DocComment including Asterisks.
@@ -30,10 +30,10 @@ class Serializer
     protected $isFirstLineIndented = true;
 
     /** @var int|null The max length of a line. */
-    protected $lineLength;
+    protected $lineLength = null;
 
     /** @var DocBlock\Tags\Formatter A custom tag formatter. */
-    protected $tagFormatter;
+    protected $tagFormatter = null;
 
     /**
      * Create a Serializer instance.
@@ -44,8 +44,14 @@ class Serializer
      * @param int|null $lineLength The max length of a line or NULL to disable line wrapping.
      * @param DocBlock\Tags\Formatter $tagFormatter A custom tag formatter, defaults to PassthroughFormatter.
      */
-    public function __construct(int $indent = 0, string $indentString = ' ', bool $indentFirstLine = true, ?int $lineLength = null, ?DocBlock\Tags\Formatter $tagFormatter = null)
+    public function __construct($indent = 0, $indentString = ' ', $indentFirstLine = true, $lineLength = null, $tagFormatter = null)
     {
+        Assert::integer($indent);
+        Assert::string($indentString);
+        Assert::boolean($indentFirstLine);
+        Assert::nullOrInteger($lineLength);
+        Assert::nullOrIsInstanceOf($tagFormatter, 'phpDocumentor\Reflection\DocBlock\Tags\Formatter');
+
         $this->indent = $indent;
         $this->indentString = $indentString;
         $this->isFirstLineIndented = $indentFirstLine;
@@ -60,7 +66,7 @@ class Serializer
      *
      * @return string The serialized doc block.
      */
-    public function getDocComment(DocBlock $docblock): string
+    public function getDocComment(DocBlock $docblock)
     {
         $indent = str_repeat($this->indentString, $this->indent);
         $firstIndent = $this->isFirstLineIndented ? $indent : '';
@@ -88,6 +94,8 @@ class Serializer
     }
 
     /**
+     * @param $indent
+     * @param $text
      * @return mixed
      */
     private function removeTrailingSpaces($indent, $text)
@@ -96,6 +104,8 @@ class Serializer
     }
 
     /**
+     * @param $indent
+     * @param $text
      * @return mixed
      */
     private function addAsterisksForEachLine($indent, $text)
@@ -103,7 +113,12 @@ class Serializer
         return str_replace("\n", "\n{$indent} * ", $text);
     }
 
-    private function getSummaryAndDescriptionTextBlock(DocBlock $docblock, $wrapLength): string
+    /**
+     * @param DocBlock $docblock
+     * @param $wrapLength
+     * @return string
+     */
+    private function getSummaryAndDescriptionTextBlock(DocBlock $docblock, $wrapLength)
     {
         $text = $docblock->getSummary() . ((string)$docblock->getDescription() ? "\n\n" . $docblock->getDescription()
                 : '');
@@ -115,7 +130,14 @@ class Serializer
         return $text;
     }
 
-    private function addTagBlock(DocBlock $docblock, $wrapLength, $indent, $comment): string
+    /**
+     * @param DocBlock $docblock
+     * @param $wrapLength
+     * @param $indent
+     * @param $comment
+     * @return string
+     */
+    private function addTagBlock(DocBlock $docblock, $wrapLength, $indent, $comment)
     {
         foreach ($docblock->getTags() as $tag) {
             $tagText = $this->tagFormatter->format($tag);

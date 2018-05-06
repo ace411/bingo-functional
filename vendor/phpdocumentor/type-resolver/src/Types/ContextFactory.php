@@ -1,18 +1,16 @@
-<?php declare(strict_types=1);
+<?php
 /**
  * This file is part of phpDocumentor.
  *
  * For the full copyright and license information, please view the LICENSE
  * file that was distributed with this source code.
  *
- * @copyright 2010-2018 Mike van Riel<mike@phpdoc.org>
+ * @copyright 2010-2015 Mike van Riel<mike@phpdoc.org>
  * @license   http://www.opensource.org/licenses/mit-license.php MIT
  * @link      http://phpdoc.org
  */
 
 namespace phpDocumentor\Reflection\Types;
-
-use UnexpectedValueException;
 
 /**
  * Convenience class to create a Context for DocBlocks when not using the Reflection Component of phpDocumentor.
@@ -34,59 +32,22 @@ final class ContextFactory
     /**
      * Build a Context given a Class Reflection.
      *
+     * @param \Reflector $reflector
+     *
      * @see Context for more information on Contexts.
+     *
+     * @return Context
      */
-    public function createFromReflector(\Reflector $reflector): Context
+    public function createFromReflector(\Reflector $reflector)
     {
-        if ($reflector instanceof \ReflectionClass) {
-            return $this->createFromReflectionClass($reflector);
+        if (method_exists($reflector, 'getDeclaringClass')) {
+            $reflector = $reflector->getDeclaringClass();
         }
 
-        if ($reflector instanceof \ReflectionParameter) {
-            return $this->createFromReflectionParameter($reflector);
-        }
+        $fileName = $reflector->getFileName();
+        $namespace = $reflector->getNamespaceName();
 
-        if ($reflector instanceof \ReflectionMethod) {
-            return $this->createFromReflectionMethod($reflector);
-        }
-
-        if ($reflector instanceof \ReflectionProperty) {
-            return $this->createFromReflectionProperty($reflector);
-        }
-
-        if ($reflector instanceof \ReflectionClassConstant) {
-            return $this->createFromReflectionClassConstant($reflector);
-        }
-
-        throw new UnexpectedValueException('Unhandled \Reflector instance given:  ' . get_class($reflector));
-    }
-
-    private function createFromReflectionParameter(\ReflectionParameter $parameter): Context
-    {
-        return $this->createFromReflectionClass($parameter->getDeclaringClass());
-    }
-
-    private function createFromReflectionMethod(\ReflectionMethod $method): Context
-    {
-        return $this->createFromReflectionClass($method->getDeclaringClass());
-    }
-
-    private function createFromReflectionProperty(\ReflectionProperty $property): Context
-    {
-        return $this->createFromReflectionClass($property->getDeclaringClass());
-    }
-
-    private function createFromReflectionClassConstant(\ReflectionClassConstant $constant): Context
-    {
-        return $this->createFromReflectionClass($constant->getDeclaringClass());
-    }
-
-    private function createFromReflectionClass(\ReflectionClass $class): Context
-    {
-        $fileName = $class->getFileName();
-        $namespace = $class->getNamespaceName();
-
-        if (is_string($fileName) && file_exists($fileName)) {
+        if (file_exists($fileName)) {
             return $this->createForNamespace($namespace, file_get_contents($fileName));
         }
 
@@ -128,14 +89,12 @@ final class ContextFactory
                             if (!$firstBraceFound) {
                                 $firstBraceFound = true;
                             }
-
-                            ++$braceLevel;
+                            $braceLevel++;
                         }
 
                         if ($tokens->current() === '}') {
-                            --$braceLevel;
+                            $braceLevel--;
                         }
-
                         $tokens->next();
                     }
                     break;
@@ -145,7 +104,6 @@ final class ContextFactory
                     }
                     break;
             }
-
             $tokens->next();
         }
 
@@ -154,6 +112,8 @@ final class ContextFactory
 
     /**
      * Deduce the name from tokens when we are at the T_NAMESPACE token.
+     *
+     * @param \ArrayIterator $tokens
      *
      * @return string
      */
@@ -174,6 +134,8 @@ final class ContextFactory
 
     /**
      * Deduce the names of all imports when we are at the T_USE token.
+     *
+     * @param \ArrayIterator $tokens
      *
      * @return string[]
      */
@@ -197,6 +159,10 @@ final class ContextFactory
 
     /**
      * Fast-forwards the iterator as longs as we don't encounter a T_STRING or T_NS_SEPARATOR token.
+     *
+     * @param \ArrayIterator $tokens
+     *
+     * @return void
      */
     private function skipToNextStringOrNamespaceSeparator(\ArrayIterator $tokens)
     {
@@ -209,7 +175,9 @@ final class ContextFactory
      * Deduce the namespace name and alias of an import when we are at the T_USE token or have not reached the end of
      * a USE statement yet.
      *
-     * @return array
+     * @param \ArrayIterator $tokens
+     *
+     * @return string
      */
     private function extractUseStatement(\ArrayIterator $tokens)
     {
@@ -221,15 +189,13 @@ final class ContextFactory
             if ($tokens->current()[0] === T_AS) {
                 $result[] = '';
             }
-
             if ($tokens->current()[0] === T_STRING || $tokens->current()[0] === T_NS_SEPARATOR) {
                 $result[count($result) - 1] .= $tokens->current()[1];
             }
-
             $tokens->next();
         }
 
-        if (count($result) === 1) {
+        if (count($result) == 1) {
             $backslashPos = strrpos($result[0], '\\');
 
             if (false !== $backslashPos) {

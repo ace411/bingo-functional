@@ -1,5 +1,4 @@
-<?php declare(strict_types=1);
-
+<?php
 /**
  * This file is part of phpDocumentor.
  *
@@ -28,14 +27,21 @@ class Property extends BaseTag implements Factory\StaticMethod
     /** @var string */
     protected $name = 'property';
 
-    /** @var Type|null */
+    /** @var Type */
     private $type;
 
     /** @var string */
     protected $variableName = '';
 
-    public function __construct(string $variableName, ?Type $type = null, ?Description $description = null)
+    /**
+     * @param string      $variableName
+     * @param Type        $type
+     * @param Description $description
+     */
+    public function __construct($variableName, Type $type = null, Description $description = null)
     {
+        Assert::string($variableName);
+
         $this->variableName = $variableName;
         $this->type = $type;
         $this->description = $description;
@@ -45,10 +51,10 @@ class Property extends BaseTag implements Factory\StaticMethod
      * {@inheritdoc}
      */
     public static function create(
-        string $body,
-        ?TypeResolver $typeResolver = null,
-        ?DescriptionFactory $descriptionFactory = null,
-        ?TypeContext $context = null
+        $body,
+        TypeResolver $typeResolver = null,
+        DescriptionFactory $descriptionFactory = null,
+        TypeContext $context = null
     ) {
         Assert::stringNotEmpty($body);
         Assert::allNotNull([$typeResolver, $descriptionFactory]);
@@ -80,24 +86,30 @@ class Property extends BaseTag implements Factory\StaticMethod
 
     /**
      * Returns the variable's name.
+     *
+     * @return string
      */
-    public function getVariableName(): string
+    public function getVariableName()
     {
         return $this->variableName;
     }
 
     /**
      * Returns the variable's type or null if unknown.
+     *
+     * @return Type|null
      */
-    public function getType(): ?Type
+    public function getType()
     {
         return $this->type;
     }
 
     /**
      * Returns a string representation for this tag.
+     *
+     * @return string
      */
-    public function __toString(): string
+    public function __toString()
     {
         return ($this->type ? $this->type . ' ' : '')
         . '$' . $this->variableName

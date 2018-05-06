@@ -1,5 +1,4 @@
-<?php declare(strict_types=1);
-
+<?php
 /**
  * This file is part of phpDocumentor.
  *
@@ -39,6 +38,8 @@ class DescriptionFactory
 
     /**
      * Initializes this factory with the means to construct (inline) tags.
+     *
+     * @param TagFactory $tagFactory
      */
     public function __construct(TagFactory $tagFactory)
     {
@@ -47,10 +48,15 @@ class DescriptionFactory
 
     /**
      * Returns the parsed text of this description.
+     *
+     * @param string $contents
+     * @param TypeContext $context
+     *
+     * @return Description
      */
-    public function create(string $contents, ?TypeContext $context = null): Description
+    public function create($contents, TypeContext $context = null)
     {
-        [$text, $tags] = $this->parse($this->lex($contents), $context);
+        list($text, $tags) = $this->parse($this->lex($contents), $context);
 
         return new Description($text, $tags);
     }
@@ -58,10 +64,11 @@ class DescriptionFactory
     /**
      * Strips the contents from superfluous whitespace and splits the description into a series of tokens.
      *
+     * @param string $contents
      *
      * @return string[] A series of tokens of which the description text is composed.
      */
-    private function lex(string $contents)
+    private function lex($contents)
     {
         $contents = $this->removeSuperfluousStartingWhitespace($contents);
 
@@ -96,7 +103,7 @@ class DescriptionFactory
                 )
             \}/Sux',
             $contents,
-            0,
+            null,
             PREG_SPLIT_DELIM_CAPTURE
         );
     }
@@ -105,10 +112,11 @@ class DescriptionFactory
      * Parses the stream of tokens in to a new set of tokens containing Tags.
      *
      * @param string[] $tokens
+     * @param TypeContext $context
      *
      * @return string[]|Tag[]
      */
-    private function parse($tokens, ?TypeContext $context = null): array
+    private function parse($tokens, TypeContext $context)
     {
         $count = count($tokens);
         $tagCount = 0;
@@ -143,8 +151,12 @@ class DescriptionFactory
      *
      * If we do not normalize the indentation then we have superfluous whitespace on the second and subsequent
      * lines and this may cause rendering issues when, for example, using a Markdown converter.
+     *
+     * @param string $contents
+     *
+     * @return string
      */
-    private function removeSuperfluousStartingWhitespace(string $contents): string
+    private function removeSuperfluousStartingWhitespace($contents)
     {
         $lines = explode("\n", $contents);
 

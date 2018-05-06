@@ -15,6 +15,7 @@ return array(
     '4fa6f7835fb4262d1eac6ec58d6c51ea' => $baseDir . '/src/Algorithms/Pluck.php',
     'd875a5b8bbe348e70dd233303855cc55' => $baseDir . '/src/Algorithms/Zip.php',
     '728c96f6d577106bc2f41cd92fe9a88c' => $baseDir . '/src/Algorithms/Fill.php',
+    '8d1dc64e2321fe2aee4f495351999664' => $baseDir . '/src/Algorithms/IndexOf.php',
     'e384318f5367c5ac963ba221f34bbb00' => $baseDir . '/src/Algorithms/Unzip.php',
     '0faecee8a9492e9d0228ba9541ee35d6' => $baseDir . '/src/Algorithms/PartialLeft.php',
     '70971cc2dc09d0c4977e4bc49cf19a87' => $baseDir . '/src/Algorithms/Extend.php',

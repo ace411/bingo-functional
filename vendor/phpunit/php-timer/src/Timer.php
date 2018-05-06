@@ -28,6 +28,11 @@ class PHP_Timer
     private static $startTimes = array();
 
     /**
+     * @var float
+     */
+    public static $requestTime;
+
+    /**
      * Starts the timer.
      */
     public static function start()
@@ -70,28 +75,16 @@ class PHP_Timer
      * Formats the elapsed time since the start of the request as a string.
      *
      * @return string
-     *
-     * @throws RuntimeException
      */
     public static function timeSinceStartOfRequest()
     {
-        if (isset($_SERVER['REQUEST_TIME_FLOAT'])) {
-            $startOfRequest = $_SERVER['REQUEST_TIME_FLOAT'];
-        } elseif (isset($_SERVER['REQUEST_TIME'])) {
-            $startOfRequest = $_SERVER['REQUEST_TIME'];
-        } else {
-            throw new RuntimeException('Cannot determine time at which the request started');
-        }
-
-        return self::secondsToTimeString(microtime(true) - $startOfRequest);
+        return self::secondsToTimeString(microtime(true) - self::$requestTime);
     }
 
     /**
      * Returns the resources (time, memory) of the request as a string.
      *
      * @return string
-     *
-     * @throws RuntimeException
      */
     public static function resourceUsage()
     {
@@ -101,4 +94,12 @@ class PHP_Timer
             memory_get_peak_usage(true) / 1048576
         );
     }
+}
+
+if (isset($_SERVER['REQUEST_TIME_FLOAT'])) {
+    PHP_Timer::$requestTime = $_SERVER['REQUEST_TIME_FLOAT'];
+} elseif (isset($_SERVER['REQUEST_TIME'])) {
+    PHP_Timer::$requestTime = $_SERVER['REQUEST_TIME'];
+} else {
+    PHP_Timer::$requestTime = microtime(true);
 }

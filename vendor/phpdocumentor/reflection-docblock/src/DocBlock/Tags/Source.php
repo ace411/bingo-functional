@@ -1,5 +1,4 @@
-<?php declare(strict_types=1);
-
+<?php
 /**
  * This file is part of phpDocumentor.
  *
@@ -30,9 +29,9 @@ final class Source extends BaseTag implements Factory\StaticMethod
     private $startingLine = 1;
 
     /** @var int|null The number of lines, relative to the starting line. NULL means "to the end". */
-    private $lineCount;
+    private $lineCount = null;
 
-    public function __construct($startingLine, $lineCount = null, ?Description $description = null)
+    public function __construct($startingLine, $lineCount = null, Description $description = null)
     {
         Assert::integerish($startingLine);
         Assert::nullOrIntegerish($lineCount);
@@ -45,11 +44,8 @@ final class Source extends BaseTag implements Factory\StaticMethod
     /**
      * {@inheritdoc}
      */
-    public static function create(
-        string $body,
-        ?DescriptionFactory $descriptionFactory = null,
-        ?TypeContext $context = null
-    ) {
+    public static function create($body, DescriptionFactory $descriptionFactory = null, TypeContext $context = null)
+    {
         Assert::stringNotEmpty($body);
         Assert::notNull($descriptionFactory);
 
@@ -76,7 +72,7 @@ final class Source extends BaseTag implements Factory\StaticMethod
      * @return int The starting line, relative to the structural element's
      *     location.
      */
-    public function getStartingLine(): int
+    public function getStartingLine()
     {
         return $this->startingLine;
     }
@@ -87,12 +83,12 @@ final class Source extends BaseTag implements Factory\StaticMethod
      * @return int|null The number of lines, relative to the starting line. NULL
      *     means "to the end".
      */
-    public function getLineCount(): ?int
+    public function getLineCount()
     {
         return $this->lineCount;
     }
 
-    public function __toString(): string
+    public function __toString()
     {
         return $this->startingLine
         . ($this->lineCount !== null ? ' ' . $this->lineCount : '')

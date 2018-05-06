@@ -1,5 +1,4 @@
-<?php declare(strict_types=1);
-
+<?php
 /**
  * This file is part of phpDocumentor.
  *
@@ -30,7 +29,7 @@ final class Throws extends BaseTag implements Factory\StaticMethod
     /** @var Type */
     private $type;
 
-    public function __construct(Type $type, ?Description $description = null)
+    public function __construct(Type $type, Description $description = null)
     {
         $this->type        = $type;
         $this->description = $description;
@@ -40,30 +39,33 @@ final class Throws extends BaseTag implements Factory\StaticMethod
      * {@inheritdoc}
      */
     public static function create(
-        string $body,
-        ?TypeResolver $typeResolver = null,
-        ?DescriptionFactory $descriptionFactory = null,
-        ?TypeContext $context = null
+        $body,
+        TypeResolver $typeResolver = null,
+        DescriptionFactory $descriptionFactory = null,
+        TypeContext $context = null
     ) {
+        Assert::string($body);
         Assert::allNotNull([$typeResolver, $descriptionFactory]);
 
         $parts = preg_split('/\s+/Su', $body, 2);
 
-        $type        = $typeResolver->resolve($parts[0] ?? '', $context);
-        $description = $descriptionFactory->create($parts[1] ?? '', $context);
+        $type        = $typeResolver->resolve(isset($parts[0]) ? $parts[0] : '', $context);
+        $description = $descriptionFactory->create(isset($parts[1]) ? $parts[1] : '', $context);
 
         return new static($type, $description);
     }
 
     /**
      * Returns the type section of the variable.
+     *
+     * @return Type
      */
-    public function getType(): Type
+    public function getType()
     {
         return $this->type;
     }
 
-    public function __toString(): string
+    public function __toString()
     {
         return $this->type . ' ' . $this->description;
     }

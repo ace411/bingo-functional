@@ -1,5 +1,4 @@
-<?php declare(strict_types=1);
-
+<?php
 /**
  * This file is part of phpDocumentor.
  *
@@ -18,5 +17,5 @@ namespace phpDocumentor\Reflection\DocBlock\Tags\Reference;
  */
 interface Reference
 {
-    public function __toString(): string;
+    public function __toString();
 }

@@ -1,5 +1,4 @@
-<?php declare(strict_types=1);
-
+<?php
 /**
  * This file is part of phpDocumentor.
  *
@@ -43,9 +42,10 @@ final class Example extends BaseTag
      */
     private $lineCount;
 
-    public function __construct(string $filePath, bool $isURI, int $startingLine, $lineCount, $description)
+    public function __construct($filePath, $isURI, $startingLine, $lineCount, $description)
     {
         Assert::notEmpty($filePath);
+        Assert::integer($startingLine);
         Assert::greaterThanEq($startingLine, 0);
 
         $this->filePath = $filePath;
@@ -53,7 +53,7 @@ final class Example extends BaseTag
         $this->lineCount = $lineCount;
         $this->name = 'example';
         if ($description !== null) {
-            $this->description = trim((string) $description);
+            $this->description = trim($description);
         }
 
         $this->isURI = $isURI;
@@ -81,7 +81,7 @@ final class Example extends BaseTag
     /**
      * {@inheritdoc}
      */
-    public static function create(string $body)
+    public static function create($body)
     {
         // File component: File path in quotes or File URI / Source information
         if (! preg_match('/^(?:\"([^\"]+)\"|(\S+))(?:\s+(.*))?$/sux', $body, $matches)) {
@@ -131,33 +131,45 @@ final class Example extends BaseTag
      * @return string Path to a file to use as an example.
      *     May also be an absolute URI.
      */
-    public function getFilePath(): string
+    public function getFilePath()
     {
         return $this->filePath;
     }
 
     /**
      * Returns a string representation for this tag.
+     *
+     * @return string
      */
-    public function __toString(): string
+    public function __toString()
     {
         return $this->filePath . ($this->description ? ' ' . $this->description : '');
     }
 
     /**
      * Returns true if the provided URI is relative or contains a complete scheme (and thus is absolute).
+     *
+     * @param string $uri
+     *
+     * @return bool
      */
-    private function isUriRelative(string $uri): bool
+    private function isUriRelative($uri)
     {
         return false === strpos($uri, ':');
     }
 
-    public function getStartingLine(): int
+    /**
+     * @return int
+     */
+    public function getStartingLine()
     {
         return $this->startingLine;
     }
 
-    public function getLineCount(): int
+    /**
+     * @return int
+     */
+    public function getLineCount()
     {
         return $this->lineCount;
     }
