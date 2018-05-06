@@ -50,6 +50,36 @@ $partial = A\partial(
 $partial(2); //bind 2 to the function; should return 3
 ```
 
+#### Partial-Left
+
+Works just like the partial function. Arguments are, with the partialLeft function, incrementally supplied from left to right.
+
+```php
+$partialLeft = A\partialLeft(
+    function (int $a, int $b) : int {
+        return $a - $b;
+    },
+    12
+);
+
+$partialLeft(9); //should output 3
+```
+
+#### Partial-Right
+
+This is the antipode of the partialLeft function. The argument order is right to left.
+
+```php
+$partialRight = A\partialRight(
+    function (int $a, int $b) : int {
+        return $a - $b;
+    },
+    9
+);
+
+$partialRight(12); //outputs 3
+```
+
 ### Currying
 
 Related to partial application is currying which is premised on splitting a higher-order function into smaller functions each taking a single argument. The idea of binding arguments to a function incrementally features strongly here as well.
@@ -188,6 +218,26 @@ Contrary to the head function, the tail function returns the second to last valu
 
 $tail = A\tail([1, 2, 3, 4]);
 //returns [2, 3, 4]
+```
+
+### indexOf function
+
+The indexOf function computes the list index of a given list item.
+
+```php
+$index = A\indexOf([1, 2, 3, 4], 2);
+
+echo $index; //outputs 1
+``` 
+
+### Fill function
+
+The fill function replaces the values of specified list indexes with an arbitrary value.
+
+```php
+$filled = A\fill([2, 4, 6, 7], 3, 1, 2);
+
+var_dump($filled); //outputs [2, 3, 3, 7s]
 ```
 
 ### Partitioning
