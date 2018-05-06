@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * indexOf function
+ * 
+ * indexOf :: [a] -> b -> c -> ([a], b, c) -> d
+ * @package bingo-functional
+ * @author Lochemem Bruno Michael
+ * @license Apache-2.0
+ */
+
 namespace Chemem\Bingo\Functional\Algorithms;
 
 const indexOf = 'Chemem\\Bingo\\Functional\\Algorithms\\indexOf';

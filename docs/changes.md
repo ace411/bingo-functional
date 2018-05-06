@@ -141,3 +141,15 @@ permalink: /changes/
 - Modified the ```orElse()``` methods of the Left, Right, Nothing, and Just functors
 
 - Added the ```flatMap()``` method to the State and List monads
+
+## v1.8.0
+
+### Made the following addition(s)
+
+- Modified the function bodies of the ```map()```, ```reduce()```, and ```fold()``` functions
+
+### New Helper functions
+
+- fill
+- partial
+- indexOf

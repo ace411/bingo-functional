@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * fill function
+ * 
+ * fill :: [a] -> b -> c -> d -> ([a], b, c, d) -> [e]
+ * @package bingo-functional
+ * @author Lochemem Bruno Michael
+ * @license Apache-2.0
+ */
+
 namespace Chemem\Bingo\Functional\Algorithms;
 
 const fill = 'Chemem\\Bingo\\Functional\\Algorithms\\fill';
