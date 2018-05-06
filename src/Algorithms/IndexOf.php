@@ -4,7 +4,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const indexOf = 'Chemem\\Bingo\\Functional\\Algorithms\\indexOf';
 
-function indexOf(array $collection, int $value, int $fromIndex = 0) : int
+function indexOf(array $collection, $value, int $fromIndex = 0)
 {
     $valKeys = array_keys($collection);
     $valCount = count($valKeys);
@@ -18,7 +18,7 @@ function indexOf(array $collection, int $value, int $fromIndex = 0) : int
     ) {
         //keep increasing index until the right one is found
         if ($init >= $valCount) {
-            return $index;
+            return $valKeys[$index];
         }
 
         $index += $collection[$valKeys[$init]] == $value ? $init : 0;
