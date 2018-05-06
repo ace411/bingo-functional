@@ -11,11 +11,15 @@ The bingo-functional library is a functional programming library built in PHP fo
 
 Before you can use the bingo-functional library, you should have either Git or Composer installed on your system of preference. To install the package via Composer, type the following in your preferred command line interface:
 
-```composer require chemem/bingo-functional```
+```
+composer require chemem/bingo-functional
+```
 
 To install via Git, type:
 
-```git clone https://github.com/ace411/bingo-functional.git```
+```
+git clone https://github.com/ace411/bingo-functional.git
+```
 
 ## Algorithms
 
