@@ -296,4 +296,11 @@ class AlgorithmTest extends TestCase
 
         $this->assertEquals($index, 1);
     }
+
+    public function testReverseFunctionComputesReverseOfArray()
+    {
+        $reverse = A\reverse(['foo', 'bar', 'baz']);
+
+        $this->assertEquals($reverse, ['baz', 'bar', 'foo']);
+    }
 }
