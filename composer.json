@@ -32,6 +32,7 @@
             "src/Algorithms/Pluck.php",
             "src/Algorithms/Zip.php",
             "src/Algorithms/Fill.php",
+            "src/Algorithms/Reverse.php",
             "src/Algorithms/IndexOf.php",
             "src/Algorithms/Unzip.php",
             "src/Algorithms/PartialLeft.php",
