@@ -153,3 +153,4 @@ permalink: /changes/
 - fill
 - partial
 - indexOf
+- reverse
