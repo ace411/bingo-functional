@@ -401,6 +401,16 @@ $attributes = ['username' => 'foo', 'password' => 'bar'];
 $keysExist = A\arrayKeysExist($attributes, 'username', 'password'); //should evaluate to true
 ```
 
+### Reverse function
+
+The reverse function computes the reverse of an array.
+
+```php
+$reverse = A\reverse(['foo', 'bar', 'baz']);
+
+var_dump($reverse); //outputs ['baz', 'bar', 'foo']
+```
+
 ### Callback signatures
 
 These are essential for proper functioning of the the following helper functions: ```pluck()```, ```pick()```, ```memoize()```, as well as ```isArrayOf()```. The following callback signatures correspond to the functions listed:
