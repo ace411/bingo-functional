@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * fromPairs function
+ * 
+ * fromPairs :: [[a, b]] -> [c]
+ * @package bingo-functional
+ * @author Lochemem Bruno Michael
+ * @license Apache-2.0
+ */
+
 namespace Chemem\Bingo\Functional\Algorithms;
 
 const fromPairs = 'Chemem\\Bingo\\Functional\\Algorithms\\fromPairs';
