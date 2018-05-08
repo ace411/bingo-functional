@@ -296,4 +296,41 @@ class AlgorithmTest extends TestCase
 
         $this->assertEquals($index, 1);
     }
+
+    public function testReverseFunctionComputesReverseOfArray()
+    {
+        $reverse = A\reverse(['foo', 'bar', 'baz']);
+
+        $this->assertEquals($reverse, ['baz', 'bar', 'foo']);
+    }
+
+    public function testFromPairsFunctionCreatesKeyValueArrayPairs()
+    {
+        $fromPairs = A\fromPairs([
+            ['foo', 'baz'], 
+            ['bar', 'baz'], 
+            ['boo', 1]
+        ]);
+
+        $this->assertEquals($fromPairs, [
+            'foo' => 'baz',
+            'bar' => 'baz',
+            'boo' => 1
+        ]);
+    }
+
+    public function testToPairsFunctionCreatesArraysWithTwoElementsEach()
+    {
+        $toPairs = A\toPairs([
+            'foo' => 'baz', 
+            'bar' => 'baz', 
+            'boo' => 1
+        ]);
+
+        $this->assertEquals($toPairs, [
+            ['foo', 'baz'], 
+            ['bar', 'baz'], 
+            ['boo', 1]
+        ]);
+    }
 }
