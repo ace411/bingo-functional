@@ -154,3 +154,5 @@ permalink: /changes/
 - partial
 - indexOf
 - reverse
+- toPairs
+- fromPairs

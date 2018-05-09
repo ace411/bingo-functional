@@ -33,6 +33,8 @@
             "src/Algorithms/Zip.php",
             "src/Algorithms/Fill.php",
             "src/Algorithms/Reverse.php",
+            "src/Algorithms/ToPairs.php",
+            "src/Algorithms/FromPairs.php",
             "src/Algorithms/IndexOf.php",
             "src/Algorithms/Unzip.php",
             "src/Algorithms/PartialLeft.php",
