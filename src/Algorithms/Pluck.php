@@ -13,9 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const pluck = "Chemem\\Bingo\\Functional\\Algorithms\\pluck";
 
-function pluck(array $values, $search, callable $callback)
+function pluck(array $values, $search)
 {
-    return array_key_exists($search, $values) ? 
-        $values[$search] :
-        call_user_func($callback, $search);
+    return isset($values[$search]) ? $values[$search] : false;
 }
