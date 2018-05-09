@@ -22,7 +22,7 @@ function memoize(callable $function)
         $key = md5(serialize($args));
 
         if (!isset($cache[$key])) {
-            $cache[$key] = call_user_func($function, $args);
+            $cache[$key] = call_user_func_array($function, $args);
         }
 
         return $cache[$key];
