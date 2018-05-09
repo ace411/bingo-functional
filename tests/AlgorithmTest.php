@@ -341,8 +341,6 @@ class AlgorithmTest extends TestCase
             }
         );
 
-        var_dump($factorial(5));
-
-        //$this->assertEquals($factorial(5), 120);
+        $this->assertEquals($factorial(5), 120);
     }
 }
