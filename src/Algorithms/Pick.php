@@ -13,11 +13,32 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const pick = "Chemem\\Bingo\\Functional\\Algorithms\\pick";
 
-function pick(array $values, $search, callable $callback)
+function pick(array $values, $search)
 {
-    $valueIndex = array_search($search, $values);
+    $valCount = count($values);
+    $arrVals = array_values($values);
 
-    return $valueIndex !== false ? 
-        $values[$valueIndex] :
-        call_user_func($callback, $valueIndex);
+    $pickFn = function (int $init = 0, array $acc = []) use ( 
+        $search, 
+        &$pickFn,
+        $arrVals,
+        $valCount
+    ) {
+        if ($init >= $valCount) {
+            return head(
+                filter(
+                    function ($val) {
+                        return !is_null($val);
+                    },
+                    $acc
+                )
+            );
+        }
+
+        $acc[] = $arrVals[$init] == $search ? $arrVals[$init] : null;
+
+        return $pickFn($init + 1, $acc);
+    };
+    
+    return $pickFn();
 }
