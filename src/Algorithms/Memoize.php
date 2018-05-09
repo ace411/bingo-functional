@@ -11,8 +11,6 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-use Chemem\Bingo\Functional\Common\Callbacks as C;
-
 const memoize = "Chemem\\Bingo\\Functional\\Algorithms\\memoize";
 
 function memoize(callable $function, callable $callback) : callable
@@ -25,6 +23,10 @@ function memoize(callable $function, callable $callback) : callable
 
         return !isset($cache[$key]) ?
             $cache[$key] = call_user_func_array($function, $args) :
-            call_user_func($callback, $function);
+            call_user_func(
+                function () { 
+                    return 'Could not memoize function'; 
+                }
+            );
     };
 }
