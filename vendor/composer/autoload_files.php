@@ -16,6 +16,8 @@ return array(
     'd875a5b8bbe348e70dd233303855cc55' => $baseDir . '/src/Algorithms/Zip.php',
     '728c96f6d577106bc2f41cd92fe9a88c' => $baseDir . '/src/Algorithms/Fill.php',
     '81bea9162a2136cdbc276cb163464606' => $baseDir . '/src/Algorithms/Reverse.php',
+    '1af791db67876cee51b06a245a40cbd4' => $baseDir . '/src/Algorithms/ToPairs.php',
+    'b3ae2c787d1d0fc0f334b0d1515be94d' => $baseDir . '/src/Algorithms/FromPairs.php',
     '8d1dc64e2321fe2aee4f495351999664' => $baseDir . '/src/Algorithms/IndexOf.php',
     'e384318f5367c5ac963ba221f34bbb00' => $baseDir . '/src/Algorithms/Unzip.php',
     '0faecee8a9492e9d0228ba9541ee35d6' => $baseDir . '/src/Algorithms/PartialLeft.php',
@@ -38,5 +40,4 @@ return array(
     '314247cb52434efef3ec5a5f35a06fdc' => $baseDir . '/src/Algorithms/PartialRight.php',
     '9a6c189934c365118237d839fbc529aa' => $baseDir . '/src/Algorithms/ArrayKeysExist.php',
     'a64e2c46128a2ff0560dc9efaa329585' => $baseDir . '/src/Algorithms/ConstantFunction.php',
-    '32ebf5e0c55f2b62bfda5425d777fe84' => $baseDir . '/src/Common/Callbacks/functions.php',
 );
