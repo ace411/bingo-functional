@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const memoize = "Chemem\\Bingo\\Functional\\Algorithms\\memoize";
 
-function memoize(callable $function) : callable
+function memoize(callable $function)
 {
     return function () use ($function) {
         static $cache = [];
