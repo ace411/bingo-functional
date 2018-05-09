@@ -411,6 +411,26 @@ $reverse = A\reverse(['foo', 'bar', 'baz']);
 var_dump($reverse); //outputs ['baz', 'bar', 'foo']
 ```
 
+### ToPairs function
+
+The toPairs function combines key-value pairs into discrete array pairs.
+
+```php
+$toPairs = A\toPairs(['foo' => 'baz', 'bar' => 'baz', 'boo' => 1]);
+
+var_dump($toPairs); //prints [['foo', 'baz'], ['bar', 'baz'], ['boo', 1]]
+```
+
+### FromPairs function
+
+The fromPairs function forms key-value pairs from discrete array pairs - it is the opposite of the toPairs function.
+
+```php
+$fromPairs = A\fromPairs([['foo', 'baz'], ['bar', 'baz'], ['boo', 1]]);
+
+var_dump($fromPairs); //outputs ['foo' => 'baz', 'bar' => 'baz', 'boo' => 1]
+```
+
 ### Callback signatures
 
 These are essential for proper functioning of the the following helper functions: ```pluck()```, ```pick()```, ```memoize()```, as well as ```isArrayOf()```. The following callback signatures correspond to the functions listed:
