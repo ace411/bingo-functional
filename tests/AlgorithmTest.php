@@ -339,7 +339,7 @@ class AlgorithmTest extends TestCase
             return $num < 2 ? 1 : $num * $factorial($num - 1);
         };
 
-        $memoize = A\memoize($factorial(5));
+        $memoize = A\memoize($factorial)(5);
 
         $this->assertEquals($memoize, 120);
     }
