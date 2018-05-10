@@ -56,7 +56,8 @@
             "src/Algorithms/IsArrayOf.php",
             "src/Algorithms/PartialRight.php",
             "src/Algorithms/ArrayKeysExist.php",
-            "src/Algorithms/ConstantFunction.php"
+            "src/Algorithms/ConstantFunction.php",
+            "src/PatternMatching/functions.php"
         ]
     },
     "keywords": [
