@@ -2,7 +2,6 @@
 
 use PHPUnit\Framework\TestCase;
 use Chemem\Bingo\Functional\Algorithms as A;
-use Chemem\Bingo\Functional\Common\Callbacks as CB;
 
 class AlgorithmTest extends TestCase
 {
@@ -30,7 +29,7 @@ class AlgorithmTest extends TestCase
     {
         $toPick = ['bar', 'foo'];
 
-        $picked = A\pick($toPick, 'foo', CB\invalidArrayKey);
+        $picked = A\pick($toPick, 'foo');
         $this->assertEquals($picked, 'foo');
     }
 
@@ -38,7 +37,7 @@ class AlgorithmTest extends TestCase
     {
         $toPluck = ['foo' => 'bar', 'baz' => 'foo-bar'];
 
-        $plucked = A\pluck($toPluck, 'foo', CB\invalidArrayValue);
+        $plucked = A\pluck($toPluck, 'foo');
         $this->assertEquals($plucked, 'bar');
     }
 
@@ -143,7 +142,7 @@ class AlgorithmTest extends TestCase
     public function testIsArrayOfReturnsArrayType()
     {
         $array = [1, 2, 3, 4];
-        $type = A\isArrayOf($array, CB\emptyArray);
+        $type = A\isArrayOf($array);
 
         $this->assertEquals($type, 'integer');
     }
@@ -332,5 +331,16 @@ class AlgorithmTest extends TestCase
             ['bar', 'baz'], 
             ['boo', 1]
         ]);
+    }
+
+    public function testMemoizeFunctionComputesMemoizedFunction()
+    {
+        $factorial = A\memoize(
+            function (int $num) use (&$factorial) {
+                return $num < 2 ? 1 : $num * $factorial($num - 1);
+            }
+        );
+
+        $this->assertEquals($factorial(5), 120);
     }
 }
