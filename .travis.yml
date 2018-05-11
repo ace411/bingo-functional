@@ -6,7 +6,7 @@ php:
     - 'nightly'
 
 script:
-    - vendor/bin/phpunit -c phpunit.xml
+    - phpunit -c phpunit.xml
 
 before-script:
     - composer selfupdate
