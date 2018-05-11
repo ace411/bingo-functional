@@ -144,15 +144,29 @@ permalink: /changes/
 
 ## v1.8.0
 
-### Made the following addition(s)
+### Removed the following callback function(s)
 
-- Modified the function bodies of the ```map()```, ```reduce()```, and ```fold()``` functions
+- invalidArrayKey()
+- invalidArrayValue()
+- emptyArray()
+- memoizationError() 
+
+### Modified the following function(s)
+
+- map()
+- pick()
+- fold()
+- pluck()
+- reduce()
+- filter()
+- memoize()
+- isArrayOf()
 
 ### New Helper functions
 
-- fill
-- partial
-- indexOf
-- reverse
-- toPairs
-- fromPairs
+- fill()
+- partial()
+- indexOf()
+- reverse()
+- toPairs()
+- fromPairs()
