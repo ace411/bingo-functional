@@ -6,4 +6,5 @@ php:
     - 'nightly'
 
 before-script:
+    - composer selfupdate
     - composer install    
