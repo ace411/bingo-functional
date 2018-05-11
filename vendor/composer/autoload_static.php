@@ -41,6 +41,7 @@ class ComposerStaticInit4c01357eac432d016b8d15fd55c48809
         '314247cb52434efef3ec5a5f35a06fdc' => __DIR__ . '/../..' . '/src/Algorithms/PartialRight.php',
         '9a6c189934c365118237d839fbc529aa' => __DIR__ . '/../..' . '/src/Algorithms/ArrayKeysExist.php',
         'a64e2c46128a2ff0560dc9efaa329585' => __DIR__ . '/../..' . '/src/Algorithms/ConstantFunction.php',
+        '7fb8df76bcc970cc64b1a26fd36557f3' => __DIR__ . '/../..' . '/src/PatternMatching/functions.php',
     );
 
     public static $prefixLengthsPsr4 = array (
@@ -67,8 +68,8 @@ class ComposerStaticInit4c01357eac432d016b8d15fd55c48809
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'Webmozart\\Assert\\' => 
         array (

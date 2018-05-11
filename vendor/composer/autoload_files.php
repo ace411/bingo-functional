@@ -40,4 +40,5 @@ return array(
     '314247cb52434efef3ec5a5f35a06fdc' => $baseDir . '/src/Algorithms/PartialRight.php',
     '9a6c189934c365118237d839fbc529aa' => $baseDir . '/src/Algorithms/ArrayKeysExist.php',
     'a64e2c46128a2ff0560dc9efaa329585' => $baseDir . '/src/Algorithms/ConstantFunction.php',
+    '7fb8df76bcc970cc64b1a26fd36557f3' => $baseDir . '/src/PatternMatching/functions.php',
 );
