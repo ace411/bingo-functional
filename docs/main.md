@@ -209,6 +209,20 @@ $players = ['PG' => 'Dragic', 'SG' => 'Winslow'];
 $extended = A\extend($players, ['SF' => 'Durant', 'PG' => 'Curry']);
 //should return ['PG' => 'Curry', 'SG' => 'Winslow', 'SF' => 'Durant']
 ```
+### Memoize function
+
+Sometimes, a computation might be expensive. Memoization ensures that the output of a computed result is cached and conveyed.
+
+```php
+$factorial = A\memoize(
+    function (int $num) use (&$factorial) {
+        return $num < 2 ? 1 : $factorial($num - 1) * $num;
+    }
+);
+
+$factorial(130); //outputs float(6.4668554892205E+219)
+```
+
 ### Head function
 
 The output of the head function is the first value of an array.
@@ -246,7 +260,7 @@ The fill function replaces the values of specified list indexes with an arbitrar
 ```php
 $filled = A\fill([2, 4, 6, 7], 3, 1, 2);
 
-var_dump($filled); //outputs [2, 3, 3, 7s]
+var_dump($filled); //outputs [2, 3, 3, 7]
 ```
 
 ### Partitioning
@@ -431,7 +445,31 @@ $fromPairs = A\fromPairs([['foo', 'baz'], ['bar', 'baz'], ['boo', 1]]);
 var_dump($fromPairs); //outputs ['foo' => 'baz', 'bar' => 'baz', 'boo' => 1]
 ```
 
+## Pattern Matching
+
+The goal of pattern matching is to bind values to successful matches. Pattern matching is similar to the switch statement.The patterns used in the pattern-matching function are a near facsimile of the [Haskell pattern-matching patterns](https://en.wikibooks.org/wiki/Haskell/Pattern_matching). 
+
+```php
+$match = Chemem\Bingo\Functional\PatternMatching\match([
+    '(a:b:_)' => function (int $a, int $b) {
+        return $a / $b;
+    },
+    '(a:_)' => function (int $a) {
+        return $a * 2;
+    },
+    '_' => function () {
+        return 1;
+    }
+]);
+
+$result = $match([10, 5]); //computes 10/5 and outputs 2
+```
+
+**Note:** The match function is curryied. The first argument is a pattern-function key-value list and the second, an array of values.
+
 ### Callback signatures
+
+**Note:** Callbacks will not be usable beyond bingo-functional v1.7.2. Check out the [changelog](https://ace411.github.io/bingo-functional/changes).
 
 These are essential for proper functioning of the the following helper functions: ```pluck()```, ```pick()```, ```memoize()```, as well as ```isArrayOf()```. The following callback signatures correspond to the functions listed:
 
@@ -451,7 +489,7 @@ A functor is an entity derived from Category Mathematics. Functors allow one to 
 
 ### Applicatives
 
-An applicative is a functor which conforms to certain laws - interchange, map, identity, homomorphism, and interchange. The most pervasive element of applicatives is the ability to apply a function to the values in their context.
+An applicative is a functor which conforms to certain laws - interchange, map, identity, and homomorphism. The most pervasive element of applicatives is the ability to apply a function to the values in their context.
 
 Functions, arrays, objects, and primitives can be encapsulated in Applicatives.
 
