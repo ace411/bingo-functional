@@ -1,0 +1,35 @@
+title: bingo-functional
+
+subTitle: A simple functional programming library for PHP
+
+include: 
+  - docs
+
+exclude:
+  - vendor
+  - website
+  - src
+  - tests
+
+branch: gh-pages
+
+github:
+  user: ace411
+  repo: bingo-functional
+
+menu:
+  items:
+    introduction: 
+      text: Introduction
+      relativeUrl:
+    documentation:
+      text: Docs
+      relativeUrl: main.html
+    changes:
+      text: Changes
+      relativeUrl: changes.html
+
+baseUrl: https://ace411.github.io/bingo-functional
+
+template:
+  url: https://github.com/CouscousPHP/Template-Light
