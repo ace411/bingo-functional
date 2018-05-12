@@ -1,6 +1,6 @@
 ---
 title: changes
-permalink: /changes/
+subTitle: Change log for the project
 ---
 
 # bingo-functional change log

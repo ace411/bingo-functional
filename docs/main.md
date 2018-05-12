@@ -1,6 +1,6 @@
 ---
 title: docs
-permalink: /docs/
+subTitle: Documentation for library
 ---
 
 # bingo-functional documentation
