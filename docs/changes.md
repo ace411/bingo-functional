@@ -171,3 +171,5 @@ subTitle: Change log for the project
 - reverse()
 - toPairs()
 - fromPairs()
+
+- Added pattern matching to library
