@@ -117,6 +117,7 @@ subTitle: Change log for the project
 - dropRight()
 - unique()
 - flatten()
+- compact()
 
 ## v1.7.0
 
