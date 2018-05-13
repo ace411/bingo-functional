@@ -2,9 +2,6 @@ title: bingo-functional
 
 subTitle: A simple functional programming library for PHP
 
-#include: 
-#  - docs
-
 exclude:
   - vendor
   - website
