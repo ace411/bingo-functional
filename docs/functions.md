@@ -207,7 +207,7 @@ $const(); //should return 1
 ## Throttle function
 
 ```
-throttle(callable $function)(mixed ...$args)
+throttle(callable $function, int $time)(mixed ...$args)
 ```
 
 **Since:** v1.4.0
@@ -215,6 +215,7 @@ throttle(callable $function)(mixed ...$args)
 **Arguments:**
 
 - ***function (callable)*** - The function to throttle
+- ***time (int)*** - The throttle time
 - ***args (mixed)*** - The function arguments
 
 The throttle function is used to defer function processing.
