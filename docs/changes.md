@@ -145,6 +145,8 @@ subTitle: Change log for the project
 
 ## v1.8.0
 
+- Added pattern matching to library
+
 ### Removed the following callback function(s)
 
 - invalidArrayKey()
@@ -171,5 +173,4 @@ subTitle: Change log for the project
 - reverse()
 - toPairs()
 - fromPairs()
-
-- Added pattern matching to library
+- match()
