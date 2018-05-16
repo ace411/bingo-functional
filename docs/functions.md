@@ -137,7 +137,7 @@ $curryied = A\curry(
 $curryied(4)(5); //should return 20
 ```
 
-### CurryN
+## CurryN
 
 ```
 curryN(int $paramCount, callable $function)
