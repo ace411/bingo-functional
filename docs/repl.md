@@ -3,7 +3,7 @@ title: repl
 subTitle: bingo-functional REPL docs
 ---
 
-The bingo-functional console is an appendage of the bingo-functional set of utilities. Capable of parsing idiomatic PHP input, the bingo-functional REPL is one predicated on providing a playground for interaction with the bingo-functional range of functions and functors. 
+The [bingo-functional console](https://github.com/ace411/bingo-functional-repl) is an appendage of the bingo-functional set of utilities. Capable of parsing idiomatic PHP input, the bingo-functional REPL is one predicated on providing a playground for interaction with the bingo-functional range of functions and functors. 
 
 ## Installation
 
@@ -53,4 +53,8 @@ bingo-functional> version
 Result: 1.0.0
 ```
 
-**Note:** To make the most of the console experience, read the rest of the bingo-functional documentation.
+## Important 
+
+- Semi-colons are not required
+
+- To make the most of the console experience, read the rest of the bingo-functional documentation.
