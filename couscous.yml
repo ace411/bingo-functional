@@ -31,6 +31,9 @@ menu:
     functors:
       text: Functors
       relativeUrl: docs/functors.html
+    console:
+      text: Console
+      relativeUrl: docs/repl.html
     changes:
       text: Changes
       relativeUrl: docs/changes.html
