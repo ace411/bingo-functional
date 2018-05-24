@@ -257,37 +257,6 @@ $factorial = A\memoize(
 $factorial(130); //outputs float(6.4668554892205E+219)
 ```
 
-## Pattern Matching
-
-```
-match(array $matches)(array $values)
-```
-
-**Since:** v1.8.0
-
-**Arguments:**
-
-- ***matches (array)*** - A Haskell-esque pattern-function key-value list
-- ***values (array)*** - Values for computation
-
-The goal of pattern matching is to bind values to successful matches. Pattern matching is similar to the switch statement.The patterns used in the pattern-matching function are a near facsimile of the [Haskell pattern-matching patterns](https://en.wikibooks.org/wiki/Haskell/Pattern_matching). 
-
-```php
-$match = Chemem\Bingo\Functional\PatternMatching\match([
-    '(a:b:_)' => function (int $a, int $b) {
-        return $a / $b;
-    },
-    '(a:_)' => function (int $a) {
-        return $a * 2;
-    },
-    '_' => function () {
-        return 1;
-    }
-]);
-
-$result = $match([10, 5]); //computes 10/5 and outputs 2
-```
-
 ## Callback signatures
 
 **Note:** Callbacks will not be usable beyond bingo-functional v1.7.2. Check out the [changelog](https://ace411.github.io/bingo-functional/changes).
