@@ -83,3 +83,182 @@ function getNumConditions(array $conditions)
 
     return array_merge(...$extr);
 }
+
+const patternMatch = 'Chemem\\Bingo\\Functional\\PatternMatching\\patternMatch';
+
+function patternMatch(array $patterns, $value)
+{
+    $patternMatch = is_array($value) ? 
+        evalArrayPattern($patterns, $value) :
+        evalStringPattern($patterns, $value);
+
+    return $patternMatch;
+}
+
+const evalArrayPattern = 'Chemem\\Bingo\\Functional\\PatternMatching\\evalArrayPattern';
+
+function evalArrayPattern(array $patterns, array $value)
+{
+    $valCount = count($value);
+
+    $evalPattern = A\compose(
+        'array_keys',
+        A\partialLeft(
+            A\filter,
+            function ($pattern) {
+                return substr($pattern, -1) == ']' && 
+                    substr($pattern, 0, 1) == '[';
+            } 
+        ),
+        A\partialLeft(
+            A\map,
+            function ($pattern) {
+                $tokens = A\compose(
+                    A\partialLeft('str_replace', '[', ''),
+                    A\partialLeft('str_replace', ']', ''),
+                    A\partialLeft('str_replace', ' ', ''),
+                    A\partialLeft('explode', ',')
+                )($pattern);
+
+                return [$pattern => $tokens];
+            }
+        ),
+        function ($patterns) {
+            return array_merge(...$patterns);
+        },
+        function ($patterns) use ($valCount) {
+            return array_filter(
+                $patterns,
+                function ($pattern) use ($valCount) {
+                    return count($pattern) == $valCount;
+                }
+            );
+        },
+        function ($patterns) use ($value, $valCount) {
+            $evaluate = array_map(
+                function ($pattern) use ($value, $valCount) {
+                    return array_map(
+                        function ($patternVal, $val) {
+                            return preg_match('/[\"]+/', $patternVal) ? 
+                                str_replace('"', '', $patternVal) == $val ? true : $val :
+                                $val;
+                        },
+                        $pattern,
+                        $value
+                    );
+                },
+                $patterns
+            );
+
+            return $evaluate;
+        },
+        function ($patternArgs) {
+            $evaluate = array_filter(
+                $patternArgs,
+                function ($pattArg) {
+                    $argCount = count($pattArg);
+                    $boolCountFn = function (int $init = 0, int $index) use (
+                        $pattArg, 
+                        $argCount, 
+                        &$boolCountFn
+                    ) {
+                        if ($init >= $argCount) {
+                            return $index;
+                        }
+
+                        $index += is_bool($pattArg[$init]) ? 1 : 0;
+
+                        return $boolCountFn($init + 1, $index);
+                    };
+
+                    $boolCount = $boolCountFn(0, 0);
+
+                    return $boolCount == $argCount || $boolCount == $argCount - 1;
+                }
+            );
+
+            return $evaluate;
+        },
+        function ($patternArgs) use ($patterns) {
+            return !empty($patternArgs) ? 
+                [
+                    'function' => $patterns[A\head(array_keys($patternArgs))],
+                    'arguments' => A\filter(
+                        function ($arg) {
+                            return !is_bool($arg);
+                        },
+                        A\head($patternArgs)
+                    ) 
+                ] :
+                [
+                    'function' => isset($patterns['_']) ? $patterns['_'] : A\constantFunction(false),
+                    'arguments' => []
+                ];
+        },
+        function ($matches) use ($patterns) {
+            $valType = A\compose('array_values', A\isArrayOf)($patterns);
+
+            return $valType == 'object' ? 
+                $matches : 
+                [
+                    'function' => A\constantFunction(false),
+                    'arguments' => []
+                ];
+        }
+    )($patterns);
+
+    return call_user_func_array($evalPattern['function'], $evalPattern['arguments']);
+}
+
+const evalStringPattern = 'Chemem\\Bingo\\Functional\\PatternMatching\\evalStringPattern';
+
+function evalStringPattern(array $patterns, string $value)
+{
+    $evalPattern = A\compose(
+        'array_keys',
+        A\partialLeft(
+            A\filter,
+            function ($val) {
+                return is_string($val) && preg_match('/([\"]+)/', $val);
+            } 
+        ),
+        A\partialLeft(
+            A\map,
+            function ($val) use ($value) {
+                $evaluate = A\compose(
+                    A\partialLeft('str_replace', '"', ''),
+                    function ($val) {
+                        $valType = gettype($val);
+
+                        return $valType == 'integer' ? 
+                            (int) $val : 
+                            $valType == 'double' ? (float) $val : $val;
+                    },
+                    function ($val) use ($value) {
+                        return $val == $value ? A\concat('"', '', $val, '') : '_';
+                    }
+                );
+
+                return $evaluate($val);
+            }
+        ),
+        A\partialLeft(
+            A\filter,
+            function ($val) {
+                return $val !== '_';
+            }
+        ),
+        function ($match) {
+            return !empty($match) ? A\head($match) : '_';
+        },
+        function ($match) use ($patterns) {
+            $valType = A\compose('array_values', A\isArrayOf)($patterns);
+
+            return $valType == 'object' ? 
+                $patterns[$match] : 
+                ['_' => A\constantFunction(false)];
+        }
+    )($patterns);
+
+    return call_user_func($evalPattern);
+}
