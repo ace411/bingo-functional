@@ -25,6 +25,9 @@ menu:
     functions:
       text: Function Helpers
       relativeUrl: docs/functions.html
+    pattern-matching:
+      text: Pattern Matching
+      relativeUrl: docs/pattern-matching.html
     collections:
       text: Collection Helpers
       relativeUrl: docs/collection.html
