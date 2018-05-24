@@ -18,6 +18,17 @@ The pattern matching subset of the bingo-functional library is quite similar to 
 
 ## match function
 
+```
+match(array $patterns, array $values)
+```
+
+**Since:** v1.8.0
+
+**Arguments:**
+
+- ***patterns (array)*** - The patterns to evaluate
+- ***values (array)*** - The values for comparison
+
 The match function deals primarily with cons, values separated by a colon. The cons serve as arguments for the accompanying lambdas: each cons pattern has a wildcard before its closing brace.
 
 ```php
@@ -41,6 +52,17 @@ $result = $match([10, 5]);
 ```
 
 ## patternMatch function
+
+```
+patternMatch(array $patterns, mixed $values)
+```
+
+**Since:** v1.8.1
+
+**Arguments:**
+
+- ***patterns (array)*** - The patterns to evaluate
+- ***values (mixed)*** - The values for comparison
 
 The pattern match function is useful for array content comparisons like URL and switch statement-driven matches. The patternMatch function combines arrays, constants, and variables and assesses the specificity of each pattern provided. 
 
