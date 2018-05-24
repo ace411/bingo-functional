@@ -1,18 +1,19 @@
 ---
-title: pattern-matching
+title: Pattern Matching
 subTitle: Pattern Matching docs
 ---
 
-The goal of pattern matching is to bind values to successful matches. Pattern matching is similar to the switch statement. The patterns used in the pattern-matching function are a near facsimile of the [Haskell pattern-matching patterns](https://en.wikibooks.org/wiki/Haskell/Pattern_matching). Because pattern matching is a core feature of a language like Haskell, implementing it in PHP is quite the uphill task. The bingo-functional library has two pattern matching functions that conform to the patterns shown in the table below: match and patternMatch.
+The goal of pattern matching is to bind values to successful matches. Pattern matching is similar to the switch statement. The patterns used in the pattern-matching function are a near facsimile of the [Haskell pattern-matching patterns](https://en.wikibooks.org/wiki/Haskell/Pattern_matching). Because pattern matching is a core feature of a language like Haskell, implementing it in PHP is quite the uphill task. The bingo-functional library has two pattern matching functions that conform to the patterns shown in the table below: ```match``` and ```patternMatch```.
 
-| Pattern name | Format | Examples |
-|--------------|:------:|---------:|
-| constant     | A scalar value | 12, 12.02, "foo" |
-| variable     | Any value identifier | foo, bar, baz |
-| array        | [constant, ..., variable] | '["foo", "bar", baz]' |
-| cons         | (identifier:identifier)   | (foo:bar:_) |
-| wildcard (mandatory default option)     | _  | '_' |
-
+| Pattern name    | Format                    | Examples |
+|-----------------|---------------------------|----------|
+| constant        | A scalar value            | ```12```, ```12.02```, ```"foo"``` |
+| variable        | Any value identifier      | ```foo```, ```bar```, ```baz``` |
+| array           | [constant, ..., variable] | ```'["foo", "bar", baz]'``` |
+| cons            | (identifier:identifier)   | ```(foo:bar:_)``` |
+| wildcard        | _                         | ```'_'``` |
+|                 |                           |          |
+<br />
 
 The pattern matching subset of the bingo-functional library is quite similar to the [pattern-matching library](https://packagist.org/packages/functional-php/pattern-matching) created by [Gilles Crettenand](https://github.com/krtek4). It is, in fact, inspired by the works of the said individual. 
 
