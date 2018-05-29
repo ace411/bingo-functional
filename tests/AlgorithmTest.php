@@ -63,11 +63,25 @@ class AlgorithmTest extends TestCase
         $this->assertInstanceOf(\Closure::class, $curryied);
     }
 
+    public function testCurryRightReturnsClosure()
+    {
+        $curryied = A\curryRight('preg_match');
+
+        $this->assertInstanceOf(\Closure::class, $curryied);
+    }
+
     public function testCurryNReturnsCurryiedFunction()
     {
         $curryied = A\curryN(2, 'array_key_exists')('foo')(['foo' => 'bar']);
 
         $this->assertEquals($curryied, true);
+    }
+
+    public function testCurryRightNReturnsCurryiedFunction()
+    {
+        $curryied = A\curryRightN(2, 'array_key_exists')(['foo' => 'bar'])('baz');
+
+        $this->assertEquals($curryied, false);
     }
 
     public function testUnzipReturnsArrayOfInitiallyGroupedArrays()
