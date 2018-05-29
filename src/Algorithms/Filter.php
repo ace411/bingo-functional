@@ -17,10 +17,12 @@ function filter(callable $func, array $collection) : array
 {
     $arrCount = count($collection);
     $colVals = array_values($collection);
+    $colKeys = array_keys($collection);
 
     $recursiveFilter = function (int $init = 0, array $acc = []) use (
         $func,
         $colVals,
+        $colKeys,
         $arrCount,
         &$recursiveFilter
     ) {
@@ -29,7 +31,7 @@ function filter(callable $func, array $collection) : array
         }
 
         if ($func($colVals[$init])) {
-            $acc[] = $colVals[$init];
+            $acc[$colKeys[$init]] = $colVals[$init];
         }
         
         return $recursiveFilter($init + 1, $acc);
