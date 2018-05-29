@@ -140,7 +140,7 @@ function evalArrayPattern(array $patterns, array $value)
                     return array_map(
                         function ($patternVal, $val) {
                             return preg_match('/[\"]+/', $patternVal) ? 
-                                str_replace('"', '', $patternVal) == $val ? true : $val :
+                                str_replace('"', '', $patternVal) == $val ? null : $val :
                                 $val;
                         },
                         $pattern,
@@ -157,23 +157,23 @@ function evalArrayPattern(array $patterns, array $value)
                 $patternArgs,
                 function ($pattArg) {
                     $argCount = count($pattArg);
-                    $boolCountFn = function (int $init = 0, int $index) use (
+                    $nullCountFn = function (int $init = 0, int $index) use (
                         $pattArg, 
                         $argCount, 
-                        &$boolCountFn
+                        &$nullCountFn
                     ) {
                         if ($init >= $argCount) {
                             return $index;
                         }
 
-                        $index += is_bool($pattArg[$init]) ? 1 : 0;
+                        $index += is_null($pattArg[$init]) ? 1 : 0;
 
-                        return $boolCountFn($init + 1, $index);
+                        return $nullCountFn($init + 1, $index);
                     };
 
-                    $boolCount = $boolCountFn(0, 0);
+                    $nullCount = $nullCountFn(0, 0);
 
-                    return $boolCount == $argCount || $boolCount == $argCount - 1;
+                    return $nullCount == $argCount || $nullCount == $argCount - 1;
                 }
             );
 
@@ -185,7 +185,7 @@ function evalArrayPattern(array $patterns, array $value)
                     'function' => $patterns[A\head(array_keys($patternArgs))],
                     'arguments' => A\filter(
                         function ($arg) {
-                            return !is_bool($arg);
+                            return !is_null($arg);
                         },
                         A\head($patternArgs)
                     ) 
