@@ -15,13 +15,24 @@ const dropRight = "Chemem\\Bingo\\Functional\\Algorithms\\dropRight";
 
 function dropRight(array $collection, int $number = 1, $acc = []) : array
 {
-    $collection = array_reverse($collection);
+    $colVals = array_values($collection);
+    $colKeys = array_keys($collection);
+    $valCount = count($collection);
 
-    foreach ($collection as $index => $value) {
-        if ($index > $number - 1) {
-            $acc[] = $value;
+    $dropFn = function (int $init, array $acc = []) use (
+        $colVals, 
+        $colKeys, 
+        &$dropFn, 
+        $valCount
+    ) {
+        if ($init < 0) {
+            return $acc;
         }
-    }
 
-    return array_reverse($acc);
+        $acc[$colKeys[$init]] = $colVals[$init];
+
+        return $dropFn($init - 1, $acc);
+    };
+
+    return $dropFn($valCount - $number - 1);
 }

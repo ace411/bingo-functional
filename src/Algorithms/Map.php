@@ -16,11 +16,13 @@ const map = "Chemem\\Bingo\\Functional\\Algorithms\\map";
 function map(callable $func, array $collection) : array
 {
     $arrCount = count($collection); 
+    $colKeys = array_keys($collection);
     $colVals = array_values($collection);
 
     $recursiveMap = function (int $init = 0, array $acc = []) use (
         $func, 
-        $colVals, 
+        $colVals,
+        $colKeys, 
         $arrCount, 
         &$recursiveMap
     ) {
@@ -28,7 +30,7 @@ function map(callable $func, array $collection) : array
             return $acc;
         }
 
-        $acc[] = $func($colVals[$init]);
+        $acc[$colKeys[$init]] = $func($colVals[$init]);
 
         return $recursiveMap($init + 1, $acc);
     };
