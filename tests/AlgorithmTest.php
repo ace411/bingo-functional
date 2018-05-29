@@ -225,6 +225,19 @@ class AlgorithmTest extends TestCase
         $this->assertEquals($reduce, 2);
     }
 
+    public function testFoldRightFunctionReducesArrayFromRightToLeft()
+    {
+        $strings = ['foo', 'bar', 'baz'];
+
+        $foldFn = function ($acc, $val) {
+            return $acc . '-' . $val;
+        };
+
+        $fold = A\foldRight($foldFn, $strings, 'fum');
+
+        $this->assertEquals($fold, 'fum-baz-bar-foo');
+    }
+
     public function testArrayKeysExistFunctionDeterminesIfKeysExistInCollection()
     {
         $character = [
@@ -342,5 +355,75 @@ class AlgorithmTest extends TestCase
         );
 
         $this->assertEquals($factorial(5), 120);
+    }
+
+    public function testEveryFunctionEvaluatesBooleanPredicate()
+    {
+        $every = A\every(
+            [1, 2, 3, false, true],
+            function ($val) {
+                return is_bool($val);
+            } 
+        );
+
+        $this->assertEquals($every, false);
+    }
+
+    public function testGroupByFunctionCreatesArrayGroupedByKey()
+    {
+        $grouped = A\groupBy(
+            [
+                ['name' => 'goran', 'pos' => 'pg'],
+                ['name' => 'josh', 'pos' => 'sg'],
+                ['name' => 'dwayne', 'pos' => 'sg']
+            ],
+            'pos'
+        );
+
+        $this->assertEquals(
+            $grouped,
+            [
+                'sg' => [
+                    ['name' => 'josh', 'pos' => 'sg'],
+                    ['name' => 'dwayne', 'pos' => 'sg']
+                ],
+                'pg' => [
+                    ['name' => 'goran', 'pos' => 'pg']
+                ]
+            ]
+        );
+    }
+
+    public function testWhereFunctionSearchesArrayForKeyValuePair()
+    {
+        $find = A\where(
+            [
+                ['name' => 'dwayne', 'pos' => 'sg'],
+                ['name' => 'james', 'pos' => 'sf'],
+                ['name' => 'demarcus', 'pos' => 'c']
+            ],
+            ['pos' => 'c']
+        );
+
+        $this->assertEquals(
+            $find,
+            [
+                ['name' => 'demarcus', 'pos' => 'c']
+            ]
+        );
+    }
+
+    public function testMinFunctionComputesLowestValueInList()
+    {
+        $min = A\min([23, 45, 12, 78]);
+
+        $this->assertEquals($min, 12);
+    }
+
+    public function testMaxFunctionComputesLargestValueInList()
+    {
+        $max = A\max([23, 79, 54, 24]);
+
+        $this->assertEquals($max, 79);
     }
 }
