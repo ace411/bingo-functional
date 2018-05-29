@@ -256,7 +256,7 @@ class AlgorithmTest extends TestCase
 
         $modified = A\dropLeft($numbers, 2);
 
-        $this->assertEquals($modified, [3, 4, 5]);
+        $this->assertEquals($modified, [2 => 3, 3 => 4, 4 => 5]);
     }
 
     public function testDropRightFunctionRemovesArrayItemsFromTheLastIndexBackwards()
@@ -408,7 +408,7 @@ class AlgorithmTest extends TestCase
         $this->assertEquals(
             $find,
             [
-                ['name' => 'demarcus', 'pos' => 'c']
+                2 => ['name' => 'demarcus', 'pos' => 'c']
             ]
         );
     }
