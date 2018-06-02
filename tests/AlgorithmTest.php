@@ -383,6 +383,18 @@ class AlgorithmTest extends TestCase
         $this->assertEquals($every, false);
     }
 
+    public function testAnyFunctionFindsFirstOccurenceOfFunctionComplianceInList()
+    {
+        $any = A\any(
+            [1, 2, 3, false, true],
+            function ($val) {
+                return is_bool($val);
+            }
+        );
+
+        $this->assertEquals($any, true);
+    }
+
     public function testGroupByFunctionCreatesArrayGroupedByKey()
     {
         $grouped = A\groupBy(
