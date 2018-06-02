@@ -1,5 +1,14 @@
 <?php
 
+/**
+ * any function
+ * 
+ * any :: [a] -> (b -> Bool) -> c
+ * @package bingo-functional
+ * @author Lochemem Bruno Michael
+ * @license Apache-2.0
+ */
+
 namespace Chemem\Bingo\Functional\Algorithms;
 
 const any = 'Chemem\\Bingo\\Functional\\Algorithms\\any';
