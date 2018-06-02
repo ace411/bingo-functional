@@ -31,6 +31,7 @@
             "src/Algorithms/Pick.php",
             "src/Algorithms/Pluck.php",
             "src/Algorithms/Zip.php",
+            "src/Algorithms/Any.php",
             "src/Algorithms/Max.php",
             "src/Algorithms/Min.php",
             "src/Algorithms/Every.php",
