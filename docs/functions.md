@@ -137,6 +137,30 @@ $curryied = A\curry(
 $curryied(4)(5); //should return 20
 ```
 
+### curryRight
+
+```
+curryRight(callable $function)
+```
+
+**Since:** v1.8.1
+
+**Arguments:**
+
+- ***function (callable)*** - The function to curry
+
+Curry a function from right to left.
+
+```php
+$curryiedRight = A\curryRight(
+    function (int $a, int $b) {
+        return $a / $b;
+    }
+);
+
+$curryiedRight(4)(8); //outputs 2
+```
+
 ## CurryN
 
 ```
@@ -162,6 +186,32 @@ $curryied = A\curryN(
 );
 
 $curryied(2)(3); //should return 5
+```
+
+### curryRightN
+
+```
+curryRightN(int $paramCount, callable $function)
+```
+
+**Since:** v1.8.1
+
+**Arguments:**
+
+- ***paramCount (int)*** - The number of parameters to curry
+- ***function (callable)*** - The function to curry
+
+Similar to the curryN function but best suited for currying from right to left.
+
+```php
+$curryied = A\curryRightN(
+    2,
+    function (int $a = 1, int $b, int $c) : int {
+        return $a + $b + $c;
+    }
+);
+
+$curryied(2)(3); //evaluates to 6
 ```
 
 ## Identity
