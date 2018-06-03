@@ -351,6 +351,31 @@ $sumOfEven = A\fold(
 //should evaluate to 12
 ```
 
+### ReduceRight function
+
+**Since:** v1.8.1
+
+**Arguments:**
+
+- ***function (callable)*** - The filter function
+- ***collection (array)*** - The array whose values are evaluated
+- ***acc (mixed)*** - The accumulator value
+
+Folds an array but does so from right to left.
+
+```php
+$collection = ["foo", "bar", "baz"];
+
+$sumOfEven = A\fold(
+    function (string $separator, string $val) : string {
+        return rtrim($val . $separator, $separator);
+    },
+    $collection,
+    '_'
+);
+//evaluates to "baz_bar_foo"
+```
+
 ## Unique function
 
 ```
@@ -515,4 +540,153 @@ The fromPairs function forms key-value pairs from discrete array pairs - it is t
 $fromPairs = A\fromPairs([['foo', 'baz'], ['bar', 'baz'], ['boo', 1]]);
 
 var_dump($fromPairs); //outputs ['foo' => 'baz', 'bar' => 'baz', 'boo' => 1]
+```
+
+## Every function
+
+```
+every(array $array, callable $function)
+```
+
+**Since:** v1.8.1
+
+**Arguments**
+
+- ***array (array)*** - The key-value collection
+- ***function (callable)*** - The function whose boolean assertion is used
+
+The every function checks if a boolean assertion in a function holds for every value in a list.
+
+```php
+$result = A\every(
+    [1, 2, 3, 4],
+    function ($val) : bool {
+        return is_int($val);
+    }
+);
+
+echo $result; //outputs true
+```
+
+## Any function
+
+```
+any(array $array, callable $function)
+```
+
+**Since:** v1.8.1
+
+**Arguments**
+
+- ***array (array)*** - The key-value collection
+- ***function (callable)*** - The function whose boolean assertion is used
+
+The any function, unlike its relative, the every function, checks if a single value in a list conforms to the boolean predicate in a function signature.
+
+```php
+$result = A\any(
+    [false, true, 1, 2, 3],
+    function ($val) : bool {
+        return is_bool($val);
+    }
+);
+
+echo $result; //outputs true
+```
+
+## GroupBy function
+
+```
+groupBy(array $array, mixed $key)
+```
+
+**Since:** v1.8.1
+
+**Arguments**
+
+- ***array (array)*** - The array to sort
+- ***key (mixed)*** - The key to use for the grouping
+
+The groupBy function is one that sorts a multi-dimensional array by a defined key. 
+
+```php
+$group = A\groupBy(
+    [
+        ['pos' => 'pg', 'name' => 'dragic'],
+        ['pos' => 'sg', 'name' => 'jordan'],
+        ['pos' => 'sg', 'name' => 'wade']
+    ],
+    'pos'
+);
+
+var_dump($group); 
+//outputs ['pg' => [['pos' => 'pg', 'name' => 'dragic']], 'sg' => [['pos' => 'sg', 'name' => 'jordan'], ['pos' => 'sg', 'name' => 'wade']]]
+```
+
+## Where function
+
+```
+where(array $list, array $search)
+```
+
+**Since:** v1.8.1
+
+**Arguments**
+
+- ***list (array)*** - The array to search
+- ***search (array)*** - The list fragment that is the basis for the search
+
+The where function searches a multi-dimensional array using a fragment of a sub-array defined in said multi-dimensional array.
+
+```php
+$result = A\where(
+    [
+        ['pos' => 'pg', 'name' => 'dragic'],
+        ['pos' => 'sg', 'name' => 'wade']
+    ],
+    ['name' => 'dragic']
+);
+
+var_dump($result);
+//outputs [['pos' => 'pg', 'name' => 'dragic']]
+```
+
+## Min function
+
+```
+min(array $array)
+```
+
+**Since:** v1.8.1
+
+**Arguments**
+
+- ***array (array)*** - The list whose lowest value is to be computed
+
+Finds the lowest value in an array.
+
+```php
+$min = A\min([22, 19, 12, 98]);
+
+echo $min; //outputs 12
+```
+
+## Max function
+
+```
+max(array $array)
+```
+
+**Since:** v1.8.1
+
+**Arguments**
+
+- ***array (array)*** - The list whose largest value is to be computed
+
+Finds the largest value in an array.
+
+```php
+$max = A\max([22, 19, 98, 12]);
+
+echo $max; //outputs 98
 ```
