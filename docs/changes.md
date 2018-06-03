@@ -174,3 +174,26 @@ subTitle: Change log for the project
 - toPairs()
 - fromPairs()
 - match()
+
+## v1.8.1
+
+- Added more robust pattern matching to library
+
+### Modified the following functions
+
+- dropLeft()
+- dropRight()
+- map()
+- filter()
+
+### New Helper functions
+
+- every()
+- any()
+- where()
+- reduceRight()
+- foldRight()
+- min()
+- max()
+- groupBy()
+- patternMatch()
