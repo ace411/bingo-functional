@@ -452,4 +452,18 @@ class AlgorithmTest extends TestCase
 
         $this->assertEquals($max, 79);
     }
+
+    public function testToExceptionPrintsExceptionMessageIfExceptionIsThrown()
+    {
+        $func = function () { 
+            throw new \Exception('I am an exception'); 
+        };
+
+        $result = function ($val) {
+            return $val * 2;
+        };
+
+        $this->assertEquals(A\toException($func)(), 'I am an exception');
+        $this->assertEquals(A\toException($result)(12), 24);
+    }
 }
