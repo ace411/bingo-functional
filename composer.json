@@ -60,6 +60,7 @@
             "src/Algorithms/DropRight.php",
             "src/Algorithms/Partition.php",
             "src/Algorithms/IsArrayOf.php",
+            "src/Algorithms/ToException.php",
             "src/Algorithms/PartialRight.php",
             "src/Algorithms/ArrayKeysExist.php",
             "src/Algorithms/ConstantFunction.php",
