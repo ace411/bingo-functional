@@ -175,7 +175,7 @@ subTitle: Change log for the project
 - fromPairs()
 - match()
 
-## v1.8.1
+## v1.9.0
 
 - Added more robust pattern matching to library
 
