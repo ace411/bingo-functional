@@ -453,7 +453,7 @@ class AlgorithmTest extends TestCase
         $this->assertEquals($max, 79);
     }
 
-    public function testToExceptionPrintsExceptionMessageIfExceptionIsThrown()
+    public function testToExceptionWrapsFunctionPrintsExceptionMessageIfExceptionIsThrownOrResult()
     {
         $func = function () { 
             throw new \Exception('I am an exception'); 
@@ -464,6 +464,7 @@ class AlgorithmTest extends TestCase
         };
 
         $this->assertEquals(A\toException($func)(), 'I am an exception');
+        $this->assertInstanceOf(Closure::class, A\toException($func));
         $this->assertEquals(A\toException($result)(12), 24);
     }
 }
