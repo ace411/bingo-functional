@@ -117,6 +117,7 @@ subTitle: Change log for the project
 - dropRight()
 - unique()
 - flatten()
+- compact()
 
 ## v1.7.0
 
@@ -144,6 +145,8 @@ subTitle: Change log for the project
 
 ## v1.8.0
 
+- Added pattern matching to library
+
 ### Removed the following callback function(s)
 
 - invalidArrayKey()
@@ -170,3 +173,27 @@ subTitle: Change log for the project
 - reverse()
 - toPairs()
 - fromPairs()
+- match()
+
+## v1.9.0
+
+- Added more robust pattern matching to library
+
+### Modified the following functions
+
+- dropLeft()
+- dropRight()
+- map()
+- filter()
+
+### New Helper functions
+
+- every()
+- any()
+- where()
+- reduceRight()
+- foldRight()
+- min()
+- max()
+- groupBy()
+- patternMatch()

@@ -2,9 +2,6 @@ title: bingo-functional
 
 subTitle: A simple functional programming library for PHP
 
-include: 
-  - docs
-
 exclude:
   - vendor
   - website
@@ -21,13 +18,28 @@ menu:
   items:
     introduction: 
       text: Introduction
-      relativeUrl:
+      relativeUrl: index.html
     documentation:
-      text: Docs
-      relativeUrl: main.html
+      text: Installation
+      relativeUrl: docs/main.html
+    functions:
+      text: Function Helpers
+      relativeUrl: docs/functions.html
+    pattern-matching:
+      text: Pattern Matching
+      relativeUrl: docs/pattern-matching.html
+    collections:
+      text: Collection Helpers
+      relativeUrl: docs/collection.html
+    functors:
+      text: Functors
+      relativeUrl: docs/functors.html
+    console:
+      text: Console
+      relativeUrl: docs/repl.html
     changes:
       text: Changes
-      relativeUrl: changes.html
+      relativeUrl: docs/changes.html
 
 baseUrl: https://ace411.github.io/bingo-functional
 
