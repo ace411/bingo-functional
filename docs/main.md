@@ -18,3 +18,15 @@ To install via Git, type:
 ```
 git clone https://github.com/ace411/bingo-functional.git
 ```
+
+## Usage
+
+The bingo-functional library's utilities are namespaced. Below is a listing of all the package's offerings and their respective namespaces:
+
+| Utility                    | Namespace |
+|----------------------------|----------------------------------------------------------|
+| Helper Functions           | ```Chemem\Bingo\Functional\Algorithms\```                |
+| Monads                     | ```Chemem\Bingo\Functional\Functors\Monads\```           |
+| Applicatives               | ```Chemem\Bingo\Functional\Functors\Applicatives\```     |
+| Union Types                | ```Chemem\Bingo\Functional\Functors\{Either or Maybe}``` | 
+| Pattern Matching Functions | ```Chemem\Bingo\Functional\PatternMatching\```           |
