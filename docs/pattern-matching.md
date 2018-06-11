@@ -20,7 +20,7 @@ The pattern matching subset of the bingo-functional library is quite similar to 
 ## match function
 
 ```
-match(array $patterns, array $values)
+match(array $patterns)(array $values)
 ```
 
 **Since:** v1.8.0
@@ -87,7 +87,7 @@ $scalarMatch = PM\patternMatch(
 		}
 	],
 	'foo'
-);
+); //outputs FOO
 ```
 
 The patternMatch function's primary feature, the array match is possible for multiple values parsed into an array.
@@ -110,5 +110,5 @@ $arrayMatch = PM\patternMatch(
 		}
 	],
 	['foo', 'bar', 'functional']
-);
+); //outputs fUNCTIONAL
 ```
