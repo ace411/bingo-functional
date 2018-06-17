@@ -67,6 +67,11 @@
             "src/PatternMatching/functions.php"
         ]
     },
+    "autoload-dev": {
+        "psr-4": {
+            "Chemem\\Bingo\\Functional\\Tests\\": "tests/"
+        }
+    },
     "keywords": [
         "functional",
         "pattern matching",
