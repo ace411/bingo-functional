@@ -1,5 +1,7 @@
 <?php
 
+namespace Chemem\Bingo\Functional\Tests;
+
 use PHPUnit\Framework\TestCase;
 use Chemem\Bingo\Functional\Functors\Monads\{IO, Writer, Reader, State, ListMonad};
 

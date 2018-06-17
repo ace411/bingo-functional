@@ -1,5 +1,7 @@
 <?php
 
+namespace Chemem\Bingo\Functional\Tests;
+
 use PHPUnit\Framework\TestCase;
 use Chemem\Bingo\Functional\Algorithms as A;
 
@@ -8,7 +10,7 @@ class AlgorithmTest extends TestCase
     public function testIdentityFunctionReturnsValueSupplied()
     {
         $value = A\identity('foo');
-        $this->assertEquals($value, 'foo');
+        $this->assertEquals('foo', $value);
     }
 
     public function testComposeFunctionNestsFunctions()
@@ -22,7 +24,7 @@ class AlgorithmTest extends TestCase
         $composed = A\compose($addTen, $multiplyTen);
         $transformed = array_map($composed, [1, 2, 3]);
 
-        $this->assertEquals($transformed, [110, 120, 130]);
+        $this->assertEquals([110, 120, 130], $transformed);
     }
 
     public function testPickGetsArrayIndexValue()
@@ -30,7 +32,7 @@ class AlgorithmTest extends TestCase
         $toPick = ['bar', 'foo'];
 
         $picked = A\pick($toPick, 'foo');
-        $this->assertEquals($picked, 'foo');
+        $this->assertEquals('foo', $picked);
     }
 
     public function testPluckReturnsArrayValue()
@@ -38,7 +40,7 @@ class AlgorithmTest extends TestCase
         $toPluck = ['foo' => 'bar', 'baz' => 'foo-bar'];
 
         $plucked = A\pluck($toPluck, 'foo');
-        $this->assertEquals($plucked, 'bar');
+        $this->assertEquals('bar', $plucked);
     }
 
     public function testZipReturnsZippedArray()
@@ -53,7 +55,7 @@ class AlgorithmTest extends TestCase
             $nums,
             $positions
         );
-        $this->assertEquals($zipped, ['1 is PG', '2 is SG']);
+        $this->assertEquals(['1 is PG', '2 is SG'], $zipped);
     }
 
     public function testCurryReturnsClosure()
@@ -74,14 +76,14 @@ class AlgorithmTest extends TestCase
     {
         $curryied = A\curryN(2, 'array_key_exists')('foo')(['foo' => 'bar']);
 
-        $this->assertEquals($curryied, true);
+        $this->assertTrue($curryied);
     }
 
     public function testCurryRightNReturnsCurryiedFunction()
     {
         $curryied = A\curryRightN(2, 'array_key_exists')(['foo' => 'bar'])('baz');
 
-        $this->assertEquals($curryied, false);
+        $this->assertFalse($curryied);
     }
 
     public function testUnzipReturnsArrayOfInitiallyGroupedArrays()
@@ -96,7 +98,7 @@ class AlgorithmTest extends TestCase
                 ['PG', 'SG']
             ]
         );
-        $this->assertTrue(is_array($unzipped));
+        $this->assertInternalType('array', $unzipped);
     }
 
     public function testPartialLeftAppliesArgumentsFromLeftToRight()
@@ -106,21 +108,21 @@ class AlgorithmTest extends TestCase
         };
         $partial = A\partialLeft($fn, 2)(2);
 
-        $this->assertEquals($partial, 4);
+        $this->assertEquals(4, $partial);
     }
 
     public function testHeadReturnsFirstItemInArray()
     {
         $array = [1, 2, 3, 4];
-        $this->assertEquals(A\head($array), 1);
+        $this->assertEquals(1, A\head($array));
     }
 
     public function testTailReturnsSecondToLastArrayItems()
     {
         $array = [1, 2, 3, 4];
         $this->assertEquals(
-            A\tail($array),
-            [2, 3, 4]
+            [2, 3, 4],
+            A\tail($array)
         );
     }
 
@@ -128,8 +130,8 @@ class AlgorithmTest extends TestCase
     {
         $array = [1, 2, 3, 4];
         $this->assertEquals(
-            A\partition(2, $array),
-            [[1, 2], [3, 4]]
+            [[1, 2], [3, 4]],
+            A\partition(2, $array)
         );
     }
 
@@ -138,19 +140,19 @@ class AlgorithmTest extends TestCase
         $array = ['foo' => 'bar', 'baz' => 12];
         $extended = A\extend($array, ['foo' => 9, 'bar' => 19]);
         $this->assertEquals(
-            $extended,
             [
                 'foo' => 9,
                 'baz' => 12,
                 'bar' => 19
-            ]
+            ],
+            $extended
         );
     }
 
     public function testConstantFunctionAlwaysReturnsFirstArgumentSupplied()
     {
         $const = A\constantFunction(12);
-        $this->assertEquals($const(), 12);
+        $this->assertEquals(12, $const());
     }
 
     public function testIsArrayOfReturnsArrayType()
@@ -158,7 +160,7 @@ class AlgorithmTest extends TestCase
         $array = [1, 2, 3, 4];
         $type = A\isArrayOf($array);
 
-        $this->assertEquals($type, 'integer');
+        $this->assertEquals('integer', $type);
     }
 
     public function testPartialRightReversesParameterOrder()
@@ -168,7 +170,7 @@ class AlgorithmTest extends TestCase
         };
 
         $partialRight = A\partialRight($divide, 6)(3);
-        $this->assertEquals($partialRight, 0.5);
+        $this->assertEquals(0.5, $partialRight);
     }
 
     public function testThrottleFunctionReturnsSuppliedFunctionReturnValue()
@@ -179,7 +181,7 @@ class AlgorithmTest extends TestCase
 
         $throttle = A\throttle($action, 5);
 
-        $this->assertEquals($throttle(2), 12);
+        $this->assertEquals(12, $throttle(2));
     }
 
     public function testConcatFunctionConcatenatesStrings()
@@ -187,7 +189,7 @@ class AlgorithmTest extends TestCase
         $wildcard = '/';
         $testsPath = A\concat($wildcard, 'path', 'to', 'tests');
 
-        $this->assertEquals($testsPath, 'path/to/tests');
+        $this->assertEquals('path/to/tests', $testsPath);
     }
 
     public function mapFunctionTransformsArrayElements()
@@ -201,7 +203,7 @@ class AlgorithmTest extends TestCase
             $numbers
         );
 
-        $this->assertEquals($transformed, [11, 12, 13, 14, 15]);
+        $this->assertEquals([11, 12, 13, 14, 15], $transformed);
     }
 
     public function testFilterFunctionSelectsArrayElementsBasedOnBooleanPredicate()
@@ -215,7 +217,7 @@ class AlgorithmTest extends TestCase
             $numbers
         );
 
-        $this->assertEquals($filtered, [1, 2, 3]);
+        $this->assertEquals([1, 2, 3], $filtered);
     }
 
     public function testFoldFunctionTransformsCollectionIntoSingleValue()
@@ -236,7 +238,7 @@ class AlgorithmTest extends TestCase
             0
         );
 
-        $this->assertEquals($reduce, 2);
+        $this->assertEquals(2, $reduce);
     }
 
     public function testFoldRightFunctionReducesArrayFromRightToLeft()
@@ -249,7 +251,7 @@ class AlgorithmTest extends TestCase
 
         $fold = A\foldRight($foldFn, $strings, 'fum');
 
-        $this->assertEquals($fold, 'fum-baz-bar-foo');
+        $this->assertEquals('fum-baz-bar-foo', $fold);
     }
 
     public function testArrayKeysExistFunctionDeterminesIfKeysExistInCollection()
@@ -261,7 +263,7 @@ class AlgorithmTest extends TestCase
 
         $testBasicInfoIsSet = A\arrayKeysExist($character, 'name', 'house');
 
-        $this->assertEquals($testBasicInfoIsSet, true);
+        $this->assertTrue($testBasicInfoIsSet);
     }
 
     public function testDropLeftFunctionRemovesArrayItemsFromTheFirstIndexOnwards()
@@ -270,7 +272,7 @@ class AlgorithmTest extends TestCase
 
         $modified = A\dropLeft($numbers, 2);
 
-        $this->assertEquals($modified, [2 => 3, 3 => 4, 4 => 5]);
+        $this->assertEquals([2 => 3, 3 => 4, 4 => 5], $modified);
     }
 
     public function testDropRightFunctionRemovesArrayItemsFromTheLastIndexBackwards()
@@ -279,7 +281,7 @@ class AlgorithmTest extends TestCase
 
         $modified = A\dropRight($numbers, 2);
 
-        $this->assertEquals($modified, [1, 2, 3]);
+        $this->assertEquals([1, 2, 3], $modified);
     }
 
     public function testUniqueFunctionRemovesDuplicateValuesInCollection()
@@ -288,7 +290,7 @@ class AlgorithmTest extends TestCase
 
         $unique = A\unique($values);
 
-        $this->assertEquals($unique, ['foo', 'bar', 'baz']);
+        $this->assertEquals(['foo', 'bar', 'baz'], $unique);
     }
 
     public function testFlattenFunctionLowersArrayDimensionsByOneLevel()
@@ -297,7 +299,7 @@ class AlgorithmTest extends TestCase
 
         $flattened = A\flatten($collection);
 
-        $this->assertEquals($flattened, ['foo', 'bar', 1, 2, 3]);
+        $this->assertEquals(['foo', 'bar', 1, 2, 3], $flattened);
     }
 
     public function testCompactFunctionPurgesCollectionOfFalseyValues()
@@ -306,28 +308,28 @@ class AlgorithmTest extends TestCase
 
         $purged = A\compact($mixed);
 
-        $this->assertEquals($purged, [1, 2, 'foo']);
+        $this->assertEquals([1, 2, 'foo'], $purged);
     }
 
     public function testFillFunctionFillsArrayIndexesWithArbitraryValues()
     {
         $fill = A\fill([1, 2, 3, 4, 5, 6, 7], 'foo', 1, 4);
 
-        $this->assertEquals($fill, [1, 'foo', 'foo', 'foo', 'foo', 6, 7]);
+        $this->assertEquals([1, 'foo', 'foo', 'foo', 'foo', 6, 7], $fill);
     }
 
     public function testIndexOfFunctionComputesArrayValueIndex()
     {
         $index = A\indexOf([1, 2, 3, 4], 2);
 
-        $this->assertEquals($index, 1);
+        $this->assertEquals(1, $index);
     }
 
     public function testReverseFunctionComputesReverseOfArray()
     {
         $reverse = A\reverse(['foo', 'bar', 'baz']);
 
-        $this->assertEquals($reverse, ['baz', 'bar', 'foo']);
+        $this->assertEquals(['baz', 'bar', 'foo'], $reverse);
     }
 
     public function testFromPairsFunctionCreatesKeyValueArrayPairs()
@@ -338,11 +340,11 @@ class AlgorithmTest extends TestCase
             ['boo', 1]
         ]);
 
-        $this->assertEquals($fromPairs, [
+        $this->assertEquals([
             'foo' => 'baz',
             'bar' => 'baz',
             'boo' => 1
-        ]);
+        ], $fromPairs);
     }
 
     public function testToPairsFunctionCreatesArraysWithTwoElementsEach()
@@ -353,11 +355,11 @@ class AlgorithmTest extends TestCase
             'boo' => 1
         ]);
 
-        $this->assertEquals($toPairs, [
+        $this->assertEquals([
             ['foo', 'baz'], 
             ['bar', 'baz'], 
             ['boo', 1]
-        ]);
+        ], $toPairs);
     }
 
     public function testMemoizeFunctionComputesMemoizedFunction()
@@ -368,7 +370,7 @@ class AlgorithmTest extends TestCase
             }
         );
 
-        $this->assertEquals($factorial(5), 120);
+        $this->assertEquals(120, $factorial(5));
     }
 
     public function testEveryFunctionEvaluatesBooleanPredicate()
@@ -380,7 +382,7 @@ class AlgorithmTest extends TestCase
             } 
         );
 
-        $this->assertEquals($every, false);
+        $this->assertFalse($every);
     }
 
     public function testAnyFunctionFindsFirstOccurenceOfFunctionComplianceInList()
@@ -392,7 +394,7 @@ class AlgorithmTest extends TestCase
             }
         );
 
-        $this->assertEquals($any, true);
+        $this->assertTrue($any);
     }
 
     public function testGroupByFunctionCreatesArrayGroupedByKey()
@@ -407,7 +409,6 @@ class AlgorithmTest extends TestCase
         );
 
         $this->assertEquals(
-            $grouped,
             [
                 'sg' => [
                     ['name' => 'josh', 'pos' => 'sg'],
@@ -416,7 +417,8 @@ class AlgorithmTest extends TestCase
                 'pg' => [
                     ['name' => 'goran', 'pos' => 'pg']
                 ]
-            ]
+            ],
+            $grouped
         );
     }
 
@@ -432,10 +434,10 @@ class AlgorithmTest extends TestCase
         );
 
         $this->assertEquals(
-            $find,
             [
                 2 => ['name' => 'demarcus', 'pos' => 'c']
-            ]
+            ],
+            $find
         );
     }
 
@@ -443,14 +445,14 @@ class AlgorithmTest extends TestCase
     {
         $min = A\min([23, 45, 12, 78]);
 
-        $this->assertEquals($min, 12);
+        $this->assertEquals(12, $min);
     }
 
     public function testMaxFunctionComputesLargestValueInList()
     {
         $max = A\max([23, 79, 54, 24]);
 
-        $this->assertEquals($max, 79);
+        $this->assertEquals(79, $max);
     }
 
     public function testToExceptionWrapsFunctionPrintsExceptionMessageIfExceptionIsThrownOrResult()
@@ -463,8 +465,8 @@ class AlgorithmTest extends TestCase
             return $val * 2;
         };
 
-        $this->assertEquals(A\toException($func)(), 'I am an exception');
-        $this->assertInstanceOf(Closure::class, A\toException($func));
-        $this->assertEquals(A\toException($result)(12), 24);
+        $this->assertEquals('I am an exception', A\toException($func)());
+        $this->assertInstanceOf(\Closure::class, A\toException($func));
+        $this->assertEquals(24, A\toException($result)(12));
     }
 }
