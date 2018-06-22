@@ -13,10 +13,16 @@ Before you can use the bingo-functional library, you should have either Git or C
 composer require chemem/bingo-functional
 ```
 
-To install via Git, type:
+To install via Git - without Composer, type:
 
 ```
 git clone https://github.com/ace411/bingo-functional.git
+```
+
+Upon successful installation, add the following statement to the summit of all the scripts in which you intend to use the library's functions and functors.
+
+```php
+require_once __DIR__ . '/autoload.php';
 ```
 
 ## Usage
