@@ -11,7 +11,7 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const extend = "Chemem\\Bingo\\Functional\\Algorithms";
+const extend = "Chemem\\Bingo\\Functional\\Algorithms\\extend";
 
 function extend(array $primary, array ...$exts) : array
 {
