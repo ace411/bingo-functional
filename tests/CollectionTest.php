@@ -96,4 +96,29 @@ class CollectionTest extends TestCase
             
         $this->assertEquals($combined, \SplFixedArray::fromArray([1, 2, 3, 4]));
     }
+
+    public function testSliceFunctionCreatesNewCollectionInstance()
+    {
+        $sliced = Collection::from('foo', 'bar', 'baz')
+            ->slice(2);
+
+        $this->assertInstanceOf(Collection::class, $sliced);
+    }
+
+    public function testSliceFunctionRemovesSpecifiedNumberOfElementsFromFrontOfList()
+    {
+        $sliced = Collection::from('foo', 'bar', 'baz')
+            ->slice(2)
+            ->getList();
+
+        $this->assertEquals($sliced, \SplFixedArray::fromArray(['baz']));
+    }
+
+    public function testCollectionInstanceIsJsonSerializable()
+    {
+        $list = Collection::from('foo', 'bar', 'baz')
+            ->map('strtoupper');
+
+        $this->assertInternalType('string', json_encode($list));
+    }
 }
