@@ -81,6 +81,23 @@ class Collection implements \JsonSerializable
         return $fold(0, $acc);
     }
 
+    public function slice(int $count) : Collection
+    {
+        $list = $this->list;
+        $listCount = $list->count();
+        $newList = new \SplFixedArray($listCount - $count);
+
+        $drop = function (int $init, int $base = 0) use ($newList, $listCount, $list, &$drop) {
+            if ($init >= $listCount) { return new static($newList); }
+
+            $newList[$base] = $list->offsetGet($init);
+
+            return $drop($init + 1, $base + 1);
+        };
+
+        return $drop($count);
+    }
+
     public function merge(Collection $list)
     {
         $oldSize = $this->getSize();
