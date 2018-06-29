@@ -1,5 +1,4 @@
 ---
-title: install
 description: Installation of library
 next: /functions.html
 nextTitle: Function helpers

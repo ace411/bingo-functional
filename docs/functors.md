@@ -1,5 +1,4 @@
 ---
-title: functors-docs
 logo: bingo-functional-logo.png
 description: Documentation for functors
 prev: /pattern-matching.html

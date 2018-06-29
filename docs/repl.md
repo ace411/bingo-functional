@@ -1,5 +1,4 @@
 ---
-title: repl
 description: bingo-functional REPL docs
 logo: bingo-functional-logo.png
 prev: /functors.html

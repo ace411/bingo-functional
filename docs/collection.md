@@ -1,5 +1,4 @@
 ---
-title: collection-helpers
 logo: bingo-functional-logo.png
 description: Documentation for helper functions used on collections
 prev: /functions.html
