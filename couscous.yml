@@ -2,6 +2,18 @@ title: bingo-functional
 
 subTitle: A simple functional programming library for PHP
 
+logo: bingo-functional-logo.png
+
+languages: ["en"]
+
+defaultLanguage: en
+
+color: "#a6a2a2"
+
+include:
+  - docs
+  - img
+
 exclude:
   - vendor
   - website
@@ -14,34 +26,34 @@ github:
   user: ace411
   repo: bingo-functional
 
-menu:
-  items:
-    introduction: 
-      text: Introduction
-      relativeUrl: index.html
-    documentation:
-      text: Installation
-      relativeUrl: docs/main.html
-    functions:
-      text: Function Helpers
-      relativeUrl: docs/functions.html
-    pattern-matching:
-      text: Pattern Matching
-      relativeUrl: docs/pattern-matching.html
-    collections:
-      text: Collection Helpers
-      relativeUrl: docs/collection.html
-    functors:
-      text: Functors
-      relativeUrl: docs/functors.html
-    console:
-      text: Console
-      relativeUrl: docs/repl.html
-    changes:
-      text: Changes
-      relativeUrl: docs/changes.html
-
 baseUrl: https://ace411.github.io/bingo-functional
 
+search: true
+scripts:
+    after:
+        - php .couscous/generated/.scripts/generate-search-index.php
+        - rm -rf .couscous/generated/.scripts
+
+sidebar:
+  - title: Links
+  - text: Install
+    link: index.html
+  - text: Function Helpers
+    link: functions.html
+  - text: Collection Helpers
+    link: collection.html
+  - text: Pattern Matching
+    link: pattern-matching.html
+  - text: Functors
+    link: functors.html
+  - text: Console
+    link: repl.html
+  - text: Changes
+    link: changes.html
+
+footer:
+  default: bingo-functional 2018 - Built by Lochemem Bruno Michael
+
 template:
-  url: https://github.com/CouscousPHP/Template-Light
+  index: main.md
+  url: https://github.com/moqmar/mintlook-couscous
