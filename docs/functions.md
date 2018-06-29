@@ -2,9 +2,9 @@
 title: function-helpers
 logo: bingo-functional-logo.png
 description: Documentation for helper functions used on functions
-prev: index.html
+prev: /index.html
 prevTitle: Installation
-next: collection.html
+next: /collection.html
 nextTitle: Collection Helpers
 ---
 

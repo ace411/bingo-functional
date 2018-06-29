@@ -1,7 +1,7 @@
 ---
 title: install
 description: Installation of library
-next: functions.html
+next: /functions.html
 nextTitle: Function helpers
 ---
 <img src="bingo-functional-logo.png" alt="bingo-functional logo">

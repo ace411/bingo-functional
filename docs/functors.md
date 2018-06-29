@@ -2,9 +2,9 @@
 title: functors-docs
 logo: bingo-functional-logo.png
 description: Documentation for functors
-prev: pattern-matching.html
+prev: /pattern-matching.html
 prevTitle: Pattern Matching
-next: repl.html
+next: /repl.html
 nextTitle: Console
 ---
 

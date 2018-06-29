@@ -2,9 +2,9 @@
 title: Pattern Matching
 logo: bingo-functional-logo.png
 description: Pattern Matching docs
-prev: collection.html
+prev: /collection.html
 prevTitle: Collection Helpers
-next: functors.html
+next: /functors.html
 nextTitle: Functors
 ---
 

@@ -2,9 +2,9 @@
 title: collection-helpers
 logo: bingo-functional-logo.png
 description: Documentation for helper functions used on collections
-prev: functions.html
+prev: /functions.html
 prevTitle: Function Helpers
-next: pattern-matching.html
+next: /pattern-matching.html
 nextTitle: Pattern Matching
 ---
 

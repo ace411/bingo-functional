@@ -2,9 +2,9 @@
 title: changes
 logo: bingo-functional-logo.png
 description: Change log for the project
-prev: repl.html
+prev: /repl.html
 prevTitle: Console
-next: index.html
+next: /index.html
 nextTitle: Installation
 ---
 
