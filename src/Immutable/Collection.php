@@ -1,21 +1,54 @@
 <?php
 
+/**
+ * Immutable Collection class
+ * 
+ * @package bingo-functional
+ * @author Lochemem Bruno Michael
+ * @license Apache-2.0
+ */
+
 namespace Chemem\Bingo\Functional\Immutable;
 
 class Collection implements \JsonSerializable
 {
+    /**
+     * @access private
+     * @var mixed $list 
+     */
     private $list;
 
+    /**
+     * Collection constructor
+     * 
+     * @param mixed $items
+     */
     public function __construct($items)
     {
         $this->list = $items;
     }
 
+    /**
+     * from static method
+     * 
+     * @access public
+     * @method from
+     * @param mixed $item
+     * @return object Collection
+     */
     public static function from(...$items) : Collection
     {
         return new static(\SplFixedArray::fromArray($items));
     }
 
+    /**
+     * map method
+     * 
+     * @access public
+     * @method map
+     * @param callable $func
+     * @return object Collection
+     */
     public function map(callable $func) : Collection
     {
         $list = $this->list;
@@ -33,6 +66,14 @@ class Collection implements \JsonSerializable
         return $map();
     }
 
+    /**
+     * flatMap method
+     * 
+     * @access public
+     * @method flatMap
+     * @param callable $func
+     * @return array $flattened
+     */
     public function flatMap(callable $func) : array
     {
         $list = $this->list;
@@ -49,6 +90,14 @@ class Collection implements \JsonSerializable
         return $flatMap();
     }
 
+    /**
+     * filter method
+     * 
+     * @access public
+     * @method filter
+     * @param callable $func
+     * @return object Collection
+     */
     public function filter(callable $func) : Collection
     {
         $list = $this->list;
@@ -65,7 +114,16 @@ class Collection implements \JsonSerializable
         return $filter();
     }
 
-    public function fold(callable $func, $acc)
+    /**
+     * fold method
+     * 
+     * @access public
+     * @method fold
+     * @param callable $func
+     * @param mixed $acc
+     * @return object Collection
+     */
+    public function fold(callable $func, $acc) : Collection
     {
         $list = $this->list;
         $count = $list->count();
@@ -81,6 +139,14 @@ class Collection implements \JsonSerializable
         return $fold(0, $acc);
     }
 
+    /**
+     * slice method
+     * 
+     * @access public
+     * @method slice
+     * @param int $count
+     * @return object Collection
+     */
     public function slice(int $count) : Collection
     {
         $list = $this->list;
@@ -98,7 +164,15 @@ class Collection implements \JsonSerializable
         return $drop($count);
     }
 
-    public function merge(Collection $list)
+    /**
+     * merge method
+     * 
+     * @access public
+     * @method merge
+     * @param Collection $list
+     * @return object Collection
+     */
+    public function merge(Collection $list) : Collection
     {
         $oldSize = $this->getSize();
         $combinedSize = $oldSize + $list->getSize();
@@ -116,21 +190,41 @@ class Collection implements \JsonSerializable
         return $merge($oldSize, 0);
     }
 
+    /**
+     * getList method
+     * 
+     * @return mixed $list
+     */
     public function getList()
     {
         return $this->list;
     }
-
+    
+    /**
+     * jsonSerialize method
+     * 
+     * @return array $list
+     */
     public function jsonSerialize()
     {
-        return $this->list->toArray();
+        return $this->list instanceof \SplFixedArray ? $this->list->toArray() : [$this->list];
     }
 
+    /**
+     * getSize method
+     * 
+     * @return int $size
+     */
     public function getSize() : int
     {
         return $this->list instanceof \SplFixedArray ? ($this->list->getSize()) : 1;
     }
 
+    /**
+     * toArray method
+     * 
+     * @return array $list
+     */
     public function toArray() : array
     {
         return $this->list instanceof \SplFixedArray ? ($this->list->toArray()) : [$this->list];
