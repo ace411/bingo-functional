@@ -1,6 +1,11 @@
 ---
 title: functors-docs
-subTitle: Documentation for functors
+logo: bingo-functional-logo.png
+description: Documentation for functors
+prev: pattern-matching.html
+prevTitle: Pattern Matching
+next: repl.html
+nextTitle: Console
 ---
 
 A functor is an entity derived from Category Mathematics. Functors allow one to map functions to one or more values defined in their context. Functors are, therefore, the data structures that form the basis for Monads, Applicatives, Just/Nothing types, and Left/Right types.

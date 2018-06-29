@@ -1,6 +1,11 @@
 ---
 title: changes
-subTitle: Change log for the project
+logo: bingo-functional-logo.png
+description: Change log for the project
+prev: repl.html
+prevTitle: Console
+next: index.html
+nextTitle: Installation
 ---
 
 # bingo-functional change log

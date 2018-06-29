@@ -1,6 +1,11 @@
 ---
 title: Pattern Matching
-subTitle: Pattern Matching docs
+logo: bingo-functional-logo.png
+description: Pattern Matching docs
+prev: collection.html
+prevTitle: Collection Helpers
+next: functors.html
+nextTitle: Functors
 ---
 
 The goal of pattern matching is to bind values to successful matches. Pattern matching is similar to the switch statement. The patterns used in the pattern-matching function are a near facsimile of the [Haskell pattern-matching patterns](https://en.wikibooks.org/wiki/Haskell/Pattern_matching). Because pattern matching is a core feature of a language like Haskell, implementing it in PHP is quite the uphill task. The bingo-functional library has two pattern matching functions that conform to the patterns shown in the table below: ```match``` and ```patternMatch```.
