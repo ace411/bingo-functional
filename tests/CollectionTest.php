@@ -26,7 +26,7 @@ class CollectionTest extends TestCase
             ->map(function ($val) { return $val + 2; })
             ->getList();
 
-        $this->assertEquals($list, \SplFixedArray::fromArray([3, 4, 5, 6]));
+        $this->assertEquals(\SplFixedArray::fromArray([3, 4, 5, 6]), $list);
     }
 
     public function testFlatMapFunctionCreatesArray()
@@ -42,7 +42,7 @@ class CollectionTest extends TestCase
         $list = Collection::from(1, 2, 3, 4)
             ->flatMap(function ($val) { return $val * 2; });
 
-        $this->assertEquals($list, [2, 4, 6, 8]);
+        $this->assertEquals([2, 4, 6, 8], $list);
     }
 
     public function testFilterFunctionCreatesNewCollectionInstance()
@@ -59,7 +59,7 @@ class CollectionTest extends TestCase
             ->filter(function ($val) { return $val > 2; })
             ->getList();
             
-        $this->assertEquals($list, \SplFixedArray::fromArray([3, 4]));
+        $this->assertEquals(\SplFixedArray::fromArray([3, 4]), $list);
     }
 
     public function testFoldFunctionCreatesNewCollectionInstance()
@@ -76,7 +76,7 @@ class CollectionTest extends TestCase
             ->fold(function ($acc, $val) { return $acc + $val; }, 1)
             ->getList();
 
-        $this->assertEquals($list, \SplFixedArray::fromArray([11]));
+        $this->assertEquals(\SplFixedArray::fromArray([11]), $list);
         $this->assertEquals($list->getSize(), 1);
     }
 
@@ -94,7 +94,7 @@ class CollectionTest extends TestCase
             ->merge(Collection::from(3, 4))
             ->getList();
             
-        $this->assertEquals($combined, \SplFixedArray::fromArray([1, 2, 3, 4]));
+        $this->assertEquals(\SplFixedArray::fromArray([1, 2, 3, 4]), $combined);
     }
 
     public function testSliceFunctionCreatesNewCollectionInstance()
@@ -111,7 +111,7 @@ class CollectionTest extends TestCase
             ->slice(2)
             ->getList();
 
-        $this->assertEquals($sliced, \SplFixedArray::fromArray(['baz']));
+        $this->assertEquals(\SplFixedArray::fromArray(['baz']), $sliced);
     }
 
     public function testCollectionInstanceIsJsonSerializable()
@@ -119,6 +119,7 @@ class CollectionTest extends TestCase
         $list = Collection::from('foo', 'bar', 'baz')
             ->map('strtoupper');
 
+        $this->assertContains('JsonSerializable', class_implements($list));
         $this->assertInternalType('string', json_encode($list));
     }
 }
