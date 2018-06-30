@@ -467,4 +467,26 @@ class AlgorithmTest extends TestCase
         $this->assertInstanceOf(Closure::class, A\toException($func));
         $this->assertEquals(A\toException($result)(12), 24);
     }
+
+    public function testTrampolineIsCurriedByDefault()
+    {
+        $fib = A\trampoline(
+            function ($val) use (&$fib) {
+                return $val < 2 ? $val : $fib($val - 1) + $fib($val - 2); 
+            }
+        );
+
+        $this->assertInstanceOf(\Closure::class, $fib);
+    }
+
+    public function testTrampolineEvaluatesRecursiveFunction()
+    {
+        $fib = A\trampoline(
+            function ($val) use (&$fib) {
+                return $val < 2 ? $val : $fib($val - 1) + $fib($val - 2); 
+            }
+        );
+
+        $this->assertEquals(89, $fib(11));
+    }
 }
