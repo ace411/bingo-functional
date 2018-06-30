@@ -10,6 +10,8 @@
 
 namespace Chemem\Bingo\Functional\Immutable;
 
+use function Chemem\Bingo\Functional\Algorithms\trampoline;
+
 class Collection implements \JsonSerializable
 {
     /**
@@ -55,13 +57,15 @@ class Collection implements \JsonSerializable
         $count = $list->count();
         $newList = new \SplFixedArray($count);
 
-        $map = function (int $init = 0) use (&$map, $list, $func, $count, $newList) {
-            if ($init >= $count) { return new static($newList); }
+        $map = trampoline(
+            function (int $init = 0) use (&$map, $list, $func, $count, $newList) {
+                if ($init >= $count) { return new static($newList); }
 
-            $newList[$init] = $func($list->offsetGet($init));
+                $newList[$init] = $func($list->offsetGet($init));
 
-            return $map($init + 1);
-        };
+                return $map($init + 1);
+            }
+        );
         
         return $map();
     }
@@ -79,13 +83,15 @@ class Collection implements \JsonSerializable
         $list = $this->list;
         $count = $list->count();
 
-        $flatMap = function (int $init = 0, array $acc = []) use ($list, $func, $count, &$flatMap) {
-            if ($init >= $count) { return $acc; }
+        $flatMap = trampoline(
+            function (int $init = 0, array $acc = []) use ($list, $func, $count, &$flatMap) {
+                if ($init >= $count) { return $acc; }
 
-            $acc[] = $func($list->offsetGet($init));
+                $acc[] = $func($list->offsetGet($init));
 
-            return $flatMap($init + 1, $acc);
-        };
+                return $flatMap($init + 1, $acc);
+            }
+        );
 
         return $flatMap();
     }
@@ -103,13 +109,15 @@ class Collection implements \JsonSerializable
         $list = $this->list;
         $count = $list->count();
         
-        $filter = function (int $init = 0, array $acc = []) use ($func, $list, $count, &$filter) {
-            if ($init >= $count) { return new static(\SplFixedArray::fromArray($acc)); }
+        $filter = trampoline(
+            function (int $init = 0, array $acc = []) use ($func, $list, $count, &$filter) {
+                if ($init >= $count) { return new static(\SplFixedArray::fromArray($acc)); }
 
-            if ($func($list->offsetGet($init))) { $acc[] = $list->offsetGet($init); }
+                if ($func($list->offsetGet($init))) { $acc[] = $list->offsetGet($init); }
 
-            return $filter($init + 1, $acc);
-        };
+                return $filter($init + 1, $acc);
+            }
+        );
 
         return $filter();
     }
@@ -128,13 +136,15 @@ class Collection implements \JsonSerializable
         $list = $this->list;
         $count = $list->count();
 
-        $fold = function (int $init = 0, $mult) use ($list, $func, $count, &$fold) {
-            if ($init >= $count) { return new static(\SplFixedArray::fromArray(is_array($mult) ? $mult: [$mult])); }
+        $fold = trampoline(
+            function (int $init = 0, $mult) use ($list, $func, $count, &$fold) {
+                if ($init >= $count) { return new static(\SplFixedArray::fromArray(is_array($mult) ? $mult: [$mult])); }
 
-            $mult = $func($mult, $list->offsetGet($init));
+                $mult = $func($mult, $list->offsetGet($init));
 
-            return $fold($init + 1, $mult);
-        };
+                return $fold($init + 1, $mult);
+            }
+        );
 
         return $fold(0, $acc);
     }
@@ -153,13 +163,15 @@ class Collection implements \JsonSerializable
         $listCount = $list->count();
         $newList = new \SplFixedArray($listCount - $count);
 
-        $drop = function (int $init, int $base = 0) use ($newList, $listCount, $list, &$drop) {
-            if ($init >= $listCount) { return new static($newList); }
+        $drop = trampoline(
+            function (int $init, int $base = 0) use ($newList, $listCount, $list, &$drop) {
+                if ($init >= $listCount) { return new static($newList); }
 
-            $newList[$base] = $list->offsetGet($init);
+                $newList[$base] = $list->offsetGet($init);
 
-            return $drop($init + 1, $base + 1);
-        };
+                return $drop($init + 1, $base + 1);
+            }
+        );
 
         return $drop($count);
     }
@@ -179,13 +191,15 @@ class Collection implements \JsonSerializable
         $old = $this->list;
         $old->setSize($combinedSize);
 
-        $merge = function (int $init, int $base) use ($list, $old, &$merge, $combinedSize) {
-            if ($init >= $combinedSize) { return new static($old); }
+        $merge = trampoline(
+            function (int $init, int $base) use ($list, $old, &$merge, $combinedSize) {
+                if ($init >= $combinedSize) { return new static($old); }
 
-            $old[$init] = $list->getList()->offsetGet($base);
+                $old[$init] = $list->getList()->offsetGet($base);
 
-            return $merge($init + 1, $base + 1);
-        };
+                return $merge($init + 1, $base + 1);
+            }
+        );
 
         return $merge($oldSize, 0);
     }
