@@ -7,7 +7,7 @@ next: /index.html
 nextTitle: Installation
 ---
 
-# bingo-functional change log
+# Change log
 
 ## v1.0.0
 

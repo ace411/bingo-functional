@@ -7,6 +7,8 @@ next: /pattern-matching.html
 nextTitle: Pattern Matching
 ---
 
+# Collection Helpers
+
 ## Picking
 
 ```
