@@ -7,6 +7,8 @@ next: /collection.html
 nextTitle: Collection Helpers
 ---
 
+# Function Helpers
+
 ## Composing functions
 
 ```
@@ -309,6 +311,26 @@ $factorial = A\memoize(
 );
 
 $factorial(130); //outputs float(6.4668554892205E+219)
+```
+
+## Trampolines
+
+```
+trampoline(callable $function)
+```
+
+**Since:** v1.10.0
+
+**Arguments:**
+
+- ***function (callable)*** - The recursive function to optimize
+
+The impetus for a trampoline implementation, a tail-call optimizer, is the inability of the PHP VM to offer tail-call optimization.
+
+```php
+$fib = A\trampoline(function (int $val) use (&$fib) { return $val < 2 ? $val : $fib($val - 1) + $fib($val - 2); });
+
+echo $fib(11); //outputs 89
 ```
 
 ## Callback signatures
