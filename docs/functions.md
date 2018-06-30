@@ -316,7 +316,7 @@ $factorial(130); //outputs float(6.4668554892205E+219)
 ## Trampolines
 
 ```
-trampoline(callable $function)
+trampoline(callable $function)(mixed ...$args)
 ```
 
 **Since:** v1.10.0
@@ -324,6 +324,7 @@ trampoline(callable $function)
 **Arguments:**
 
 - ***function (callable)*** - The recursive function to optimize
+- ***args (mixed)*** - The arguments of the function to optimize
 
 The impetus for a trampoline implementation, a tail-call optimizer, is the inability of the PHP VM to offer tail-call optimization.
 
