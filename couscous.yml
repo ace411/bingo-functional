@@ -44,6 +44,8 @@ sidebar:
     link: collection.html
   - text: Pattern Matching
     link: pattern-matching.html
+  - text: Immutable Lists
+    link: immutable-lists.html
   - text: Functors
     link: functors.html
   - text: Console
