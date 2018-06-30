@@ -122,4 +122,28 @@ class CollectionTest extends TestCase
         $this->assertContains('JsonSerializable', class_implements($list));
         $this->assertInternalType('string', json_encode($list));
     }
+
+    public function testCollectionImplementsIteratorAggregate()
+    {
+        $list = Collection::from('FOO', 'BAR')
+            ->map('strtolower');
+
+        $this->assertContains('IteratorAggregate', class_implements($list));
+    }
+
+    public function testCollectionClassIsIterable()
+    {
+        $acc = [];
+        $list = Collection::from(13, 15, 16, 18, 14, 20)
+            ->filter(function ($val) { return $val % 2 == 0; });
+
+        foreach ($list as $val) {
+            if ($val < 15) {
+                $acc[] = $val;
+            }
+        }
+
+        $this->assertInternalType('array', $acc);
+        $this->assertEquals([14], $acc);
+    }
 }
