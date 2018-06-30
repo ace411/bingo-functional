@@ -12,7 +12,7 @@ namespace Chemem\Bingo\Functional\Immutable;
 
 use function Chemem\Bingo\Functional\Algorithms\trampoline;
 
-class Collection implements \JsonSerializable
+class Collection implements \JsonSerializable, \IteratorAggregate
 {
     /**
      * @access private
@@ -242,5 +242,17 @@ class Collection implements \JsonSerializable
     public function toArray() : array
     {
         return $this->list instanceof \SplFixedArray ? ($this->list->toArray()) : [$this->list];
+    }
+
+    /**
+     * getIterator method
+     * 
+     * @see ArrayIterator
+     * @return object ArrayIterator
+     */
+
+    public function getIterator() : \ArrayIterator
+    {
+        return new \ArrayIterator($this->toArray());
     }
 }
