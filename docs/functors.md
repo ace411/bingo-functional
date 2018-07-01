@@ -1,12 +1,12 @@
 ---
-title: functors-docs
 logo: bingo-functional-logo.png
 description: Documentation for functors
-prev: /pattern-matching.html
-prevTitle: Pattern Matching
+prev: /immutable-lists.html
+prevTitle: Immutable Lists
 next: /repl.html
 nextTitle: Console
 ---
+# Functors
 
 A functor is an entity derived from Category Mathematics. Functors allow one to map functions to one or more values defined in their context. Functors are, therefore, the data structures that form the basis for Monads, Applicatives, Just/Nothing types, and Left/Right types.
 
@@ -21,11 +21,8 @@ use Chemem\Bingo\Functional\Functors\{CollectionApplicative, Applicative};
 
 $num = Applicative::pure(10); //should return an integer, 10 encapsulated in an Applicative object
 
-$addTen = Applicative::pure(
-    function (int $a) : int {
-        return $a + 10;
-    }
-); //should return a Closure object encapsulated in an Applicative object
+$addTen = Applicative::pure(function (int $a) : int { return $a + 10; }); 
+//should return a Closure object encapsulated in an Applicative object
 ```
 
 ### CollectionApplicatives
@@ -35,13 +32,9 @@ Applicatives and CollectionApplicatives are not entirely dissimilar. The latter 
 ```php
 $zipList = CollectionApplicative::pure([
     $addTen,
-    function (int $a) : int {
-        return $a * 10;
-    }
+    function (int $a) : int { return $a * 10; }
 ])
-->apply(
-    CollectionApplicative::pure([1, 2, 3])
-)
+->apply(CollectionApplicative::pure([1, 2, 3]))
 ->getValues();
 //should return [11, 12, 13, 10, 20, 30]
 ```        
@@ -51,7 +44,6 @@ $zipList = CollectionApplicative::pure([
 The apply method is simply a means of binding an argument to a function defined in the context of an Applicative. It is especially convenient for state transformations within a functor environment.
 
 ```php
-
 $addTen->apply($num)
     ->getValue(); //should return 20
 ```    
@@ -64,11 +56,8 @@ The monad implementation in this library is a simple one. Considering the existe
 use Chemem\Bingo\Functional\Functors\Monad;
 
 $val = Monad::return(10)
-    ->bind(
-        function (int $val) : int {
-            return $val + 10;
-        }
-    ); //returns the value 10 encapsulated in a Monad object
+    ->bind(function (int $val) : int { return $val + 10; }); 
+//returns the value 10 encapsulated in a Monad object
 ```
 
 ***Monads*** map functions onto values stored inside their contexts whereas ***Applicatives*** bind values to the functions stored inside theirs.
@@ -82,11 +71,7 @@ The IO monad is one built purposely for handling impure operations. Impure opera
 ```php
 use Chemem\Bingo\Functional\Functors\Monads\IO;
 
-$readFromFile = function () : string {
-    return file_get_contents('path/to/file');
-};
-
-$io = IO::of($readFromFile)
+$io = IO::of(function () : string { return file_get_contents('path/to/file'); })
     ->map('strtoupper')
     ->bind('var_dump')
     ->exec();
@@ -102,9 +87,7 @@ use Chemem\Bingo\Functional\Functors\Monads\Writer;
 
 list($result, $log) = Writer::of(2, 'Initialize')
     ->bind(
-        function (int $x) : int {
-            return $x + 2;
-        },
+        function (int $x) : int { return $x + 2;},
         'Add 2 to x val'
     )
     ->run();
@@ -208,7 +191,6 @@ $yetAnotherVal = Maybe::fromValue(9, 9); //returns Nothing as the Just value and
 The ```isJust()``` and ```isNothing()``` methods simply return boolean values to indicate whether values are either of the Just type or the Nothing type.
 
 ```php
-
 $var = Maybe::fromValue(33)
     ->isJust(); //returns true
 
@@ -234,7 +216,6 @@ $err = Either::left('Invalid integer'); //error value encapsulated in Left type
 As is the case with Haskell, the ```partitionEithers()``` method transforms an array of Either type items into a multidimensional array of left and right indexed sub-arrays.
 
 ```php
-
 $eithers = [Either::right(12), Either::right(10), Either::left('Invalid Integer')];
 
 $partitionedEithers = Either::partitionEithers($eithers);
@@ -249,17 +230,12 @@ The ```filter()``` method is one that returns a value which, in this case can be
 
 ```php
 $justVal = Maybe::just(2)
-    ->filter(
-        function (int $a) : bool {
-            return is_int($a);
-        }
-    ); //should return 2 encapsulated in a Just type object
+    ->filter(function (int $a) : bool { return is_int($a); }); 
+//should return 2 encapsulated in a Just type object
 
 $rightval = Either::right('12')
     ->filter(
-        function (string $a) : bool {
-            return is_numeric($a);
-        },
+        function (string $a) : bool { return is_numeric($a); },
         'Value is not a numeric string'
     ); //should return '12' encapsulated in a Right type object
 ```
@@ -269,12 +245,8 @@ $rightval = Either::right('12')
 The ```map()``` method makes it possible to mutate functor context by enabling function binding.
 
 ```php
-
-$justVal->map(
-    function (int $a) : int {
-        return $a + 10;
-    }
-); //should return 12 encapsulated in a Just type object
+$justVal->map(function (int $a) : int { return $a + 10; }); 
+//should return 12 encapsulated in a Just type object
 //should work in a similar way for Right type objects
 ```
 
@@ -283,12 +255,8 @@ $justVal->map(
 The ```flatMap()``` method works in a manner similar to the ```map()``` method but returns a non-encapsulated value.
 
 ```php
-
-$justVal->flatMap(
-    function (int $a) : int {
-        return $a * 10;
-    }
-); //should return 20
+$justVal->flatMap(function (int $a) : int { return $a * 10; }); 
+//should return 20
 ```
 
 - **orElse()**
@@ -297,9 +265,8 @@ The ```orElse()``` method returns a current value if there is one or a given val
 
 ```php
 $user = Either::right(get_current_user())
-    ->orElse(
-        Either::right('foo')
-    ); //returns foo if the current script owner is not defined
+    ->orElse(Either::right('foo')); 
+//returns foo if the current script owner is not defined
 ```
 
 - **lift()**
@@ -315,14 +282,9 @@ function add(int $a, int $b) : int
 $maybeLifted = Maybe::lift('add');
 $eitherLifted = Either::lift('add', Either::left('Invalid Operation'));
 
-$maybeLifted(
-    Maybe::just(1),
-    Maybe::just(2)
-); //returns 3 encapsulated in a Just type object
+$maybeLifted(Maybe::just(1), Maybe::just(2)); 
+//returns 3 encapsulated in a Just type object
 
-$eitherLifted(
-    Either::right(1),
-    Either::right(2)
-);
+$eitherLifted(Either::right(1), Either::right(2));
 //returns 3 encapsulated in a Right type object
 ```

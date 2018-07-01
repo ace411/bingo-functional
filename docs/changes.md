@@ -1,5 +1,4 @@
 ---
-title: changes
 logo: bingo-functional-logo.png
 description: Change log for the project
 prev: /repl.html
@@ -8,7 +7,7 @@ next: /index.html
 nextTitle: Installation
 ---
 
-# bingo-functional change log
+# Change log
 
 ## v1.0.0
 

@@ -1,5 +1,4 @@
 ---
-title: repl
 description: bingo-functional REPL docs
 logo: bingo-functional-logo.png
 prev: /functors.html
@@ -8,6 +7,8 @@ next: /changes.html
 nextTitle: Changes
 ---
 
+# bingo-functional REPL
+
 The [bingo-functional console](https://github.com/ace411/bingo-functional-repl) is an appendage of the bingo-functional set of utilities. Capable of parsing idiomatic PHP input, the bingo-functional REPL is one predicated on providing a playground for interaction with the bingo-functional range of functions and functors. 
 
 ## Installation
@@ -15,7 +16,7 @@ The [bingo-functional console](https://github.com/ace411/bingo-functional-repl) 
 To install the bingo-functional REPL, type the following text in a command line of your choosing:
 
 ```
-composer require chemem/bingo-functional-repl
+composer require chemem/bingo-functional-repl dev-master
 ```
 
 ## Supported Expressions

@@ -44,6 +44,8 @@ sidebar:
     link: collection.html
   - text: Pattern Matching
     link: pattern-matching.html
+  - text: Immutable Lists
+    link: immutable-lists.html
   - text: Functors
     link: functors.html
   - text: Console
@@ -52,7 +54,7 @@ sidebar:
     link: changes.html
 
 footer:
-  default: bingo-functional 2018 - Built by Lochemem Bruno Michael
+  default: bingo-functional - Built by <a href="https://github.com/ace411">Lochemem Bruno Michael</a> and licensed under <strong>Apache-2.0</strong>
 
 template:
   index: main.md
