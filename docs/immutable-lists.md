@@ -166,7 +166,7 @@ The collection class implements the ```Countable```, ```JsonSerializable```, and
 ```php
 $list = Collection::from('foo', 'bar', 'baz');
 
-echo count($list); //outputs 2
+echo count($list); //outputs 3
 
 echo json_encode($list); //outputs '["foo", "bar", "baz"]'
 
