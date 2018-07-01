@@ -12,7 +12,7 @@ namespace Chemem\Bingo\Functional\Immutable;
 
 use function Chemem\Bingo\Functional\Algorithms\trampoline;
 
-class Collection implements \JsonSerializable, \IteratorAggregate
+class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
 {
     /**
      * @access private
@@ -254,5 +254,15 @@ class Collection implements \JsonSerializable, \IteratorAggregate
     public function getIterator() : \ArrayIterator
     {
         return new \ArrayIterator($this->toArray());
+    }
+
+    /**
+     * count method
+     * 
+     * @return int $count
+     */
+    public function count() : int
+    {
+        return $this->getSize();
     }
 }
