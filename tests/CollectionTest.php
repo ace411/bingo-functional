@@ -146,4 +146,20 @@ class CollectionTest extends TestCase
         $this->assertInternalType('array', $acc);
         $this->assertEquals([14], $acc);
     }
+
+    public function testCollectionImplementsCountable()
+    {
+        $list = Collection::from('foo', 'bar')
+            ->map('strtoupper');
+
+        $this->assertContains('Countable', class_implements($list));
+    }
+
+    public function testCollectionIsCountable()
+    {
+        $list = Collection::from('foo', 'bar')
+            ->map('strtoupper');
+            
+        $this->assertEquals(2, count($list));
+    }
 }
