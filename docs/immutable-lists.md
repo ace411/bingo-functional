@@ -101,9 +101,9 @@ $list->fold(callable $function, mixed $acc)
 The fold function transforms a list into a single value. 
 
 ```php
-$list = Collection::from(...['foo', 'bar', 'baz'])
-    ->fold(function (string $acc, string $val) { return rtrim($val . $acc, $acc); }, '-');
-//outputs the collection ['foo-bar-baz']
+$list = Collection::from(...[1, 2, 3, 4])
+    ->fold(function (string $acc, string $val) { return $val + $acc; }, 1);
+//outputs the collection [11]
 ```
 
 ## merge
