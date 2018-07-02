@@ -1,10 +1,10 @@
 <?php
 
 /**
- * any function
- * 
+ * any function.
+ *
  * any :: [a] -> (b -> Bool) -> c
- * @package bingo-functional
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */

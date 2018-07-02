@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Immutable Collection class
- * 
- * @package bingo-functional
+ * Immutable Collection class.
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -15,14 +14,13 @@ use function Chemem\Bingo\Functional\Algorithms\trampoline;
 class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
 {
     /**
-     * @access private
-     * @var mixed $list 
+     * @var mixed
      */
     private $list;
 
     /**
-     * Collection constructor
-     * 
+     * Collection constructor.
+     *
      * @param mixed $items
      */
     public function __construct($items)
@@ -31,27 +29,29 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * from static method
-     * 
-     * @access public
+     * from static method.
+     *
      * @method from
+     *
      * @param mixed $item
+     *
      * @return object Collection
      */
-    public static function from(...$items) : Collection
+    public static function from(...$items) : self
     {
         return new static(\SplFixedArray::fromArray($items));
     }
 
     /**
-     * map method
-     * 
-     * @access public
+     * map method.
+     *
      * @method map
+     *
      * @param callable $func
+     *
      * @return object Collection
      */
-    public function map(callable $func) : Collection
+    public function map(callable $func) : self
     {
         $list = $this->list;
         $count = $list->count();
@@ -59,23 +59,26 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
 
         $map = trampoline(
             function (int $init = 0) use (&$map, $list, $func, $count, $newList) {
-                if ($init >= $count) { return new static($newList); }
+                if ($init >= $count) {
+                    return new static($newList);
+                }
 
                 $newList[$init] = $func($list->offsetGet($init));
 
                 return $map($init + 1);
             }
         );
-        
+
         return $map();
     }
 
     /**
-     * flatMap method
-     * 
-     * @access public
+     * flatMap method.
+     *
      * @method flatMap
+     *
      * @param callable $func
+     *
      * @return array $flattened
      */
     public function flatMap(callable $func) : array
@@ -85,7 +88,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
 
         $flatMap = trampoline(
             function (int $init = 0, array $acc = []) use ($list, $func, $count, &$flatMap) {
-                if ($init >= $count) { return $acc; }
+                if ($init >= $count) {
+                    return $acc;
+                }
 
                 $acc[] = $func($list->offsetGet($init));
 
@@ -97,23 +102,28 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * filter method
-     * 
-     * @access public
+     * filter method.
+     *
      * @method filter
+     *
      * @param callable $func
+     *
      * @return object Collection
      */
-    public function filter(callable $func) : Collection
+    public function filter(callable $func) : self
     {
         $list = $this->list;
         $count = $list->count();
-        
+
         $filter = trampoline(
             function (int $init = 0, array $acc = []) use ($func, $list, $count, &$filter) {
-                if ($init >= $count) { return new static(\SplFixedArray::fromArray($acc)); }
+                if ($init >= $count) {
+                    return new static(\SplFixedArray::fromArray($acc));
+                }
 
-                if ($func($list->offsetGet($init))) { $acc[] = $list->offsetGet($init); }
+                if ($func($list->offsetGet($init))) {
+                    $acc[] = $list->offsetGet($init);
+                }
 
                 return $filter($init + 1, $acc);
             }
@@ -123,22 +133,25 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * fold method
-     * 
-     * @access public
+     * fold method.
+     *
      * @method fold
+     *
      * @param callable $func
-     * @param mixed $acc
+     * @param mixed    $acc
+     *
      * @return object Collection
      */
-    public function fold(callable $func, $acc) : Collection
+    public function fold(callable $func, $acc) : self
     {
         $list = $this->list;
         $count = $list->count();
 
         $fold = trampoline(
-            function (int $init = 0, $mult) use ($list, $func, $count, &$fold) {
-                if ($init >= $count) { return new static(\SplFixedArray::fromArray(is_array($mult) ? $mult: [$mult])); }
+            function (int $init, $mult) use ($list, $func, $count, &$fold) {
+                if ($init >= $count) {
+                    return new static(\SplFixedArray::fromArray(is_array($mult) ? $mult : [$mult]));
+                }
 
                 $mult = $func($mult, $list->offsetGet($init));
 
@@ -150,14 +163,15 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * slice method
-     * 
-     * @access public
+     * slice method.
+     *
      * @method slice
+     *
      * @param int $count
+     *
      * @return object Collection
      */
-    public function slice(int $count) : Collection
+    public function slice(int $count) : self
     {
         $list = $this->list;
         $listCount = $list->count();
@@ -165,7 +179,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
 
         $drop = trampoline(
             function (int $init, int $base = 0) use ($newList, $listCount, $list, &$drop) {
-                if ($init >= $listCount) { return new static($newList); }
+                if ($init >= $listCount) {
+                    return new static($newList);
+                }
 
                 $newList[$base] = $list->offsetGet($init);
 
@@ -177,14 +193,15 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * merge method
-     * 
-     * @access public
+     * merge method.
+     *
      * @method merge
+     *
      * @param Collection $list
+     *
      * @return object Collection
      */
-    public function merge(Collection $list) : Collection
+    public function merge(self $list) : self
     {
         $oldSize = $this->getSize();
         $combinedSize = $oldSize + $list->getSize();
@@ -193,7 +210,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
 
         $merge = trampoline(
             function (int $init, int $base) use ($list, $old, &$merge, $combinedSize) {
-                if ($init >= $combinedSize) { return new static($old); }
+                if ($init >= $combinedSize) {
+                    return new static($old);
+                }
 
                 $old[$init] = $list->getList()->offsetGet($base);
 
@@ -205,13 +224,13 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * reverse method
-     * 
-     * @access public
+     * reverse method.
+     *
      * @method reverse
+     *
      * @return object Collection
      */
-    public function reverse() : Collection
+    public function reverse() : self
     {
         $list = $this->list;
         $count = $this->list->getSize();
@@ -219,7 +238,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
 
         $reverse = trampoline(
             function (int $init, int $base = 0) use ($list, $count, $newList, &$reverse) {
-                if ($init < 0 && $base >= $count) { return new static($newList); }
+                if ($init < 0 && $base >= $count) {
+                    return new static($newList);
+                }
 
                 $newList[$base] = $list[$init];
 
@@ -231,18 +252,18 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * getList method
-     * 
+     * getList method.
+     *
      * @return mixed $list
      */
     public function getList()
     {
         return $this->list;
     }
-    
+
     /**
-     * jsonSerialize method
-     * 
+     * jsonSerialize method.
+     *
      * @return array $list
      */
     public function jsonSerialize()
@@ -251,8 +272,8 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * getSize method
-     * 
+     * getSize method.
+     *
      * @return int $size
      */
     public function getSize() : int
@@ -261,8 +282,8 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * toArray method
-     * 
+     * toArray method.
+     *
      * @return array $list
      */
     public function toArray() : array
@@ -271,20 +292,20 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * getIterator method
-     * 
+     * getIterator method.
+     *
      * @see ArrayIterator
+     *
      * @return object ArrayIterator
      */
-
     public function getIterator() : \ArrayIterator
     {
         return new \ArrayIterator($this->toArray());
     }
 
     /**
-     * count method
-     * 
+     * count method.
+     *
      * @return int $count
      */
     public function count() : int

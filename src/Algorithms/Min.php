@@ -6,7 +6,7 @@ const min = 'Chemem\\Bingo\\Functional\\Algorithms\\min';
 
 function min(array $collection) : int
 {
-    $minVal = isArrayOf($collection) == 'integer' ? 
+    $minVal = isArrayOf($collection) == 'integer' ?
         fold(
             function ($acc, $val) {
                 return $val < $acc ? $val : $acc;

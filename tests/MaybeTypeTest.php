@@ -2,8 +2,10 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
+use Chemem\Bingo\Functional\Functors\Maybe\Just;
+use Chemem\Bingo\Functional\Functors\Maybe\Maybe;
+use Chemem\Bingo\Functional\Functors\Maybe\Nothing;
 use PHPUnit\Framework\TestCase;
-use Chemem\Bingo\Functional\Functors\Maybe\{Maybe, Just, Nothing};
 
 class MaybeTypeTest extends TestCase
 {
@@ -126,12 +128,12 @@ class MaybeTypeTest extends TestCase
             )
             ->map(
                 function ($val = null) : string {
-                    return "null";
+                    return 'null';
                 }
             )
             ->flatMap(
                 function ($val = null) : string {
-                    return "null";
+                    return 'null';
                 }
             );
         $this->assertEquals($val, null);

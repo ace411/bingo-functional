@@ -2,8 +2,8 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Chemem\Bingo\Functional\Algorithms as A;
+use PHPUnit\Framework\TestCase;
 
 class AlgorithmTest extends TestCase
 {
@@ -50,7 +50,7 @@ class AlgorithmTest extends TestCase
 
         $zipped = A\zip(
             function ($num, $pos) {
-                return $num . ' is ' . $pos;
+                return $num.' is '.$pos;
             },
             $nums,
             $positions
@@ -95,7 +95,7 @@ class AlgorithmTest extends TestCase
             $unzipped,
             [
                 [1, 2],
-                ['PG', 'SG']
+                ['PG', 'SG'],
             ]
         );
         $this->assertInternalType('array', $unzipped);
@@ -143,7 +143,7 @@ class AlgorithmTest extends TestCase
             [
                 'foo' => 9,
                 'baz' => 12,
-                'bar' => 19
+                'bar' => 19,
             ],
             $extended
         );
@@ -225,7 +225,7 @@ class AlgorithmTest extends TestCase
         $characters = [
             ['name' => 'Tyrion', 'incest' => false],
             ['name' => 'Cersei', 'incest' => true],
-            ['name' => 'Jaimie', 'incest' => true]
+            ['name' => 'Jaimie', 'incest' => true],
         ];
 
         $reduce = A\fold(
@@ -246,7 +246,7 @@ class AlgorithmTest extends TestCase
         $strings = ['foo', 'bar', 'baz'];
 
         $foldFn = function ($acc, $val) {
-            return $acc . '-' . $val;
+            return $acc.'-'.$val;
         };
 
         $fold = A\foldRight($foldFn, $strings, 'fum');
@@ -257,8 +257,8 @@ class AlgorithmTest extends TestCase
     public function testArrayKeysExistFunctionDeterminesIfKeysExistInCollection()
     {
         $character = [
-            'name' => 'Tyrion',
-            'house' => 'Lannister'
+            'name'  => 'Tyrion',
+            'house' => 'Lannister',
         ];
 
         $testBasicInfoIsSet = A\arrayKeysExist($character, 'name', 'house');
@@ -335,30 +335,30 @@ class AlgorithmTest extends TestCase
     public function testFromPairsFunctionCreatesKeyValueArrayPairs()
     {
         $fromPairs = A\fromPairs([
-            ['foo', 'baz'], 
-            ['bar', 'baz'], 
-            ['boo', 1]
+            ['foo', 'baz'],
+            ['bar', 'baz'],
+            ['boo', 1],
         ]);
 
         $this->assertEquals([
             'foo' => 'baz',
             'bar' => 'baz',
-            'boo' => 1
+            'boo' => 1,
         ], $fromPairs);
     }
 
     public function testToPairsFunctionCreatesArraysWithTwoElementsEach()
     {
         $toPairs = A\toPairs([
-            'foo' => 'baz', 
-            'bar' => 'baz', 
-            'boo' => 1
+            'foo' => 'baz',
+            'bar' => 'baz',
+            'boo' => 1,
         ]);
 
         $this->assertEquals([
-            ['foo', 'baz'], 
-            ['bar', 'baz'], 
-            ['boo', 1]
+            ['foo', 'baz'],
+            ['bar', 'baz'],
+            ['boo', 1],
         ], $toPairs);
     }
 
@@ -379,7 +379,7 @@ class AlgorithmTest extends TestCase
             [1, 2, 3, false, true],
             function ($val) {
                 return is_bool($val);
-            } 
+            }
         );
 
         $this->assertFalse($every);
@@ -403,7 +403,7 @@ class AlgorithmTest extends TestCase
             [
                 ['name' => 'goran', 'pos' => 'pg'],
                 ['name' => 'josh', 'pos' => 'sg'],
-                ['name' => 'dwayne', 'pos' => 'sg']
+                ['name' => 'dwayne', 'pos' => 'sg'],
             ],
             'pos'
         );
@@ -412,11 +412,11 @@ class AlgorithmTest extends TestCase
             [
                 'sg' => [
                     ['name' => 'josh', 'pos' => 'sg'],
-                    ['name' => 'dwayne', 'pos' => 'sg']
+                    ['name' => 'dwayne', 'pos' => 'sg'],
                 ],
                 'pg' => [
-                    ['name' => 'goran', 'pos' => 'pg']
-                ]
+                    ['name' => 'goran', 'pos' => 'pg'],
+                ],
             ],
             $grouped
         );
@@ -428,14 +428,14 @@ class AlgorithmTest extends TestCase
             [
                 ['name' => 'dwayne', 'pos' => 'sg'],
                 ['name' => 'james', 'pos' => 'sf'],
-                ['name' => 'demarcus', 'pos' => 'c']
+                ['name' => 'demarcus', 'pos' => 'c'],
             ],
             ['pos' => 'c']
         );
 
         $this->assertEquals(
             [
-                2 => ['name' => 'demarcus', 'pos' => 'c']
+                2 => ['name' => 'demarcus', 'pos' => 'c'],
             ],
             $find
         );
@@ -457,8 +457,8 @@ class AlgorithmTest extends TestCase
 
     public function testToExceptionWrapsFunctionPrintsExceptionMessageIfExceptionIsThrownOrResult()
     {
-        $func = function () { 
-            throw new \Exception('I am an exception'); 
+        $func = function () {
+            throw new \Exception('I am an exception');
         };
 
         $result = function ($val) {
@@ -474,7 +474,7 @@ class AlgorithmTest extends TestCase
     {
         $fib = A\trampoline(
             function ($val) use (&$fib) {
-                return $val < 2 ? $val : $fib($val - 1) + $fib($val - 2); 
+                return $val < 2 ? $val : $fib($val - 1) + $fib($val - 2);
             }
         );
 
@@ -485,7 +485,7 @@ class AlgorithmTest extends TestCase
     {
         $fib = A\trampoline(
             function ($val) use (&$fib) {
-                return $val < 2 ? $val : $fib($val - 1) + $fib($val - 2); 
+                return $val < 2 ? $val : $fib($val - 1) + $fib($val - 2);
             }
         );
 
