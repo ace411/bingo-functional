@@ -2,8 +2,10 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
+use Chemem\Bingo\Functional\Functors\Either\Either;
+use Chemem\Bingo\Functional\Functors\Either\Left;
+use Chemem\Bingo\Functional\Functors\Either\Right;
 use PHPUnit\Framework\TestCase;
-use Chemem\Bingo\Functional\Functors\Either\{Either, Left, Right};
 
 class EitherTypeTest extends TestCase
 {
@@ -25,15 +27,15 @@ class EitherTypeTest extends TestCase
             Either::right(12),
             Either::right(32),
             Either::left(false),
-            Either::left('undefined')
+            Either::left('undefined'),
         ];
         $partitionedEithers = Either::partitionEithers($eithers);
         $this->assertTrue(is_array($partitionedEithers));
         $this->assertEquals(
             $partitionedEithers,
             [
-                'left' => [2 => false, 3 => 'undefined'],
-                'right' => [12, 32]
+                'left'  => [2 => false, 3 => 'undefined'],
+                'right' => [12, 32],
             ]
         );
     }
@@ -129,12 +131,12 @@ class EitherTypeTest extends TestCase
             )
             ->map(
                 function (string $val) {
-                    return $val . '//';
+                    return $val.'//';
                 }
             )
             ->flatMap(
                 function (string $val) {
-                    return $val . '..';
+                    return $val.'..';
                 }
             );
         $this->assertEquals($error, $GLOBALS['ERR_MSG']);

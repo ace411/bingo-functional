@@ -2,9 +2,10 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
-use PHPUnit\Framework\TestCase;
 use Chemem\Bingo\Functional\Common\Applicatives\ApplicativeAbstract;
-use Chemem\Bingo\Functional\Functors\Applicatives\{Applicative, CollectionApplicative};
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicative;
+use Chemem\Bingo\Functional\Functors\Applicatives\CollectionApplicative;
+use PHPUnit\Framework\TestCase;
 
 class ApplicativeTest extends TestCase
 {
@@ -66,7 +67,7 @@ class ApplicativeTest extends TestCase
             },
             function (int $b) : int {
                 return $b * 10;
-            }
+            },
         ])
         ->apply(CollectionApplicative::pure([1, 2, 3]));
 

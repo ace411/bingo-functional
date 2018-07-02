@@ -1,29 +1,29 @@
 <?php
 
 /**
- * map function
- * 
+ * map function.
+ *
  * map :: (a -> b) -> [a] -> [b]
- * @package bingo-functional
+ *
  * @author Lochemem Bruno Michael
- * @license Apache 2.0 
+ * @license Apache 2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const map = "Chemem\\Bingo\\Functional\\Algorithms\\map";
+const map = 'Chemem\\Bingo\\Functional\\Algorithms\\map';
 
 function map(callable $func, array $collection) : array
 {
-    $arrCount = count($collection); 
+    $arrCount = count($collection);
     $colKeys = array_keys($collection);
     $colVals = array_values($collection);
 
     $recursiveMap = function (int $init = 0, array $acc = []) use (
-        $func, 
+        $func,
         $colVals,
-        $colKeys, 
-        $arrCount, 
+        $colKeys,
+        $arrCount,
         &$recursiveMap
     ) {
         if ($init >= $arrCount) {

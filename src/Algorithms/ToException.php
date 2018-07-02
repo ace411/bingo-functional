@@ -1,10 +1,10 @@
 <?php
 
 /**
- * toException function
- * 
+ * toException function.
+ *
  * toException :: (a) -> (b(c)) -> d
- * @package bingo-functional
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */

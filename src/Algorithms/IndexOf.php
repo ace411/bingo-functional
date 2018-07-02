@@ -1,10 +1,10 @@
 <?php
 
 /**
- * indexOf function
- * 
+ * indexOf function.
+ *
  * indexOf :: [a] -> b -> c -> ([a], b, c) -> d
- * @package bingo-functional
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -18,10 +18,10 @@ function indexOf(array $collection, $value, int $fromIndex = 0)
     $valKeys = array_keys($collection);
     $valCount = count($valKeys);
 
-    $indexOf = function (int $init = 0, int $index) use (
+    $indexOf = function (int $init, int $index) use (
         $value,
         $valKeys,
-        $valCount, 
+        $valCount,
         &$indexOf,
         $collection
     ) {

@@ -1,17 +1,17 @@
 <?php
 
 /**
- * PartialLeft function
+ * PartialLeft function.
  *
  * partialLeft :: (a, b) -> (a) b
- * @package bingo-functional
+ *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const partialLeft = "Chemem\\Bingo\\Functional\\Algorithms\\partialLeft";
+const partialLeft = 'Chemem\\Bingo\\Functional\\Algorithms\\partialLeft';
 
 function partialLeft(callable $fn, ...$args)
 {
@@ -26,7 +26,7 @@ function partialLeft(callable $fn, ...$args)
     };
 }
 
-const partial = "Chemem\\Bingo\\Functional\\Algorithms\\partial";
+const partial = 'Chemem\\Bingo\\Functional\\Algorithms\\partial';
 
 function partial(callable $func, ...$args)
 {

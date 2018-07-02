@@ -1,17 +1,17 @@
 <?php
 
 /**
- * memoize function
+ * memoize function.
  *
  * memoize :: (a) -> (a -> b) -> (a)
- * @package bingo-functional
+ *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const memoize = "Chemem\\Bingo\\Functional\\Algorithms\\memoize";
+const memoize = 'Chemem\\Bingo\\Functional\\Algorithms\\memoize';
 
 function memoize(callable $function)
 {

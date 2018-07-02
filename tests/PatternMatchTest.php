@@ -2,11 +2,9 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
+use Chemem\Bingo\Functional\Algorithms as A;
+use Chemem\Bingo\Functional\PatternMatching as PM;
 use PHPUnit\Framework\TestCase;
-use Chemem\Bingo\Functional\{
-    Algorithms as A,
-    PatternMatching as PM
-};
 
 class PatternMatchTest extends TestCase
 {
@@ -15,11 +13,11 @@ class PatternMatchTest extends TestCase
         $numConditions = PM\getNumConditions(['(a:b:_)', '(a:_)', '_']);
 
         $this->assertEquals(
-            $numConditions, 
+            $numConditions,
             [
-                '(a:b:_)' => 2, 
-                '(a:_)' => 1, 
-                '_' => 0
+                '(a:b:_)' => 2,
+                '(a:_)'   => 1,
+                '_'       => 0,
             ]
         );
     }
@@ -36,7 +34,7 @@ class PatternMatchTest extends TestCase
                 },
                 '_' => function () {
                     return 1;
-                }
+                },
             ]
         );
 
@@ -58,8 +56,8 @@ class PatternMatchTest extends TestCase
                 },
                 '_' => function () {
                     return 'undefined';
-                }
-            ] 
+                },
+            ]
         );
 
         $this->assertEquals($strings('foo'), 'foo');
@@ -79,7 +77,7 @@ class PatternMatchTest extends TestCase
                 },
                 '_' => function () {
                     return 'undefined';
-                }
+                },
             ]
         );
 
@@ -100,7 +98,7 @@ class PatternMatchTest extends TestCase
                 },
                 '_' => function () {
                     return 'undefined';
-                }
+                },
             ]
         );
 
@@ -115,7 +113,7 @@ class PatternMatchTest extends TestCase
             [
                 '"foo"' => function () {
                     $val = strtoupper('FOO');
-                    
+
                     return $val;
                 },
                 '"12"' => function () {
@@ -123,7 +121,7 @@ class PatternMatchTest extends TestCase
                 },
                 '_' => function () {
                     return 'undefined';
-                }
+                },
             ],
             'foo'
         );
@@ -147,7 +145,7 @@ class PatternMatchTest extends TestCase
                 },
                 '_' => function () {
                     return 'undefined';
-                }
+                },
             ],
             explode('/', 'foo/bar/functional')
         );

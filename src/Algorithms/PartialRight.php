@@ -1,17 +1,17 @@
 <?php
 
 /**
- * PartialRight function
+ * PartialRight function.
  *
  * partialRight :: (a, b) -> (b) a
- * @package bingo-functional
+ *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const partialRight = "Chemem\\Bingo\\Functional\\Algorithms\\partialRight";
+const partialRight = 'Chemem\\Bingo\\Functional\\Algorithms\\partialRight';
 
 function partialRight(callable $fn, ...$args)
 {

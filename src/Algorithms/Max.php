@@ -6,7 +6,7 @@ const max = 'Chemem\\Bingo\\Functional\\Algorithms\\max';
 
 function max(array $collection) : int
 {
-    $maxVal = isArrayOf($collection) == 'integer' ? 
+    $maxVal = isArrayOf($collection) == 'integer' ?
         fold(
             function ($acc, $val) {
                 return $val > $acc ? $val : $acc;
@@ -15,6 +15,6 @@ function max(array $collection) : int
             0
         ) :
         0;
-        
+
     return $maxVal;
 }
