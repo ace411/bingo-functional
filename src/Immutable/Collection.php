@@ -10,8 +10,6 @@
 
 namespace Chemem\Bingo\Functional\Immutable;
 
-use function Chemem\Bingo\Functional\Algorithms\trampoline;
-
 class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
 {
     /**
@@ -54,20 +52,12 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     public function map(callable $func) : Collection
     {
         $list = $this->list;
-        $count = $list->count();
-        $newList = new \SplFixedArray($count);
-
-        $map = trampoline(
-            function (int $init = 0) use (&$map, $list, $func, $count, $newList) {
-                if ($init >= $count) { return new static($newList); }
-
-                $newList[$init] = $func($list->offsetGet($init));
-
-                return $map($init + 1);
-            }
-        );
         
-        return $map();
+        foreach ($list as $index => $val) {
+            $list[$index] = $func($val);
+        }
+
+        return new static($list);
     }
 
     /**
@@ -81,19 +71,13 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     public function flatMap(callable $func) : array
     {
         $list = $this->list;
-        $count = $list->count();
+        $acc = [];
 
-        $flatMap = trampoline(
-            function (int $init = 0, array $acc = []) use ($list, $func, $count, &$flatMap) {
-                if ($init >= $count) { return $acc; }
+        foreach ($list as $val) {
+            $acc[] = $func($val);
+        }
 
-                $acc[] = $func($list->offsetGet($init));
-
-                return $flatMap($init + 1, $acc);
-            }
-        );
-
-        return $flatMap();
+        return $acc;
     }
 
     /**
@@ -107,19 +91,13 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     public function filter(callable $func) : Collection
     {
         $list = $this->list;
-        $count = $list->count();
+        $acc = [];
         
-        $filter = trampoline(
-            function (int $init = 0, array $acc = []) use ($func, $list, $count, &$filter) {
-                if ($init >= $count) { return new static(\SplFixedArray::fromArray($acc)); }
+        foreach ($list as $index => $val) {
+            if ($func($val)) { $acc[] = $val; }
+        }
 
-                if ($func($list->offsetGet($init))) { $acc[] = $list->offsetGet($init); }
-
-                return $filter($init + 1, $acc);
-            }
-        );
-
-        return $filter();
+        return new static(\SplFixedArray::fromArray($acc));
     }
 
     /**
@@ -134,19 +112,12 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     public function fold(callable $func, $acc) : Collection
     {
         $list = $this->list;
-        $count = $list->count();
 
-        $fold = trampoline(
-            function (int $init = 0, $mult) use ($list, $func, $count, &$fold) {
-                if ($init >= $count) { return new static(\SplFixedArray::fromArray(is_array($mult) ? $mult: [$mult])); }
+        foreach ($list as $val) {
+            $acc = $func($acc, $val);
+        }
 
-                $mult = $func($mult, $list->offsetGet($init));
-
-                return $fold($init + 1, $mult);
-            }
-        );
-
-        return $fold(0, $acc);
+        return new static($acc);
     }
 
     /**
@@ -161,19 +132,13 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     {
         $list = $this->list;
         $listCount = $list->count();
-        $newList = new \SplFixedArray($listCount - $count);
+        $new = new \SplFixedArray($listCount - $count);
 
-        $drop = trampoline(
-            function (int $init, int $base = 0) use ($newList, $listCount, $list, &$drop) {
-                if ($init >= $listCount) { return new static($newList); }
+        foreach ($new as $index => $val) {
+            $new[$index] = $list[($index + $count)];
+        }
 
-                $newList[$base] = $list->offsetGet($init);
-
-                return $drop($init + 1, $base + 1);
-            }
-        );
-
-        return $drop($count);
+        return new static($new);
     }
 
     /**
@@ -191,17 +156,13 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
         $old = $this->list;
         $old->setSize($combinedSize);
 
-        $merge = trampoline(
-            function (int $init, int $base) use ($list, $old, &$merge, $combinedSize) {
-                if ($init >= $combinedSize) { return new static($old); }
-
-                $old[$init] = $list->getList()->offsetGet($base);
-
-                return $merge($init + 1, $base + 1);
+        foreach ($old as $index => $val) {
+            if ($index > $oldSize - 1) {
+                $old[$index] = $list->getList()[($index - $oldSize)];
             }
-        );
+        }
 
-        return $merge($oldSize, 0);
+        return new static($old);
     }
 
     /**
@@ -215,19 +176,13 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     {
         $list = $this->list;
         $count = $this->list->getSize();
-        $newList = new \SplFixedArray($count);
+        $newList = new \SplFixedArray($count);        
 
-        $reverse = trampoline(
-            function (int $init, int $base = 0) use ($list, $count, $newList, &$reverse) {
-                if ($init < 0 && $base >= $count) { return new static($newList); }
+        foreach ($newList as $index => $val) {
+            $newList[$index] = $list[$count - $index - 1];
+        }
 
-                $newList[$base] = $list[$init];
-
-                return $reverse($init - 1, $base + 1);
-            }
-        );
-
-        return $reverse($count - 1);
+        return new static($newList);
     }
 
     /**
