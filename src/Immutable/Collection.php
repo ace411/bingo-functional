@@ -205,6 +205,32 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
+     * reverse method
+     * 
+     * @access public
+     * @method reverse
+     * @return object Collection
+     */
+    public function reverse() : Collection
+    {
+        $list = $this->list;
+        $count = $this->list->getSize();
+        $newList = new \SplFixedArray($count);
+
+        $reverse = trampoline(
+            function (int $init, int $base = 0) use ($list, $count, $newList, &$reverse) {
+                if ($init < 0 && $base >= $count) { return new static($newList); }
+
+                $newList[$base] = $list[$init];
+
+                return $reverse($init - 1, $base + 1);
+            }
+        );
+
+        return $reverse($count - 1);
+    }
+
+    /**
      * getList method
      * 
      * @return mixed $list

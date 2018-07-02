@@ -162,4 +162,25 @@ class CollectionTest extends TestCase
             
         $this->assertEquals(2, count($list));
     }
+
+    public function testReverseMethodCreatesNewCollectionInstance()
+    {
+        $list = Collection::from(...range(0, 10))
+            ->reverse();
+
+        $this->assertInstanceOf(Collection::class, $list);
+    }
+
+    public function testReverseMethodReversesListOrder()
+    {
+        $list = Collection::from(...range(0, 10))
+            ->map(function ($val) { return $val * 5; })
+            ->reverse()
+            ->getList();
+
+        $this->assertEquals(
+            \SplFixedArray::fromArray([50, 45, 40, 35, 30, 25, 20, 15, 10, 5, 0]),
+            $list
+        );
+    }
 }
