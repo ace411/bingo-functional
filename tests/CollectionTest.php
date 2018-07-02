@@ -75,9 +75,8 @@ class CollectionTest extends TestCase
         $list = Collection::from(1, 2, 3, 4)
             ->fold(function ($acc, $val) { return $acc + $val; }, 1)
             ->getList();
-
-        $this->assertEquals(\SplFixedArray::fromArray([11]), $list);
-        $this->assertEquals($list->getSize(), 1);
+            
+        $this->assertEquals($list, 11);
     }
 
     public function testMergeFunctionCreatesNewCollectionInstance()
