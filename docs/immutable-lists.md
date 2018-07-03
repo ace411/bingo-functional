@@ -143,6 +143,26 @@ $list = Collection::from('foo', 'bar', 1, 2, 3)
     ->slice(2); //outputs the collection [1, 2, 3]
 ```
 
+## fill
+
+```
+$list->fill(mixed $value, int $start, int $end)
+```
+
+**Argument(s)**
+
+- ***value (mixed)*** - The value to insert in list
+- ***start (int)*** - The first index whose corresponding value is to be replaced with fill value
+- ***end (int)*** - The last index whose corresponding value is to be replaced with fill value
+
+The fill function replaces the values of specified list indexes with an arbitrary value.
+
+```php
+$list = Collection::from(...range(1, 10))
+    ->fill('foo', 2, 4);
+//outputs the collection [1, 2, 'foo', 'foo', 'foo', 6, 7, 8, 9, 10]
+```
+
 ## toArray
 
 ```
