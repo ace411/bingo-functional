@@ -182,4 +182,24 @@ class CollectionTest extends TestCase
             $list
         );
     }
+
+    public function testFillMethodCreatesNewCollectionInstance()
+    {
+        $list = Collection::from(...range(0, 10))
+            ->fill('foo', 2, 5);
+
+        $this->assertInstanceOf(Collection::class, $list);
+    }
+
+    public function testFillMethodOutputsListWithArbitraryValuesAffixedToDefinedIndexes()
+    {
+        $list = Collection::from(...range(1, 10))
+            ->fill('foo', 2, 5)
+            ->getList();
+
+        $this->assertEquals(
+            \SplFixedArray::fromArray([1, 2, 'foo', 'foo', 'foo', 'foo', 7, 8, 9, 10]),
+            $list
+        );
+    }
 }
