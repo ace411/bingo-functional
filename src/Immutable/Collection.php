@@ -186,6 +186,27 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
+     * fill method
+     * 
+     * @access public
+     * @method fill
+     * @param mixed $value
+     * @param int $start
+     * @param int $end
+     * @return object Collection
+     */
+    public function fill($value, int $start, int $end)
+    {
+        $list = $this->list;
+
+        foreach ($list as $index => $val) {
+            $list[$index] = $index >= $start && $index <= $end ? $value : $val;
+        }
+
+        return new static($list);
+    }
+
+    /**
      * getList method
      * 
      * @return mixed $list
