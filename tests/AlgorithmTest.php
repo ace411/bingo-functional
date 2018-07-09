@@ -491,4 +491,25 @@ class AlgorithmTest extends TestCase
 
         $this->assertEquals(89, $fib(11));
     }
+
+    public function testMeanFunctionComputesTheAverageOfNumbersInAList()
+    {
+        $mean = A\mean([12, 13, 14, 19]);
+
+        $this->assertEquals(14.5, $mean);
+        $this->assertInternalType('float', $mean);
+    }
+
+    public function testRejectFunctionReturnsArrayWhoseValuesDoNotConformToBooleanPredicate()
+    {
+        $list = A\reject(function ($val) { return strlen($val) > 4; }, ['foo', 'bar', 'foobar']);
+
+        $this->assertEquals(['foo', 'bar'], $list);
+        $this->assertInternalType('array', $list);
+    }
+
+    public function testLastFunctionOutputsTheLastValueInAnArray()
+    {
+        $this->assertEquals('foo', A\last(['bar', 'baz', 'foo']));
+    }
 }
