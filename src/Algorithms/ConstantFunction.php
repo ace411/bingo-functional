@@ -15,7 +15,5 @@ const constantFunction = "Chemem\\Bingo\\Functional\\Algorithms\\constantFunctio
 
 function constantFunction(...$args)
 {
-    return function () use ($args) {
-        return $args[0];
-    };
+    return function () use ($args) { return $args[0]; };
 }
