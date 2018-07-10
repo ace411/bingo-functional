@@ -44,7 +44,7 @@ function curryRightN(int $paramCount, callable $func)
         return function () use ($paramCount, $args, $func, $acc) {
             $funcArgs = compose(
                 partialRight('array_merge', func_get_args()),
-                reverse
+                'array_reverse'
             )($args);
 
             if ($paramCount <= count($funcArgs)) {
