@@ -38,7 +38,6 @@
             "src/Algorithms/Where.php",
             "src/Algorithms/GroupBy.php",
             "src/Algorithms/Fill.php",
-            "src/Algorithms/Reverse.php",
             "src/Algorithms/ToPairs.php",
             "src/Algorithms/FromPairs.php",
             "src/Algorithms/Trampoline.php",
