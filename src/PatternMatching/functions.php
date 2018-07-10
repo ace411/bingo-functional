@@ -11,21 +11,12 @@ function match(array $options) : callable
     $matchFn = function (array $options) : array {
         return array_key_exists('_', $options) ? 
             $options :
-            [
-                '_' => function () {
-                    return false;
-                }
-            ];
+            ['_' => function () { return false; }];
     };
 
     $conditionGen = A\compose(
         $matchFn,
-        A\partialRight(
-            'array_filter',
-            function ($value) {
-                return is_callable($value);
-            }
-        ),
+        A\partialRight('array_filter', function ($value) { return is_callable($value); }),
         'array_keys',
         getNumConditions
     );
@@ -35,15 +26,10 @@ function match(array $options) : callable
 
         $check = A\compose(
             $conditionGen,
-            A\partialLeft(
-                A\filter,
-                function (int $count) use ($valCount) {
-                    return $count == $valCount;
-                }
-            ),
+            A\partialLeft(A\filter, function (int $count) use ($valCount) { return $count == $valCount; }),
             A\head
         );
-
+        
         return $check($options) > 0 ? 
             call_user_func_array(
                 $options[A\indexOf($conditionGen($options), $valCount)],
@@ -67,12 +53,7 @@ function getNumConditions(array $conditions)
                 $checkOpt,
                 A\partialLeft('preg_replace', '/([(\)])+/', ''),
                 A\partialLeft('explode', ':'),
-                A\partialLeft(
-                    A\filter, 
-                    function ($val) {
-                        return $val !== '_';
-                    }
-                ),
+                A\partialLeft(A\filter, function ($val) { return $val !== '_'; }),
                 'count'
             );
 
@@ -105,11 +86,7 @@ function evalArrayPattern(array $patterns, array $value)
         'array_keys',
         A\partialLeft(
             A\filter,
-            function ($pattern) {
-                return substr($pattern, -1) == ']' && 
-                    substr($pattern, 0, 1) == '[';
-            } 
-        ),
+            function ($pattern) { return substr($pattern, -1) == ']' && substr($pattern, 0, 1) == '['; }),
         A\partialLeft(
             A\map,
             function ($pattern) {
@@ -123,15 +100,11 @@ function evalArrayPattern(array $patterns, array $value)
                 return [$pattern => $tokens];
             }
         ),
-        function ($patterns) {
-            return array_merge(...$patterns);
-        },
+        function ($patterns) { return array_merge(...$patterns); },
         function ($patterns) use ($valCount) {
             return array_filter(
                 $patterns,
-                function ($pattern) use ($valCount) {
-                    return count($pattern) == $valCount;
-                }
+                function ($pattern) use ($valCount) { return count($pattern) == $valCount; }
             );
         },
         function ($patterns) use ($value, $valCount) {
@@ -216,12 +189,7 @@ function evalStringPattern(array $patterns, string $value)
 {
     $evalPattern = A\compose(
         'array_keys',
-        A\partialLeft(
-            A\filter,
-            function ($val) {
-                return is_string($val) && preg_match('/([\"]+)/', $val);
-            } 
-        ),
+        A\partialLeft(A\filter, function ($val) { return is_string($val) && preg_match('/([\"]+)/', $val); }),
         A\partialLeft(
             A\map,
             function ($val) use ($value) {
@@ -234,23 +202,14 @@ function evalStringPattern(array $patterns, string $value)
                             (int) $val : 
                             $valType == 'double' ? (float) $val : $val;
                     },
-                    function ($val) use ($value) {
-                        return $val == $value ? A\concat('"', '', $val, '') : '_';
-                    }
+                    function ($val) use ($value) { return $val == $value ? A\concat('"', '', $val, '') : '_'; }
                 );
 
                 return $evaluate($val);
             }
         ),
-        A\partialLeft(
-            A\filter,
-            function ($val) {
-                return $val !== '_';
-            }
-        ),
-        function ($match) {
-            return !empty($match) ? A\head($match) : '_';
-        },
+        A\partialLeft(A\filter, function ($val) { return $val !== '_'; }),
+        function ($match) { return !empty($match) ? A\head($match) : '_'; },
         function ($match) use ($patterns) {
             $valType = A\compose('array_values', A\isArrayOf)($patterns);
 
