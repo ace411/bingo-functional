@@ -15,12 +15,7 @@ const arrayKeysExist = "Chemem\\Bingo\\Functional\\Algorithms\\arrayKeysExist";
 
 function arrayKeysExist(array $toSearch, ...$keys) : bool
 {
-    $keysIntersection = array_intersect(
-        array_keys($toSearch),
-        $keys
-    );
+    $keysIntersection = array_intersect(array_keys($toSearch), $keys);
 
-    return count($keysIntersection) !== count($keys) ? 
-        false :
-        true;
+    return count($keysIntersection) !== count($keys) ? identity(false) : identity(true);
 }
