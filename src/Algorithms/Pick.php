@@ -15,30 +15,11 @@ const pick = "Chemem\\Bingo\\Functional\\Algorithms\\pick";
 
 function pick(array $values, $search)
 {
-    $valCount = count($values);
-    $arrVals = array_values($values);
+    $acc = [];
 
-    $pickFn = function (int $init = 0, array $acc = []) use ( 
-        $search, 
-        &$pickFn,
-        $arrVals,
-        $valCount
-    ) {
-        if ($init >= $valCount) {
-            return head(
-                filter(
-                    function ($val) {
-                        return !is_null($val);
-                    },
-                    $acc
-                )
-            );
-        }
+    foreach ($values as $value) {
+        if ($value == $search) { $acc[] = $value; }
+    }
 
-        $acc[] = $arrVals[$init] == $search ? $arrVals[$init] : null;
-
-        return $pickFn($init + 1, $acc);
-    };
-    
-    return $pickFn();
+    return head($acc);
 }

@@ -15,25 +15,13 @@ const unique = "Chemem\\Bingo\\Functional\\Algorithms\\unique";
 
 function unique(array $collection) : array
 {
-    $valCount = count($collection);
-    $arrKeys = array_keys($collection);
+    $acc = [];
 
-    $uniqueFn = function (int $init = 0, array $acc = []) use ( 
-        $arrKeys, 
-        $valCount, 
-        &$uniqueFn,
-        $collection
-    ) {
-        if ($init >= $valCount) {
-            return $acc;
+    foreach ($collection as $index => $value) {
+        if (!in_array($value, $acc)) {
+            $acc[$index] = $value;
         }
+    }
 
-        if (!in_array($collection[$arrKeys[$init]], $acc)) {
-            $acc[$arrKeys[$init]] = $collection[$arrKeys[$init]];            
-        }
-
-        return $uniqueFn($init + 1, $acc);
-    };
-
-    return $uniqueFn();
+    return $acc;
 }

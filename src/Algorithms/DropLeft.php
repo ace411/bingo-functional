@@ -15,24 +15,9 @@ const dropLeft = "Chemem\\Bingo\\Functional\\Algorithms\\dropLeft";
 
 function dropLeft(array $collection, int $number = 1, array $acc = []) : array
 {
-    $colVals = array_values($collection);
-    $colKeys = array_keys($collection);
-    $valCount = count($collection);
+    foreach ($collection as $index => $value) {
+        if ($index > $number - 1) { $acc[$index] = $value; }
+    }
 
-    $dropFn = function (int $init, array $acc = []) use (
-        $colVals, 
-        $colKeys, 
-        &$dropFn, 
-        $valCount
-    ) {
-        if ($init >= $valCount) {
-            return $acc;
-        }
-
-        $acc[$colKeys[$init]] = $colVals[$init];
-        
-        return $dropFn($init + 1, $acc);
-    };
-
-    return $dropFn($number);
+    return $acc;
 } 

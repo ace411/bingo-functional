@@ -15,25 +15,11 @@ const fold = "Chemem\\Bingo\\Functional\\Algorithms\\fold";
 
 function fold(callable $func, array $collection, $acc)
 {
-    $arrCount = count($collection);
-    $colVals = array_values($collection);
+    foreach ($collection as $index => $value) {
+        $acc = $func($acc, $value);
+    }
 
-    $recursiveFold = function (int $init = 0, $mult) use (
-        $func,
-        $colVals,
-        $arrCount,
-        &$recursiveFold
-    ) {
-        if ($init >= $arrCount) {
-            return $mult;
-        }
-
-        $mult = call_user_func_array($func, [$mult, $colVals[$init]]);
-
-        return $recursiveFold($init + 1, $mult);
-    };
-
-    return $recursiveFold(0, $acc);
+    return $acc;
 }
 
 /**
@@ -49,24 +35,11 @@ const foldRight = 'Chemem\\Bingo\\Functional\\Algorithms\\foldRight';
 
 function foldRight(callable $func, array $collection, $acc)
 {
-    $arrCount = count($collection);
-    $colVals = array_values($collection);
+    foreach (array_reverse($collection) as $index => $value) {
+        $acc = $func($acc, $value);
+    }
 
-    $recursiveFold = function (int $init, $mult) use (
-        $func,
-        $colVals,
-        &$recursiveFold
-    ) {
-        if ($init < 0) {
-            return $mult;
-        }
-
-        $mult = call_user_func_array($func, [$mult, $colVals[$init]]);
-
-        return $recursiveFold($init - 1, $mult);
-    };
-
-    return $recursiveFold($arrCount - 1, $acc);
+    return $acc;
 }
 
 /**

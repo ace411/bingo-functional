@@ -15,16 +15,11 @@ const reject = 'Chemem\\Bingo\\Functional\\Algorithms\\reject';
 
 function reject(callable $func, array $collection) : array
 {
-    $count = count($collection);
-    $keys = array_keys($collection);
+    $acc = [];
 
-    $rejectFn = function (int $init = 0, array $acc = []) use ($keys, $func, $count, &$rejectFn, $collection) {
-        if ($init >= $count) { return $acc; }
+    foreach ($collection as $index => $value) {
+        if (!$func($value)) { $acc[$index] = $value; }
+    }
 
-        if (!$func($collection[$keys[$init]])) { $acc[$keys[$init]] = $collection[$keys[$init]]; } 
-
-        return $rejectFn($init + 1, $acc);
-    };
-
-    return $rejectFn();
+    return $acc;
 } 

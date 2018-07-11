@@ -15,25 +15,13 @@ const indexOf = 'Chemem\\Bingo\\Functional\\Algorithms\\indexOf';
 
 function indexOf(array $collection, $value, int $fromIndex = 0)
 {
-    $valKeys = array_keys($collection);
-    $valCount = count($valKeys);
-
-    $indexOf = function (int $init = 0, int $index) use (
-        $value,
-        $valKeys,
-        $valCount, 
-        &$indexOf,
-        $collection
-    ) {
-        //keep increasing index until the right one is found
-        if ($init >= $valCount) {
-            return $valKeys[$index];
+    $indexFn = function ($valIndex) use ($value, $fromIndex, $collection) {
+        foreach ($collection as $index => $val) {
+            if ($val == $value) { $valIndex = $index; }
         }
 
-        $index += $collection[$valKeys[$init]] == $value ? $init : 0;
-
-        return $indexOf($init + 1, $index);
+        return $valIndex;
     };
 
-    return $indexOf(0, $fromIndex);
+    return $indexFn(isArrayOf($collection) == 'string' ? identity('') : identity($fromIndex));
 }

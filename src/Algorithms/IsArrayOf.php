@@ -15,19 +15,13 @@ const isArrayOf = "Chemem\\Bingo\\Functional\\Algorithms\\isArrayOf";
 
 function isArrayOf(array $collection) : string
 {
-    $elCount = count($collection);
+    $types = [];
 
-    $isArrOf = function (int $init = 0, array $acc = []) use ($elCount, &$isArrOf, $collection) {
-        if ($init >= $elCount) {
-            $types = unique($acc);
-            
-            return count($types) == 1 ? head($types) : 'mixed'; 
-        }
+    foreach ($collection as $value) {
+        $types[] = gettype($value);
+    }
 
-        $acc[] = gettype($collection[$init]);
+    $unique = array_unique($types);
 
-        return $isArrOf($init + 1, $acc);
-    };
-
-    return !empty($collection) ? $isArrOf() : 'none';
+    return count($unique) > 1 ? identity('mixed') : head($unique);
 }

@@ -15,27 +15,11 @@ const filter = "Chemem\\Bingo\\Functional\\Algorithms\\filter";
 
 function filter(callable $func, array $collection) : array
 {
-    $arrCount = count($collection);
-    $colVals = array_values($collection);
-    $colKeys = array_keys($collection);
+    $acc = [];
 
-    $recursiveFilter = function (int $init = 0, array $acc = []) use (
-        $func,
-        $colVals,
-        $colKeys,
-        $arrCount,
-        &$recursiveFilter
-    ) {
-        if ($init >= $arrCount) {
-            return $acc;
-        }
+    foreach ($collection as $index => $value) {
+        if ($func($value)) { $acc[$index] = $value; }
+    }
 
-        if ($func($colVals[$init])) {
-            $acc[$colKeys[$init]] = $colVals[$init];
-        }
-        
-        return $recursiveFilter($init + 1, $acc);
-    };
-
-    return $recursiveFilter();
+    return $acc;
 }

@@ -15,33 +15,16 @@ const where = 'Chemem\\Bingo\\Functional\\Algorithms\\where';
 
 function where(array $collection, array $search) : array
 {
-    $arrCount = count($collection);
     list($searchKey, $searchVal) = head(toPairs($search));
 
-    $whereFn = function (int $init = 0, array $acc = []) use (
-        $arrCount, 
-        &$whereFn, 
-        $searchKey,
-        $searchVal, 
-        $collection
-    ) {
-        if ($init >= $arrCount) {
-            $result = filter(
-                function ($val) {
-                    return !empty($val);
-                },
-                $acc
-            );
-
-            return $result;
+    $whereFn = function (array $acc = []) use ($searchKey, $searchVal, $collection) {
+        foreach ($collection as $index => $value) {
+            if (isset($collection[$index][$searchKey]) && $collection[$index][$searchKey] == $searchVal) {
+                $acc[] = $value;
+            }
         }
 
-        $acc[] = isset($collection[$init][$searchKey]) && 
-            $collection[$init][$searchKey] == $searchVal ?
-                $collection[$init] :
-                []; 
-        
-        return $whereFn($init + 1, $acc);
+        return $acc;
     };
 
     return isArrayOf($collection) == 'array' ? $whereFn() : $collection;

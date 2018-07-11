@@ -15,18 +15,9 @@ const fill = 'Chemem\\Bingo\\Functional\\Algorithms\\fill';
 
 function fill(array $collection, $value, int $start, int $end) : array
 {
-    $vals = array_values($collection);
-    $valCount = count($collection);
+    foreach ($collection as $index => $val) {
+        $collection[$index] = $index >= $start && $index <= $end ? $value : $val;
+    }
 
-    $fillFunc = function (int $init, array $acc) use ($vals, $value, $end, &$fillFunc) {
-        if ($init > $end) {
-            return $acc;
-        }
-
-        $acc[$init] = $value;
-
-        return $fillFunc($init + 1, $acc);
-    }; 
-
-    return $fillFunc($start, $vals);
+    return $collection;
 }
