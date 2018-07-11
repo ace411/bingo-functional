@@ -19,15 +19,10 @@ function partition(int $number, array $array) : array
         return [$array];
     }
 
-    $pSize = ceil(count($array) / $number); //calculate partition size
+    $pSize = ceil(count($array) / $number);
 
     return array_merge(
-        [
-            array_slice($array, 0, $pSize)
-        ],
-        partition(
-            $number - 1,
-            array_slice($array, $pSize)
-        )
+        [array_slice($array, 0, $pSize)],
+        partition($number - 1, array_slice($array, $pSize))
     );
 }
