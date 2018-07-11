@@ -29,19 +29,29 @@ class CollectionTest extends TestCase
         $this->assertEquals(\SplFixedArray::fromArray([3, 4, 5, 6]), $list);
     }
 
+    public function testMapFunctionAppliesFunctionToAllValuesInArray()
+    {
+        $list = Collection::from(1, 2, 3, 4)
+            ->map(function ($val) { return $val + 2; });
+
+        $this->assertEquals([3, 4, 5, 6], $list->toArray());
+    }
+
     public function testFlatMapFunctionCreatesArray()
     {
         $list = Collection::from(1, 2, 3, 4)
             ->flatMap(function ($val) { return $val * 2; });
 
         $this->assertInternalType('array', $list);
+        $this->assertEquals([2, 4, 6, 8], $list);
     }
 
-    public function testFlatMapFunctionAppliesFunctionToAllValuesInList()
+    public function testFlatMapFunctionAppliesFunctionToAllValuesInArray()
     {
         $list = Collection::from(1, 2, 3, 4)
             ->flatMap(function ($val) { return $val * 2; });
 
+        $this->assertInternalType('array', $list);
         $this->assertEquals([2, 4, 6, 8], $list);
     }
 
@@ -58,7 +68,7 @@ class CollectionTest extends TestCase
         $list = Collection::from(1, 2, 3, 4)
             ->filter(function ($val) { return $val > 2; })
             ->getList();
-            
+
         $this->assertEquals(\SplFixedArray::fromArray([3, 4]), $list);
     }
 
@@ -76,7 +86,7 @@ class CollectionTest extends TestCase
             ->fold(function ($acc, $val) { return $acc + $val; }, 1)
             ->getList();
             
-        $this->assertEquals($list, 11);
+        $this->assertEquals(11, $list);
     }
 
     public function testMergeFunctionCreatesNewCollectionInstance()
@@ -132,18 +142,12 @@ class CollectionTest extends TestCase
 
     public function testCollectionClassIsIterable()
     {
-        $acc = [];
         $list = Collection::from(13, 15, 16, 18, 14, 20)
             ->filter(function ($val) { return $val % 2 == 0; });
-
-        foreach ($list as $val) {
-            if ($val < 15) {
-                $acc[] = $val;
-            }
-        }
+        $acc = $list->toArray();
 
         $this->assertInternalType('array', $acc);
-        $this->assertEquals([14], $acc);
+        $this->assertEquals([16, 18, 14, 20], $acc);
     }
 
     public function testCollectionImplementsCountable()
@@ -158,8 +162,8 @@ class CollectionTest extends TestCase
     {
         $list = Collection::from('foo', 'bar')
             ->map('strtoupper');
-            
-        $this->assertEquals(2, count($list));
+
+        $this->assertCount(2, $list);
     }
 
     public function testReverseMethodCreatesNewCollectionInstance()
@@ -168,6 +172,15 @@ class CollectionTest extends TestCase
             ->reverse();
 
         $this->assertInstanceOf(Collection::class, $list);
+    }
+
+    public function testReverseMethodCreatesNewCollectionToArray()
+    {
+        $list = Collection::from(...range(0, 10))
+            ->reverse()
+            ->toArray();
+
+        $this->assertEquals([10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0], $list);
     }
 
     public function testReverseMethodReversesListOrder()
