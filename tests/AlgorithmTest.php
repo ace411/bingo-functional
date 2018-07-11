@@ -135,20 +135,6 @@ class AlgorithmTest extends TestCase
         );
     }
 
-    public function testExtendAppendsElementsOntoArray()
-    {
-        $array = ['foo' => 'bar', 'baz' => 12];
-        $extended = A\extend($array, ['foo' => 9, 'bar' => 19]);
-        $this->assertEquals(
-            [
-                'foo' => 9,
-                'baz' => 12,
-                'bar' => 19
-            ],
-            $extended
-        );
-    }
-
     public function testConstantFunctionAlwaysReturnsFirstArgumentSupplied()
     {
         $const = A\constantFunction(12);
@@ -325,13 +311,6 @@ class AlgorithmTest extends TestCase
         $this->assertEquals(1, $index);
     }
 
-    public function testReverseFunctionComputesReverseOfArray()
-    {
-        $reverse = A\reverse(['foo', 'bar', 'baz']);
-
-        $this->assertEquals(['baz', 'bar', 'foo'], $reverse);
-    }
-
     public function testFromPairsFunctionCreatesKeyValueArrayPairs()
     {
         $fromPairs = A\fromPairs([
@@ -435,7 +414,7 @@ class AlgorithmTest extends TestCase
 
         $this->assertEquals(
             [
-                2 => ['name' => 'demarcus', 'pos' => 'c']
+                ['name' => 'demarcus', 'pos' => 'c']
             ],
             $find
         );
