@@ -1,57 +1,54 @@
 <?php
 
 /**
- * Applicative and Monadic functor trait
+ * Applicative and Monadic functor trait.
  *
- * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
 
 namespace Chemem\Bingo\Functional\Common\Applicatives;
 
-use Chemem\Bingo\Functional\Functors\Either\{Either, Left, Right};
 use Chemem\Bingo\Functional\Functors\Applicatives\CollectionApplicative;
+use Chemem\Bingo\Functional\Functors\Either\Either;
+use Chemem\Bingo\Functional\Functors\Either\Right;
 
 trait ApplicativeTrait
 {
     /**
-     * @access private
-     * @var mixed $value
+     * @var mixed
      */
-
     private $value;
 
     /**
-     * Constructor
+     * Constructor.
      *
      * @param mixed $value
      */
-
     public function __construct($value)
     {
         $this->value = $value;
     }
 
     /**
-     * Pure method
+     * Pure method.
      *
      * @param mixed $value
+     *
      * @return object ApplicativeAbstract
      */
-
     public static function pure($value) : ApplicativeAbstract
     {
         return new static($value);
     }
 
     /**
-     * Apply method
+     * Apply method.
      *
      * @param ApplicativeAbstract $applicative
+     *
      * @return object ApplicativeAbstract
      */
-
     public function apply(ApplicativeAbstract $applicative) : ApplicativeAbstract
     {
         $applied = Either::right($this->getValue())
@@ -79,11 +76,10 @@ trait ApplicativeTrait
     }
 
     /**
-     * getValue method
+     * getValue method.
      *
      * @return mixed $value
      */
-
     public function getValue()
     {
         return $this->value;

@@ -1,9 +1,8 @@
 <?php
 
 /**
- * CollectionApplicative functor
+ * CollectionApplicative functor.
  *
- * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
@@ -11,34 +10,29 @@
 namespace Chemem\Bingo\Functional\Functors\Applicatives;
 
 use Chemem\Bingo\Functional\Common\Applicatives\ApplicativeAbstract;
-use Chemem\Bingo\Functional\Functors\Either\{Either, Left, Right};
+use Chemem\Bingo\Functional\Functors\Either\Either;
+use Chemem\Bingo\Functional\Functors\Either\Right;
 
-class CollectionApplicative
-    extends ApplicativeAbstract
-    implements \IteratorAggregate
+class CollectionApplicative extends ApplicativeAbstract implements \IteratorAggregate
 {
     /**
-     * @access private
-     * @var array $values
+     * @var array
      */
-
     private $values;
 
     /**
-     * CollectionApplicative constructor
+     * CollectionApplicative constructor.
      *
      * @param array $values
      */
-
     public function __construct(array $values)
     {
         $this->values = $values;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public static function pure($values) : ApplicativeAbstract
     {
         if ($values instanceof \Traversable) {
@@ -46,13 +40,13 @@ class CollectionApplicative
         } elseif (!is_array($values)) {
             $values = [$values];
         }
+
         return new static($values);
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function apply(ApplicativeAbstract $applicative) : ApplicativeAbstract
     {
         //ensure that all the values are functions
@@ -90,24 +84,23 @@ class CollectionApplicative
     }
 
     /**
-     * getValues method
+     * getValues method.
      *
      * @return array $values
      */
-
     public function getValues()
     {
         return $this->values;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      *
      * @see ArrayIterator
      * @see IteratorAggregate
+     *
      * @return object ArrayIterator
      */
-
     public function getIterator()
     {
         return new ArrayIterator($this->getValues());

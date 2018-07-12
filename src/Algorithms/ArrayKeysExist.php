@@ -1,17 +1,17 @@
 <?php
 
 /**
- * arrayKeysExist function
- * 
+ * arrayKeysExist function.
+ *
  * arrayKeysExist :: [a] b -> (b -> [a]) -> Bool c
- * @package bingo-functional
+ *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const arrayKeysExist = "Chemem\\Bingo\\Functional\\Algorithms\\arrayKeysExist";
+const arrayKeysExist = 'Chemem\\Bingo\\Functional\\Algorithms\\arrayKeysExist';
 
 function arrayKeysExist(array $toSearch, ...$keys) : bool
 {

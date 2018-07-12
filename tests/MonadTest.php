@@ -2,21 +2,25 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
+use Chemem\Bingo\Functional\Functors\Monads\IO;
+use Chemem\Bingo\Functional\Functors\Monads\ListMonad;
+use Chemem\Bingo\Functional\Functors\Monads\Reader;
+use Chemem\Bingo\Functional\Functors\Monads\State;
+use Chemem\Bingo\Functional\Functors\Monads\Writer;
 use PHPUnit\Framework\TestCase;
-use Chemem\Bingo\Functional\Functors\Monads\{IO, Writer, Reader, State, ListMonad};
 
 class MonadTest extends TestCase
 {
     public function testIOMonadHandlesIOProperly()
     {
         $readFromFile = function () : string {
-            return file_get_contents(dirname(__DIR__) . '/io.test.txt');
+            return file_get_contents(dirname(__DIR__).'/io.test.txt');
         };
 
         $io = IO::of($readFromFile)
             ->map('strtoupper')
             ->exec();
-        
+
         $this->assertEquals($io, 'THIS IS AN IO MONAD TEST FILE.');
     }
 
@@ -30,9 +34,9 @@ class MonadTest extends TestCase
                 'add 2 to x val'
             )
             ->run();
-        
+
         $this->assertEquals($result, 4);
-        $this->assertEquals($log, 'initialize' . PHP_EOL . 'add 2 to x val');
+        $this->assertEquals($log, 'initialize'.PHP_EOL.'add 2 to x val');
     }
 
     public function testReaderMonadLazilyEvaluatesEnvironmentVariable()
@@ -40,13 +44,13 @@ class MonadTest extends TestCase
         $ask = function ($content) : Reader {
             return Reader::of(
                 function ($name) use ($content) {
-                    return $content . ($name === 'world' ? '' : '. How are you?');
+                    return $content.($name === 'world' ? '' : '. How are you?');
                 }
             );
         };
 
         $sayHello = function ($name) : string {
-            return 'Hello ' . $name;
+            return 'Hello '.$name;
         };
 
         $reader = Reader::of($sayHello)
@@ -70,7 +74,7 @@ class MonadTest extends TestCase
             ->evalState($addTen)
             ->bind($multiplyByTen)
             ->exec();
-        
+
         $this->assertEquals($default, 2);
         $this->assertEquals($state, 120);
     }

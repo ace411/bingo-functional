@@ -1,17 +1,17 @@
 <?php
 
 /**
- * Partition function
+ * Partition function.
  *
  * partition :: [a, b] Int b -> [[a], [b]]
- * @package bingo-functional
+ *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const partition = "Chemem\\Bingo\\Functional\\Algorithms\\partition";
+const partition = 'Chemem\\Bingo\\Functional\\Algorithms\\partition';
 
 function partition(int $number, array $array) : array
 {

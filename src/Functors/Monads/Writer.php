@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Writer monad
- * 
- * @package bingo-functional
+ * Writer monad.
+ *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
@@ -15,21 +14,19 @@ use Chemem\Bingo\Functional\Algorithms as A;
 class Writer
 {
     /**
-     * @access private
-     * @var mixed $value
+     * @var mixed
      */
     private $value;
 
     /**
-     * @access private
-     * @var string $logMsg
+     * @var string
      */
-    private $logMsg; 
+    private $logMsg;
 
     /**
-     * Writer monad constructor
-     * 
-     * @param mixed $value
+     * Writer monad constructor.
+     *
+     * @param mixed  $value
      * @param string $logMsg
      */
     public function __construct($value, $logMsg)
@@ -39,15 +36,16 @@ class Writer
     }
 
     /**
-     * of method
-     * 
+     * of method.
+     *
      * @static of
-     * @param mixed $value
+     *
+     * @param mixed  $value
      * @param string $logMsg
+     *
      * @return object Writer
      */
-
-    public static function of($value, $logMsg) : Writer
+    public static function of($value, $logMsg) : self
     {
         return is_callable($value) ?
             new static(call_user_func($value), $logMsg) :
@@ -55,56 +53,55 @@ class Writer
     }
 
     /**
-     * map method
-     * 
+     * map method.
+     *
      * @param callable $function The morphism used to transform the state value
-     * @param string $logMsg
+     * @param string   $logMsg
+     *
      * @return object Writer
      */
-
-    public function map(callable $function, $logMsg) : Writer
+    public function map(callable $function, $logMsg) : self
     {
         return new static(
-            call_user_func($function, $this->value), 
+            call_user_func($function, $this->value),
             A\concat(PHP_EOL, $this->logMsg, $logMsg)
         );
     }
-    
+
     /**
-     * bind method
-     * 
+     * bind method.
+     *
      * @param callable $function
-     * @param string $logMsg
+     * @param string   $logMsg
+     *
      * @return object Writer
      */
-
-    public function bind(callable $function, $logMsg) : Writer
+    public function bind(callable $function, $logMsg) : self
     {
         return $this->map($function, $logMsg);
     }
 
     /**
-     * flatMap method
-     * 
+     * flatMap method.
+     *
      * @param callable $function
-     * @param string $logMsg
+     * @param string   $logMsg
+     *
      * @return mixed $result
      */
-
     public function flatMap(callable $function, $logMsg)
     {
         return [
             call_user_func($function, $this->value),
-            A\concat(PHP_EOL, $this->logMsg, $logMsg)
+            A\concat(PHP_EOL, $this->logMsg, $logMsg),
         ];
     }
 
     /**
-     * run method
-     * 
+     * run method.
+     *
      * @return array [$value, $logMsg]
      */
-
     public function run()
     {
         return [$this->value, $this->logMsg];

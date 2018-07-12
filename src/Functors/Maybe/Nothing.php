@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Nothing type
+ * Nothing type.
  *
- * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
@@ -22,81 +21,71 @@ final class Nothing extends Maybe implements FunctorInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function isJust() : bool
     {
         return false;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function isNothing() : bool
     {
         return true;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function getNothing()
     {
         return $this->nothing;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function getJust()
     {
-        return null;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function flatMap(callable $fn)
     {
         return $this->getNothing();
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function getOrElse($default)
     {
         return $this;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function map(callable $fn) : FunctorInterface
     {
         return $this;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function filter(callable $fn) : Maybe
     {
         return $this;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function orElse(Maybe $maybe) : Maybe
     {
         return $maybe;

@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Left type functor
+ * Left type functor.
  *
- * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
@@ -22,72 +21,63 @@ final class Left extends Either implements FunctorInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function isLeft() : bool
     {
         return true;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function isRight() : bool
     {
         return false;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function getLeft()
     {
         return $this->value;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function getRight()
     {
-        return null;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function filter(callable $fn, $error) : Either
     {
         return $this;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function flatMap(callable $fn)
     {
         return $this->getLeft();
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function map(callable $fn) : FunctorInterface
     {
         return $this;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function orElse(Either $either) : Either
     {
         return $either;

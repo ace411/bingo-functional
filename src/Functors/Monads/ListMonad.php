@@ -1,9 +1,8 @@
 <?php
 
 /**
- * List monad
- * 
- * @package bingo-functional
+ * List monad.
+ *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
@@ -15,42 +14,40 @@ use Chemem\Bingo\Functional\Algorithms as A;
 class ListMonad
 {
     /**
-     * @access private
-     * @var array $collection The collection to transform
+     * @var array The collection to transform
      */
     private $collection;
 
     /**
-     * ListMonad constructor
-     * 
+     * ListMonad constructor.
+     *
      * @param mixed $collection
      */
-
     public function __construct(...$collection)
     {
         $this->collection = $collection;
     }
 
     /**
-     * of method
-     * 
+     * of method.
+     *
      * @param mixed $collection
+     *
      * @return object ListMonad
      */
-
-    public static function of(...$collection) : ListMonad
+    public static function of(...$collection) : self
     {
         return new static($collection);
     }
 
     /**
-     * bind method
-     * 
+     * bind method.
+     *
      * @param callable $function
+     *
      * @return object ListMonad
      */
-
-    public function bind(callable $function) : ListMonad
+    public function bind(callable $function) : self
     {
         list($original, $final) = State::of($this->extract())
             ->map(
@@ -72,11 +69,10 @@ class ListMonad
     }
 
     /**
-     * extract method
-     * 
+     * extract method.
+     *
      * @return array $collection
      */
-
     public function extract() : array
     {
         return A\flatten($this->collection);

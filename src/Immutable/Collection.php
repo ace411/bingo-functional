@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Immutable Collection class
- * 
- * @package bingo-functional
+ * Immutable Collection class.
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -13,14 +12,13 @@ namespace Chemem\Bingo\Functional\Immutable;
 class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
 {
     /**
-     * @access private
-     * @var mixed $list 
+     * @var mixed
      */
     private $list;
 
     /**
-     * Collection constructor
-     * 
+     * Collection constructor.
+     *
      * @param mixed $items
      */
     public function __construct($items)
@@ -29,30 +27,32 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * from static method
-     * 
-     * @access public
+     * from static method.
+     *
      * @method from
+     *
      * @param mixed $item
+     *
      * @return object Collection
      */
-    public static function from(...$items) : Collection
+    public static function from(...$items) : self
     {
         return new static(\SplFixedArray::fromArray($items));
     }
 
     /**
-     * map method
-     * 
-     * @access public
+     * map method.
+     *
      * @method map
+     *
      * @param callable $func
+     *
      * @return object Collection
      */
-    public function map(callable $func) : Collection
+    public function map(callable $func) : self
     {
         $list = $this->list;
-        
+
         foreach ($list as $index => $val) {
             $list[$index] = $func($val);
         }
@@ -61,11 +61,12 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * flatMap method
-     * 
-     * @access public
+     * flatMap method.
+     *
      * @method flatMap
+     *
      * @param callable $func
+     *
      * @return array $flattened
      */
     public function flatMap(callable $func) : array
@@ -81,35 +82,39 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * filter method
-     * 
-     * @access public
+     * filter method.
+     *
      * @method filter
+     *
      * @param callable $func
+     *
      * @return object Collection
      */
-    public function filter(callable $func) : Collection
+    public function filter(callable $func) : self
     {
         $list = $this->list;
         $acc = [];
-        
+
         foreach ($list as $index => $val) {
-            if ($func($val)) { $acc[] = $val; }
+            if ($func($val)) {
+                $acc[] = $val;
+            }
         }
 
         return new static(\SplFixedArray::fromArray($acc));
     }
 
     /**
-     * fold method
-     * 
-     * @access public
+     * fold method.
+     *
      * @method fold
+     *
      * @param callable $func
-     * @param mixed $acc
+     * @param mixed    $acc
+     *
      * @return object Collection
      */
-    public function fold(callable $func, $acc) : Collection
+    public function fold(callable $func, $acc) : self
     {
         $list = $this->list;
 
@@ -121,14 +126,15 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * slice method
-     * 
-     * @access public
+     * slice method.
+     *
      * @method slice
+     *
      * @param int $count
+     *
      * @return object Collection
      */
-    public function slice(int $count) : Collection
+    public function slice(int $count) : self
     {
         $list = $this->list;
         $listCount = $list->count();
@@ -142,14 +148,15 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * merge method
-     * 
-     * @access public
+     * merge method.
+     *
      * @method merge
+     *
      * @param Collection $list
+     *
      * @return object Collection
      */
-    public function merge(Collection $list) : Collection
+    public function merge(self $list) : self
     {
         $oldSize = $this->getSize();
         $combinedSize = $oldSize + $list->getSize();
@@ -166,17 +173,17 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * reverse method
-     * 
-     * @access public
+     * reverse method.
+     *
      * @method reverse
+     *
      * @return object Collection
      */
-    public function reverse() : Collection
+    public function reverse() : self
     {
         $list = $this->list;
         $count = $this->list->getSize();
-        $newList = new \SplFixedArray($count);        
+        $newList = new \SplFixedArray($count);
 
         foreach ($newList as $index => $val) {
             $newList[$index] = $list[$count - $index - 1];
@@ -186,13 +193,14 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * fill method
-     * 
-     * @access public
+     * fill method.
+     *
      * @method fill
+     *
      * @param mixed $value
-     * @param int $start
-     * @param int $end
+     * @param int   $start
+     * @param int   $end
+     *
      * @return object Collection
      */
     public function fill($value, int $start, int $end)
@@ -207,18 +215,18 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * getList method
-     * 
+     * getList method.
+     *
      * @return mixed $list
      */
     public function getList()
     {
         return $this->list;
     }
-    
+
     /**
-     * jsonSerialize method
-     * 
+     * jsonSerialize method.
+     *
      * @return array $list
      */
     public function jsonSerialize()
@@ -227,8 +235,8 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * getSize method
-     * 
+     * getSize method.
+     *
      * @return int $size
      */
     public function getSize() : int
@@ -237,8 +245,8 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * toArray method
-     * 
+     * toArray method.
+     *
      * @return array $list
      */
     public function toArray() : array
@@ -247,20 +255,20 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * getIterator method
-     * 
+     * getIterator method.
+     *
      * @see ArrayIterator
+     *
      * @return object ArrayIterator
      */
-
     public function getIterator() : \ArrayIterator
     {
         return new \ArrayIterator($this->toArray());
     }
 
     /**
-     * count method
-     * 
+     * count method.
+     *
      * @return int $count
      */
     public function count() : int
