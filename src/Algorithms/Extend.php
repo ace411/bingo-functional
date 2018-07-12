@@ -1,17 +1,17 @@
 <?php
 
 /**
- * extend function
+ * extend function.
  *
- * extend :: [a] [b] -> [a, b] 
- * @package bingo-functional
+ * extend :: [a] [b] -> [a, b]
+ *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const extend = "Chemem\\Bingo\\Functional\\Algorithms\\extend";
+const extend = 'Chemem\\Bingo\\Functional\\Algorithms\\extend';
 
 function extend(array $primary, array ...$exts) : array
 {

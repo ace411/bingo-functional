@@ -1,10 +1,10 @@
 <?php
 
 /**
- * indexOf function
- * 
+ * indexOf function.
+ *
  * indexOf :: [a] -> b -> c -> ([a], b, c) -> d
- * @package bingo-functional
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -17,7 +17,9 @@ function indexOf(array $collection, $value, int $fromIndex = 0)
 {
     $indexFn = function ($valIndex) use ($value, $fromIndex, $collection) {
         foreach ($collection as $index => $val) {
-            if ($val == $value) { $valIndex = $index; }
+            if ($val == $value) {
+                $valIndex = $index;
+            }
         }
 
         return $valIndex;

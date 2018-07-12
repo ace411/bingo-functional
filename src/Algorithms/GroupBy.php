@@ -1,10 +1,10 @@
 <?php
 
 /**
- * groupBy function
- * 
+ * groupBy function.
+ *
  * groupBy :: [a] -> b -> [c]
- * @package bingo-functional
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */

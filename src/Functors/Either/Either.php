@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Either type functor
+ * Either type functor.
  *
- * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
@@ -15,37 +14,37 @@ use Chemem\Bingo\Functional\Common\Functors\FunctorInterface;
 abstract class Either
 {
     /**
-     * left method
+     * left method.
      *
      * @param mixed $value
+     *
      * @return object Left
      */
-
     public static function left($value) : Left
     {
         return new Left($value);
     }
 
     /**
-     * right method
+     * right method.
      *
      * @param mixed $value
+     *
      * @return object Right
      */
-
     public static function right($value) : Right
     {
         return new Right($value);
     }
 
     /**
-     * partitionEithers method
+     * partitionEithers method.
      *
      * @param array $values
      * @param array $acc
+     *
      * @return array $acc
      */
-
     public static function partitionEithers(array $values, $acc = []) : array
     {
         $acc['left'] = array_map(
@@ -64,17 +63,18 @@ abstract class Either
                 return $val instanceof Right;
             })
         );
+
         return $acc;
     }
 
     /**
-     * lift method
+     * lift method.
      *
      * @param callable $fn
-     * @param Left $left
+     * @param Left     $left
+     *
      * @return callable
      */
-
     public static function lift(callable $fn, Left $left) : callable
     {
         return function () use ($fn, $left) {
@@ -95,82 +95,84 @@ abstract class Either
                     },
                     func_get_args()
                 );
+
                 return self::right(call_user_func($fn, ...$args));
             }
+
             return $left;
         };
     }
 
     /**
-     * getLeft method
+     * getLeft method.
      *
      * @abstract
      */
-
     abstract public function getLeft();
 
     /**
-     * getRight method
+     * getRight method.
      *
      * @abstract
      */
-
     abstract public function getRight();
 
     /**
-     * isLeft method
+     * isLeft method.
      *
      * @abstract
-     * @return boolean
+     *
+     * @return bool
      */
-
     abstract public function isLeft() : bool;
 
     /**
-     * isRight method
+     * isRight method.
      *
      * @abstract
-     * @return boolean
+     *
+     * @return bool
      */
-
     abstract public function isRight() : bool;
 
     /**
-     * flatMap method
+     * flatMap method.
      *
      * @abstract
+     *
      * @param callable $fn
      */
-
     abstract public function flatMap(callable $fn);
 
     /**
-     * map method
+     * map method.
      *
      * @abstract
+     *
      * @param callable $fn
+     *
      * @return object FunctorInterface
      */
-
     abstract public function map(callable $fn) : FunctorInterface;
 
     /**
-     * filter method
+     * filter method.
      *
      * @abstract
+     *
      * @param callable $fn
-     * @param mixed $error
+     * @param mixed    $error
+     *
      * @return object Either
      */
-
-    abstract public function filter(callable $fn, $error) : Either;
+    abstract public function filter(callable $fn, $error) : self;
 
     /**
-     * orElse method
+     * orElse method.
      *
      * @param Either $either
+     *
      * @return object Either
      */
-
-    abstract public function orElse(Either $either) : Either;
+    abstract public function orElse(self $either) : self;
 }

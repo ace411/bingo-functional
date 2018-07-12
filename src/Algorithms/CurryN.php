@@ -1,17 +1,17 @@
 <?php
 
 /**
- * CurryN function
+ * CurryN function.
  *
  * curryN :: (a, (b)) -> (b)
- * @package bingo-functional
+ *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const curryN = "Chemem\\Bingo\\Functional\\Algorithms\\curryN";
+const curryN = 'Chemem\\Bingo\\Functional\\Algorithms\\curryN';
 
 function curryN(int $paramCount, callable $fn)
 {
@@ -21,21 +21,22 @@ function curryN(int $paramCount, callable $fn)
             if ($paramCount <= count($args)) {
                 return call_user_func_array($fn, $args);
             }
+
             return $acc($args);
         };
     };
+
     return $acc([]);
 }
 
 /**
- * CurryN function
+ * CurryN function.
  *
  * curryRightN :: (a, (b)) -> (b)
- * @package bingo-functional
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
-
 const curryRightN = 'Chemem\\Bingo\\Functional\\Algorithms\\curryRightN';
 
 function curryRightN(int $paramCount, callable $func)

@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Right type functor
+ * Right type functor.
  *
- * @package bingo-functional
  * @license Apache 2.0
  * @author Lochemem Bruno Michael
  */
@@ -22,45 +21,39 @@ final class Right extends Either implements FunctorInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function isLeft() : bool
     {
         return false;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function isRight() : bool
     {
         return true;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function getLeft()
     {
-        return null;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function getRight()
     {
         return $this->value;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function filter(callable $fn, $error) : Either
     {
         return $fn($this->value) ?
@@ -69,29 +62,26 @@ final class Right extends Either implements FunctorInterface
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function flatMap(callable $fn)
     {
         return $fn($this->getRight());
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function map(callable $fn) : FunctorInterface
     {
         return new static($fn($this->getRight()));
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function orElse(Either $either) : Either
     {
-        return !isset($this->value) ? $either : new static($this->value);  
+        return !isset($this->value) ? $either : new static($this->value);
     }
 }

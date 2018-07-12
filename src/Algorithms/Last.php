@@ -1,10 +1,10 @@
 <?php
 
 /**
- * last function
- * 
- * last :: [a, b] -> b 
- * @package bingo-functional
+ * last function.
+ *
+ * last :: [a, b] -> b
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */

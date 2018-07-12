@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Maybe type abstract functor
+ * Maybe type abstract functor.
  *
- * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
@@ -15,37 +14,36 @@ use Chemem\Bingo\Functional\Common\Functors\FunctorInterface;
 abstract class Maybe
 {
     /**
-     * just method
+     * just method.
      *
      * @param mixed $value
+     *
      * @return object Just
      */
-
     public static function just($value) : Just
     {
         return new Just($value);
     }
 
     /**
-     * nothing method
+     * nothing method.
      *
      * @return object Nothing
      */
-
     public static function nothing() : Nothing
     {
         return new Nothing();
     }
 
     /**
-     * fromValue method
+     * fromValue method.
      *
      * @param mixed $just
      * @param mixed $nothing
+     *
      * @return object Maybe
      */
-
-    public static function fromValue($just, $nothing = null) : Maybe
+    public static function fromValue($just, $nothing = null) : self
     {
         return $just !== $nothing ?
             self::just($just) :
@@ -53,12 +51,12 @@ abstract class Maybe
     }
 
     /**
-     * lift method
+     * lift method.
      *
      * @param callable $fn
+     *
      * @return callable
      */
-
     public static function lift(callable $fn) : callable
     {
         return function () use ($fn) {
@@ -77,93 +75,98 @@ abstract class Maybe
                     },
                     func_get_args($fn)
                 );
+
                 return self::just(call_user_func($fn, ...$args));
             }
+
             return self::nothing();
         };
     }
 
     /**
-     * getJust method
+     * getJust method.
      *
      * @abstract
      */
-
     abstract public function getJust();
 
     /**
-     * getNothing method
+     * getNothing method.
      *
      * @abstract
      */
-
     abstract public function getNothing();
 
     /**
-     * isJust method
+     * isJust method.
      *
      * @abstract
-     * @return boolean
+     *
+     * @return bool
      */
-
     abstract public function isJust() : bool;
 
     /**
-     * isNothing method
+     * isNothing method.
      *
      * @abstract
-     * @return boolean
+     *
+     * @return bool
      */
-
     abstract public function isNothing() : bool;
 
     /**
-     * flatMap method
+     * flatMap method.
      *
      * @abstract
+     *
      * @param callable $fn
+     *
      * @return mixed $value
      */
-
     abstract public function flatMap(callable $fn);
 
     /**
-     * getOrElse method
+     * getOrElse method.
      *
      * @abstract
+     *
      * @param mixed $default
+     *
      * @return mixed $value
      */
-
     abstract public function getOrElse($default);
 
     /**
-     * map method
+     * map method.
      *
      * @abstract
+     *
      * @param callable $fn
+     *
      * @return object FunctorInterface
      */
-
     abstract public function map(callable $fn) : FunctorInterface;
 
     /**
-     * filter method
+     * filter method.
      *
      * @abstract
+     *
      * @param callable $fn
+     *
      * @return object Maybe
      */
-
-    abstract public function filter(callable $fn) : Maybe;
+    abstract public function filter(callable $fn) : self;
 
     /**
-     * orElse method
+     * orElse method.
      *
      * @abstract
+     *
      * @param Maybe $value
+     *
      * @return object Maybe
      */
-
-    abstract public function orElse(Maybe $value) : Maybe;
+    abstract public function orElse(self $value) : self;
 }
