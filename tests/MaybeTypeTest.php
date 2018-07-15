@@ -24,6 +24,7 @@ class MaybeTypeTest extends TestCase
         $val = Maybe::fromValue(12);
         $another = Maybe::fromValue(12, 12);
         $yetAnother = Maybe::fromValue(null);
+
         $this->assertInstanceOf(Just::class, $val);
         $this->assertInstanceOf(Nothing::class, $another);
         $this->assertInstanceOf(Nothing::class, $yetAnother);
@@ -47,61 +48,42 @@ class MaybeTypeTest extends TestCase
 
     public function testMaybeLiftMethodChangesFunctionsToAcceptMaybeTypes()
     {
-        $add = function (int $a, int $b) : int {
-            return $a + $b;
-        };
+        $lifted = Maybe::lift(function (int $a, int $b) : int { return $a + $b; });
 
-        $lifted = Maybe::lift($add);
-        $this->assertEquals(
-            $lifted(
-                Maybe::just(1),
-                Maybe::just(2)
-            )
-            ->getJust(),
-            3
-        );
+        $this->assertEquals(3, $lifted(Maybe::just(1), Maybe::just(2))->getJust());
     }
 
     public function testMaybeJustTypeGetJustMethodReturnsJustValue()
     {
         $val = Maybe::just(12);
 
-        $this->assertEquals($val->getJust(), 12);
-        $this->assertEquals($val->getNothing(), null);
+        $this->assertEquals(12, $val->getJust());
+        $this->assertEquals(null, $val->getNothing());
     }
 
     public function testMaybeJustTypeFlatMapMethodReturnsNonEncapsulatedValue()
     {
         $val = Maybe::just(12)
-            ->flatMap(
-                function (int $a) : int {
-                    return $a + 10;
-                }
-            );
-        $this->assertEquals($val, 22);
+            ->flatMap(function (int $a) : int { return $a + 10; });
+
+        $this->assertEquals(22, $val);
     }
 
     public function testMaybeJustTypeMapMethodReturnsEncapsulatedValue()
     {
         $val = Maybe::just(12)
-            ->map(
-                function (int $a) : int {
-                    return $a + 10;
-                }
-            );
+            ->map(function (int $a) : int { return $a + 10; });
+
         $this->assertInstanceOf(Just::class, $val);
     }
 
     public function testMaybeJustTypeFilterMethodReturnsEncapsulatedValueBasedOnPredicate()
     {
         $val = Maybe::just('foo')
-            ->filter(
-                function (string $str) : bool {
-                    return is_string($str);
-                }
-            );
+            ->filter(function (string $str) : bool { return is_string($str); });
+        
         $this->assertInstanceOf(Just::class, $val);
-        $this->assertEquals($val->getJust(), 'foo');
+        $this->assertEquals('foo', $val->getJust());
     }
 
     public function testMaybeJustTypeReturnsNothingIfConditionEvaluatesToFalse()
@@ -113,28 +95,17 @@ class MaybeTypeTest extends TestCase
                 }
             );
         $this->assertInstanceOf(Nothing::class, $val);
-        $this->assertEquals($val->getNothing(), null);
+        $this->assertEquals(null, $val->getNothing());
     }
 
     public function testMapFlatMapFilterMethodsHaveNoEffectOnNothingValue()
     {
         $val = Maybe::nothing()
-            ->filter(
-                function ($val = null) {
-                    return is_null($val);
-                }
-            )
-            ->map(
-                function ($val = null) : string {
-                    return "null";
-                }
-            )
-            ->flatMap(
-                function ($val = null) : string {
-                    return "null";
-                }
-            );
-        $this->assertEquals($val, null);
+            ->filter(function ($val = null) { return is_null($val); })
+            ->map(function ($val = null) : string { return "null"; })
+            ->flatMap(function ($val = null) : string { return "null"; });
+
+        $this->assertEquals(null, $val);
     }
 
     public function testOrElseMethodReturnsFinalMaybeTypeResult()
@@ -142,20 +113,11 @@ class MaybeTypeTest extends TestCase
         $val = Maybe::fromValue(12);
 
         $mutated = $val
-            ->filter(
-                function ($val) {
-                    return $val > 20;
-                },
-                0
-            )
-            ->map(
-                function ($val) {
-                    return $val + 10;
-                }
-            )
+            ->filter(function ($val) { return $val > 20; }, 0)
+            ->map(function ($val) { return $val + 10; })
             ->orElse(Maybe::fromValue(25));
 
         $this->assertInstanceOf(Maybe::class, $mutated);
-        $this->assertEquals($mutated->getJust(), 25);
+        $this->assertEquals(25, $mutated->getJust());
     }
 }

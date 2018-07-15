@@ -10,7 +10,9 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-class State
+use \FunctionalPHP\FantasyLand\{Apply, Functor, Monad};
+
+class State implements Monad
 {
     /**
      * @access private
@@ -44,7 +46,7 @@ class State
      * @return object State
      */
 
-    public static function of($initVal) : State
+    public static function of($initVal)
     {
         return new static($initVal, $initVal);
     }
@@ -65,17 +67,31 @@ class State
     }
 
     /**
+     * ap method
+     * 
+     * @inheritdoc
+     */
+    public function ap(Apply $app) : Apply
+    {
+        return $this->map(function ($val) use ($app) { return $app->map($val); });
+    }
+
+    /**
      * map method
      * 
-     * @param callable $function
-     * @return object State
+     * @inheritdoc
      */
-
-    public function map(callable $function) : State
+    public function map(callable $function) : Functor
     {
         return $this->evalState($function);
     }
 
+    /**
+     * map method
+     * 
+     * @param callable $function
+     * @return mixed $result
+     */
     public function flatMap(callable $function)
     {
         return $this
@@ -90,7 +106,7 @@ class State
      * @return object State
      */
 
-    public function bind(callable $function) : State
+    public function bind(callable $function)
     {
         return $this->map($function);
     }

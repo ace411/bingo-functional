@@ -10,9 +10,9 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-use Chemem\Bingo\Functional\Algorithms as A;
+use \FunctionalPHP\FantasyLand\{Apply, Functor, Monad};
 
-class Reader
+class Reader implements Monad
 {
     /**
      * @access private
@@ -38,15 +38,19 @@ class Reader
      * @return object Reader
      */
 
-    public static function of($action) : Reader
+    public static function of($action)
     {
-        return is_callable($action) ? 
-            new static($action) :
-            new static(
-                function ($env) use ($action) {
-                    return $action;
-                }
-            );
+        return is_callable($action) ? new static($action) : new static(function ($env) use ($action) { return $action; });
+    }
+
+    /**
+     * ap method
+     * 
+     * @inheritdoc
+     */
+    public function ap(Apply $app) : Apply
+    {
+        return $this->withReader(function ($val) use ($app) { return $app->map($val); });
     }
 
     /**
@@ -73,7 +77,17 @@ class Reader
      * @return object Reader
      */
 
-    public function map(callable $function) : Reader
+    public function map(callable $function) : Functor
+    {
+        return $this->withReader($function);
+    }
+
+    /**
+     * bind method
+     * 
+     * @inheritdoc
+     */
+    public function bind(callable $function)
     {
         return $this->withReader($function);
     }

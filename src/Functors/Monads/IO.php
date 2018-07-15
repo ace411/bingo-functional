@@ -10,7 +10,10 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-class IO
+use \FunctionalPHP\FantasyLand\{Functor, Apply, Monad};
+use function \Chemem\Bingo\Functional\Algorithms\constantFunction;
+
+class IO implements Monad
 {
     /**
      * @access private
@@ -23,8 +26,7 @@ class IO
      * 
      * @param callable $operation
      */
-
-    public function __construct($operation)
+    public function __construct(callable $operation)
     {
         $this->operation = $operation;
     }
@@ -37,31 +39,37 @@ class IO
      * @return object IO
      */
 
-    public static function of(callable $operation) : IO
+    public static function of($operation)
     {
-        return new static(call_user_func($operation));
+        return new static(is_callable($operation) ? $operation : constantFunction($operation));
+    }
+
+    /**
+     * ap method
+     * 
+     * @inheritdoc
+     */
+    public function ap(Apply $app) : Apply
+    {
+        return $app->map($this->exec());
     }
 
     /**
      * map method
      * 
-     * @param callable $function 
-     * @return object IO
+     * @inheritdoc
      */
-
-    public function map(callable $function) : IO
+    public function map(callable $function) : Functor
     {
-        return new static(call_user_func($function, $this->operation));
+        return self::of(call_user_func($function, $this->exec()));
     }
 
     /**
      * bind method
      * 
-     * @param callable $function 
-     * @return object IO
+     * @inheritdoc
      */
-
-    public function bind(callable $function) : IO
+    public function bind(callable $function)
     {
         return $this->map($function);
     }
@@ -74,7 +82,7 @@ class IO
 
     public function exec()
     {
-        return $this->operation;
+        return call_user_func($this->operation);
     }
 
     /**
@@ -86,6 +94,6 @@ class IO
 
     public function flatMap(callable $function)
     {
-        return call_user_func($function, $this->operation);
+        return call_user_func($function, $this->exec());
     }
 }

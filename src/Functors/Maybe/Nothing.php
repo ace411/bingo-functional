@@ -10,9 +10,9 @@
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
-use Chemem\Bingo\Functional\Common\Functors\FunctorInterface;
+use \FunctionalPHP\FantasyLand\{Apply, Functor};
 
-final class Nothing extends Maybe implements FunctorInterface
+class Nothing extends Maybe
 {
     private $nothing;
 
@@ -24,7 +24,6 @@ final class Nothing extends Maybe implements FunctorInterface
     /**
      * @inheritdoc
      */
-
     public function isJust() : bool
     {
         return false;
@@ -33,7 +32,6 @@ final class Nothing extends Maybe implements FunctorInterface
     /**
      * @inheritdoc
      */
-
     public function isNothing() : bool
     {
         return true;
@@ -42,7 +40,6 @@ final class Nothing extends Maybe implements FunctorInterface
     /**
      * @inheritdoc
      */
-
     public function getNothing()
     {
         return $this->nothing;
@@ -51,7 +48,6 @@ final class Nothing extends Maybe implements FunctorInterface
     /**
      * @inheritdoc
      */
-
     public function getJust()
     {
         return null;
@@ -69,7 +65,14 @@ final class Nothing extends Maybe implements FunctorInterface
     /**
      * @inheritdoc
      */
+    public function ap(Apply $app) : Apply
+    {
+        return $this;
+    }
 
+    /**
+     * @inheritdoc
+     */
     public function getOrElse($default)
     {
         return $this;
@@ -78,8 +81,7 @@ final class Nothing extends Maybe implements FunctorInterface
     /**
      * @inheritdoc
      */
-
-    public function map(callable $fn) : FunctorInterface
+    public function map(callable $function) : Functor
     {
         return $this;
     }
@@ -87,7 +89,6 @@ final class Nothing extends Maybe implements FunctorInterface
     /**
      * @inheritdoc
      */
-
     public function filter(callable $fn) : Maybe
     {
         return $this;
@@ -96,7 +97,6 @@ final class Nothing extends Maybe implements FunctorInterface
     /**
      * @inheritdoc
      */
-
     public function orElse(Maybe $maybe) : Maybe
     {
         return $maybe;
