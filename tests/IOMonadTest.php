@@ -7,7 +7,7 @@ class IOMonadTest extends PHPUnit\Framework\TestCase
 {
     public function testIOMonadHandlesIOProperly()
     {
-        $txt = IO::of(function ($file) { return file_get_contents($file); })
+        $txt = IO::of(function () { return function ($file) { return file_get_contents($file); }; })
             ->ap(IO::of(dirname(__DIR__) . '/io.test.txt'))
             ->map('strtoupper')
             ->exec();
@@ -33,8 +33,8 @@ class IOMonadTest extends PHPUnit\Framework\TestCase
 
     public function testApMethodMapsOneClassLambdaOntoAnotherClassLambdaValue()
     {
-        $apply = IO::of(function ($val) { return strtoupper($val); })
-            ->ap(IO::of(function () { return 'foo'; }))
+        $apply = IO::of(function () { return function ($val) { return strtoupper($val); }; })
+            ->ap(IO::of('foo'))
             ->flatMap(Chemem\Bingo\Functional\Algorithms\identity);
 
         $this->assertEquals('FOO', $apply);
