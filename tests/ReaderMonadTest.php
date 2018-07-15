@@ -22,19 +22,19 @@ class ReaderMonadTest extends \PHPUnit\Framework\TestCase
 
     public function testApMethodOuputsReaderInstance()
     {
-        $read = Reader::of(function ($name) { return 'Hello ' . $name; })
-            ->ap(Reader::of(function ($content) { return 'Hi, ' . $content; }));
+        $read = Reader::of(function ($first) { return function ($last) use ($first) { return Reader::of(concat(' ', 'Hello', $first, $last)); }; })
+            ->ap(Reader::of('Loki'));
 
         $this->assertInstanceOf(Reader::class, $read);
     }
 
     public function testApMethodBuildsOnInitialReaderTransformation()
     {
-        $read = Reader::of(function ($name) { return 'Hello ' . $name; })
-            ->ap(Reader::of(function ($content) { return 'Hi, ' . $content; }))
-            ->run('loki');
+        $read = Reader::of(function ($first) { return function ($last) use ($first) { return Reader::of(concat(' ', 'Hello', $first, $last)); }; })
+            ->ap(Reader::of('Loki'))
+            ->run('Agiro');
 
-        $this->assertEquals('Hi, Hello loki', $read);
+        $this->assertEquals('Hello Agiro Loki', $read);
         $this->assertInternalType('string', $read);
     }
 
