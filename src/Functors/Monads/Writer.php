@@ -10,7 +10,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-use Chemem\Bingo\Functional\Algorithms as A;
+use function \Chemem\Bingo\Functional\Algorithms\concat;
 
 class Writer
 {
@@ -47,11 +47,19 @@ class Writer
      * @return object Writer
      */
 
-    public static function of($value, $logMsg) : Writer
+    public static function of($value, string $logMsg) : Writer
     {
-        return is_callable($value) ?
-            new static(call_user_func($value), $logMsg) :
-            new static($value, $logMsg);
+        return is_callable($value) ? new static(call_user_func($value), $logMsg) : new static($value, $logMsg);
+    }
+
+    /**
+     * ap method
+     * 
+     * @inheritdoc
+     */
+    public function ap(Apply $app, string $logMsg) : Writer
+    {
+        return $this->map(function ($val) use ($app, $logMsg) { return $app->map($val, $logMsg); });
     }
 
     /**
@@ -62,12 +70,9 @@ class Writer
      * @return object Writer
      */
 
-    public function map(callable $function, $logMsg) : Writer
+    public function map(callable $function, string $logMsg) : Writer
     {
-        return new static(
-            call_user_func($function, $this->value), 
-            A\concat(PHP_EOL, $this->logMsg, $logMsg)
-        );
+        return self::of(call_user_func($function, $this->value), concat(PHP_EOL, $this->logMsg, $logMsg));
     }
     
     /**
@@ -78,7 +83,7 @@ class Writer
      * @return object Writer
      */
 
-    public function bind(callable $function, $logMsg) : Writer
+    public function bind(callable $function, string $logMsg) : Writer
     {
         return $this->map($function, $logMsg);
     }
@@ -91,12 +96,9 @@ class Writer
      * @return mixed $result
      */
 
-    public function flatMap(callable $function, $logMsg)
+    public function flatMap(callable $function, string $logMsg) : array
     {
-        return [
-            call_user_func($function, $this->value),
-            A\concat(PHP_EOL, $this->logMsg, $logMsg)
-        ];
+        return [call_user_func($function, $this->value), concat(PHP_EOL, $this->logMsg, $logMsg)];
     }
 
     /**
@@ -105,7 +107,7 @@ class Writer
      * @return array [$value, $logMsg]
      */
 
-    public function run()
+    public function run() : array
     {
         return [$this->value, $this->logMsg];
     }
