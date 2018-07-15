@@ -49,17 +49,19 @@ class Writer
 
     public static function of($value, string $logMsg) : Writer
     {
-        return is_callable($value) ? new static(call_user_func($value), $logMsg) : new static($value, $logMsg);
+        return new static($value, $logMsg);
     }
 
     /**
      * ap method
      * 
-     * @inheritdoc
+     * @param Writer $app
+     * @param string $logMsg
+     * @return object Writer
      */
-    public function ap(Apply $app, string $logMsg) : Writer
+    public function ap(Writer $app, string $logMsg) : Writer
     {
-        return $this->map(function ($val) use ($app, $logMsg) { return $app->map($val, $logMsg); });
+        return $this->map(function ($val) use ($app, $logMsg) { return $app->map($val, $logMsg); }, concat(PHP_EOL, $app->run()[1], $logMsg));
     }
 
     /**
