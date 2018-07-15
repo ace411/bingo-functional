@@ -61,7 +61,7 @@ class StateMonadTest extends \PHPUnit\Framework\TestCase
         
         $this->assertInternalType('array', $val);
         $this->assertEquals(range(1, 10), $val[0]);
-        $this->assertEquals([2, 4, 6, 8, 10], $val[1]);
+        $this->assertEquals([1 => 2, 3 => 4, 5 => 6, 7 => 8, 9 => 10], $val[1]);
     }
 
     public function testExecMethodOuputsAnArrayContainingInitialAndNewStates()

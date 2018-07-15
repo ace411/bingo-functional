@@ -4,7 +4,7 @@ namespace Chemem\Bingo\Functional\Tests;
 
 use \Chemem\Bingo\Functional\Functors\Monads\ListMonad;
 
-class ListMonadTest extends PHPUnit\Framework\TestCase
+class ListMonadTest extends \PHPUnit\Framework\TestCase
 {
     public function testOfStaticMethodReturnsListMonadInstance()
     {

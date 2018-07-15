@@ -5,7 +5,7 @@ namespace Chemem\Bingo\Functional\Tests;
 use \Chemem\Bingo\Functional\Functors\Monads\IO;
 use function \Chemem\Bingo\Functional\Algorithms\{identity, reduce};
 
-class IOMonadTest extends PHPUnit\Framework\TestCase
+class IOMonadTest extends \PHPUnit\Framework\TestCase
 {
     public function testIOMonadHandlesIOProperly()
     {
@@ -37,7 +37,7 @@ class IOMonadTest extends PHPUnit\Framework\TestCase
     {
         $apply = IO::of(function () { return function ($val) { return strtoupper($val); }; })
             ->ap(IO::of('foo'))
-            ->flatMap(Chemem\Bingo\Functional\Algorithms\identity);
+            ->flatMap(\Chemem\Bingo\Functional\Algorithms\identity);
 
         $this->assertEquals('FOO', $apply);
     }
