@@ -10,9 +10,10 @@
 
 namespace Chemem\Bingo\Functional\Functors\Either;
 
-use Chemem\Bingo\Functional\Common\Functors\FunctorInterface;
+use \FunctionalPHP\FantasyLand\{Apply, Functor};
+use function \Chemem\Bingo\Functional\Algorithms\{compose, partialLeft};
 
-abstract class Either
+abstract class Either implements Functor
 {
     /**
      * left method
@@ -48,42 +49,39 @@ abstract class Either
 
     public static function partitionEithers(array $values, $acc = []) : array
     {
-        $acc['left'] = array_map(
-            function ($val) {
-                return $val->getLeft();
-            },
-            array_filter($values, function ($val) {
-                return $val instanceof Left;
-            })
+        $partition = compose(
+            partialLeft(\Chemem\Bingo\Functional\Algorithms\filter, function ($val) { return $val instanceof Either; }),
+            function ($eithers) use ($acc) {
+                foreach ($eithers as $either) {
+                    if ($either instanceof Right) {
+                        $acc['right'][] = $either->getRight();
+                    } else if ($either instanceof Left) {
+                        $acc['left'][] = $either->getLeft();
+                    }
+                }
+
+                return $acc;
+            }
         );
-        $acc['right'] = array_map(
-            function ($val) {
-                return $val->getRight();
-            },
-            array_filter($values, function ($val) {
-                return $val instanceof Right;
-            })
-        );
-        return $acc;
+
+        return $partition($values);
     }
 
     /**
      * lift method
      *
-     * @param callable $fn
+     * @param callable $function
      * @param Left $left
      * @return callable
      */
 
-    public static function lift(callable $fn, Left $left) : callable
+    public static function lift(callable $function, Left $left) : callable
     {
-        return function () use ($fn, $left) {
+        return function () use ($function, $left) {
             if (
                 array_reduce(
-                    func_get_args($fn),
-                    function (bool $status, Either $val) {
-                        return $val->isLeft() ? false : $status;
-                    },
+                    func_get_args($function),
+                    function (bool $status, Either $val) { return $val->isLeft() ? false : $status; },
                     true
                 )
             ) {
@@ -95,7 +93,7 @@ abstract class Either
                     },
                     func_get_args()
                 );
-                return self::right(call_user_func($fn, ...$args));
+                return self::right(call_user_func($function, ...$args));
             }
             return $left;
         };
@@ -139,31 +137,54 @@ abstract class Either
      * flatMap method
      *
      * @abstract
-     * @param callable $fn
+     * @param callable $function
      */
 
-    abstract public function flatMap(callable $fn);
+    abstract public function flatMap(callable $function);
 
     /**
      * map method
      *
+     * @see FunctionalPHP\FantasyLand\Functor
      * @abstract
-     * @param callable $fn
-     * @return object FunctorInterface
+     * @param callable $function
+     * @return object Functor
      */
 
-    abstract public function map(callable $fn) : FunctorInterface;
+    abstract public function map(callable $function) : Functor;
+
+    /**
+     * bind method
+     * 
+     * @see FunctionalPHP\FantasyLand\Chain
+     * @abstract
+     * @param callable $function
+     * @return object Either
+     */
+
+    abstract public function bind(callable $function);
+
+    /**
+     * ap method
+     * 
+     * @see FunctionalPHP\FantasyLand\Apply
+     * @abstract
+     * @param Apply $app
+     * @return object Apply
+     */
+
+    abstract public function ap(Apply $app) : Apply;
 
     /**
      * filter method
      *
      * @abstract
-     * @param callable $fn
+     * @param callable $function
      * @param mixed $error
      * @return object Either
      */
 
-    abstract public function filter(callable $fn, $error) : Either;
+    abstract public function filter(callable $function, $error) : Either;
 
     /**
      * orElse method

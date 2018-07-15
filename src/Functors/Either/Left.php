@@ -10,9 +10,9 @@
 
 namespace Chemem\Bingo\Functional\Functors\Either;
 
-use Chemem\Bingo\Functional\Common\Functors\FunctorInterface;
+use \FunctionalPHP\FantasyLand\{Apply, Functor, Monad};
 
-final class Left extends Either implements FunctorInterface
+class Left extends Either
 {
     private $value;
 
@@ -24,7 +24,6 @@ final class Left extends Either implements FunctorInterface
     /**
      * @inheritdoc
      */
-
     public function isLeft() : bool
     {
         return true;
@@ -33,7 +32,6 @@ final class Left extends Either implements FunctorInterface
     /**
      * @inheritdoc
      */
-
     public function isRight() : bool
     {
         return false;
@@ -42,7 +40,6 @@ final class Left extends Either implements FunctorInterface
     /**
      * @inheritdoc
      */
-
     public function getLeft()
     {
         return $this->value;
@@ -51,7 +48,6 @@ final class Left extends Either implements FunctorInterface
     /**
      * @inheritdoc
      */
-
     public function getRight()
     {
         return null;
@@ -60,8 +56,7 @@ final class Left extends Either implements FunctorInterface
     /**
      * @inheritdoc
      */
-
-    public function filter(callable $fn, $error) : Either
+    public function filter(callable $function, $error) : Either
     {
         return $this;
     }
@@ -69,8 +64,15 @@ final class Left extends Either implements FunctorInterface
     /**
      * @inheritdoc
      */
+    public function ap(Apply $app) : Apply
+    {
+        return $this;
+    }
 
-    public function flatMap(callable $fn)
+    /**
+     * @inheritdoc
+     */
+    public function flatMap(callable $function)
     {
         return $this->getLeft();
     }
@@ -78,8 +80,7 @@ final class Left extends Either implements FunctorInterface
     /**
      * @inheritdoc
      */
-
-    public function map(callable $fn) : FunctorInterface
+    public function map(callable $function) : Functor
     {
         return $this;
     }
@@ -87,7 +88,14 @@ final class Left extends Either implements FunctorInterface
     /**
      * @inheritdoc
      */
+    public function bind(callable $function)
+    {
+        return $this;
+    }
 
+    /**
+     * @inheritdoc
+     */
     public function orElse(Either $either) : Either
     {
         return $either;

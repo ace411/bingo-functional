@@ -10,9 +10,10 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-use Chemem\Bingo\Functional\Algorithms as A;
+use \FunctionalPHP\FantasyLand\{Apply, Functor, Monad};
+use function \Chemem\Bingo\Functional\Algorithms\{map, extend, compose, flatten, partialLeft};
 
-class ListMonad
+class ListMonad implements Monad
 {
     /**
      * @access private
@@ -26,7 +27,7 @@ class ListMonad
      * @param mixed $collection
      */
 
-    public function __construct(...$collection)
+    public function __construct($collection)
     {
         $this->collection = $collection;
     }
@@ -38,9 +39,31 @@ class ListMonad
      * @return object ListMonad
      */
 
-    public static function of(...$collection) : ListMonad
+    public static function of($collection)
     {
-        return new static($collection);
+        return new static(is_array($collection) ? $collection : [$collection]);
+    }
+
+    public function ap(Apply $app) : Apply
+    {
+        $list = $this->extract();
+
+        $result = compose(
+            partialLeft(\Chemem\Bingo\Functional\Algorithms\filter, function ($val) { return is_callable($val); }),
+            partialLeft(
+                \Chemem\Bingo\Functional\Algorithms\map, 
+                function ($func) use ($list) {
+                    $app = function (array $acc = []) use ($func, $list) { 
+                        return map($func, $list);
+                    };
+
+                    return $app();
+                }
+            ),
+            function ($result) use ($list) { return extend($list, ...$result); } 
+        );
+
+        return new static($result($app->extract()));
     }
 
     /**
@@ -50,18 +73,18 @@ class ListMonad
      * @return object ListMonad
      */
 
-    public function bind(callable $function) : ListMonad
+    public function bind(callable $function)
     {
         list($original, $final) = State::of($this->extract())
-            ->map(
-                A\partialLeft(
-                    A\map,
-                    $function
-                )
-            )
+            ->map(partialLeft(\Chemem\Bingo\Functional\Algorithms\map, $function))
             ->exec();
 
-        return new static(A\extend($final, $original));
+        return new static(extend($final, $original));
+    }
+
+    public function map(callable $function) : Functor
+    {
+        return $this->bind($function);
     }
 
     public function flatMap(callable $function)
@@ -79,6 +102,6 @@ class ListMonad
 
     public function extract() : array
     {
-        return A\flatten($this->collection);
+        return flatten($this->collection);
     }
 }

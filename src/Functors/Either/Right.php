@@ -10,9 +10,9 @@
 
 namespace Chemem\Bingo\Functional\Functors\Either;
 
-use Chemem\Bingo\Functional\Common\Functors\FunctorInterface;
+use \FunctionalPHP\FantasyLand\{Apply, Functor};
 
-final class Right extends Either implements FunctorInterface
+class Right extends Either
 {
     private $value;
 
@@ -60,30 +60,43 @@ final class Right extends Either implements FunctorInterface
     /**
      * @inheritdoc
      */
-
-    public function filter(callable $fn, $error) : Either
+    public function ap(Apply $app) : Apply
     {
-        return $fn($this->value) ?
-            new static($this->getRight()) :
-            new Left($error);
+        return $app->bind($this->value);
     }
 
     /**
      * @inheritdoc
      */
 
-    public function flatMap(callable $fn)
+    public function filter(callable $function, $error) : Either
     {
-        return $fn($this->getRight());
+        return $function($this->value) ? new static($this->getRight()) : new Left($error);
     }
 
     /**
      * @inheritdoc
      */
 
-    public function map(callable $fn) : FunctorInterface
+    public function flatMap(callable $function)
     {
-        return new static($fn($this->getRight()));
+        return $function($this->getRight());
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function map(callable $function) : Functor
+    {
+        return new static($function($this->getRight()));
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function bind(callable $function)
+    {
+        return $this->map($function);
     }
 
     /**

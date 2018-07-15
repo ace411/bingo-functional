@@ -10,9 +10,9 @@
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
-use Chemem\Bingo\Functional\Common\Functors\FunctorInterface;
+use \FunctionalPHP\FantasyLand\{Apply, Functor};
 
-abstract class Maybe
+abstract class Maybe implements Functor
 {
     /**
      * just method
@@ -47,9 +47,7 @@ abstract class Maybe
 
     public static function fromValue($just, $nothing = null) : Maybe
     {
-        return $just !== $nothing ?
-            self::just($just) :
-            self::nothing();
+        return $just !== $nothing ? self::just($just) : self::nothing();
     }
 
     /**
@@ -65,16 +63,12 @@ abstract class Maybe
             if (
                 array_reduce(
                     func_get_args($fn),
-                    function ($status, Maybe $val) {
-                        return $val->isNothing() ? false : $status;
-                    },
+                    function ($status, Maybe $val) { return $val->isNothing() ? false : $status; },
                     true
                 )
             ) {
                 $args = array_map(
-                    function (Maybe $maybe) {
-                        return $maybe->getOrElse(null);
-                    },
+                    function (Maybe $maybe) { return $maybe->getOrElse(null); },
                     func_get_args($fn)
                 );
                 return self::just(call_user_func($fn, ...$args));
@@ -128,6 +122,15 @@ abstract class Maybe
     abstract public function flatMap(callable $fn);
 
     /**
+     * ap method
+     * 
+     * @abstract
+     * @param Apply $app
+     * @return object Apply
+     */
+    abstract public function ap(Apply $app) : Apply;
+
+    /**
      * getOrElse method
      *
      * @abstract
@@ -142,10 +145,10 @@ abstract class Maybe
      *
      * @abstract
      * @param callable $fn
-     * @return object FunctorInterface
+     * @return object Functor
      */
 
-    abstract public function map(callable $fn) : FunctorInterface;
+    abstract public function map(callable $function) : Functor;
 
     /**
      * filter method

@@ -10,9 +10,9 @@
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
-use Chemem\Bingo\Functional\Common\Functors\FunctorInterface;
+use \FunctionalPHP\FantasyLand\{Apply, Functor};
 
-final class Just extends Maybe implements FunctorInterface
+class Just extends Maybe
 {
     private $value;
 
@@ -24,7 +24,6 @@ final class Just extends Maybe implements FunctorInterface
     /**
      * @inheritdoc
      */
-
     public function isJust() : bool
     {
         return true;
@@ -33,7 +32,6 @@ final class Just extends Maybe implements FunctorInterface
     /**
      * @inheritdoc
      */
-
     public function isNothing() : bool
     {
         return false;
@@ -42,7 +40,6 @@ final class Just extends Maybe implements FunctorInterface
     /**
      * @inheritdoc
      */
-
     public function getJust()
     {
         return $this->value;
@@ -51,7 +48,6 @@ final class Just extends Maybe implements FunctorInterface
     /**
      * @inheritdoc
      */
-
     public function getNothing()
     {
         return null;
@@ -60,7 +56,6 @@ final class Just extends Maybe implements FunctorInterface
     /**
      * @inheritdoc
      */
-
     public function flatMap(callable $fn)
     {
         return $fn($this->getJust());
@@ -78,8 +73,15 @@ final class Just extends Maybe implements FunctorInterface
     /**
      * @inheritdoc
      */
+    public function ap(Apply $app) : Apply
+    {
+        return $app->map($this);
+    }
 
-    public function map(callable $fn) : FunctorInterface
+    /**
+     * @inheritdoc
+     */
+    public function map(callable $fn) : Functor
     {
         return new static($fn($this->getJust()));
     }
@@ -87,18 +89,14 @@ final class Just extends Maybe implements FunctorInterface
     /**
      * @inheritdoc
      */
-
     public function filter(callable $fn) : Maybe
     {
-        return $fn($this->getJust()) ?
-            new static($this->getJust()) :
-            new Nothing();
+        return $fn($this->getJust()) ? new static($this->getJust()) : new Nothing();
     }
 
     /**
      * @inheritdoc
      */
-
     public function orElse(Maybe $maybe) : Maybe
     {
         return !isset($this->value) ? $maybe : new static($this->value);
