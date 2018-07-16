@@ -40,6 +40,7 @@
             "src/Algorithms/Fill.php",
             "src/Algorithms/Reverse.php",
             "src/Algorithms/ToPairs.php",
+            "src/Algorithms/MapDeep.php",
             "src/Algorithms/FromPairs.php",
             "src/Algorithms/Trampoline.php",
             "src/Algorithms/IndexOf.php",
