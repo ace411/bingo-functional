@@ -14,7 +14,7 @@
         "phpunit/phpunit": "~6"
     },
     "require": {
-        "php": ">=7.0.0",
+        "php": ">=7.1.0",
         "functional-php/fantasy-land": "1.0.0"
     },
     "suggest": {
