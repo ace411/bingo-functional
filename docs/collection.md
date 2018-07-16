@@ -696,3 +696,23 @@ $max = A\max([22, 19, 98, 12]);
 
 echo $max; //outputs 98
 ```
+
+## Mean function
+
+```
+mean(array $array)
+```
+
+**Since:** v1.10.0
+
+**Arguments**
+
+- ***array (array)*** - The list whose mean value is to be computed
+
+Computes the mean of the values in an array.
+
+```php
+$mean = A\mean([22, 19, 98, 12]);
+
+echo $mean; //outputs 37.75
+```
