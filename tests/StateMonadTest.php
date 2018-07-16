@@ -10,16 +10,6 @@ class StateMonadTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(State::class, State::of(12));
     }
 
-    public function testStateMonadClassImplementsFantasyLandMonadInterface()
-    {
-        $interfaces = class_implements(State::of('foo'));
-
-        $this->assertContains(
-            'FunctionalPHP\\FantasyLand\\Monad',
-            $interfaces
-        );
-    }
-
     public function testApMethodOutputsNewAppliedState()
     {
         list($old, $new) = State::of(function ($val) { return $val * 2; })
