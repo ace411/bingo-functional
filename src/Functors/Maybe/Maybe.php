@@ -9,9 +9,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
-use \FunctionalPHP\FantasyLand\{Apply, Functor};
-
-abstract class Maybe implements Functor
+abstract class Maybe
 {
     /**
      * just method.
@@ -124,10 +122,10 @@ abstract class Maybe implements Functor
      * ap method
      * 
      * @abstract
-     * @param Apply $app
-     * @return object Apply
+     * @param Maybe $app
+     * @return object Maybe
      */
-    abstract public function ap(Apply $app) : Apply;
+    abstract public function ap(Maybe $app) : Maybe;
 
     /**
      * getOrElse method
@@ -146,10 +144,10 @@ abstract class Maybe implements Functor
      * @abstract
      *
      * @param callable $fn
-     * @return object Functor
+     * @return object Maybe
      */
 
-    abstract public function map(callable $function) : Functor;
+    abstract public function map(callable $function) : Maybe;
 
     /**
      * filter method.

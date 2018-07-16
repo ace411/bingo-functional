@@ -9,9 +9,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-use \FunctionalPHP\FantasyLand\{Apply, Functor, Monad};
-
-class Reader implements Monad
+class Reader
 {
     /**
      * @var callable The operation to use to lazily evaluate an environment variable
@@ -37,8 +35,7 @@ class Reader implements Monad
      *
      * @return object Reader
      */
-
-    public static function of($action)
+    public static function of($action) : Reader
     {
         return is_callable($action) ? new static($action) : new static(function ($env) use ($action) { return $action; });
     }
@@ -48,7 +45,7 @@ class Reader implements Monad
      * 
      * @inheritdoc
      */
-    public function ap(Apply $app) : Apply
+    public function ap(Reader $app) : Reader
     {
         return $this->withReader(function ($val) use ($app) { return $app->map($val); });
     }
@@ -60,7 +57,7 @@ class Reader implements Monad
      *
      * @return object Reader
      */
-    public function withReader(callable $action) : self
+    public function withReader(callable $action) : Reader
     {
         return new static(
             function ($env) use ($action) {
@@ -78,8 +75,7 @@ class Reader implements Monad
      *
      * @return object Reader
      */
-
-    public function map(callable $function) : Functor
+    public function map(callable $function) : Reader
     {
         return $this->withReader($function);
     }
@@ -89,7 +85,7 @@ class Reader implements Monad
      * 
      * @inheritdoc
      */
-    public function bind(callable $function)
+    public function bind(callable $function) : Reader
     {
         return $this->withReader($function);
     }

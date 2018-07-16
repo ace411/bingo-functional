@@ -9,8 +9,6 @@
 
 namespace Chemem\Bingo\Functional\Functors\Either;
 
-use \FunctionalPHP\FantasyLand\{Apply, Functor};
-
 class Right extends Either
 {
     private $value;
@@ -54,7 +52,7 @@ class Right extends Either
     /**
      * {@inheritdoc}
      */
-    public function ap(Apply $app) : Apply
+    public function ap(Either $app) : Either
     {
         return $app->bind($this->value);
     }
@@ -80,7 +78,7 @@ class Right extends Either
     /**
      * {@inheritdoc}
      */
-    public function map(callable $function) : Functor
+    public function map(callable $function) : Either
     {
         return new static($function($this->getRight()));
     }

@@ -12,16 +12,6 @@ class ReaderMonadTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(Reader::class, Reader::of(function ($name) { return 'Hello ' . $name; }));
     }
 
-    public function testReaderMonadImplementsFantasyLandMonadInterface()
-    {
-        $interfaces = class_implements(Reader::of(function ($name) { return 'Hello ' + $name; }));
-
-        $this->assertContains(
-            'FunctionalPHP\\FantasyLand\\Monad',
-            $interfaces
-        );
-    }
-
     public function testApMethodOuputsReaderInstance()
     {
         $read = Reader::of(function ($first) { return function ($last) use ($first) { return Reader::of(concat(' ', 'Hello', $first, $last)); }; })

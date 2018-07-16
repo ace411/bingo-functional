@@ -23,16 +23,6 @@ class IOMonadTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(IO::class, IO::of(function () { return 'foo'; }));
     }
 
-    public function testIOClassImplementsFantasyLandMonadInterface()
-    {
-        $interfaces = class_implements(IO::of('foo'));
-
-        $this->assertContains(
-            'FunctionalPHP\\FantasyLand\\Monad',
-            $interfaces
-        );
-    }
-
     public function testApMethodMapsOneClassLambdaOntoAnotherClassLambdaValue()
     {
         $apply = IO::of(function () { return function ($val) { return strtoupper($val); }; })

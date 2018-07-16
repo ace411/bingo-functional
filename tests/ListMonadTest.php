@@ -11,16 +11,6 @@ class ListMonadTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(ListMonad::class, ListMonad::of(range(1, 5)));
     }
 
-    public function testListMonadClassImplementsFantasyLandMonadInterface()
-    {
-        $interfaces = class_implements(ListMonad::of('foo'));
-
-        $this->assertContains(
-            'FunctionalPHP\\FantasyLand\\Monad',
-            $interfaces
-        );
-    }
-
     public function testApMethodOutputsListMonadInstance()
     {
         $zip = ListMonad::of(range(1, 3))

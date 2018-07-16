@@ -9,10 +9,9 @@
 
 namespace Chemem\Bingo\Functional\Functors\Either;
 
-use \FunctionalPHP\FantasyLand\{Apply, Functor};
 use function \Chemem\Bingo\Functional\Algorithms\{compose, partialLeft};
 
-abstract class Either implements Functor
+abstract class Either
 {
     /**
      * left method.
@@ -149,7 +148,7 @@ abstract class Either implements Functor
      * @return object Functor
      */
 
-    abstract public function map(callable $function) : Functor;
+    abstract public function map(callable $function) : Either;
 
     /**
      * bind method
@@ -167,11 +166,11 @@ abstract class Either implements Functor
      * 
      * @see FunctionalPHP\FantasyLand\Apply
      * @abstract
-     * @param Apply $app
-     * @return object Apply
+     * @param Either $app
+     * @return object Either
      */
 
-    abstract public function ap(Apply $app) : Apply;
+    abstract public function ap(Either $app) : Either;
 
     /**
      * filter method.

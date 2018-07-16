@@ -9,8 +9,6 @@
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
-use \FunctionalPHP\FantasyLand\{Apply, Functor};
-
 class Just extends Maybe
 {
     private $value;
@@ -70,7 +68,7 @@ class Just extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function ap(Apply $app) : Apply
+    public function ap(Maybe $app) : Maybe
     {
         return $app->map($this);
     }
@@ -78,7 +76,7 @@ class Just extends Maybe
     /**
      * @inheritdoc
      */
-    public function map(callable $fn) : Functor
+    public function map(callable $fn) : Maybe
     {
         return new static($fn($this->getJust()));
     }
