@@ -1,9 +1,8 @@
 <?php
 
 /**
- * State monad
- * 
- * @package bingo-functional
+ * State monad.
+ *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
@@ -15,20 +14,18 @@ use \FunctionalPHP\FantasyLand\{Apply, Functor, Monad};
 class State implements Monad
 {
     /**
-     * @access private
-     * @var mixed $state The transformed state
+     * @var mixed The transformed state
      */
     private $state;
 
     /**
-     * @access private
-     * @var mixed $value The initial state: value to transform 
+     * @var mixed The initial state: value to transform
      */
     private $value;
 
     /**
-     * State monad constructor
-     * 
+     * State monad constructor.
+     *
      * @param mixed $value
      * @param mixed $state
      */
@@ -39,10 +36,12 @@ class State implements Monad
     }
 
     /**
-     * of method
-     * 
+     * of method.
+     *
      * @static of
+     *
      * @param mixed $initVal
+     *
      * @return object State
      */
 
@@ -52,13 +51,13 @@ class State implements Monad
     }
 
     /**
-     * evalState method
-     * 
+     * evalState method.
+     *
      * @param callable $action
+     *
      * @return object State
      */
-
-    public function evalState(callable $action) : State
+    public function evalState(callable $action) : self
     {
         return new static(
             $this->value,
@@ -100,9 +99,10 @@ class State implements Monad
     }
 
     /**
-     * bind method
-     * 
+     * bind method.
+     *
      * @param callable $action
+     *
      * @return object State
      */
 
@@ -112,11 +112,10 @@ class State implements Monad
     }
 
     /**
-     * evalState method
-     * 
+     * evalState method.
+     *
      * @return array [$value, $state]
      */
-
     public function exec()
     {
         return [$this->value, $this->state];

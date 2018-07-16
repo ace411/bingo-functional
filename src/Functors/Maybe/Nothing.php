@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Nothing type
+ * Nothing type.
  *
- * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
@@ -22,7 +21,7 @@ class Nothing extends Maybe
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isJust() : bool
     {
@@ -30,7 +29,7 @@ class Nothing extends Maybe
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isNothing() : bool
     {
@@ -38,7 +37,7 @@ class Nothing extends Maybe
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getNothing()
     {
@@ -46,24 +45,22 @@ class Nothing extends Maybe
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getJust()
     {
-        return null;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function flatMap(callable $fn)
     {
         return $this->getNothing();
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function ap(Apply $app) : Apply
     {
@@ -79,7 +76,7 @@ class Nothing extends Maybe
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function map(callable $function) : Functor
     {
@@ -87,7 +84,7 @@ class Nothing extends Maybe
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function filter(callable $fn) : Maybe
     {
@@ -95,7 +92,7 @@ class Nothing extends Maybe
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function orElse(Maybe $maybe) : Maybe
     {

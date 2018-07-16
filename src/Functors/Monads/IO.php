@@ -1,9 +1,8 @@
 <?php
 
 /**
- * IO monad
- * 
- * @package bingo-functional
+ * IO monad.
+ *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
@@ -16,14 +15,13 @@ use function \Chemem\Bingo\Functional\Algorithms\constantFunction;
 class IO implements Monad
 {
     /**
-     * @access private
-     * @var callable $operation The unsafe operation to perform
+     * @var callable The unsafe operation to perform
      */
     private $operation;
 
     /**
-     * IO monad constructor
-     * 
+     * IO monad constructor.
+     *
      * @param callable $operation
      */
     public function __construct(callable $operation)
@@ -32,10 +30,12 @@ class IO implements Monad
     }
 
     /**
-     * of method
-     * 
+     * of method.
+     *
      * @static of
+     *
      * @param callable $operation
+     *
      * @return object IO
      */
 
@@ -75,23 +75,22 @@ class IO implements Monad
     }
 
     /**
-     * exec method
-     *  
+     * exec method.
+     *
      * @return $operation
      */
-
     public function exec()
     {
         return call_user_func($this->operation);
     }
 
     /**
-     * flatMap method
-     * 
-     * @param callable $function 
+     * flatMap method.
+     *
+     * @param callable $function
+     *
      * @return mixed $operation
      */
-
     public function flatMap(callable $function)
     {
         return call_user_func($function, $this->exec());

@@ -1,17 +1,17 @@
 <?php
 
 /**
- * isArrayOf function
+ * isArrayOf function.
  *
  * isArrayOf :: [a] -> String b
- * @package bingo-functional
+ *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const isArrayOf = "Chemem\\Bingo\\Functional\\Algorithms\\isArrayOf";
+const isArrayOf = 'Chemem\\Bingo\\Functional\\Algorithms\\isArrayOf';
 
 function isArrayOf(array $collection) : string
 {

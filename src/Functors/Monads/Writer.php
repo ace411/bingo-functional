@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Writer monad
- * 
- * @package bingo-functional
+ * Writer monad.
+ *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
@@ -15,21 +14,19 @@ use function \Chemem\Bingo\Functional\Algorithms\concat;
 class Writer
 {
     /**
-     * @access private
-     * @var mixed $value
+     * @var mixed
      */
     private $value;
 
     /**
-     * @access private
-     * @var string $logMsg
+     * @var string
      */
-    private $logMsg; 
+    private $logMsg;
 
     /**
-     * Writer monad constructor
-     * 
-     * @param mixed $value
+     * Writer monad constructor.
+     *
+     * @param mixed  $value
      * @param string $logMsg
      */
     public function __construct($value, $logMsg)
@@ -39,11 +36,13 @@ class Writer
     }
 
     /**
-     * of method
-     * 
+     * of method.
+     *
      * @static of
-     * @param mixed $value
+     *
+     * @param mixed  $value
      * @param string $logMsg
+     *
      * @return object Writer
      */
 
@@ -65,10 +64,11 @@ class Writer
     }
 
     /**
-     * map method
-     * 
+     * map method.
+     *
      * @param callable $function The morphism used to transform the state value
-     * @param string $logMsg
+     * @param string   $logMsg
+     *
      * @return object Writer
      */
 
@@ -76,12 +76,13 @@ class Writer
     {
         return self::of(call_user_func($function, $this->value), concat(PHP_EOL, $this->logMsg, $logMsg));
     }
-    
+
     /**
-     * bind method
-     * 
+     * bind method.
+     *
      * @param callable $function
-     * @param string $logMsg
+     * @param string   $logMsg
+     *
      * @return object Writer
      */
 
@@ -91,10 +92,11 @@ class Writer
     }
 
     /**
-     * flatMap method
-     * 
+     * flatMap method.
+     *
      * @param callable $function
-     * @param string $logMsg
+     * @param string   $logMsg
+     *
      * @return mixed $result
      */
 
@@ -104,8 +106,8 @@ class Writer
     }
 
     /**
-     * run method
-     * 
+     * run method.
+     *
      * @return array [$value, $logMsg]
      */
 

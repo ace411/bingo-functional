@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Left type functor
+ * Left type functor.
  *
- * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
@@ -22,7 +21,7 @@ class Left extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isLeft() : bool
     {
@@ -30,7 +29,7 @@ class Left extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isRight() : bool
     {
@@ -38,7 +37,7 @@ class Left extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getLeft()
     {
@@ -46,15 +45,14 @@ class Left extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getRight()
     {
-        return null;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function filter(callable $function, $error) : Either
     {
@@ -62,7 +60,7 @@ class Left extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function ap(Apply $app) : Apply
     {
@@ -78,7 +76,7 @@ class Left extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function map(callable $function) : Functor
     {
@@ -86,7 +84,7 @@ class Left extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function bind(callable $function)
     {

@@ -1,9 +1,8 @@
 <?php
 
 /**
- * List monad
- * 
- * @package bingo-functional
+ * List monad.
+ *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
@@ -16,14 +15,13 @@ use function \Chemem\Bingo\Functional\Algorithms\{map, extend, compose, flatten,
 class ListMonad implements Monad
 {
     /**
-     * @access private
-     * @var array $collection The collection to transform
+     * @var array The collection to transform
      */
     private $collection;
 
     /**
-     * ListMonad constructor
-     * 
+     * ListMonad constructor.
+     *
      * @param mixed $collection
      */
 
@@ -33,9 +31,10 @@ class ListMonad implements Monad
     }
 
     /**
-     * of method
-     * 
+     * of method.
+     *
      * @param mixed $collection
+     *
      * @return object ListMonad
      */
 
@@ -67,9 +66,10 @@ class ListMonad implements Monad
     }
 
     /**
-     * bind method
-     * 
+     * bind method.
+     *
      * @param callable $function
+     *
      * @return object ListMonad
      */
 
@@ -95,11 +95,10 @@ class ListMonad implements Monad
     }
 
     /**
-     * extract method
-     * 
+     * extract method.
+     *
      * @return array $collection
      */
-
     public function extract() : array
     {
         return flatten($this->collection);

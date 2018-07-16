@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Either type functor
+ * Either type functor.
  *
- * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
@@ -16,37 +15,37 @@ use function \Chemem\Bingo\Functional\Algorithms\{compose, partialLeft};
 abstract class Either implements Functor
 {
     /**
-     * left method
+     * left method.
      *
      * @param mixed $value
+     *
      * @return object Left
      */
-
     public static function left($value) : Left
     {
         return new Left($value);
     }
 
     /**
-     * right method
+     * right method.
      *
      * @param mixed $value
+     *
      * @return object Right
      */
-
     public static function right($value) : Right
     {
         return new Right($value);
     }
 
     /**
-     * partitionEithers method
+     * partitionEithers method.
      *
      * @param array $values
      * @param array $acc
+     *
      * @return array $acc
      */
-
     public static function partitionEithers(array $values, $acc = []) : array
     {
         $partition = compose(
@@ -68,7 +67,7 @@ abstract class Either implements Functor
     }
 
     /**
-     * lift method
+     * lift method.
      *
      * @param callable $function
      * @param Left $left
@@ -95,46 +94,45 @@ abstract class Either implements Functor
                 );
                 return self::right(call_user_func($function, ...$args));
             }
+
             return $left;
         };
     }
 
     /**
-     * getLeft method
+     * getLeft method.
      *
      * @abstract
      */
-
     abstract public function getLeft();
 
     /**
-     * getRight method
+     * getRight method.
      *
      * @abstract
      */
-
     abstract public function getRight();
 
     /**
-     * isLeft method
+     * isLeft method.
      *
      * @abstract
-     * @return boolean
+     *
+     * @return bool
      */
-
     abstract public function isLeft() : bool;
 
     /**
-     * isRight method
+     * isRight method.
      *
      * @abstract
-     * @return boolean
+     *
+     * @return bool
      */
-
     abstract public function isRight() : bool;
 
     /**
-     * flatMap method
+     * flatMap method.
      *
      * @abstract
      * @param callable $function
@@ -143,7 +141,7 @@ abstract class Either implements Functor
     abstract public function flatMap(callable $function);
 
     /**
-     * map method
+     * map method.
      *
      * @see FunctionalPHP\FantasyLand\Functor
      * @abstract
@@ -176,7 +174,7 @@ abstract class Either implements Functor
     abstract public function ap(Apply $app) : Apply;
 
     /**
-     * filter method
+     * filter method.
      *
      * @abstract
      * @param callable $function
@@ -187,11 +185,11 @@ abstract class Either implements Functor
     abstract public function filter(callable $function, $error) : Either;
 
     /**
-     * orElse method
+     * orElse method.
      *
      * @param Either $either
+     *
      * @return object Either
      */
-
-    abstract public function orElse(Either $either) : Either;
+    abstract public function orElse(self $either) : self;
 }

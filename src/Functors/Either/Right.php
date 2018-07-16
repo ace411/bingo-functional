@@ -1,9 +1,8 @@
 <?php
 
 /**
- * Right type functor
+ * Right type functor.
  *
- * @package bingo-functional
  * @license Apache 2.0
  * @author Lochemem Bruno Michael
  */
@@ -22,43 +21,38 @@ class Right extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function isLeft() : bool
     {
         return false;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function isRight() : bool
     {
         return true;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function getLeft()
     {
-        return null;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function getRight()
     {
         return $this->value;
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function ap(Apply $app) : Apply
     {
@@ -75,7 +69,7 @@ class Right extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
 
     public function flatMap(callable $function)
@@ -84,7 +78,7 @@ class Right extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function map(callable $function) : Functor
     {
@@ -100,11 +94,10 @@ class Right extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function orElse(Either $either) : Either
     {
-        return !isset($this->value) ? $either : new static($this->value);  
+        return !isset($this->value) ? $either : new static($this->value);
     }
 }
