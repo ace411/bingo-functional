@@ -10,10 +10,9 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-use \FunctionalPHP\FantasyLand\{Functor, Apply, Monad};
 use function \Chemem\Bingo\Functional\Algorithms\constantFunction;
 
-class IO implements Monad
+class IO
 {
     /**
      * @access private
@@ -39,7 +38,7 @@ class IO implements Monad
      * @return object IO
      */
 
-    public static function of($operation)
+    public static function of($operation) : IO
     {
         return new static(is_callable($operation) ? $operation : constantFunction($operation));
     }
@@ -47,9 +46,10 @@ class IO implements Monad
     /**
      * ap method
      * 
-     * @inheritdoc
+     * @param object IO
+     * @return object IO
      */
-    public function ap(Apply $app) : Apply
+    public function ap(IO $app) : IO
     {
         return $app->map($this->exec());
     }
@@ -57,9 +57,10 @@ class IO implements Monad
     /**
      * map method
      * 
-     * @inheritdoc
+     * @param callable $function
+     * @return object IO
      */
-    public function map(callable $function) : Functor
+    public function map(callable $function) : IO
     {
         return self::of(call_user_func($function, $this->exec()));
     }
@@ -67,9 +68,10 @@ class IO implements Monad
     /**
      * bind method
      * 
-     * @inheritdoc
+     * @param callable $function
+     * @return object IO
      */
-    public function bind(callable $function)
+    public function bind(callable $function) : IO
     {
         return $this->map($function);
     }
@@ -79,7 +81,6 @@ class IO implements Monad
      *  
      * @return $operation
      */
-
     public function exec()
     {
         return call_user_func($this->operation);
@@ -91,7 +92,6 @@ class IO implements Monad
      * @param callable $function 
      * @return mixed $operation
      */
-
     public function flatMap(callable $function)
     {
         return call_user_func($function, $this->exec());

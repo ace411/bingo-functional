@@ -10,9 +10,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-use \FunctionalPHP\FantasyLand\{Apply, Functor, Monad};
-
-class Reader implements Monad
+class Reader
 {
     /**
      * @access private
@@ -37,8 +35,7 @@ class Reader implements Monad
      * @param mixed $action
      * @return object Reader
      */
-
-    public static function of($action)
+    public static function of($action) : Reader
     {
         return is_callable($action) ? new static($action) : new static(function ($env) use ($action) { return $action; });
     }
@@ -48,7 +45,7 @@ class Reader implements Monad
      * 
      * @inheritdoc
      */
-    public function ap(Apply $app) : Apply
+    public function ap(Reader $app) : Reader
     {
         return $this->withReader(function ($val) use ($app) { return $app->map($val); });
     }
@@ -59,7 +56,6 @@ class Reader implements Monad
      * @param callable $action
      * @return object Reader
      */
-
     public function withReader(callable $action) : Reader
     {
         return new static(
@@ -76,8 +72,7 @@ class Reader implements Monad
      * @param callable $action
      * @return object Reader
      */
-
-    public function map(callable $function) : Functor
+    public function map(callable $function) : Reader
     {
         return $this->withReader($function);
     }
@@ -87,7 +82,7 @@ class Reader implements Monad
      * 
      * @inheritdoc
      */
-    public function bind(callable $function)
+    public function bind(callable $function) : Reader
     {
         return $this->withReader($function);
     }
@@ -97,7 +92,6 @@ class Reader implements Monad
      * 
      * @return mixed $action
      */
-
     public function ask()
     {
         return $this->action;
@@ -109,7 +103,6 @@ class Reader implements Monad
      * @param mixed $env Environment variable
      * @return mixed $action 
      */
-
     public function run($env)
     {
         return call_user_func($this->action, $env);   

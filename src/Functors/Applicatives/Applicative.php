@@ -10,9 +10,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Applicatives;
 
-use \FunctionalPHP\FantasyLand\{Apply, Functor, Pointed};
-
-class Applicative implements Pointed, Apply
+class Applicative
 {
     /**
      * @var mixed $value
@@ -47,7 +45,7 @@ class Applicative implements Pointed, Apply
      * 
      * @inheritdoc
      */
-    public static function of($value)
+    public static function of($value) : Applicative
     {
         return new static($value);
     }
@@ -57,7 +55,7 @@ class Applicative implements Pointed, Apply
      * 
      * @inheritdoc
      */
-    public function ap(Apply $app) : Apply
+    public function ap(Applicative $app) : Applicative
     {
         return new static($this->getValue()($app->getValue()));
     }
@@ -67,7 +65,7 @@ class Applicative implements Pointed, Apply
      * 
      * @inheritdoc
      */
-    public function map(callable $function) : Functor
+    public function map(callable $function) : Applicative
     {
         return self::pure($function)->ap($this);
     }
