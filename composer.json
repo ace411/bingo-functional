@@ -34,6 +34,7 @@
             "src/Algorithms/Any.php",
             "src/Algorithms/Max.php",
             "src/Algorithms/Min.php",
+            "src/Algorithms/Omit.php",
             "src/Algorithms/Every.php",
             "src/Algorithms/Where.php",
             "src/Algorithms/GroupBy.php",
