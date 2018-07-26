@@ -517,4 +517,12 @@ class AlgorithmTest extends TestCase
 
         $this->assertEquals([2, 4, [6, 8], [10, [12, 14]]], $deep);
     }
+
+    public function testOmitFunctionOutputsArrayWithoutSpecifiedKeys()
+    {
+        $omit = A\omit(['foo' => 12, 'bar' => 13, 'baz' => 13], 'foo', 'baz');
+
+        $this->assertInternalType('array', $omit);
+        $this->assertEquals(['bar' => 13], $omit);
+    }
 }
