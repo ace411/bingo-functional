@@ -51,6 +51,7 @@
             "src/Algorithms/Memoize.php",
             "src/Algorithms/Tail.php",
             "src/Algorithms/Concat.php",
+            "src/Algorithms/AddKeys.php",
             "src/Algorithms/Throttle.php",
             "src/Algorithms/Head.php",
             "src/Algorithms/Map.php",

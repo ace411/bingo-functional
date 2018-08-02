@@ -525,4 +525,12 @@ class AlgorithmTest extends TestCase
         $this->assertInternalType('array', $omit);
         $this->assertEquals(['bar' => 13], $omit);
     }
+
+    public function testAddKeysOutputsArrayWithSpecifiedKeys()
+    {
+        $add = A\addKeys(['foo' => 12, 'bar' => 13, 'baz' => 15], 'foo', 'baz');
+
+        $this->assertInternalType('array', $add);
+        $this->assertEquals(['foo' => 12, 'baz' => 15], $add);
+    }
 }
