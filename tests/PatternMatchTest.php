@@ -5,6 +5,14 @@ namespace Chemem\Bingo\Functional\Tests;
 use Chemem\Bingo\Functional\Algorithms as A;
 use Chemem\Bingo\Functional\PatternMatching as PM;
 use PHPUnit\Framework\TestCase;
+<<<<<<< HEAD
+=======
+use Chemem\Bingo\Functional\{
+    Algorithms as A,
+    PatternMatching as PM
+};
+use Chemem\Bingo\Functional\Functors\Monads\{IO, State};
+>>>>>>> pattern-matching
 
 class PatternMatchTest extends TestCase
 {
@@ -152,4 +160,22 @@ class PatternMatchTest extends TestCase
 
         $this->assertEquals($pattern, 'fUNCTIONAL');
     }
+<<<<<<< HEAD
 }
+=======
+
+    public function testEvalObjectPatternMatchesObjects()
+    {
+        $evalObject = PM\evalObjectPattern(
+            [
+                IO::class => function () { return 'IO monad'; },
+                State::class => function () { return 'State monad'; },
+                '_' => function () { return 'NaN'; }
+            ],
+            IO::of(function () { return 12; })
+        );
+
+        $this->assertEquals('IO monad', $evalObject);
+    }
+}
+>>>>>>> pattern-matching
