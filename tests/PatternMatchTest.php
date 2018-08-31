@@ -2,12 +2,11 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
+use Chemem\Bingo\Functional\Algorithms as A;
+use Chemem\Bingo\Functional\Functors\Monads\IO;
+use Chemem\Bingo\Functional\Functors\Monads\State;
+use Chemem\Bingo\Functional\PatternMatching as PM;
 use PHPUnit\Framework\TestCase;
-use Chemem\Bingo\Functional\{
-    Algorithms as A,
-    PatternMatching as PM
-};
-use Chemem\Bingo\Functional\Functors\Monads\{IO, State};
 
 class PatternMatchTest extends TestCase
 {
@@ -44,6 +43,24 @@ class PatternMatchTest extends TestCase
         $result = $match([10, 5]);
 
         $this->assertEquals($result, 2);
+    }
+
+    public function testMatchFunctionComputesMatchesWithNoUnderLine()
+    {
+        $match = PM\match(
+            [
+                '(dividend:divisor:_)' => function (int $dividend, int $divisor) {
+                    return $dividend / $divisor;
+                },
+                '(dividend:_)' => function (int $dividend) {
+                    return $dividend / 2;
+                },
+            ]
+        );
+
+        $result = $match([10, 5]);
+
+        $this->assertFalse($result);
     }
 
     public function testEvalStringPatternEvaluatesStrings()
@@ -132,6 +149,31 @@ class PatternMatchTest extends TestCase
         $this->assertEquals($pattern, 'FOO');
     }
 
+    public function testPatternMatchFunctionPerformsSingleObjectMatch()
+    {
+        $pattern = PM\patternMatch(
+            [
+                '"foo"' => function () {
+                    $val = strtoupper('FOO');
+
+                    return $val;
+                },
+                '"12"' => function () {
+                    return 12 * 12;
+                },
+                '_' => function () {
+                    return 'undefined';
+                },
+                \stdClass::class => function () {
+                    return 'object';
+                },
+            ],
+            new \stdClass('foo')
+        );
+
+        $this->assertEquals($pattern, 'object');
+    }
+
     public function testPatternMatchFunctionPerformsMultipleValueSensitiveMatch()
     {
         $pattern = PM\patternMatch(
@@ -160,11 +202,19 @@ class PatternMatchTest extends TestCase
     {
         $evalObject = PM\evalObjectPattern(
             [
-                IO::class => function () { return 'IO monad'; },
-                State::class => function () { return 'State monad'; },
-                '_' => function () { return 'NaN'; }
+                IO::class => function () {
+                    return 'IO monad';
+                },
+                State::class => function () {
+                    return 'State monad';
+                },
+                '_' => function () {
+                    return 'NaN';
+                },
             ],
-            IO::of(function () { return 12; })
+            IO::of(function () {
+                return 12;
+            })
         );
 
         $this->assertEquals('IO monad', $evalObject);

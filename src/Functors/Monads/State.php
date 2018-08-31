@@ -42,7 +42,6 @@ class State
      *
      * @return object State
      */
-
     public static function of($initVal)
     {
         return new static($initVal, $initVal);
@@ -64,31 +63,36 @@ class State
     }
 
     /**
-     * ap method
-     * 
+     * ap method.
+     *
      * @param object State
+     *
      * @return object State
      */
-    public function ap(State $app) : State
+    public function ap(self $app) : self
     {
-        return $this->map(function ($val) use ($app) { return $app->map($val); });
+        return $this->map(function ($val) use ($app) {
+            return $app->map($val);
+        });
     }
 
     /**
-     * map method
-     * 
+     * map method.
+     *
      * @param callable $function
+     *
      * @return object State
      */
-    public function map(callable $function) : State
+    public function map(callable $function) : self
     {
         return $this->evalState($function);
     }
 
     /**
-     * map method
-     * 
+     * map method.
+     *
      * @param callable $function
+     *
      * @return mixed $result
      */
     public function flatMap(callable $function)
@@ -105,8 +109,7 @@ class State
      *
      * @return object State
      */
-
-    public function bind(callable $function) : State
+    public function bind(callable $function) : self
     {
         return $this->map($function);
     }

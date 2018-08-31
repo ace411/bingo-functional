@@ -111,6 +111,16 @@ class AlgorithmTest extends TestCase
         $this->assertEquals(4, $partial);
     }
 
+    public function testPartialAppliesArgumentsFromLeftToRight()
+    {
+        $fn = function (int $a, int $b) : int {
+            return $a + $b;
+        };
+        $partial = A\partial($fn, 2)(2);
+
+        $this->assertEquals(4, $partial);
+    }
+
     public function testHeadReturnsFirstItemInArray()
     {
         $array = [1, 2, 3, 4];
@@ -236,6 +246,19 @@ class AlgorithmTest extends TestCase
         };
 
         $fold = A\foldRight($foldFn, $strings, 'fum');
+
+        $this->assertEquals('fum-baz-bar-foo', $fold);
+    }
+
+    public function testReduceRightFunctionReducesArrayFromRightToLeft()
+    {
+        $strings = ['foo', 'bar', 'baz'];
+
+        $foldFn = function ($acc, $val) {
+            return $acc.'-'.$val;
+        };
+
+        $fold = A\reduceRight($foldFn, $strings, 'fum');
 
         $this->assertEquals('fum-baz-bar-foo', $fold);
     }
@@ -496,7 +519,9 @@ class AlgorithmTest extends TestCase
 
     public function testMapDeepFunctionAppliesFunctionToAllValuesInMultiDimensionalArray()
     {
-        $deep = A\mapDeep(function ($val) { return $val * 2; }, [1, 2, [3, 4], [5, [6, 7]]]);
+        $deep = A\mapDeep(function ($val) {
+            return $val * 2;
+        }, [1, 2, [3, 4], [5, [6, 7]]]);
 
         $this->assertEquals([2, 4, [6, 8], [10, [12, 14]]], $deep);
     }

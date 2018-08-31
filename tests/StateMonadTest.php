@@ -2,8 +2,8 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
-use \Chemem\Bingo\Functional\Functors\Monads\State;
-use function \Chemem\Bingo\Functional\Algorithms\filter;
+use Chemem\Bingo\Functional\Functors\Monads\State;
+use function Chemem\Bingo\Functional\Algorithms\filter;
 
 class StateMonadTest extends \PHPUnit\Framework\TestCase
 {
@@ -14,7 +14,9 @@ class StateMonadTest extends \PHPUnit\Framework\TestCase
 
     public function testApMethodOutputsNewAppliedState()
     {
-        list($old, $new) = State::of(function ($val) { return $val * 2; })
+        list($old, $new) = State::of(function ($val) {
+            return $val * 2;
+        })
             ->ap(State::of(14))
             ->exec();
 
@@ -47,8 +49,12 @@ class StateMonadTest extends \PHPUnit\Framework\TestCase
 
     public function testFlatMapMethodAppliesFunctionToFunctorValueAndPreservesOldState()
     {
-        $val = State::of(range(1, 10))->flatMap(function ($list) { return filter(function ($val) { return $val % 2 == 0; }, $list); });
-        
+        $val = State::of(range(1, 10))->flatMap(function ($list) {
+            return filter(function ($val) {
+                return $val % 2 == 0;
+            }, $list);
+        });
+
         $this->assertInternalType('array', $val);
         $this->assertEquals(range(1, 10), $val[0]);
         $this->assertEquals([1 => 2, 3 => 4, 5 => 6, 7 => 8, 9 => 10], $val[1]);

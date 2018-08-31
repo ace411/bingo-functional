@@ -35,19 +35,21 @@ class Reader
      *
      * @return object Reader
      */
-    public static function of($action) : Reader
+    public static function of($action) : self
     {
-        return is_callable($action) ? new static($action) : new static(function ($env) use ($action) { return $action; });
+        return is_callable($action) ? new static($action) : new static(function ($env) use ($action) {
+            return $action;
+        });
     }
 
     /**
-     * ap method
-     * 
-     * @inheritdoc
+     * ap method.
      */
-    public function ap(Reader $app) : Reader
+    public function ap(self $app) : self
     {
-        return $this->withReader(function ($val) use ($app) { return $app->map($val); });
+        return $this->withReader(function ($val) use ($app) {
+            return $app->map($val);
+        });
     }
 
     /**
@@ -57,7 +59,7 @@ class Reader
      *
      * @return object Reader
      */
-    public function withReader(callable $action) : Reader
+    public function withReader(callable $action) : self
     {
         return new static(
             function ($env) use ($action) {
@@ -75,17 +77,15 @@ class Reader
      *
      * @return object Reader
      */
-    public function map(callable $function) : Reader
+    public function map(callable $function) : self
     {
         return $this->withReader($function);
     }
 
     /**
-     * bind method
-     * 
-     * @inheritdoc
+     * bind method.
      */
-    public function bind(callable $function) : Reader
+    public function bind(callable $function) : self
     {
         return $this->withReader($function);
     }

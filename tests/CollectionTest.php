@@ -226,6 +226,16 @@ class CollectionTest extends TestCase
         $this->assertInstanceOf(Collection::class, $list);
     }
 
+    public function testGetIterator()
+    {
+        $list = Collection::from(...range(0, 10))
+            ->fill(1, 2, 3);
+        $result = $list->getIterator();
+
+        $this->assertInstanceOf(\ArrayIterator::class, $result);
+        $this->assertSame([0, 1, 1, 1, 4, 5, 6, 7, 8, 9, 10], iterator_to_array($result));
+    }
+
     public function testFillMethodOutputsListWithArbitraryValuesAffixedToDefinedIndexes()
     {
         $list = Collection::from(...range(1, 10))

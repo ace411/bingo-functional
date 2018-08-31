@@ -66,7 +66,7 @@ class Nothing extends Maybe
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getOrElse($default)
     {

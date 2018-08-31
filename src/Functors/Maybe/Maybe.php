@@ -59,12 +59,16 @@ abstract class Maybe
             if (
                 array_reduce(
                     func_get_args($fn),
-                    function ($status, Maybe $val) { return $val->isNothing() ? false : $status; },
+                    function ($status, Maybe $val) {
+                        return $val->isNothing() ? false : $status;
+                    },
                     true
                 )
             ) {
                 $args = array_map(
-                    function (Maybe $maybe) { return $maybe->getOrElse(null); },
+                    function (Maybe $maybe) {
+                        return $maybe->getOrElse(null);
+                    },
                     func_get_args($fn)
                 );
 
@@ -119,16 +123,18 @@ abstract class Maybe
     abstract public function flatMap(callable $fn);
 
     /**
-     * ap method
-     * 
+     * ap method.
+     *
      * @abstract
+     *
      * @param Maybe $app
+     *
      * @return object Maybe
      */
-    abstract public function ap(Maybe $app) : Maybe;
+    abstract public function ap(self $app) : self;
 
     /**
-     * getOrElse method
+     * getOrElse method.
      *
      * @abstract
      *
@@ -144,10 +150,10 @@ abstract class Maybe
      * @abstract
      *
      * @param callable $fn
+     *
      * @return object Maybe
      */
-
-    abstract public function map(callable $function) : Maybe;
+    abstract public function map(callable $function) : self;
 
     /**
      * filter method.

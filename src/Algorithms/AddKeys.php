@@ -1,13 +1,11 @@
 <?php
 
 /**
- * 
- * addKeys function
- * 
+ * addKeys function.
+ *
  * addKeys :: [a, b] -> [a] -> [a]
- * 
- * @package bingo-functional
- * @author Lochemem Bruno Michael 
+ *
+ * @author Lochemem Bruno Michael
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
