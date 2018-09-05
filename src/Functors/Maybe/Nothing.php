@@ -48,7 +48,7 @@ class Nothing extends Maybe
      */
     public function getJust()
     {
-        return null;
+        return $this;
     }
 
     /**
@@ -73,7 +73,7 @@ class Nothing extends Maybe
      */
     public function getOrElse($default)
     {
-        return $this;
+        return $default;
     }
 
     /**
