@@ -2,7 +2,7 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
-use \Chemem\Bingo\Functional\Functors\Monads\Writer;
+use Chemem\Bingo\Functional\Functors\Monads\Writer;
 
 class WriterMonadTest extends \PHPUnit\Framework\TestCase
 {
@@ -13,7 +13,9 @@ class WriterMonadTest extends \PHPUnit\Framework\TestCase
 
     public function testApMethodOutputsWriterMonadInstance()
     {
-        $val = Writer::of(function ($val) { return $val * 2; }, 'Received lambda')
+        $val = Writer::of(function ($val) {
+            return $val * 2;
+        }, 'Received lambda')
             ->ap(Writer::of(12, 'Received 12'), 'Applied lambda to 12');
 
         $this->assertInstanceOf(Writer::class, $val);
@@ -21,7 +23,9 @@ class WriterMonadTest extends \PHPUnit\Framework\TestCase
 
     public function testApMethodOutputsWriterWithAllLoggedStateChanges()
     {
-        list($orig, $msg) = Writer::of(function ($val) { return $val * 2; }, 'Received lambda')
+        list($orig, $msg) = Writer::of(function ($val) {
+            return $val * 2;
+        }, 'Received lambda')
             ->ap(Writer::of(12, 'Received 12'), 'Applied lambda to 12')
             ->run();
 
@@ -50,7 +54,9 @@ class WriterMonadTest extends \PHPUnit\Framework\TestCase
     public function testFlatMapMethodOutputsArrayContainingValueAndActionLog()
     {
         $action = Writer::of(39, 'Received 39')
-            ->flatMap(function ($val) { return $val % 2 == 0 ? $val * 2 : $val + 1; }, 'Applied function to value');
+            ->flatMap(function ($val) {
+                return $val % 2 == 0 ? $val * 2 : $val + 1;
+            }, 'Applied function to value');
 
         $this->assertInternalType('array', $action);
         $this->assertEquals(40, $action[0]);

@@ -9,7 +9,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-use function \Chemem\Bingo\Functional\Algorithms\concat;
+use function Chemem\Bingo\Functional\Algorithms\concat;
 
 class Writer
 {
@@ -45,22 +45,24 @@ class Writer
      *
      * @return object Writer
      */
-
-    public static function of($value, string $logMsg) : Writer
+    public static function of($value, string $logMsg) : self
     {
         return new static($value, $logMsg);
     }
 
     /**
-     * ap method
-     * 
+     * ap method.
+     *
      * @param Writer $app
      * @param string $logMsg
+     *
      * @return object Writer
      */
-    public function ap(Writer $app, string $logMsg) : Writer
+    public function ap(self $app, string $logMsg) : self
     {
-        return $this->map(function ($val) use ($app, $logMsg) { return $app->map($val, $logMsg); }, concat(PHP_EOL, $app->run()[1], $logMsg));
+        return $this->map(function ($val) use ($app, $logMsg) {
+            return $app->map($val, $logMsg);
+        }, concat(PHP_EOL, $app->run()[1], $logMsg));
     }
 
     /**
@@ -71,8 +73,7 @@ class Writer
      *
      * @return object Writer
      */
-
-    public function map(callable $function, string $logMsg) : Writer
+    public function map(callable $function, string $logMsg) : self
     {
         return self::of(call_user_func($function, $this->value), concat(PHP_EOL, $this->logMsg, $logMsg));
     }
@@ -85,8 +86,7 @@ class Writer
      *
      * @return object Writer
      */
-
-    public function bind(callable $function, string $logMsg) : Writer
+    public function bind(callable $function, string $logMsg) : self
     {
         return $this->map($function, $logMsg);
     }
@@ -99,7 +99,6 @@ class Writer
      *
      * @return mixed $result
      */
-
     public function flatMap(callable $function, string $logMsg) : array
     {
         return [call_user_func($function, $this->value), concat(PHP_EOL, $this->logMsg, $logMsg)];
@@ -110,7 +109,6 @@ class Writer
      *
      * @return array [$value, $logMsg]
      */
-
     public function run() : array
     {
         return [$this->value, $this->logMsg];

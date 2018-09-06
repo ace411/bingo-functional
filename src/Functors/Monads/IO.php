@@ -9,7 +9,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-use function \Chemem\Bingo\Functional\Algorithms\constantFunction;
+use function Chemem\Bingo\Functional\Algorithms\constantFunction;
 
 class IO
 {
@@ -37,41 +37,43 @@ class IO
      *
      * @return object IO
      */
-
-    public static function of($operation) : IO
+    public static function of($operation) : self
     {
         return new static(is_callable($operation) ? $operation : constantFunction($operation));
     }
 
     /**
-     * ap method
-     * 
+     * ap method.
+     *
      * @param object IO
+     *
      * @return object IO
      */
-    public function ap(IO $app) : IO
+    public function ap(self $app) : self
     {
         return $app->map($this->exec());
     }
 
     /**
-     * map method
-     * 
+     * map method.
+     *
      * @param callable $function
+     *
      * @return object IO
      */
-    public function map(callable $function) : IO
+    public function map(callable $function) : self
     {
         return self::of(call_user_func($function, $this->exec()));
     }
 
     /**
-     * bind method
-     * 
+     * bind method.
+     *
      * @param callable $function
+     *
      * @return object IO
      */
-    public function bind(callable $function) : IO
+    public function bind(callable $function) : self
     {
         return $this->map($function);
     }

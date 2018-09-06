@@ -74,7 +74,7 @@ class Just extends Maybe
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function map(callable $fn) : Maybe
     {

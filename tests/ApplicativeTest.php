@@ -2,7 +2,7 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
-use \Chemem\Bingo\Functional\Functors\Applicatives\Applicative;
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicative;
 
 class ApplicativeTest extends \PHPUnit\Framework\TestCase
 {
@@ -14,11 +14,21 @@ class ApplicativeTest extends \PHPUnit\Framework\TestCase
 
     public function testApplicativeApplyMethodMapsValueOntoApplicativeCallable()
     {
-        $app = Applicative::pure(function ($val) { return $val * 2; })
+        $app = Applicative::pure(function ($val) {
+            return $val * 2;
+        })
             ->ap(Applicative::pure(12))
             ->getValue();
 
         $this->assertEquals(24, $app);
+    }
+
+    public function testApplicativeOfShouldReturnGivenValue()
+    {
+        $app = Applicative::of(12)
+            ->getValue();
+
+        $this->assertEquals(12, $app);
     }
 
     public function testMapMethodAppliesCallbackToValueDefinedInApplicativeContext()
