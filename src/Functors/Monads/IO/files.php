@@ -3,7 +3,7 @@
 namespace Chemem\Bingo\Functional\Functors\Monads\IO;
 
 use \Chemem\Bingo\Functional\Functors\Monads\IO as IOMonad;
-use function \Chemem\Bingo\Functional\Algorithms\{identity, toException, concat};
+use function \Chemem\Bingo\Functional\Algorithms\{identity, toException, concat, constantFunction};
 
 /**
  * readFile :: String -> IO String
@@ -45,11 +45,11 @@ function appendFile(string $filePath, string $content) : IOMonad
  * readIO :: Read a => String -> IO a
  */
 
-function readIO(IO $getStr)
+function readIO(IOMonad $getStr)
 {
     //parse failure
     return $getStr
         ->map(function (string $input) { 
-            return toException(concat(\PHP_EOL, $input, '')); 
+            return toException(constantFunction($input))(); 
         });
 }
