@@ -73,6 +73,8 @@
             "src/Algorithms/ConstantFunction.php",
             "src/Functors/Monads/IO/files.php",
             "src/Functors/Monads/IO/simple.php",
+            "src/Functors/Monads/Reader/functions.php",
+            "src/Functors/Monads/Writer/functions.php",
             "src/PatternMatching/functions.php"
         ]
     },
