@@ -22,7 +22,7 @@ function getChar() : IOMonad
 {
     return putChar()
         ->map(function (callable $fget) { 
-            return toException($fget(\STDIN)); 
+            return toException($fget)(\STDIN); 
         });
 }
 
@@ -56,7 +56,9 @@ function getLine() : IOMonad
 {
     return putStr()
         ->map(function (callable $fget) { 
-            return toException(\PHP_EOL, concat($fget(\STDIN), identity(''))); 
+            $result = toException($fget)(\STDIN);
+
+            return concat(\PHP_EOL, $result);
         });
 }
 
@@ -85,7 +87,7 @@ function interact(callable $function) : IOMonad
  * _print :: Show a => a -> IO ()
  */
 
-function _print(IO $interaction) : IOMonad
+function _print(IOMonad $interaction) : IOMonad
 {
     return $interaction
         ->map(function (string $result) { 
