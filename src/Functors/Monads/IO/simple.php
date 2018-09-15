@@ -58,7 +58,7 @@ function getLine() : IOMonad
         ->map(function (callable $fget) { 
             $result = toException($fget)(\STDIN);
 
-            return concat(\PHP_EOL, $result);
+            return concat(\PHP_EOL, $result, identity(''));
         });
 }
 
