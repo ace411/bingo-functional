@@ -26,3 +26,34 @@ function curryN(int $paramCount, callable $fn)
     };
     return $acc([]);
 }
+
+/**
+ * CurryN function
+ *
+ * curryRightN :: (a, (b)) -> (b)
+ * @package bingo-functional
+ * @author Lochemem Bruno Michael
+ * @license Apache-2.0
+ */
+
+const curryRightN = 'Chemem\\Bingo\\Functional\\Algorithms\\curryRightN';
+
+function curryRightN(int $paramCount, callable $func)
+{
+    $acc = function ($args) use ($paramCount, $func, &$acc) {
+        return function () use ($paramCount, $args, $func, $acc) {
+            $funcArgs = compose(
+                partialRight('array_merge', func_get_args()),
+                reverse
+            )($args);
+
+            if ($paramCount <= count($funcArgs)) {
+                return call_user_func_array($func, $funcArgs);
+            }
+
+            return $acc($funcArgs);
+        };
+    };
+
+    return $acc([]);
+}

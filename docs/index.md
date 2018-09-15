@@ -1,8 +1,6 @@
-<p align="center">
-    <img src="https://github.com/ace411/bingo-functional/blob/master/img/bingo-functional-logo.png">
-</p>
-
 # Bingo Functional
+
+![bingo-functional logo](https://github.com/ace411/bingo-functional/blob/master/img/bingo-functional-logo.png)
 
 [![Join the chat at https://gitter.im/bingo-functional/Lobby](https://badges.gitter.im/bingo-functional/Lobby.svg)](https://gitter.im/bingo-functional/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7c30c744fd0142d58dd210fd961ea842)](https://www.codacy.com/app/ace411/bingo-functional?utm_source=github.com&utm_medium=referral&utm_content=ace411/bingo-functional&utm_campaign=badger)
@@ -10,7 +8,6 @@
 [![Latest Stable Version](https://poser.pugx.org/chemem/bingo-functional/v/stable)](https://packagist.org/packages/chemem/bingo-functional)
 [![License](https://poser.pugx.org/chemem/bingo-functional/license)](https://packagist.org/packages/chemem/bingo-functional)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/ace411/bingo-functional.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Face411%2Fbingo-functional)
-
 
 A simple functional programming library for PHP.
 
@@ -24,9 +21,9 @@ PHP lacks the organic support for functional programming multiple functional pro
 
 ## Documentation
 
-Please check out the [documentation](https://github.com/ace411/bingo-functional/blob/master/docs/main.md) for more knowledge on how to use this library.
+Please check out the [documentation](https://ace411.github.io/bingo-functional/docs) for more knowledge on how to use this library.
 
-Also, a [change log](https://github.com/ace411/bingo-functional/blob/master/docs/changes.md) exists and can be used to track changes made to the project.
+Also, a [change log](https://ace411.github.io/bingo-functional/changes) exists and can be used to track changes made to the project.
 
 ## Dealing with problems
 

@@ -1,3 +1,8 @@
+---
+title: docs
+permalink: /docs/
+---
+
 # bingo-functional documentation
 
 The bingo-functional library is a functional programming library built in PHP for PHP users. Available in this library are monads, Just/Nothing types, Left/Right types, applicative functors, and function algorithms meant to ease the cognitive burden for those who intend to use them. The subsequent text is documentation of the library which should help you, the reader, understand how to go about using it.
@@ -6,11 +11,15 @@ The bingo-functional library is a functional programming library built in PHP fo
 
 Before you can use the bingo-functional library, you should have either Git or Composer installed on your system of preference. To install the package via Composer, type the following in your preferred command line interface:
 
-```composer require chemem/bingo-functional```
+```
+composer require chemem/bingo-functional
+```
 
 To install via Git, type:
 
-```git clone https://github.com/ace411/bingo-functional.git```
+```
+git clone https://github.com/ace411/bingo-functional.git
+```
 
 ## Algorithms
 
@@ -48,6 +57,36 @@ $partial = A\partial(
 ); //bind the argument 1 to the function
 
 $partial(2); //bind 2 to the function; should return 3
+```
+
+#### Partial-Left
+
+Works just like the partial function. Arguments are, with the partialLeft function, incrementally supplied from left to right.
+
+```php
+$partialLeft = A\partialLeft(
+    function (int $a, int $b) : int {
+        return $a - $b;
+    },
+    12
+);
+
+$partialLeft(9); //should output 3
+```
+
+#### Partial-Right
+
+This is the antipode of the partialLeft function. The argument order is right to left.
+
+```php
+$partialRight = A\partialRight(
+    function (int $a, int $b) : int {
+        return $a - $b;
+    },
+    9
+);
+
+$partialRight(12); //outputs 3
 ```
 
 ### Currying
@@ -190,6 +229,26 @@ $tail = A\tail([1, 2, 3, 4]);
 //returns [2, 3, 4]
 ```
 
+### indexOf function
+
+The indexOf function computes the list index of a given list item.
+
+```php
+$index = A\indexOf([1, 2, 3, 4], 2);
+
+echo $index; //outputs 1
+``` 
+
+### Fill function
+
+The fill function replaces the values of specified list indexes with an arbitrary value.
+
+```php
+$filled = A\fill([2, 4, 6, 7], 3, 1, 2);
+
+var_dump($filled); //outputs [2, 3, 3, 7s]
+```
+
 ### Partitioning
 
 The partition function one which can be used to create a multidimensional array expressed as a collection of smaller arrays of a defined size.
@@ -204,11 +263,17 @@ $partitioned = A\partition(2, [1, 2, 3, 4]);
 The throttle function is used to defer function processing.
 
 ```php
-$constDigit = A\constantFunction(12);
+$addTwelve = function (int $val) : int {
+    return $val + 12;
+};
 
-echo A\throttle($constDigit, 10);
+$throttle = A\throttle($addTwelve, 10);
+
+echo $throttle(0);
 //prints the digit 12 after 10 seconds
 ```
+
+**Note:** The throttle function as of v1.7.1 supports functions with multiple arguments.
 
 ### isArrayOf function
 
@@ -334,6 +399,36 @@ The arrayKeysExist function determines whether specified keys match the indexes 
 $attributes = ['username' => 'foo', 'password' => 'bar'];
 
 $keysExist = A\arrayKeysExist($attributes, 'username', 'password'); //should evaluate to true
+```
+
+### Reverse function
+
+The reverse function computes the reverse of an array.
+
+```php
+$reverse = A\reverse(['foo', 'bar', 'baz']);
+
+var_dump($reverse); //outputs ['baz', 'bar', 'foo']
+```
+
+### ToPairs function
+
+The toPairs function combines key-value pairs into discrete array pairs.
+
+```php
+$toPairs = A\toPairs(['foo' => 'baz', 'bar' => 'baz', 'boo' => 1]);
+
+var_dump($toPairs); //prints [['foo', 'baz'], ['bar', 'baz'], ['boo', 1]]
+```
+
+### FromPairs function
+
+The fromPairs function forms key-value pairs from discrete array pairs - it is the opposite of the toPairs function.
+
+```php
+$fromPairs = A\fromPairs([['foo', 'baz'], ['bar', 'baz'], ['boo', 1]]);
+
+var_dump($fromPairs); //outputs ['foo' => 'baz', 'bar' => 'baz', 'boo' => 1]
 ```
 
 ### Callback signatures

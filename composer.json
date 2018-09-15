@@ -2,7 +2,7 @@
     "name": "chemem/bingo-functional",
     "description": "A simple functional programming library.",
     "type": "library",
-    "license": "Apache 2.0",
+    "license": "Apache-2.0",
     "authors": [
         {
             "name": "Lochemem Bruno Michael",
@@ -11,7 +11,11 @@
     ],
     "minimum-stability": "dev",
     "require-dev": {
+<<<<<<< HEAD
         "phpunit/phpunit": "~6"
+=======
+        "phpunit/phpunit": "6.5.8"
+>>>>>>> new-functions
     },
     "require": {
         "php": ">=7.0.0"
@@ -31,16 +35,34 @@
             "src/Algorithms/Pick.php",
             "src/Algorithms/Pluck.php",
             "src/Algorithms/Zip.php",
+            "src/Algorithms/Any.php",
+            "src/Algorithms/Max.php",
+            "src/Algorithms/Min.php",
+            "src/Algorithms/Omit.php",
+            "src/Algorithms/Every.php",
+            "src/Algorithms/Where.php",
+            "src/Algorithms/GroupBy.php",
+            "src/Algorithms/Fill.php",
+            "src/Algorithms/Reverse.php",
+            "src/Algorithms/ToPairs.php",
+            "src/Algorithms/MapDeep.php",
+            "src/Algorithms/FromPairs.php",
+            "src/Algorithms/Trampoline.php",
+            "src/Algorithms/IndexOf.php",
             "src/Algorithms/Unzip.php",
             "src/Algorithms/PartialLeft.php",
             "src/Algorithms/Extend.php",
             "src/Algorithms/Memoize.php",
             "src/Algorithms/Tail.php",
             "src/Algorithms/Concat.php",
+            "src/Algorithms/AddKeys.php",
             "src/Algorithms/Throttle.php",
             "src/Algorithms/Head.php",
             "src/Algorithms/Map.php",
+            "src/Algorithms/Last.php",
+            "src/Algorithms/Mean.php",
             "src/Algorithms/Filter.php",
+            "src/Algorithms/Reject.php",
             "src/Algorithms/Fold.php",
             "src/Algorithms/Unique.php",
             "src/Algorithms/Compact.php",
@@ -49,12 +71,31 @@
             "src/Algorithms/DropRight.php",
             "src/Algorithms/Partition.php",
             "src/Algorithms/IsArrayOf.php",
+            "src/Algorithms/ToException.php",
             "src/Algorithms/PartialRight.php",
             "src/Algorithms/ArrayKeysExist.php",
             "src/Algorithms/ConstantFunction.php",
             "src/Common/Callbacks/functions.php",
             "src/Functors/Monads/IO/files.php",
-            "src/Functors/Monads/IO/simple.php"
+            "src/Functors/Monads/IO/simple.php",
+            "src/PatternMatching/functions.php"
         ]
-    }
+    },
+    "keywords": [
+        "functional",
+        "monads",
+        "immutability",
+        "IO monad",
+        "Reader monad",
+        "Writer monad",
+        "State monad",
+        "referential transparency",
+        "fp",
+        "functional programming",
+        "bingo",
+        "Either",
+        "Maybe",
+        "Applicative",
+        "Functor"
+    ]
 }

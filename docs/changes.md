@@ -1,3 +1,8 @@
+---
+title: changes
+permalink: /changes/
+---
+
 # bingo-functional change log
 
 ## v1.0.0
@@ -118,3 +123,36 @@
 ### New monad
 
 - ListMonad
+
+## v1.7.1
+
+### Made the following change(s)
+
+- Modified the ```throttle()``` function to accept multiple arguments
+
+- Added type signatures and doc blocks for functions without any
+
+- Added immutable const definition for ```concat()``` function
+
+## v1.7.2
+
+### Made the following change(s)
+
+- Modified the ```orElse()``` methods of the Left, Right, Nothing, and Just functors
+
+- Added the ```flatMap()``` method to the State and List monads
+
+## v1.8.0
+
+### Made the following addition(s)
+
+- Modified the function bodies of the ```map()```, ```reduce()```, and ```fold()``` functions
+
+### New Helper functions
+
+- fill
+- partial
+- indexOf
+- reverse
+- toPairs
+- fromPairs

@@ -1,0 +1,5 @@
+theme: jekyll-theme-cayman
+title: Bingo-Functional
+markdown: kramdown
+navigation: 1
+permalink: /:title/
