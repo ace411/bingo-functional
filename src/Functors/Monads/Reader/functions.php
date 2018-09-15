@@ -5,12 +5,12 @@ namespace Chemem\Bingo\Functional\Functors\Monads\Reader;
 use \Chemem\Bingo\Functional\Functors\Monads\Reader as ReaderMonad;
 
 /**
- * _return :: Callable value -> Reader r a
+ * reader :: Callable value -> Reader r a
  */
 
-const _return = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\_return';
+const reader = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\reader';
 
-function _return($value) : ReaderMonad
+function reader($value) : ReaderMonad
 {
     return ReaderMonad::of($value);
 }
@@ -34,7 +34,7 @@ const mapReader = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\mapReade
 
 function mapReader(callable $function, ReaderMonad $reader, $value) : ReaderMonad
 {
-    return _return($function($reader->run($value)));
+    return reader($function($reader->run($value)));
 }
 
 /**

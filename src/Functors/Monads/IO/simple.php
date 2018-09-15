@@ -6,12 +6,12 @@ use \Chemem\Bingo\Functional\Functors\Monads\IO as IOMonad;
 use function \Chemem\Bingo\Functional\Algorithms\{compose, concat, identity, toException};
 
 /**
- * _return :: Callable value -> IOMonad ()
+ * IO :: Callable value -> IOMonad ()
  */
 
-const _return = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\_return';
+const IO = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\IO';
 
-function _return($value) : IOMonad
+function IO($value) : IOMonad
 {
     return IOMonad::of($value);
 }
@@ -38,7 +38,7 @@ const putChar = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putChar';
  
 function putChar() : IOMonad
 {
-    return _return(function () {
+    return IO(function () {
         return compose('fgetc', 'trim');
     });
 }
@@ -51,7 +51,7 @@ const putStr = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putStr';
 
 function putStr() : IOMonad
 {
-    return _return(function () {
+    return IO(function () {
         return compose('fgets', 'trim');
     });
 }
