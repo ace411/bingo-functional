@@ -27,7 +27,7 @@ function runReader(ReaderMonad $reader, $value)
 }
 
 /**
- * mapReader :: (a -> b) -> Reader r a -> Reader r b
+ * mapReader :: (a -> b) -> Reader r a -> a -> Reader r b
  */
 
 const mapReader = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\mapReader';
