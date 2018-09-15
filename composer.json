@@ -11,11 +11,7 @@
     ],
     "minimum-stability": "dev",
     "require-dev": {
-<<<<<<< HEAD
         "phpunit/phpunit": "~6"
-=======
-        "phpunit/phpunit": "6.5.8"
->>>>>>> new-functions
     },
     "require": {
         "php": ">=7.0.0"
