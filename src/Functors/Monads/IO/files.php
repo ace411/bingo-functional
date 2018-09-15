@@ -9,6 +9,8 @@ use function \Chemem\Bingo\Functional\Algorithms\{identity, toException, concat,
  * readFile :: String -> IO String
  */
 
+const readFile = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\readFile';
+
 function readFile(string $filePath) : IOMonad
 {
     return _return($filePath)
@@ -20,6 +22,8 @@ function readFile(string $filePath) : IOMonad
 /**
  * writeFile :: String -> String -> IO ()
  */
+
+const writeFile = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\writeFile';
 
 function writeFile(string $filePath, string $content) : IOMonad
 {
@@ -33,6 +37,8 @@ function writeFile(string $filePath, string $content) : IOMonad
  * appendFile :: String -> String -> IO ()
  */
 
+const appendFile = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\appendFile';
+
 function appendFile(string $filePath, string $content) : IOMonad
 {
     return _return($filePath)
@@ -44,6 +50,8 @@ function appendFile(string $filePath, string $content) : IOMonad
 /**
  * readIO :: Read a => String -> IO a
  */
+
+const readIO = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\readIO';
 
 function readIO(IOMonad $getStr)
 {

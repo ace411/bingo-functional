@@ -5,6 +5,10 @@ namespace Chemem\Bingo\Functional\Functors\Monads\IO;
 use \Chemem\Bingo\Functional\Functors\Monads\IO as IOMonad;
 use function \Chemem\Bingo\Functional\Algorithms\{compose, concat, identity, toException};
 
+/**
+ * _return :: Callable value -> IOMonad ()
+ */
+
 const _return = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\_return';
 
 function _return($value) : IOMonad
@@ -30,6 +34,8 @@ function getChar() : IOMonad
  * putChar :: Char -> IO ()
  */
 
+const putChar = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putChar'; 
+ 
 function putChar() : IOMonad
 {
     return _return(function () {
@@ -41,6 +47,8 @@ function putChar() : IOMonad
  * putStr :: String -> IO ()
  */
 
+const putStr = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putStr';
+
 function putStr() : IOMonad
 {
     return _return(function () {
@@ -51,6 +59,8 @@ function putStr() : IOMonad
 /**
  * getLine :: IO String
  */
+
+const getLine = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\getLine';
 
 function getLine() : IOMonad
 {
@@ -66,6 +76,8 @@ function getLine() : IOMonad
  * putStrLn :: String -> IO ()
  */
 
+const putStrLn = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putStrLn';
+ 
 function putStrLn() : IOMonad
 {
     return putStr()
@@ -77,6 +89,8 @@ function putStrLn() : IOMonad
 /**
  * interact :: (String -> String) -> IO ()
  */
+
+const interact = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\interact';
 
 function interact(callable $function) : IOMonad
 {
