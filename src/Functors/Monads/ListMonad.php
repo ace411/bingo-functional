@@ -10,7 +10,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-use function \Chemem\Bingo\Functional\Algorithms\{map, extend, compose, flatten, partialLeft};
+use function \Chemem\Bingo\Functional\Algorithms\{mapDeep, extend, compose, flatten, partialLeft};
 
 class ListMonad
 {
@@ -18,7 +18,7 @@ class ListMonad
      * @access private
      * @var array $collection The collection to transform
      */
-    private $collection;
+    private $collection = [];
 
     /**
      * ListMonad constructor
@@ -28,7 +28,7 @@ class ListMonad
 
     public function __construct($collection)
     {
-        $this->collection = $collection;
+        $this->collection[] = $collection;
     }
 
     /**
@@ -59,7 +59,7 @@ class ListMonad
                 \Chemem\Bingo\Functional\Algorithms\map, 
                 function ($func) use ($list) {
                     $app = function (array $acc = []) use ($func, $list) { 
-                        return map($func, $list);
+                        return mapDeep($func, $list);
                     };
 
                     return $app();
@@ -80,11 +80,14 @@ class ListMonad
 
     public function bind(callable $function) : ListMonad
     {
-        list($original, $final) = State::of($this->extract())
-            ->map(partialLeft(\Chemem\Bingo\Functional\Algorithms\map, $function))
-            ->exec();
+        $concat = compose(
+            function (array $list) use ($function) {
+                return mapDeep($function, $list);
+            },
+            partialLeft('array_merge', $this->collection)
+        );
 
-        return new static(extend($final, $original));
+        return self::of($concat($this->collection));
     }
 
     /**
@@ -118,6 +121,6 @@ class ListMonad
      */
     public function extract() : array
     {
-        return flatten($this->collection);
+        return flatten(...$this->collection);
     }
 }
