@@ -18,7 +18,7 @@ class ListMonad
      * @access private
      * @var array $collection The collection to transform
      */
-    private $collection = [];
+    private $collection;
 
     /**
      * ListMonad constructor
@@ -26,9 +26,9 @@ class ListMonad
      * @param mixed $collection
      */
 
-    public function __construct($collection)
+    public function __construct(array $collection)
     {
-        $this->collection[] = $collection;
+        $this->collection = $collection;
     }
 
     /**
@@ -87,7 +87,7 @@ class ListMonad
             partialLeft('array_merge', $this->collection)
         );
 
-        return self::of($concat($this->collection));
+        return self::of(flatten($concat($this->collection)));
     }
 
     /**
@@ -121,6 +121,6 @@ class ListMonad
      */
     public function extract() : array
     {
-        return flatten(...$this->collection);
+        return flatten($this->collection);
     }
 }
