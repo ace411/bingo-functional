@@ -76,6 +76,7 @@
             "src/Functors/Monads/Reader/functions.php",
             "src/Functors/Monads/Writer/functions.php",
             "src/Functors/Monads/State/functions.php",
+            "src/Functors/Applicatives/Applicative/functions.php",
             "src/PatternMatching/functions.php"
         ]
     },
