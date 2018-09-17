@@ -10,107 +10,111 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-use function \Chemem\Bingo\Functional\Algorithms\concat;
+use function \Chemem\Bingo\Functional\Algorithms\{concat, extend};
 
 class Writer
 {
     /**
      * @access private
-     * @var mixed $value
+     * @var mixed $result
      */
-    private $value;
+    private $result;
 
     /**
      * @access private
-     * @var string $logMsg
+     * @var mixed $output
      */
-    private $logMsg; 
+    private $output = []; 
 
     /**
      * Writer monad constructor
      * 
-     * @param mixed $value
-     * @param string $logMsg
+     * @param mixed $result
+     * @param mixed $output
      */
-    public function __construct($value, $logMsg)
+    public function __construct($result, $output)
     {
-        $this->value = $value;
-        $this->logMsg = $logMsg;
+        $this->result = $result;
+        $this->output[] = $output;
     }
 
     /**
      * of method
      * 
      * @static of
-     * @param mixed $value
-     * @param string $logMsg
+     * @param mixed $result
+     * @param mixed $output
      * @return object Writer
      */
 
-    public static function of($value, string $logMsg) : Writer
+    public static function of($result, $output) : Writer
     {
-        return new static($value, $logMsg);
+        return new static($result, $output);
     }
 
     /**
      * ap method
      * 
      * @param Writer $app
-     * @param string $logMsg
+     * @param mixed $output
      * @return object Writer
      */
-    public function ap(Writer $app, string $logMsg) : Writer
+    public function ap(Writer $app) : Writer
     {
-        return $this->map(function ($val) use ($app, $logMsg) { return $app->map($val, $logMsg); }, concat(PHP_EOL, $app->run()[1], $logMsg));
+        return $this->bind(function ($function) use ($app) {
+            return $app->map($function);
+        });
     }
 
     /**
      * map method
      * 
      * @param callable $function The morphism used to transform the state value
-     * @param string $logMsg
+     * @param mixed $output
      * @return object Writer
      */
 
-    public function map(callable $function, string $logMsg) : Writer
+    public function map(callable $function) : Writer
     {
-        return self::of(call_user_func($function, $this->value), concat(PHP_EOL, $this->logMsg, $logMsg));
+        return self::of($function($this->result), $this->output);
     }
     
     /**
      * bind method
      * 
      * @param callable $function
-     * @param string $logMsg
+     * @param mixed $output
      * @return object Writer
      */
 
-    public function bind(callable $function, string $logMsg) : Writer
+    public function bind(callable $function) : Writer
     {
-        return $this->map($function, $logMsg);
+        list($result, $output) = $function($this->result)->run();
+
+        return self::of($result, extend($this->output, $output));
     }
 
     /**
      * flatMap method
      * 
      * @param callable $function
-     * @param string $logMsg
+     * @param mixed $output
      * @return mixed $result
      */
 
-    public function flatMap(callable $function, string $logMsg) : array
+    public function flatMap(callable $function) : array
     {
-        return [call_user_func($function, $this->value), concat(PHP_EOL, $this->logMsg, $logMsg)];
+        return $this->map($function)->run();
     }
 
     /**
      * run method
      * 
-     * @return array [$value, $logMsg]
+     * @return array [$result, $output]
      */
 
     public function run() : array
     {
-        return [$this->value, $this->logMsg];
+        return [$this->result, $this->output];
     }
 }
