@@ -2,8 +2,10 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads\Writer;
 
-use \Chemem\Bingo\Functional\Functors\Monads\Writer as WriterMonad;
-use function \Chemem\Bingo\Functional\Algorithms\{compose, partialLeft};
+use \Chemem\Bingo\Functional\{
+    Algorithms as A,
+    Functors\Monads\Writer as WriterMonad
+};
 
 /**
  * writer :: a -> String w -> WriterMonad (a, w)
@@ -11,9 +13,9 @@ use function \Chemem\Bingo\Functional\Algorithms\{compose, partialLeft};
 
 const writer = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Writer\\writer';
 
-function writer($init, string $msg) : WriterMonad
+function writer($result, $output) : WriterMonad
 {
-    return WriterMonad::of($init, $msg);
+    return WriterMonad::of($result, $output);
 }
 
 /**
@@ -48,7 +50,7 @@ const mapWriter = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Writer\\mapWrite
 
 function mapWriter(callable $function, WriterMonad $writer) : WriterMonad
 {
-    $return = compose(partialLeft('array_map', $function), 'array_reverse');
+    $return = A\compose(A\partialLeft(A\mapDeep, $function), 'array_reverse');
 
     return writer(...$return($writer->run()));
 }
