@@ -74,7 +74,9 @@ class Reader
      */
     public function map(callable $function) : Reader
     {
-        return $this->withReader($function);
+        return $this->bind(function ($env) use ($function) {
+            return self::of($function($env));
+        });
     }
 
     /**
@@ -84,7 +86,9 @@ class Reader
      */
     public function bind(callable $function) : Reader
     {
-        return $this->withReader($function);
+        return new self(function ($env) use ($function) {
+            return $function($this->run($env))->run($env);
+        });
     }
 
     /**
