@@ -1,19 +1,19 @@
 <?php
 
-use Chemem\Bingo\Functional\Functors\Applicatives\Applicative;
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicative as Ap;
 
 class ApplicativeTest extends PHPUnit\Framework\TestCase
 {
     public function testApplicativePureMethodAddsValueToApplicativeFunctor()
     {
-        $value = Applicative::pure('foo');
-        $this->assertInstanceOf(Applicative::class, $value);
+        $value = Ap::pure('foo');
+        $this->assertInstanceOf(Ap::class, $value);
     }
 
     public function testApplicativeApplyMethodMapsValueOntoApplicativeCallable()
     {
-        $app = Applicative::pure(function ($val) { return $val * 2; })
-            ->ap(Applicative::pure(12))
+        $app = Ap::pure(function ($val) { return $val * 2; })
+            ->ap(Ap::pure(12))
             ->getValue();
 
         $this->assertEquals(24, $app);
@@ -21,7 +21,7 @@ class ApplicativeTest extends PHPUnit\Framework\TestCase
 
     public function testMapMethodAppliesCallbackToValueDefinedInApplicativeContext()
     {
-        $app = Applicative::pure('foo')
+        $app = Ap::pure('foo')
             ->map('strtoupper')
             ->getValue();
 
@@ -30,9 +30,30 @@ class ApplicativeTest extends PHPUnit\Framework\TestCase
 
     public function testMapMethodOutputsApplicativeInstance()
     {
-        $app = Applicative::pure('foo')
+        $app = Ap::pure('foo')
             ->map('strtoupper');
 
-        $this->assertInstanceOf(Applicative::class, $app);
+        $this->assertInstanceOf(Ap::class, $app);
+    }
+
+    public function testPureHelperFunctionLiftsValue()
+    {
+        $app = Ap\pure(12);
+
+        $this->assertInstanceOf(Ap::class, $app);
+    }
+
+    public function testLiftA2HelperFunctionLiftsBinaryFunctionIntoActions()
+    {
+        $lift = Ap\liftA2(
+            function ($x, $y) { 
+                return ($x * 3) / $y; 
+            }, 
+            Ap\pure(12), 
+            Ap\pure(2)
+        );
+
+        $this->assertInstanceOf(Ap::class, $lift);
+        $this->assertEquals(18, $lift->getValue());
     }
 }
