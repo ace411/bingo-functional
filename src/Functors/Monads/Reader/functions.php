@@ -86,7 +86,7 @@ const withReader = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\withRea
 
 function withReader(callable $function, ReaderMonad $reader) : ReaderMonad
 {
-    return $reader->withReader($function);
+    return $reader->bind($function);
 }
 
 /**
