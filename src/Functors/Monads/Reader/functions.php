@@ -65,9 +65,9 @@ function runReader(ReaderMonad $reader, $value)
 
 const mapReader = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\mapReader';
 
-function mapReader(callable $function, ReaderMonad $reader, $value) : ReaderMonad
+function mapReader(callable $function, ReaderMonad $reader) : ReaderMonad
 {
-    return reader($function($reader->run($value)));
+    return $reader->map($function);
 }
 
 /**
@@ -87,4 +87,23 @@ const withReader = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\withRea
 function withReader(callable $function, ReaderMonad $reader) : ReaderMonad
 {
     return $reader->withReader($function);
+}
+
+/**
+ * 
+ * ask function
+ * Retrieves the monad environment
+ * 
+ * ask :: m r
+ * 
+ * @return object Reader
+ */
+
+const ask = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\ask';
+
+function ask() : ReaderMonad
+{
+    return ReaderMonad::of(function ($value) {
+        return $value;
+    });
 }
