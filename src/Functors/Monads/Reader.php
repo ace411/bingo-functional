@@ -47,25 +47,11 @@ class Reader
      */
     public function ap(Reader $app) : Reader
     {
-        return $this->withReader(function ($val) use ($app) { return $app->map($val); });
+        return $this->bind(function ($func) use ($app) { 
+            return $app->map($func); 
+        });
     }
-
-    /**
-     * withReader method
-     * 
-     * @param callable $action
-     * @return object Reader
-     */
-    public function withReader(callable $action) : Reader
-    {
-        return new static(
-            function ($env) use ($action) {
-                $reader = call_user_func($action, $this->run($env));
-                return $reader->run($env);
-            }
-        );
-    }
-
+    
     /**
      * map method
      * 
