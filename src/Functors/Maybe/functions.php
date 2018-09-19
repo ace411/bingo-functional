@@ -46,6 +46,8 @@ function maybe($default, callable $function, $maybe)
  * @return boolean 
  */
 
+const isJust = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\isJust';
+
 function isJust($maybe)
 {
     return $maybe->isJust();
@@ -61,6 +63,8 @@ function isJust($maybe)
  * @param object Maybe
  * @return boolean 
  */
+
+const isNothing = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\isNothing';
 
 function isNothing($maybe)
 {
