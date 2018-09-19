@@ -59,6 +59,40 @@ function _extract(array $eithers, string $class)
 
 /**
  * 
+ * isLeft function
+ * Return True if the given value is a Left-value, False otherwise
+ * 
+ * isLeft :: Either a b -> Bool
+ * 
+ * @return boolean
+ */
+
+const isLeft = 'Chemem\\Bingo\\Functional\\Functors\\Either\\isLeft';
+
+function isLeft($either) : boolean
+{
+    return $either->isLeft();
+}
+
+/**
+ * 
+ * isRight function
+ * Return True if the given value is a Right-value, False otherwise
+ * 
+ * isRight :: Either a b -> Bool
+ * 
+ * @return boolean
+ */
+
+const isRight = 'Chemem\\Bingo\\Functional\\Functors\\Either\\isRight';
+
+function isRight($either) : boolean
+{
+    return $either->isRight();
+}
+
+/**
+ * 
  * lefts function
  * Extracts from a list of Either all the Left elements
  * 
