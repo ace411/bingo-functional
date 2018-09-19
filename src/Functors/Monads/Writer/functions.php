@@ -22,7 +22,7 @@ use \Chemem\Bingo\Functional\{
  * writer function
  * Create a new instance of the writer monad
  * 
- * writer :: a -> String w -> WriterMonad (a, w)
+ * writer :: a -> w -> Writer (a, w)
  * 
  * @param mixed $result
  * @param mixed $output
