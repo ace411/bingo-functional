@@ -12,13 +12,28 @@ namespace Chemem\Bingo\Functional\Functors\Monads;
 
 class State
 {
+    /**
+     * @access private
+     * @var callable $comp The state computation to store
+     */
     private $comp;
 
+    /**
+     * State monad constructor
+     * 
+     * @param callable $comp
+     */
     public function __construct(callable $comp)
     {
         $this->comp = $comp;
     }
 
+    /**
+     * of method
+     * 
+     * @param callable $value The initial state
+     * @return object State
+     */
     public static function of($value) : State
     {
         return new static(function ($state) use ($value) {
@@ -26,6 +41,12 @@ class State
         });
     }
 
+    /**
+     * ap method
+     * 
+     * @param object State $monad 
+     * @return object State
+     */
     public function ap(State $monad) : State
     {
         return $state->map(function ($function) use ($monad) {
@@ -33,6 +54,12 @@ class State
         });
     }
 
+    /**
+     * bind method
+     * 
+     * @param callable $function
+     * @return object State
+     */
     public function bind(callable $function) : State
     {
         return new self(function ($state) use ($function) {
@@ -42,6 +69,12 @@ class State
         });
     }
 
+    /**
+     * map method
+     * 
+     * @param callable $function
+     * @return object State
+     */
     public function map(callable $function) : State
     {
         return $this->bind(function ($state) use ($function) {
@@ -49,6 +82,11 @@ class State
         });
     }
 
+    /**
+     * run method
+     * 
+     * @return array 
+     */
     public function run($state)
     {
         return call_user_func($this->comp, $state);
