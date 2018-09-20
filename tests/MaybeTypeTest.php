@@ -2,6 +2,18 @@
 
 use PHPUnit\Framework\TestCase;
 use Chemem\Bingo\Functional\Functors\Maybe\{Maybe, Just, Nothing};
+use function \Chemem\Bingo\Functional\Algorithms\toException;
+use function Chemem\Bingo\Functional\Functors\Maybe\{
+    maybe,
+    isJust,
+    isNothing,
+    fromJust,
+    fromMaybe,
+    listToMaybe,
+    maybeToList,
+    catMaybes,
+    mapMaybe
+};
 
 class MaybeTypeTest extends TestCase
 {
@@ -117,5 +129,71 @@ class MaybeTypeTest extends TestCase
 
         $this->assertInstanceOf(Maybe::class, $mutated);
         $this->assertEquals(25, $mutated->getJust());
+    }
+
+    public function testMaybeFunctionAppliesFunctionToValueInsideJustAndReturnsDefaultValueIfNothing()
+    {
+        $maybe = maybe(
+            12,
+            function ($val) : int {
+                return ($val * 2) / 4;
+            },
+            Maybe::fromValue(12)
+        );
+
+        $this->assertEquals(6, $maybe);
+        $this->assertInternalType('integer', $maybe);
+    }
+
+    public function testIsJustAndIsNothingFunctionsEvaluateToBoolean()
+    {
+        $this->assertEquals(true, isJust(Maybe::fromValue(18)));
+        $this->assertEquals(true, isNothing(Maybe::nothing()));
+    }
+
+    public function testFromJustExtractsOutputFromJustIfJustValueIsSuppliedAndThrowsAnExceptionOtherwise()
+    {
+        $this->assertEquals(12, fromJust(Maybe::fromValue(12)));
+        $this->assertEquals(
+            'Maybe.fromJust: Nothing', 
+            toException(\Chemem\Bingo\Functional\Functors\Maybe\fromJust)(Maybe::nothing())
+        );
+    }
+
+    public function testFromMaybeFunctionReturnsDefaultValueIfMaybeIsNothingAndJustValueOtherwise()
+    {
+        $this->assertEquals(0, fromMaybe(0, Maybe::nothing()));
+        $this->assertEquals(12, fromMaybe(1, Maybe::fromValue(12)));
+    }
+
+    public function testListToMaybeFunctionReturnsNothingOnEmptyListOrJustTypeWithFirstListElement()
+    {
+        $this->assertInstanceOf(Nothing::class, listToMaybe([]));
+        $this->assertInstanceOf(Just::class, listToMaybe(range(1, 3)));   
+    }
+
+    public function testMaybeToListReturnsAnEmptyListWhenSuppliedNothingAndSingletonListOtherwise()
+    {
+        $this->assertEquals([], maybeToList(Maybe::nothing()));
+        $this->assertEquals([19], maybeToList(Maybe::fromValue(19)));
+    }
+
+    public function testCatMaybesTakesListOfMaybesAndReturnsListOfJustValues()
+    {
+        $this->assertEquals(['foo', 'bar'], catMaybes([Maybe::fromValue('foo'), Maybe::fromValue('bar')]));
+        $this->assertEquals([], catMaybes([Maybe::nothing(), Maybe::nothing()]));
+    }
+
+    public function testMapMaybeIsVersionOfMapAndThrowsOutElements()
+    {
+        $map = mapMaybe(
+            function (string $value) {
+                return Maybe::fromValue(strtoupper($value));
+            },
+            ['foo', 'bar']
+        );
+
+        $this->assertEquals(['FOO', 'BAR'], $map);
+        $this->assertInternalType('array', $map);
     }
 }
