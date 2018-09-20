@@ -114,26 +114,6 @@ function getLine() : IOMonad
 
 /**
  * 
- * putStrLn function
- * The same as putStr, but adds a newline character
- * 
- * putStrLn :: String -> IO ()
- * 
- * @return object IO
- */
-
-const putStrLn = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putStrLn';
- 
-function putStrLn() : IOMonad
-{
-    return putStr()
-        ->map(function (callable $fget) { 
-            return compose($fget, function (string $str) { return concat(\PHP_EOL, $str, ''); }); 
-        });
-}
-
-/**
- * 
  * interact function
  * Takes String->String function, parses standard input device input and conveys output to same standard device
  * 
