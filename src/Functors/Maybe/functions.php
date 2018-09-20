@@ -12,8 +12,8 @@
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
-use Chemem\Bingo\Functional\Functors\Maybe as MType;
-use function Chemem\Bingo\Functional\Algorithms\{head, fold, identity as id};
+use Chemem\Bingo\Functional\Functors\Maybe\Maybe as Mtype;
+use function Chemem\Bingo\Functional\Algorithms\{head, compose, fold, identity as id, partialLeft};
 
 /**
  * 
@@ -30,7 +30,7 @@ use function Chemem\Bingo\Functional\Algorithms\{head, fold, identity as id};
 
 const maybe = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\maybe';
 
-function maybe($default, callable $function, $maybe)
+function maybe($default, callable $function, Mtype $maybe)
 {
     return $maybe instanceof Nothing ? $default : $maybe->flatMap($function);
 }
@@ -48,7 +48,7 @@ function maybe($default, callable $function, $maybe)
 
 const isJust = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\isJust';
 
-function isJust($maybe)
+function isJust(Mtype $maybe)
 {
     return $maybe->isJust();
 }
@@ -66,7 +66,7 @@ function isJust($maybe)
 
 const isNothing = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\isNothing';
 
-function isNothing($maybe)
+function isNothing(Mtype $maybe)
 {
     return $maybe->isNothing();
 }
@@ -84,7 +84,7 @@ function isNothing($maybe)
 
 const fromJust = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\fromJust';
 
-function fromJust($maybe)
+function fromJust(Mtype $maybe)
 {
     if ($maybe instanceof Nothing) {
         throw new \Exception('Maybe.fromJust: Nothing');
@@ -107,7 +107,7 @@ function fromJust($maybe)
 
 const fromMaybe = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\fromMaybe';
 
-function fromMaybe($default, $maybe)
+function fromMaybe($default, Mtype $maybe)
 {
     return $maybe instanceof Nothing ? $default : $maybe->getJust();
 }
@@ -125,9 +125,9 @@ function fromMaybe($default, $maybe)
 
 const listToMaybe = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\listToMaybe'; 
 
-function listToMaybe(array $list) : MType
+function listToMaybe(array $list) : Mtype
 {
-    return empty($list) ? Maybe::fromValue(id([]), id([])) : Maybe::fromValue(head($list));
+    return empty($list) ? Mtype::fromValue(id([]), id([])) : Mtype::fromValue(head($list));
 }
 
 /**
@@ -143,7 +143,7 @@ function listToMaybe(array $list) : MType
 
 const maybeToList = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\maybeToList';
 
-function maybeToList($maybe) : array
+function maybeToList(Mtype $maybe) : array
 {
     return $maybe instanceof Nothing ? id([]) : [$maybe->getJust()];
 }
@@ -164,7 +164,7 @@ const catMaybes = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\catMaybes';
 function catMaybes(array $maybes) : array
 {
     return fold(
-        function ($list, $maybe) {
+        function ($list, Mtype $maybe) {
             if ($maybe instanceof Just) {
                 $list[] = $maybe->getJust();
             }
