@@ -12,8 +12,8 @@
 
 namespace Chemem\Bingo\Functional\Functors\Either;
 
-use Chemem\Bingo\Functional\Functors\Either as Etype;
-use function Chemem\Bingo\Functional\Algorithms\{compose, partialLeft, partialRight};
+use Chemem\Bingo\Functional\Functors\Either\Either as Etype;
+use function Chemem\Bingo\Functional\Algorithms\{fold, compose, identity as id, partialLeft, partialRight};
 
 /**
  * 
@@ -30,31 +30,25 @@ use function Chemem\Bingo\Functional\Algorithms\{compose, partialLeft, partialRi
 
 const either = 'Chemem\\Bingo\\Functional\\Functors\\Either\\either';
 
-function either(callable $left, callable $right, $either)
+function either(callable $left, callable $right, Etype $either)
 {
-    return $either instanceof Either\Left ? 
+    return $either instanceof Left ? 
         $left($either->getLeft()) : 
         $right($either->getRight()); 
 }
 
 function _extract(array $eithers, string $class)
 {
-    $extract = compose(
-        partialRight(
-            'array_filter', 
-            function ($either) use ($class) { 
-                return $either instanceof $class; 
+    return fold(
+        function (array $acc, Etype $either) use ($class) {
+            if ($either instanceof $class) {
+                $acc[] = $either->isRight() ? $either->getRight() : $either->getLeft();
             }
-        ),
-        partialLeft(
-            'array_map', 
-            function ($either) {
-                return $either->isRight() ? $either->getRight() : $either->getLeft();
-            }
-        )
+            return $acc;
+        },
+        $eithers,
+        id([])
     );
-
-    return $extract($eithers);
 }
 
 /**
@@ -69,7 +63,7 @@ function _extract(array $eithers, string $class)
 
 const isLeft = 'Chemem\\Bingo\\Functional\\Functors\\Either\\isLeft';
 
-function isLeft($either) : boolean
+function isLeft(Etype $either) : bool
 {
     return $either->isLeft();
 }
@@ -86,7 +80,7 @@ function isLeft($either) : boolean
 
 const isRight = 'Chemem\\Bingo\\Functional\\Functors\\Either\\isRight';
 
-function isRight($either) : boolean
+function isRight(Etype $either) : bool
 {
     return $either->isRight();
 }
@@ -141,7 +135,7 @@ function rights(array $eithers) : array
 
 const fromRight = 'Chemem\\Bingo\\Functional\\Functors\\Either\\fromRight';
 
-function fromRight($default, $either)
+function fromRight($default, Etype $either)
 {
     return $either->isRight() ? $either->getRight() : $default;
 }
@@ -180,17 +174,16 @@ const partitionEithers = 'Chemem\\Bingo\\Functional\\Functors\\Either\\partition
 
 function partitionEithers(array $eithers) : array
 {
-    return array_reduce(
-        $eithers,
-        function (array $acc, $either) {
+    return fold(
+        function (array $acc, Etype $either) {
             if ($either->isRight()) {
                 $acc['right'][] = $either->getRight(); 
             } else {
                 $acc['left'][] = $either->getLeft();
             }
-
             return $acc;
         },
-        []
+        $eithers,
+        id([])
     );
 }
