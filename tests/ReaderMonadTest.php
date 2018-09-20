@@ -2,40 +2,35 @@
 
 use Chemem\Bingo\Functional\Functors\Monads\Reader;
 use function Chemem\Bingo\Functional\Algorithms\{fold, concat};
+use function \Chemem\Bingo\Functional\Functors\Monads\Reader\{reader, runReader, mapReader, withReader, ask};
 
 class ReaderMonadTest extends \PHPUnit\Framework\TestCase
 {
     public function testOfStaticMethodOutputsReaderInstance()
     {
-        $this->assertInstanceOf(Reader::class, Reader::of(function ($name) { return 'Hello ' . $name; }));
+        $this->assertInstanceOf(Reader::class, reader(function ($name) { return 'Hello ' . $name; }));
     }
 
     public function testApMethodOuputsReaderInstance()
     {
-        $read = Reader::of(function ($first) { return function ($last) use ($first) { return Reader::of(concat(' ', 'Hello', $first, $last)); }; })
+        $read = Reader::of(function ($first) { 
+            return function ($last) use ($first) { 
+                return Reader::of(concat(' ', 'Hello', $first, $last)); 
+            }; 
+        })
             ->ap(Reader::of('Loki'));
 
         $this->assertInstanceOf(Reader::class, $read);
     }
 
-    public function testApMethodBuildsOnInitialReaderTransformation()
-    {
-        $read = Reader::of(function ($first) { return function ($last) use ($first) { return Reader::of(concat(' ', 'Hello', $first, $last)); }; })
-            ->ap(Reader::of('Loki'))
-            ->run('Agiro');
-
-        $this->assertEquals('Hello Agiro Loki', $read);
-        $this->assertInternalType('string', $read);
-    }
-
-    public function testWithReaderUsesCallbackToTransformInitialReaderValue()
+    public function testBindMethodUsesCallbackToTransformInitialReaderValue()
     {
         $read = Reader::of(function ($name) { return concat(' ', 'Hello', $name . '.'); })
-            ->withReader(
+            ->bind(
                 function ($content) { 
-                    return Reader::of(
-                        function ($name) use ($content) { return concat(' ', $content, ($name == 'Loki' ? '' : 'How are you?')); }
-                    ); 
+                    return Reader::of(function ($name) use ($content) { 
+                        return concat(' ', $content, ($name == 'Loki' ? '' : 'How are you?')); 
+                    }); 
                 }
             );
 
@@ -43,10 +38,10 @@ class ReaderMonadTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('Hello Michael. How are you?', $read->run('Michael'));
     }
 
-    public function testWithReaderOutputsReaderInstance()
+    public function testBindMethodOutputsReaderInstance()
     {
         $read = Reader::of(function ($name) { return concat(' ', 'Hello', $name . '.'); })
-            ->withReader(
+            ->bind(
                 function ($content) { 
                     return Reader::of(
                         function ($name) use ($content) { return concat(' ', $content, ($name == 'Loki' ? '' : 'How are you?')); }
@@ -65,46 +60,64 @@ class ReaderMonadTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(Reader::class, $read);
     }
 
-    public function testMapMethodUsesCallbackToTransformInitialReaderValue()
-    {
-        $read = Reader::of(function ($val) { return $val * 2; })
-            ->map(function ($mult) { return Reader::of(function ($val) use ($mult) { return $mult * ($val + 5); }); })
-            ->run(4);
-
-        $this->assertEquals(72, $read);
-    }
-
-    public function testBindMethodOutputsReaderInstance()
-    {
-        $read = Reader::of(function ($nums) { return fold(function ($acc, $num) { return $acc + $num; }, $nums, 0); })
-            ->bind(
-                function ($sum) { 
-                    return Reader::of(function ($nums) use ($sum) { return fold(function ($acc, $val) { return $acc * $val; }, $nums, $sum); }); 
-                }
-            );
-
-        $this->assertInstanceOf(Reader::class, $read);
-    }
-
-    public function testBindMethodUsesCallbackToTransformInitialReaderValue()
-    {
-        $read = Reader::of(function ($nums) { return fold(function ($acc, $num) { return $acc + $num; }, $nums, 0); })
-            ->bind(
-                function ($sum) { 
-                    return Reader::of(function ($nums) use ($sum) { return fold(function ($acc, $val) { return $acc * $val; }, $nums, $sum); }); 
-                }
-            )
-            ->run(range(1, 3));
-
-        $this->assertInternalType('integer', $read);
-        $this->assertEquals(36, $read);
-    }
-
     public function testAskMethodOutputsClosure()
     {
         $read = Reader::of(function ($name) { return concat(' ', 'Hello', $name); })
             ->ask();
 
         $this->assertInstanceOf(\Closure::class, $read);
+    }
+
+    public function testRunReaderRunsReaderAndExtractsFinalValue()
+    {
+        $read = runReader(
+            reader(function (int $val) {
+                return $val * 2;
+            }),
+            12
+        );
+
+        $this->assertEquals(24, $read);
+    }
+
+    public function testMapReaderTransformsValueReturnedByReader()
+    {
+        $reader = mapReader(
+            'strtoupper',
+            reader(function (string $val) {
+                return concat('-', 'foo', $val);
+            })
+        );
+
+        $this->assertInstanceOf(Reader::class, $reader);
+        $this->assertEquals('FOO-BAR', runReader($reader, 'bar'));
+    }
+
+    public function testWithReaderExecutesComputationInModifiedEnvironment()
+    {
+        $reader = withReader(
+            function ($sum) {
+                return reader(function (array $ints) use ($sum) {
+                    return $sum / count($ints);
+                });
+            },
+            reader(function (array $ints) {
+                return fold(
+                    function (int $acc, int $val) { 
+                        return $acc + $val; 
+                    },
+                    $ints,
+                    0
+                );
+            })
+        );
+
+        $this->assertInstanceOf(Reader::class, $reader);
+        $this->assertEquals(3, runReader($reader, [3, 2, 4]));
+    }
+
+    public function testAskFunctionRetrievesMonadEnvironment()
+    {
+        $this->assertInstanceOf(Reader::class, ask());
     }
 }
