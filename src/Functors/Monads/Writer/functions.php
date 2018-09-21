@@ -90,7 +90,7 @@ const mapWriter = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Writer\\mapWrite
 
 function mapWriter(callable $function, WriterMonad $writer) : WriterMonad
 {
-    $return = A\compose(A\partialLeft(A\mapDeep, $function), 'array_reverse');
+    list($result, $output) = $function(runWriter($writer));
 
-    return writer(...$return($writer->run()));
+    return writer($result, is_array($output) ? A\head($output) : $output);
 }
