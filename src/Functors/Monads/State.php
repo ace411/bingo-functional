@@ -49,7 +49,7 @@ class State
      */
     public function ap(State $monad) : State
     {
-        return $state->map(function ($function) use ($monad) {
+        return $this->bind(function ($function) use ($monad) {
             return $monad->map($function);
         });
     }
