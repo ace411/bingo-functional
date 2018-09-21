@@ -11,7 +11,7 @@
 namespace Chemem\Bingo\Functional\Functors\Monads\ListMonad;
 
 use \Chemem\Bingo\Functional\Functors\Monads\ListMonad as LMonad;
-use function \Chemem\Bingo\Functional\Algorithms\{fold, extend, last, head as _head};
+use function \Chemem\Bingo\Functional\Algorithms\{fold, extend, flatten, last, head as _head};
 
 /**
  * 
@@ -75,9 +75,7 @@ const prepend = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\prepend
 
 function prepend(LMonad $value, LMonad $list) : LMonad
 {
-    return $list->map(function ($list) use ($value) {
-        return extend($value->extract(), $list);
-    });
+    return concat($value, $list);
 }
 
 /**
@@ -96,9 +94,7 @@ const append = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\append';
 
 function append(LMonad $value, LMonad $list) : LMonad
 {
-    return $list->map(function ($list) use ($value) {
-        return extend($list, $value->extract());
-    });
+    return concat($list, $value);
 }
 
 /**
