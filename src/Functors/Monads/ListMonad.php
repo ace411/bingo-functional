@@ -9,7 +9,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-use function \Chemem\Bingo\Functional\Algorithms\{map, extend, compose, flatten, partialLeft};
+use function \Chemem\Bingo\Functional\Algorithms\{fold, mapDeep, extend, compose, flatten, partialLeft};
 
 class ListMonad
 {
@@ -24,7 +24,7 @@ class ListMonad
      * @param mixed $collection
      */
 
-    public function __construct($collection)
+    public function __construct(array $collection)
     {
         $this->collection = $collection;
     }
@@ -58,7 +58,7 @@ class ListMonad
                 \Chemem\Bingo\Functional\Algorithms\map, 
                 function ($func) use ($list) {
                     $app = function (array $acc = []) use ($func, $list) { 
-                        return map($func, $list);
+                        return mapDeep($func, $list);
                     };
 
                     return $app();
@@ -80,11 +80,21 @@ class ListMonad
 
     public function bind(callable $function) : ListMonad
     {
-        list($original, $final) = State::of($this->extract())
-            ->map(partialLeft(\Chemem\Bingo\Functional\Algorithms\map, $function))
-            ->exec();
+        $concat = compose(
+            function (array $list) use ($function) {
+                return fold(
+                    function ($acc, $item) use ($function) {
+                        $acc[] = $function($item)->extract();
+                        return $acc;
+                    },
+                    $list,
+                    []
+                );
+            },
+            partialLeft('array_merge', $this->collection)
+        );
 
-        return new static(extend($final, $original));
+        return self::of(flatten($concat($this->collection)));
     }
 
     /**
@@ -95,7 +105,9 @@ class ListMonad
      */
     public function map(callable $function) : ListMonad
     {
-        return $this->bind($function);
+        return $this->bind(function ($list) use ($function) {
+            return self::of($function($list));
+        });
     }
 
     /**
@@ -107,7 +119,7 @@ class ListMonad
     public function flatMap(callable $function)
     {
         return $this
-            ->bind($function)
+            ->map($function)
             ->extract();
     }
 

@@ -5,6 +5,16 @@ namespace Chemem\Bingo\Functional\Tests;
 use PHPUnit\Framework\TestCase;
 use Chemem\Bingo\Functional\Functors\Either\{Either, Left, Right};
 use function Chemem\Bingo\Functional\Algorithms\{concat, identity};
+use function \Chemem\Bingo\Functional\Functors\Either\{
+    either, 
+    isLeft, 
+    isRight, 
+    rights, 
+    lefts, 
+    fromLeft, 
+    fromRight, 
+    partitionEithers
+};
 
 class EitherTypeTest extends TestCase
 {
@@ -18,25 +28,6 @@ class EitherTypeTest extends TestCase
     {
         $val = Either::right(12);
         $this->assertInstanceOf(Right::class, $val);
-    }
-
-    public function testPartitionEithersReturnsLeftRightUnzippedList()
-    {
-        $eithers = Either::partitionEithers([
-            Either::right(12),
-            Either::right(32),
-            Either::left(false),
-            Either::left('undefined')
-        ]);
-
-        $this->assertInternalType('array', $eithers);
-        $this->assertEquals(
-            [
-                'left' => [false, 'undefined'],
-                'right' => [12, 32]
-            ],
-            $eithers
-        );
     }
 
     public function testEitherRightTypeValueIsRight()
@@ -135,5 +126,58 @@ class EitherTypeTest extends TestCase
 
         $this->assertInstanceOf(Either::class, $mutated);
         $this->assertEquals(25, $mutated->getRight());
+    }
+
+    public function testEitherFunctionPerformsCaseAnalysisOnEitherType()
+    {
+        $either = either(
+            'strtoupper',
+            function (int $val) {
+                return (144 / $val) * 2;
+            },
+            Either::left('Cannot divide by zero')
+        );
+
+        $this->assertEquals('CANNOT DIVIDE BY ZERO', $either);
+        $this->assertInternalType('string', $either);
+    }
+
+    public function testIsLeftAndIsRightFunctionsEvaluateToBooleanValues()
+    {
+        $left = Either::left(12);
+        
+        $this->assertEquals(true, isLeft($left));
+        $this->assertEquals(false, isRight($left));
+        $this->assertInternalType('boolean', isLeft($left));
+    }
+
+    public function testLeftsAndRightsFunctionsExtractFromAListOfEithersAllLeftAndRightValuesRespectively()
+    {
+        $eithers = [Either::left(1), Either::right(13), Either::right(22)];
+
+        $this->assertEquals([1], lefts($eithers));
+        $this->assertEquals([13, 22], rights($eithers));
+        $this->assertInternalType('array', rights($eithers));
+        $this->assertInternalType('array', lefts($eithers));
+    }
+
+    public function testFromRightFunctionOutputsRightValueIfEitherIsRightOrDefaultValueOtherwise()
+    {
+        $this->assertEquals(33, fromRight(33, Either::left(12)));
+        $this->assertEquals(2, fromRight(4, Either::right(2)));
+    }
+
+    public function testFromLeftFunctionOutputsLeftValueIfEitherIsLeftOrDefaultValueOtherwise()
+    {
+        $this->assertEquals(2, fromLeft(22, Either::left(2)));
+        $this->assertEquals(22, fromLeft(22, Either::right(14)));
+    }
+
+    public function testPartitionEithersFunctionPartitionsListOfEithersIntoTwoLists()
+    {
+        $eithers = partitionEithers([Either::left(12), Either::right(2), Either::left(19)]);
+
+        $this->assertInternalType('array', $eithers);
+        $this->assertEquals(['left' => [12, 19], 'right' => [2]], $eithers);
     }
 }

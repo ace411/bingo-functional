@@ -1,8 +1,8 @@
 <?php
 
 namespace Chemem\Bingo\Functional\Tests;
-
-use \Chemem\Bingo\Functional\Functors\Monads\ListMonad;
+use Chemem\Bingo\Functional\Functors\Monads\ListMonad;
+use function Chemem\Bingo\Functional\Functors\Monads\ListMonad\{fromValue, concat, prepend, append, head, tail};
 
 class ListMonadTest extends \PHPUnit\Framework\TestCase
 {
@@ -11,55 +11,69 @@ class ListMonadTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(ListMonad::class, ListMonad::of(range(1, 5)));
     }
 
-    public function testApMethodOutputsListMonadInstance()
+    public function testConcatFunctionMergesMultipleLists()
     {
-        $zip = ListMonad::of(range(1, 3))
-            ->ap(ListMonad::of([function ($val) { return $val * 2; }, function ($val) { return $val + 1; }]));
+        $list = concat(fromValue(range(1, 4)), fromValue(range(5, 10)));
 
-        $this->assertInstanceOf(ListMonad::class, $zip);
+        $this->assertInstanceOf(ListMonad::class, $list);
+        $this->assertEquals(range(1, 10), $list->extract());
+        $this->assertInternalType('array', $list->extract());
     }
 
-    public function testApMethodGeneratesZipListByApplyingEachFunctionInListToCurrentCollection()
+    public function testPrependAddsOneListToBeginningOfAnother()
     {
-        $zip = ListMonad::of(range(1, 3))
-            ->ap(ListMonad::of([function ($val) { return $val * 2; }, function ($val) { return $val + 1; }]))
-            ->extract();
+        $list = prepend(fromValue(range(1, 3)), fromValue(range(5, 7)));
 
-        $this->assertInternalType('array', $zip);
-        $this->assertEquals([1, 2, 3, 2, 4, 6, 2, 3, 4], $zip);
+        $this->assertInstanceOf(ListMonad::class, $list);
+        $this->assertEquals([1, 2, 3, 5, 6, 7], $list->extract());
     }
 
-    public function testMapMethodReturnsInstanceOfListMonad()
+    public function testAppendAddsOneListToEndOfAnother()
     {
-        $zip = ListMonad::of(range(1, 5))
-            ->map(function ($val) { return $val * 2; });
-        
+        $list = append(fromValue(range(1, 3)), fromValue(['foo', 'bar']));
+
+        $this->assertInstanceOf(ListMonad::class, $list);
+        $this->assertEquals(['foo', 'bar', 1, 2, 3], $list->extract());
+    }
+
+    public function testHeadFunctionOutputsFirstElementInList()
+    {
+        $this->assertEquals(1, head(fromValue(range(1, 3))));
+    }
+
+    public function testTailFunctionOutputsLastElementInList()
+    {
+        $this->assertEquals(3, tail(fromValue(range(1, 3))));
+    }
+
+    public function testBindMethodGeneratesZipList()
+    {
+        $zip = fromValue(range(1, 3))
+            ->bind(function (int $val) {
+                return fromValue($val * 2);
+            });
+
         $this->assertInstanceOf(ListMonad::class, $zip);
+        $this->assertEquals([1, 2, 3, 2, 4, 6], $zip->extract());
     }
 
     public function testMapMethodGeneratesZipList()
     {
-        $zip = ListMonad::of(['foo', 'bar', 'baz'])
-            ->map('strtoupper')
-            ->extract();
+        $zip = fromValue(range(1, 3))
+            ->map(function (int $val) {
+                return $val + 1;
+            });
 
-        $this->assertInternalType('array', $zip);
-        $this->assertEquals(['FOO', 'BAR', 'BAZ', 'foo', 'bar', 'baz'], $zip);
-    }
-
-    public function testBindMethodReturnsInstanceOfListMonad()
-    {
-        $zip = ListMonad::of(range(1, 5))
-            ->bind(function ($val) { return $val * 2; });
-        
         $this->assertInstanceOf(ListMonad::class, $zip);
+        $this->assertEquals([1, 2, 3, 2, 3, 4], $zip->extract());
     }
 
-    public function testFlatMapMethodOutputsArray()
+    public function testFlatMapFunctionOutputsZipListAsArray()
     {
-        $zip = ListMonad::of(['foo', 'bar', 'baz'])
+        $zip = fromValue(['foo', 'bar'])
             ->flatMap('strtoupper');
 
         $this->assertInternalType('array', $zip);
+        $this->assertEquals(['foo', 'bar', 'FOO', 'BAR'], $zip);
     }
 }

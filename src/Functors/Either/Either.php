@@ -38,35 +38,7 @@ abstract class Either
     }
 
     /**
-     * partitionEithers method.
-     *
-     * @param array $values
-     * @param array $acc
-     *
-     * @return array $acc
-     */
-    public static function partitionEithers(array $values, $acc = []) : array
-    {
-        $partition = compose(
-            partialLeft(\Chemem\Bingo\Functional\Algorithms\filter, function ($val) { return $val instanceof Either; }),
-            function ($eithers) use ($acc) {
-                foreach ($eithers as $either) {
-                    if ($either instanceof Right) {
-                        $acc['right'][] = $either->getRight();
-                    } else if ($either instanceof Left) {
-                        $acc['left'][] = $either->getLeft();
-                    }
-                }
-
-                return $acc;
-            }
-        );
-
-        return $partition($values);
-    }
-
-    /**
-     * lift method.
+     * lift method
      *
      * @param callable $function
      * @param Left $left

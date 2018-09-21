@@ -12,66 +12,60 @@ namespace Chemem\Bingo\Functional\Functors\Monads;
 class State
 {
     /**
-     * @var mixed The transformed state
+     * @access private
+     * @var callable $comp The state computation to store
      */
-    private $state;
+    private $comp;
 
     /**
-     * @var mixed The initial state: value to transform
+     * State monad constructor
+     * 
+     * @param callable $comp
      */
-    private $value;
-
-    /**
-     * State monad constructor.
-     *
-     * @param mixed $value
-     * @param mixed $state
-     */
-    public function __construct($value, $state)
+    public function __construct(callable $comp)
     {
-        $this->value = $value;
-        $this->state = $state;
+        $this->comp = $comp;
     }
 
     /**
-     * of method.
-     *
-     * @static of
-     *
-     * @param mixed $initVal
-     *
+     * of method
+     * 
+     * @param callable $value The initial state
      * @return object State
      */
-
-    public static function of($initVal)
+    public static function of($value) : State
     {
-        return new static($initVal, $initVal);
-    }
-
-    /**
-     * evalState method.
-     *
-     * @param callable $action
-     *
-     * @return object State
-     */
-    public function evalState(callable $action) : self
-    {
-        return new static(
-            $this->value,
-            call_user_func($action, $this->state)
-        );
+        return new static(function ($state) use ($value) {
+            return [$value, $state];
+        });
     }
 
     /**
      * ap method
      * 
-     * @param object State
+     * @param object State $monad 
      * @return object State
      */
-    public function ap(State $app) : State
+    public function ap(State $monad) : State
     {
-        return $this->map(function ($val) use ($app) { return $app->map($val); });
+        return $this->bind(function ($function) use ($monad) {
+            return $monad->map($function);
+        });
+    }
+
+    /**
+     * bind method
+     * 
+     * @param callable $function
+     * @return object State
+     */
+    public function bind(callable $function) : State
+    {
+        return new self(function ($state) use ($function) {
+            list($initial, $final) = $this->run($state);
+
+            return $function($initial)->run($final);
+        });
     }
 
     /**
@@ -82,42 +76,18 @@ class State
      */
     public function map(callable $function) : State
     {
-        return $this->evalState($function);
+        return $this->bind(function ($state) use ($function) {
+            return self::of($function($state));
+        });
     }
 
     /**
-     * map method
+     * run method
      * 
-     * @param callable $function
-     * @return mixed $result
+     * @return array 
      */
-    public function flatMap(callable $function)
+    public function run($state)
     {
-        return $this
-            ->evalState($function)
-            ->exec();
-    }
-
-    /**
-     * bind method.
-     *
-     * @param callable $action
-     *
-     * @return object State
-     */
-
-    public function bind(callable $function) : State
-    {
-        return $this->map($function);
-    }
-
-    /**
-     * evalState method.
-     *
-     * @return array [$value, $state]
-     */
-    public function exec()
-    {
-        return [$this->value, $this->state];
+        return call_user_func($this->comp, $state);
     }
 }

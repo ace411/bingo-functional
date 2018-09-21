@@ -3,6 +3,8 @@
 namespace Chemem\Bingo\Functional\Tests;
 
 use \Chemem\Bingo\Functional\Functors\Monads\Writer;
+use function \Chemem\Bingo\Functional\Algorithms\{extend, map};
+use function \Chemem\Bingo\Functional\Functors\Monads\Writer\{writer, runWriter, execWriter, mapWriter};
 
 class WriterMonadTest extends \PHPUnit\Framework\TestCase
 {
@@ -11,49 +13,66 @@ class WriterMonadTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(Writer::class, Writer::of(12, 'Received 12'));
     }
 
+    public function testRunWriterUnwrapsWriterComputationAsResultOutputPair()
+    {
+        $pair = runWriter(writer(1, 13));
+
+        $this->assertInternalType('array', $pair);
+        $this->assertEquals([1, [13]], $pair);
+    }
+
+    public function testExecWriterExtractsOutputFromWriter()
+    {
+        $writer = execWriter(writer(12, 19));
+
+        $this->assertEquals([19], $writer);
+        $this->assertInternalType('array', $writer);
+    }
+
+    public function testMapWriterMapsFunctionOntoBothReturnValueAndOutputOfWriter()
+    {
+        $result = mapWriter(
+            function (array $writer) {
+                list($res,) = $writer;
+                $new = $res * 2;
+                return extend([$new], [$new % 2 == 0 ? 'even' : 'odd']);
+            },
+            writer(19, 'odd')
+        );
+
+        $this->assertInstanceOf(Writer::class, $result);
+        $this->assertEquals([38, ['even']], runWriter($result));
+    }
+
     public function testApMethodOutputsWriterMonadInstance()
     {
         $val = Writer::of(function ($val) { return $val * 2; }, 'Received lambda')
-            ->ap(Writer::of(12, 'Received 12'), 'Applied lambda to 12');
+            ->ap(Writer::of(12, 'Applied 12 to lambda'));
 
         $this->assertInstanceOf(Writer::class, $val);
     }
 
-    public function testApMethodOutputsWriterWithAllLoggedStateChanges()
+    public function testBindMethodUpdatesWriter()
     {
-        list($orig, $msg) = Writer::of(function ($val) { return $val * 2; }, 'Received lambda')
-            ->ap(Writer::of(12, 'Received 12'), 'Applied lambda to 12')
-            ->run();
+        $writer = writer(12, 'int')
+            ->bind(function ($val) {
+                return writer((float) ($val / 3), 'float'); 
+            });
 
-        list($val, $mid) = $orig->run();
-
-        $this->assertInternalType('string', $msg);
-        $this->assertInternalType('string', $mid);
-        $this->assertEquals(24, $val);
+        $this->assertInstanceOf(Writer::class, $writer);
+        $this->assertInternalType('array', runWriter($writer));
+        $this->assertEquals([(float) 4.0, [['int', 'float']]], runWriter($writer));
     }
 
-    public function testMapMethodOutputsWriterMonadInstance()
+    public function testMapMethodTransformsInnerValue()
     {
-        $val = Writer::of('foo', 'Received foo')->map('strtoupper', 'Converted string to uppercase');
+        $writer = Writer\writer(12, 'int')
+            ->map(function (int $val) {
+                return ($val - 2) / 5;
+            });
 
-        $this->assertInstanceOf(Writer::class, $val);
-    }
-
-    public function testMapMethodAppliesFunctionToFunctorValueAndLogsAction()
-    {
-        list($val, $msg) = Writer::of('foo', 'Received foo')->map('strtoupper', 'Converted string to uppercase')->run();
-
-        $this->assertEquals('FOO', $val);
-        $this->assertInternalType('string', $msg);
-    }
-
-    public function testFlatMapMethodOutputsArrayContainingValueAndActionLog()
-    {
-        $action = Writer::of(39, 'Received 39')
-            ->flatMap(function ($val) { return $val % 2 == 0 ? $val * 2 : $val + 1; }, 'Applied function to value');
-
-        $this->assertInternalType('array', $action);
-        $this->assertEquals(40, $action[0]);
-        $this->assertInternalType('string', $action[1]);
+        $this->assertInstanceOf(Writer::class, $writer);
+        $this->assertInternalType('array', runWriter($writer));
+        $this->assertEquals([2, [['int']]], runWriter($writer));
     }
 }

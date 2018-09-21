@@ -2,22 +2,12 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
-use \Chemem\Bingo\Functional\Functors\Monads\IO;
-use function \Chemem\Bingo\Functional\Algorithms\{identity, reduce};
+use Chemem\Bingo\Functional\Functors\Monads\IO;
+use function Chemem\Bingo\Functional\Algorithms\{identity, reduce, concat};
+use function \Chemem\Bingo\Functional\Functors\Monads\IO\{IO, putChar, putStr, readIO, readFile};
 
 class IOMonadTest extends \PHPUnit\Framework\TestCase
 {
-    public function testIOMonadHandlesIOProperly()
-    {
-        $txt = IO::of(function () { return function ($file) { return file_get_contents($file); }; })
-            ->ap(IO::of(dirname(__DIR__) . '/io.test.txt'))
-            ->map('strtoupper')
-            ->exec();
-
-        $this->assertInternalType('string', $txt);
-        $this->assertEquals('THIS IS AN IO MONAD TEST FILE.', $txt);
-    }
-
     public function testOfStaticMethodReturnsIOInstance()
     {
         $this->assertInstanceOf(IO::class, IO::of(function () { return 'foo'; }));
@@ -52,7 +42,7 @@ class IOMonadTest extends \PHPUnit\Framework\TestCase
     public function testBindMethodReturnsInstanceOfIOMonad()
     {
         $io = IO::of(function () { return 'FOO'; })
-            ->bind('strtolower');
+            ->bind(function (string $txt) { return IO::of(strtoupper($txt)); });
         
         $this->assertInstanceOf(IO::class, $io);
     } 
@@ -60,7 +50,7 @@ class IOMonadTest extends \PHPUnit\Framework\TestCase
     public function testBindMethodPerformsMapOperation()
     {
         $io = IO::of(function () { return range(1, 5); })
-            ->bind(function ($ints) { return reduce(function ($acc, $val) { return $acc + $val; }, $ints, 0); })
+            ->bind(function ($ints) { return IO::of(reduce(function ($acc, $val) { return $acc + $val; }, $ints, 0)); })
             ->exec();
 
         $this->assertEquals(15, $io);
@@ -82,5 +72,34 @@ class IOMonadTest extends \PHPUnit\Framework\TestCase
 
         $this->assertEquals('scooter', identity('scooter'));
         $this->assertInternalType('string', $io);
+    }
+
+    public function testPutCharFunctionOutputsFunctionWrappedInsideIO()
+    {
+        $this->assertInstanceOf(IO::class, putChar());
+        $this->assertInstanceOf(\Closure::class, putChar()->exec());
+    }
+
+    public function testPutStrFunctionOutputsFunctionWrappedInsideIO()
+    {
+        $this->assertInstanceOf(IO::class, putStr());
+        $this->assertInstanceOf(\Closure::class, putStr()->exec());
+    }
+
+    public function testReadIOMethodReadsStringInput()
+    {
+        $read = readIO(IO('foo'));
+
+        $this->assertInstanceOf(IO::class, $read);
+        $this->assertInternalType('string', $read->exec());
+    }
+
+    public function testReadFileOutputsFileContents()
+    {
+        $file = readFile(concat('/', dirname(__DIR__), 'io.test.txt'));
+
+        $this->assertInstanceOf(IO::class, $file);
+        $this->assertInternalType('string', $file->exec());
+        $this->assertEquals('THIS IS AN IO MONAD TEST FILE.', $file->flatMap('strtoupper'));
     }
 }

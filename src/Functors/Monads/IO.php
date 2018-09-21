@@ -73,7 +73,7 @@ class IO
      */
     public function bind(callable $function) : IO
     {
-        return $this->map($function);
+        return $function($this->exec());
     }
 
     /**
