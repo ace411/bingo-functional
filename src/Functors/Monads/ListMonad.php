@@ -119,7 +119,7 @@ class ListMonad
     public function flatMap(callable $function)
     {
         return $this
-            ->bind($function)
+            ->map($function)
             ->extract();
     }
 
