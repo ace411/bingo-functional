@@ -10,7 +10,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-use function \Chemem\Bingo\Functional\Algorithms\{mapDeep, extend, compose, flatten, partialLeft};
+use function \Chemem\Bingo\Functional\Algorithms\{fold, mapDeep, extend, compose, flatten, partialLeft};
 
 class ListMonad
 {
@@ -82,7 +82,14 @@ class ListMonad
     {
         $concat = compose(
             function (array $list) use ($function) {
-                return mapDeep($function, $list);
+                return fold(
+                    function ($acc, $item) use ($function) {
+                        $acc[] = $function($item)->extract();
+                        return $acc;
+                    },
+                    $list,
+                    []
+                );
             },
             partialLeft('array_merge', $this->collection)
         );
@@ -98,7 +105,9 @@ class ListMonad
      */
     public function map(callable $function) : ListMonad
     {
-        return $this->bind($function);
+        return $this->bind(function ($list) use ($function) {
+            return self::of($function($list));
+        });
     }
 
     /**
