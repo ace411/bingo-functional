@@ -10,7 +10,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-use function \Chemem\Bingo\Functional\Algorithms\{concat, extend};
+use function \Chemem\Bingo\Functional\Algorithms\{concat, extend, flatten};
 
 class Writer
 {
@@ -76,7 +76,7 @@ class Writer
 
     public function map(callable $function) : Writer
     {
-        return self::of($function($this->result), $this->output);
+        return self::of($function($this->result), flatten($this->output));
     }
     
     /**
@@ -91,7 +91,7 @@ class Writer
     {
         list($result, $output) = $function($this->result)->run();
 
-        return self::of($result, extend($this->output, $output));
+        return self::of($result, flatten(extend($this->output, $output)));
     }
 
     /**
