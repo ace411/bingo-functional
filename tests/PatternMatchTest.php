@@ -169,4 +169,38 @@ class PatternMatchTest extends TestCase
 
         $this->assertEquals('IO monad', $evalObject);
     }
+
+    public function testEvalArrayPatternMatchesListPatternWithWildcard()
+    {
+        $pattern = PM\evalArrayPattern(
+            [
+                '[_, "chemem"]' => function () {
+                    return 'chemem';
+                },
+                '_' => function () {
+                    return 'don\'t care';
+                }
+            ],
+            ['func', 'chemem']
+        );
+
+        $this->assertEquals('chemem', $pattern);
+    }
+
+    public function testEvalArrayPatternEvaluatesIrregularWildcardPatterns()
+    {
+        $result = PM\evalArrayPattern(
+            [
+                '["ask", _, "mike"]' => function () {
+                    return 'G.O.A.T';
+                },
+                '_' => function () {
+                    return 'not the greatest';
+                }
+            ],
+            ['ask', 'uncle', 'mike']
+        );
+
+        $this->assertEquals('G.O.A.T', $result);
+    }
 }
