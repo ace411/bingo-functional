@@ -214,13 +214,13 @@ function evalArrayPattern(array $patterns, array $comp)
         },
         function (array $pattern) use ($comp, $patterns) {
             $funcKey = !empty($pattern) ? A\head(array_keys($pattern)) : '_';
-            
-            $args = A\fold(function ($acc, $val) use ($comp) {
+            $pttn = !empty($pattern) ? A\head($pattern) : [];
+            $args = A\fold(function ($acc, $val) use ($comp, $pttn) {
                 if (is_string($val) && !preg_match('/[\"\*]+/', $val)) {
-                    $acc[] = end($comp);
+                    $acc[] = $comp[A\indexOf($pttn, $val)];
                 } 
                 return $acc;
-            }, (!empty($pattern) ? A\head($pattern) : []), []);
+            }, $pttn, []);
 
             return !empty($args) ? $patterns[$funcKey](...$args) : $patterns[$funcKey]();
         }
