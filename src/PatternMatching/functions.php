@@ -151,122 +151,82 @@ function patternMatch(array $patterns, $value)
 
 const evalArrayPattern = 'Chemem\\Bingo\\Functional\\PatternMatching\\evalArrayPattern';
 
-function evalArrayPattern(array $patterns, array $value)
+function evalArrayPattern(array $patterns, array $comp)
 {
-    $valCount = count($value);
-
-    $evalPattern = A\compose(
+    $evaluate = A\compose(
         'array_keys',
-        A\partialLeft(
-            A\filter,
-            function ($pattern) {
-                return substr($pattern, -1) == ']' && 
-                    substr($pattern, 0, 1) == '[';
-            } 
-        ),
-        A\partialLeft(
-            A\map,
-            function ($pattern) {
-                $tokens = A\compose(
-                    A\partialLeft('str_replace', '[', ''),
-                    A\partialLeft('str_replace', ']', ''),
-                    A\partialLeft('str_replace', ' ', ''),
-                    A\partialLeft('explode', ',')
-                )($pattern);
-
-                return [$pattern => $tokens];
-            }
-        ),
-        function ($patterns) {
-            return array_merge(...$patterns);
+        function (array $pttnKeys) {
+            $filter = A\partialLeft(A\filter, function ($pattern) {
+                return substr($pattern, 0, 1) == '[' && substr($pattern, -1) == ']';
+            });
+            return $filter($pttnKeys);
         },
-        function ($patterns) use ($valCount) {
-            return array_filter(
-                $patterns,
-                function ($pattern) use ($valCount) {
-                    return count($pattern) == $valCount;
+        function (array $pttnKeys) {
+            $extract = A\compose(
+                A\partialLeft('str_replace', '[', ''),
+                A\partialLeft('str_replace', ']', ''),
+                A\partialLeft('str_replace', ' ', ''),
+                A\partialLeft('explode', ', '),
+                function (array $tokens) {
+                    return array_merge(...array_map(function ($token) {
+                        return A\fold(function ($acc, $tkn) {
+                            $acc[] = preg_match('/[\"]+/', $tkn) ? A\concat('*', '', str_replace('"', '', $tkn)) : $tkn;
+                            return $acc;
+                        }, explode(',', $token), []);
+                    }, $tokens));
                 }
             );
+            return array_combine($pttnKeys, A\map($extract, $pttnKeys));
         },
-        function ($patterns) use ($value) {
-            $evaluate = A\compose(
-                function ($patterns) {
-                    return array_map(
-                        function ($pattern) { return array_map(function ($patt) { return preg_match('/[\"]+/', $patt) ? str_replace('"', '', $patt) : null; }, $pattern); },
-                        $patterns
-                    );
-                },
-                
-                function ($modified) use ($value, $patterns) {                     
-                    $nonDoubleCount = function ($patterns, $count = 0) {
-                        foreach ($patterns as $index => $value) {
-                            foreach ($value as $subIndx => $subVal) {
-                                $count += !preg_match('/[\"]+/', $subVal) ? 1 : 0;
-                            } 
-                        }
+        function (array $patterns) use ($comp) {
+            $cmpCount = count($comp);
+            $filter = A\partialRight('array_filter', function ($pttn) use ($cmpCount) {
+                return count($pttn) == $cmpCount;
+            });
 
-                        return $count;
-                    };
-
-                    $nonDub = $nonDoubleCount($patterns);
-
-                    return $nonDub == 0 ?
-                        array_filter($modified, function ($val) use ($value) { return $val == $value; }) :
-                        array_filter($modified, function ($val) use ($value, $nonDub) { return A\dropRight($val, $nonDub) == A\dropRight($value, $nonDub); });
-                }
-            );
-
-            return $evaluate($patterns);
+            return $filter($patterns);
         },
-        function ($modified) use ($patterns, $value, $valCount) {
-            $modCount = count($modified);
+        function (array $patterns) use ($comp) {
+            $compLen = count($comp);
+
+            $list = array_map(function ($pttns) use ($comp, $compLen) {
+                $keys = array_map(function ($key) {
+                    return str_replace('*', '', $key);
+                }, $pttns);         
+
+                $intersect = array_intersect_assoc($keys, $comp);
+                return A\extend($pttns, ['intersect' => $intersect]);
+            }, $patterns);
+
+            return $list;
+        },
+        function (array $patterns) use ($comp) {
+            return array_filter($patterns, function ($pttn) use ($comp) {
+                $raw = A\dropRight(array_values($pttn), 1);
+                $keys = array_map(function ($tkn) {
+                    return str_replace('*', '', $tkn);
+                }, $raw);
+
+                return !empty($pttn['intersect']) && in_array('_', $keys) && end($keys) == end($comp) ||
+                    !empty($pttn['intersect']) && !preg_match('/[\*\_]+/', end($raw)) ||
+                    count($pttn['intersect']) == count($comp);
+            });
+        },
+        function (array $pattern) use ($comp, $patterns) {
+            $funcKey = !empty($pattern) ? A\head(array_keys($pattern)) : '_';
             
-            $nullCount = empty($modified) ?
-                A\identity(0) :
-                A\fold(
-                    function ($acc, $val) { 
-                        $acc += is_null($val) ? 1 : 0; 
-                        return $acc; 
-                    }, 
-                    A\head($modified), 
-                    0                    
-                );
+            $args = A\fold(function ($acc, $val) use ($comp) {
+                if (is_string($val) && !preg_match('/[\"\*]+/', $val)) {
+                    $acc[] = end($comp);
+                } 
+                return $acc;
+            }, (!empty($pattern) ? A\head($pattern) : []), []);
 
-            switch ($modCount) {
-                case 0:
-                    return [
-                        'func' => isset($patterns['_']) ? $patterns['_'] : A\constantFunction(false),
-                        'args' => []
-                    ];
-                    break;
-                
-                case 1:
-                    return [
-                        'func' => $patterns[A\head(array_keys($modified))], 
-                        'args' => $nullCount > 0 ? A\dropLeft($value, $valCount - $nullCount) : []
-                    ];
-                    break;
-
-                case $modCount > 1:
-                    return [
-                        'func' => $patterns[
-                            A\head(
-                                array_keys(
-                                    array_filter(
-                                        $modified, 
-                                        function ($pattern) use ($nullCount, $value) { return A\dropRight($pattern, $nullCount) == A\dropRight($value, $nullCount); }
-                                    )
-                                )
-                            )
-                        ],
-                        'args' => A\dropLeft($value, $valCount - $nullCount)
-                    ];
-                    break;
-            }
+            return !empty($args) ? $patterns[$funcKey](...$args) : $patterns[$funcKey]();
         }
-    )($patterns);
+    );
 
-    return call_user_func_array($evalPattern['func'], $evalPattern['args']);
+    return $evaluate($patterns);
 }
 
 /**
