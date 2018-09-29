@@ -533,4 +533,13 @@ class AlgorithmTest extends TestCase
         $this->assertInternalType('array', $add);
         $this->assertEquals(['foo' => 12, 'baz' => 15], $add);
     }
+
+    public function testFlipFunctionReversesFunctionArgumentOrder()
+    {
+        $flip = A\flip(function ($valX, $valY) {
+            return ($valX / $valY) * 3;
+        });
+
+        $this->assertEquals(15, $flip(2, 10));
+    }
 }
