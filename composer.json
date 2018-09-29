@@ -55,6 +55,7 @@
             "src/Algorithms/Head.php",
             "src/Algorithms/Map.php",
             "src/Algorithms/Last.php",
+            "src/Algorithms/Flip.php",
             "src/Algorithms/Mean.php",
             "src/Algorithms/Filter.php",
             "src/Algorithms/Reject.php",
