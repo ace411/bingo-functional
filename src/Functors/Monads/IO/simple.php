@@ -141,6 +141,8 @@ function interact(callable $function) : IOMonad
  * @return object IO
  */
 
+const _print = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\_print';
+
 function _print(IOMonad $interaction) : IOMonad
 {
     return $interaction
