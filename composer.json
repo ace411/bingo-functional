@@ -70,6 +70,7 @@
             "src/Algorithms/PartialRight.php",
             "src/Algorithms/ArrayKeysExist.php",
             "src/Algorithms/ConstantFunction.php",
+            "src/Functors/Monads/functions.php",
             "src/Functors/Monads/IO/files.php",
             "src/Functors/Monads/IO/simple.php",
             "src/Functors/Monads/Reader/functions.php",
