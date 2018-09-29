@@ -29,15 +29,11 @@ const mcompose = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\mcompose';
 
 function mcompose(callable $funcA, callable $funcB)
 {
-    return array_reduce(
-        [$funcB],
-        function (callable $acc, callable $monadFn) {
-            return function ($val) use ($acc, $monadFn) {
-                return bind($acc, bind($monadFn, $val));
-            };
-        },
-        $funcA
-    );    
+    return A\fold(function (callable $acc, callable $monadFn) {
+        return function ($val) use ($acc, $monadFn) {
+            return bind($acc, bind($monadFn, $val));
+        };
+    }, [$funcB], $funcA);    
 }
 
 /**
