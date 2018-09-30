@@ -86,7 +86,7 @@ class Left extends Either
     /**
      * @inheritdoc
      */
-    public function bind(callable $function)
+    public function bind(callable $function) : Either
     {
         return $this;
     }

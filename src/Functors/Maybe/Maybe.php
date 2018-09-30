@@ -149,6 +149,17 @@ abstract class Maybe
     abstract public function map(callable $function) : Maybe;
 
     /**
+     * 
+     * bind method
+     * 
+     * @abstract
+     * @param callable $function
+     * @return object Maybe
+     */
+
+    abstract public function bind(callable $function) : Maybe;
+
+    /**
      * filter method
      *
      * @abstract

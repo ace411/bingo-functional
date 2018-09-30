@@ -133,7 +133,7 @@ abstract class Either
      * @return object Either
      */
 
-    abstract public function bind(callable $function);
+    abstract public function bind(callable $function) : Either;
 
     /**
      * ap method

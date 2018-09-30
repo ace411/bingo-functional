@@ -95,6 +95,14 @@ class Nothing extends Maybe
     /**
      * @inheritdoc
      */
+    public function bind(callable $function) : Maybe
+    {
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function orElse(Maybe $maybe) : Maybe
     {
         return $maybe;

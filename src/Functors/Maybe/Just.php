@@ -87,6 +87,14 @@ class Just extends Maybe
     /**
      * @inheritdoc
      */
+    public function bind(callable $function) : Maybe
+    {
+        return $function($this->getJust());   
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function filter(callable $fn) : Maybe
     {
         return $fn($this->getJust()) ? new static($this->getJust()) : new Nothing();
