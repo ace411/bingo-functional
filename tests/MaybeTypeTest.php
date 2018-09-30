@@ -23,6 +23,20 @@ class MaybeTypeTest extends TestCase
         $this->assertInstanceOf(Just::class, $val);
     }
 
+    public function testBindMethodEnablesSequentialChainOfJustType()
+    {
+        $maybe = Maybe::fromValue(2)
+            ->bind(function ($val) {
+                return Maybe::just($val * 2);
+            })
+            ->bind(function ($val) {
+                return Maybe::just($val / 4);
+            });
+
+        $this->assertInstanceOf(Maybe::class, $maybe);
+        $this->assertEquals(1, fromMaybe(0, $maybe));
+    }
+
     public function testMaybeTypeNothingMethodReturnsNothingType()
     {
         $val = Maybe::nothing(12);
