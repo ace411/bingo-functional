@@ -124,7 +124,7 @@ class MaybeTypeTest extends TestCase
 
     public function testMapFlatMapFilterMethodsHaveNoEffectOnNothingValue()
     {
-        $val = Nothing::of()
+        $val = Nothing::of(null)
             ->filter(function ($val = null) { return is_null($val); })
             ->map(function ($val = null) : string { return "null"; })
             ->flatMap(function ($val = null) : string { return "null"; });
@@ -162,7 +162,7 @@ class MaybeTypeTest extends TestCase
     public function testIsJustAndIsNothingFunctionsEvaluateToBoolean()
     {
         $this->assertEquals(true, isJust(Maybe::fromValue(18)));
-        $this->assertEquals(true, isNothing(Nothing::of()));
+        $this->assertEquals(true, isNothing(Nothing::of(null)));
     }
 
     public function testFromJustExtractsOutputFromJustIfJustValueIsSuppliedAndThrowsAnExceptionOtherwise()
@@ -170,13 +170,13 @@ class MaybeTypeTest extends TestCase
         $this->assertEquals(12, fromJust(Maybe::fromValue(12)));
         $this->assertEquals(
             'Maybe.fromJust: Nothing', 
-            toException(\Chemem\Bingo\Functional\Functors\Maybe\fromJust)(Nothing::of())
+            toException(\Chemem\Bingo\Functional\Functors\Maybe\fromJust)(Nothing::of(null))
         );
     }
 
     public function testFromMaybeFunctionReturnsDefaultValueIfMaybeIsNothingAndJustValueOtherwise()
     {
-        $this->assertEquals(0, fromMaybe(0, Nothing::of()));
+        $this->assertEquals(0, fromMaybe(0, Nothing::of(null)));
         $this->assertEquals(12, fromMaybe(1, Maybe::fromValue(12)));
     }
 
