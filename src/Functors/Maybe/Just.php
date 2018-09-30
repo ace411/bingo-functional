@@ -21,6 +21,14 @@ class Just extends Maybe
     /**
      * {@inheritdoc}
      */
+    public static function of($value) : Maybe
+    {
+        return new static($value);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function isJust() : bool
     {
         return true;
@@ -83,6 +91,14 @@ class Just extends Maybe
 
     /**
      * {@inheritdoc}
+     */
+    public function bind(callable $function) : Maybe
+    {
+        return $function($this->getJust());   
+    }
+
+    /**
+     * @inheritdoc
      */
     public function filter(callable $fn) : Maybe
     {

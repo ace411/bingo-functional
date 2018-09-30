@@ -103,8 +103,18 @@ abstract class Either
     abstract public function isRight() : bool;
 
     /**
-     * flatMap method.
+     * 
+     * of method
+     * 
+     * @param mixed $value
+     * @return object Either
+     */
+    abstract public static function of($value) : Either;
+
+    /**
+     * flatMap method
      *
+     * @abstract
      * @abstract
      * @param callable $function
      */
@@ -131,7 +141,7 @@ abstract class Either
      * @return object Either
      */
 
-    abstract public function bind(callable $function);
+    abstract public function bind(callable $function) : Either;
 
     /**
      * ap method

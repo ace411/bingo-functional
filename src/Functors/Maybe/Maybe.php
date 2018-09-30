@@ -76,7 +76,16 @@ abstract class Maybe
     }
 
     /**
-     * getJust method.
+     * 
+     * of method
+     * 
+     * @param mixed $value
+     * @return object Maybe
+     */
+    abstract public static function of($value) : Maybe;
+
+    /**
+     * getJust method
      *
      * @abstract
      */
@@ -150,7 +159,18 @@ abstract class Maybe
     abstract public function map(callable $function) : Maybe;
 
     /**
-     * filter method.
+     * 
+     * bind method
+     * 
+     * @abstract
+     * @param callable $function
+     * @return object Maybe
+     */
+
+    abstract public function bind(callable $function) : Maybe;
+
+    /**
+     * filter method
      *
      * @abstract
      *

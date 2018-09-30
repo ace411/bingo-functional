@@ -24,6 +24,20 @@ class EitherTypeTest extends TestCase
         $this->assertInstanceOf(Left::class, $error);
     }
 
+    public function testBindMethodEnablesSequentialFunctionChainOfRightType()
+    {
+        $either = Either::right(12)
+            ->bind(function ($val) {
+                return Either::right($val + 2);
+            })
+            ->bind(function ($val) {
+                return Either::right(pow($val, 2));
+            });
+        
+        $this->assertInstanceOf(Either::class, $either);
+        $this->assertEquals(196, fromRight(0, $either));
+    }
+
     public function testEitherTypeRightMethodReturnsRightType()
     {
         $val = Either::right(12);
@@ -144,7 +158,7 @@ class EitherTypeTest extends TestCase
 
     public function testIsLeftAndIsRightFunctionsEvaluateToBooleanValues()
     {
-        $left = Either::left(12);
+        $left = Left::of(12);
         
         $this->assertEquals(true, isLeft($left));
         $this->assertEquals(false, isRight($left));
@@ -153,7 +167,7 @@ class EitherTypeTest extends TestCase
 
     public function testLeftsAndRightsFunctionsExtractFromAListOfEithersAllLeftAndRightValuesRespectively()
     {
-        $eithers = [Either::left(1), Either::right(13), Either::right(22)];
+        $eithers = [Left::of(1), Right::of(13), Right::of(22)];
 
         $this->assertEquals([1], lefts($eithers));
         $this->assertEquals([13, 22], rights($eithers));

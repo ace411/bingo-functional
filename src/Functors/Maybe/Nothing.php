@@ -21,6 +21,14 @@ class Nothing extends Maybe
     /**
      * {@inheritdoc}
      */
+    public static function of($value) : Maybe
+    {
+        return new self();
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function isJust() : bool
     {
         return false;
@@ -92,6 +100,14 @@ class Nothing extends Maybe
 
     /**
      * {@inheritdoc}
+     */
+    public function bind(callable $function) : Maybe
+    {
+        return $this;
+    }
+
+    /**
+     * @inheritdoc
      */
     public function orElse(Maybe $maybe) : Maybe
     {

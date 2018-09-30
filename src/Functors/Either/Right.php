@@ -21,6 +21,15 @@ class Right extends Either
     /**
      * {@inheritdoc}
      */
+    public static function of($value) : Either
+    {
+        return new static($value);
+    }
+
+    /**
+     * @inheritdoc
+     */
+
     public function isLeft() : bool
     {
         return false;
@@ -86,9 +95,9 @@ class Right extends Either
     /**
      * @inheritdoc
      */
-    public function bind(callable $function)
+    public function bind(callable $function) : Either
     {
-        return $this->map($function);
+        return $function($this->getRight());
     }
 
     /**
