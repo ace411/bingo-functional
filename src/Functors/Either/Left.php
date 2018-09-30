@@ -22,6 +22,14 @@ class Left extends Either
     /**
      * @inheritdoc
      */
+    public static function of($value) : Either
+    {
+        return new static($value);
+    }
+
+    /**
+     * @inheritdoc
+     */
     public function isLeft() : bool
     {
         return true;

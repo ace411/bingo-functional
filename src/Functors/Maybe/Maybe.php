@@ -76,6 +76,15 @@ abstract class Maybe
     }
 
     /**
+     * 
+     * of method
+     * 
+     * @param mixed $value
+     * @return object Maybe
+     */
+    abstract public static function of($value) : Maybe;
+
+    /**
      * getJust method
      *
      * @abstract
