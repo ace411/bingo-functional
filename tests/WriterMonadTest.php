@@ -2,9 +2,12 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
-use \Chemem\Bingo\Functional\Functors\Monads\Writer;
-use function \Chemem\Bingo\Functional\Algorithms\{extend, map};
-use function \Chemem\Bingo\Functional\Functors\Monads\Writer\{writer, runWriter, execWriter, mapWriter};
+use Chemem\Bingo\Functional\Functors\Monads\Writer;
+use function Chemem\Bingo\Functional\Algorithms\extend;
+use function Chemem\Bingo\Functional\Functors\Monads\Writer\execWriter;
+use function Chemem\Bingo\Functional\Functors\Monads\Writer\mapWriter;
+use function Chemem\Bingo\Functional\Functors\Monads\Writer\runWriter;
+use function Chemem\Bingo\Functional\Functors\Monads\Writer\writer;
 
 class WriterMonadTest extends \PHPUnit\Framework\TestCase
 {
@@ -33,8 +36,9 @@ class WriterMonadTest extends \PHPUnit\Framework\TestCase
     {
         $result = mapWriter(
             function (array $writer) {
-                list($res,) = $writer;
+                list($res) = $writer;
                 $new = $res * 2;
+
                 return extend([$new], [$new % 2 == 0 ? 'even' : 'odd']);
             },
             writer(19, 'odd')
@@ -46,7 +50,9 @@ class WriterMonadTest extends \PHPUnit\Framework\TestCase
 
     public function testApMethodOutputsWriterMonadInstance()
     {
-        $val = Writer::of(function ($val) { return $val * 2; }, 'Received lambda')
+        $val = Writer::of(function ($val) {
+            return $val * 2;
+        }, 'Received lambda')
             ->ap(Writer::of(12, 'Applied 12 to lambda'));
 
         $this->assertInstanceOf(Writer::class, $val);
@@ -56,7 +62,7 @@ class WriterMonadTest extends \PHPUnit\Framework\TestCase
     {
         $writer = writer(12, 'int')
             ->bind(function ($val) {
-                return writer((float) ($val / 3), 'float'); 
+                return writer((float) ($val / 3), 'float');
             });
 
         $this->assertInstanceOf(Writer::class, $writer);

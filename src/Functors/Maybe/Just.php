@@ -27,7 +27,7 @@ class Just extends Maybe
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isJust() : bool
     {
@@ -82,7 +82,7 @@ class Just extends Maybe
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function map(callable $fn) : Maybe
     {
@@ -94,11 +94,11 @@ class Just extends Maybe
      */
     public function bind(callable $function) : Maybe
     {
-        return $function($this->getJust());   
+        return $function($this->getJust());
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function filter(callable $fn) : Maybe
     {

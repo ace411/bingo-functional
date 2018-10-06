@@ -3,8 +3,9 @@
 namespace Chemem\Bingo\Functional\Tests;
 
 use Chemem\Bingo\Functional\Functors\Monads\IO;
-use function \Chemem\Bingo\Functional\Algorithms\concat;
-use function \Chemem\Bingo\Functional\Functors\Monads\{mcompose, bind};
+use function Chemem\Bingo\Functional\Algorithms\concat;
+use function Chemem\Bingo\Functional\Functors\Monads\bind;
+use function Chemem\Bingo\Functional\Functors\Monads\mcompose;
 
 class MonadHelperTest extends \PHPUnit\Framework\TestCase
 {

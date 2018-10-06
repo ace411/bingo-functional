@@ -496,7 +496,9 @@ class AlgorithmTest extends TestCase
 
     public function testMapDeepFunctionAppliesFunctionToAllValuesInMultiDimensionalArray()
     {
-        $deep = A\mapDeep(function ($val) { return $val * 2; }, [1, 2, [3, 4], [5, [6, 7]]]);
+        $deep = A\mapDeep(function ($val) {
+            return $val * 2;
+        }, [1, 2, [3, 4], [5, [6, 7]]]);
 
         $this->assertEquals([2, 4, [6, 8], [10, [12, 14]]], $deep);
     }

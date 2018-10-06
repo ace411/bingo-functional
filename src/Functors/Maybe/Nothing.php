@@ -27,7 +27,7 @@ class Nothing extends Maybe
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isJust() : bool
     {
@@ -75,7 +75,7 @@ class Nothing extends Maybe
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function getOrElse($default)
     {
@@ -107,7 +107,7 @@ class Nothing extends Maybe
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function orElse(Maybe $maybe) : Maybe
     {

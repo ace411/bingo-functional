@@ -1,12 +1,10 @@
 <?php
 
 /**
- * 
- * Flip function
- * 
+ * Flip function.
+ *
  * flip :: (a -> b -> c) -> b -> a -> c
- * 
- * @package bingo-functional
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */

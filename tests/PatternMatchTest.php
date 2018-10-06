@@ -2,12 +2,11 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
+use Chemem\Bingo\Functional\Algorithms as A;
+use Chemem\Bingo\Functional\Functors\Monads\IO;
+use Chemem\Bingo\Functional\Functors\Monads\State;
+use Chemem\Bingo\Functional\PatternMatching as PM;
 use PHPUnit\Framework\TestCase;
-use Chemem\Bingo\Functional\{
-    Algorithms as A,
-    PatternMatching as PM
-};
-use Chemem\Bingo\Functional\Functors\Monads\{IO, State};
 
 class PatternMatchTest extends TestCase
 {
@@ -160,11 +159,19 @@ class PatternMatchTest extends TestCase
     {
         $evalObject = PM\evalObjectPattern(
             [
-                IO::class => function () { return 'IO monad'; },
-                State::class => function () { return 'State monad'; },
-                '_' => function () { return 'NaN'; }
+                IO::class => function () {
+                    return 'IO monad';
+                },
+                State::class => function () {
+                    return 'State monad';
+                },
+                '_' => function () {
+                    return 'NaN';
+                },
             ],
-            IO::of(function () { return 12; })
+            IO::of(function () {
+                return 12;
+            })
         );
 
         $this->assertEquals('IO monad', $evalObject);
@@ -179,7 +186,7 @@ class PatternMatchTest extends TestCase
                 },
                 '_' => function () {
                     return 'don\'t care';
-                }
+                },
             ],
             ['func', 'chemem']
         );
@@ -196,7 +203,7 @@ class PatternMatchTest extends TestCase
                 },
                 '_' => function () {
                     return 'not the greatest';
-                }
+                },
             ],
             ['ask', 'uncle', 'mike']
         );

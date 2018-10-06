@@ -2,20 +2,20 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
+use Chemem\Bingo\Functional\Functors\Maybe\Just;
+use Chemem\Bingo\Functional\Functors\Maybe\Maybe;
+use Chemem\Bingo\Functional\Functors\Maybe\Nothing;
 use PHPUnit\Framework\TestCase;
-use Chemem\Bingo\Functional\Functors\Maybe\{Maybe, Just, Nothing};
-use function \Chemem\Bingo\Functional\Algorithms\toException;
-use function Chemem\Bingo\Functional\Functors\Maybe\{
-    maybe,
-    isJust,
-    isNothing,
-    fromJust,
-    fromMaybe,
-    listToMaybe,
-    maybeToList,
-    catMaybes,
-    mapMaybe
-};
+use function Chemem\Bingo\Functional\Algorithms\toException;
+use function Chemem\Bingo\Functional\Functors\Maybe\catMaybes;
+use function Chemem\Bingo\Functional\Functors\Maybe\fromJust;
+use function Chemem\Bingo\Functional\Functors\Maybe\fromMaybe;
+use function Chemem\Bingo\Functional\Functors\Maybe\isJust;
+use function Chemem\Bingo\Functional\Functors\Maybe\isNothing;
+use function Chemem\Bingo\Functional\Functors\Maybe\listToMaybe;
+use function Chemem\Bingo\Functional\Functors\Maybe\mapMaybe;
+use function Chemem\Bingo\Functional\Functors\Maybe\maybe;
+use function Chemem\Bingo\Functional\Functors\Maybe\maybeToList;
 
 class MaybeTypeTest extends TestCase
 {
@@ -74,7 +74,9 @@ class MaybeTypeTest extends TestCase
 
     public function testMaybeLiftMethodChangesFunctionsToAcceptMaybeTypes()
     {
-        $lifted = Maybe::lift(function (int $a, int $b) : int { return $a + $b; });
+        $lifted = Maybe::lift(function (int $a, int $b) : int {
+            return $a + $b;
+        });
 
         $this->assertEquals(3, $lifted(Just::of(1), Just::of(2))->getJust());
     }
@@ -90,7 +92,9 @@ class MaybeTypeTest extends TestCase
     public function testMaybeJustTypeFlatMapMethodReturnsNonEncapsulatedValue()
     {
         $val = Maybe::just(12)
-            ->flatMap(function (int $a) : int { return $a + 10; });
+            ->flatMap(function (int $a) : int {
+                return $a + 10;
+            });
 
         $this->assertEquals(22, $val);
     }
@@ -98,7 +102,9 @@ class MaybeTypeTest extends TestCase
     public function testMaybeJustTypeMapMethodReturnsEncapsulatedValue()
     {
         $val = Just::of(12)
-            ->map(function (int $a) : int { return $a + 10; });
+            ->map(function (int $a) : int {
+                return $a + 10;
+            });
 
         $this->assertInstanceOf(Just::class, $val);
     }
@@ -106,8 +112,10 @@ class MaybeTypeTest extends TestCase
     public function testMaybeJustTypeFilterMethodReturnsEncapsulatedValueBasedOnPredicate()
     {
         $val = Just::of('foo')
-            ->filter(function (string $str) : bool { return is_string($str); });
-        
+            ->filter(function (string $str) : bool {
+                return is_string($str);
+            });
+
         $this->assertInstanceOf(Just::class, $val);
         $this->assertEquals('foo', $val->getJust());
     }
@@ -127,9 +135,15 @@ class MaybeTypeTest extends TestCase
     public function testMapFlatMapFilterMethodsHaveNoEffectOnNothingValue()
     {
         $val = Nothing::of(null)
-            ->filter(function ($val = null) { return is_null($val); })
-            ->map(function ($val = null) : string { return "null"; })
-            ->flatMap(function ($val = null) : string { return "null"; });
+            ->filter(function ($val = null) {
+                return is_null($val);
+            })
+            ->map(function ($val = null) : string {
+                return 'null';
+            })
+            ->flatMap(function ($val = null) : string {
+                return 'null';
+            });
 
         $this->assertEquals(null, $val);
     }
@@ -139,8 +153,12 @@ class MaybeTypeTest extends TestCase
         $val = Maybe::fromValue(12);
 
         $mutated = $val
-            ->filter(function ($val) { return $val > 20; }, 0)
-            ->map(function ($val) { return $val + 10; })
+            ->filter(function ($val) {
+                return $val > 20;
+            }, 0)
+            ->map(function ($val) {
+                return $val + 10;
+            })
             ->orElse(Maybe::fromValue(25));
 
         $this->assertInstanceOf(Maybe::class, $mutated);
@@ -171,7 +189,7 @@ class MaybeTypeTest extends TestCase
     {
         $this->assertEquals(12, fromJust(Maybe::fromValue(12)));
         $this->assertEquals(
-            'Maybe.fromJust: Nothing', 
+            'Maybe.fromJust: Nothing',
             toException(\Chemem\Bingo\Functional\Functors\Maybe\fromJust)(Nothing::of(null))
         );
     }
@@ -185,7 +203,7 @@ class MaybeTypeTest extends TestCase
     public function testListToMaybeFunctionReturnsNothingOnEmptyListOrJustTypeWithFirstListElement()
     {
         $this->assertInstanceOf(Nothing::class, listToMaybe([]));
-        $this->assertInstanceOf(Just::class, listToMaybe(range(1, 3)));   
+        $this->assertInstanceOf(Just::class, listToMaybe(range(1, 3)));
     }
 
     public function testMaybeToListReturnsAnEmptyListWhenSuppliedNothingAndSingletonListOtherwise()

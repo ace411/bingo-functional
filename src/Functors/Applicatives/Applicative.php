@@ -12,14 +12,13 @@ namespace Chemem\Bingo\Functional\Functors\Applicatives;
 class Applicative
 {
     /**
-     * @var mixed $value
-     * @access private
+     * @var mixed
      */
     private $value;
 
     /**
-     * constructor
-     * 
+     * constructor.
+     *
      * @param mixed $value
      */
     public function __construct($value)
@@ -28,10 +27,12 @@ class Applicative
     }
 
     /**
-     * pure method
-     * 
+     * pure method.
+     *
      * @static
+     *
      * @param mixed $value
+     *
      * @return object Applicative
      */
     public static function pure($value)
@@ -39,39 +40,33 @@ class Applicative
         return new static($value);
     }
 
-     /**
-     * of method
-     * 
-     * @inheritdoc
+    /**
+     * of method.
      */
-    public static function of($value) : Applicative
+    public static function of($value) : self
     {
         return new static($value);
     }
-    
+
     /**
-     * ap method
-     * 
-     * @inheritdoc
+     * ap method.
      */
-    public function ap(Applicative $app) : Applicative
+    public function ap(self $app) : self
     {
         return new static($this->getValue()($app->getValue()));
     }
 
     /**
-     * map method
-     * 
-     * @inheritdoc
+     * map method.
      */
-    public function map(callable $function) : Applicative
+    public function map(callable $function) : self
     {
         return self::pure($function)->ap($this);
     }
 
     /**
-     * getValue method
-     * 
+     * getValue method.
+     *
      * @return mixed $value
      */
     public function getValue()

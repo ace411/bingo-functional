@@ -1,6 +1,7 @@
 <?php
 
 namespace Chemem\Bingo\Functional\Tests;
+
 use Chemem\Bingo\Functional\Functors\Applicatives\Applicative as Ap;
 
 class ApplicativeTest extends \PHPUnit\Framework\TestCase
@@ -13,7 +14,9 @@ class ApplicativeTest extends \PHPUnit\Framework\TestCase
 
     public function testApplicativeApplyMethodMapsValueOntoApplicativeCallable()
     {
-        $app = Ap::pure(function ($val) { return $val * 2; })
+        $app = Ap::pure(function ($val) {
+            return $val * 2;
+        })
             ->ap(Ap::pure(12))
             ->getValue();
 
@@ -47,10 +50,10 @@ class ApplicativeTest extends \PHPUnit\Framework\TestCase
     public function testLiftA2HelperFunctionLiftsBinaryFunctionIntoActions()
     {
         $lift = Ap\liftA2(
-            function ($x, $y) { 
-                return ($x * 3) / $y; 
-            }, 
-            Ap\pure(12), 
+            function ($x, $y) {
+                return ($x * 3) / $y;
+            },
+            Ap\pure(12),
             Ap\pure(2)
         );
 

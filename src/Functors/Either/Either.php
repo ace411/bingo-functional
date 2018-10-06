@@ -9,8 +9,6 @@
 
 namespace Chemem\Bingo\Functional\Functors\Either;
 
-use function \Chemem\Bingo\Functional\Algorithms\{compose, partialLeft};
-
 abstract class Either
 {
     /**
@@ -38,20 +36,22 @@ abstract class Either
     }
 
     /**
-     * lift method
+     * lift method.
      *
      * @param callable $function
-     * @param Left $left
+     * @param Left     $left
+     *
      * @return callable
      */
-
     public static function lift(callable $function, Left $left) : callable
     {
         return function () use ($function, $left) {
             if (
                 array_reduce(
                     func_get_args($function),
-                    function (bool $status, Either $val) { return $val->isLeft() ? false : $status; },
+                    function (bool $status, Either $val) {
+                        return $val->isLeft() ? false : $status;
+                    },
                     true
                 )
             ) {
@@ -63,6 +63,7 @@ abstract class Either
                     },
                     func_get_args()
                 );
+
                 return self::right(call_user_func($function, ...$args));
             }
 
@@ -103,22 +104,22 @@ abstract class Either
     abstract public function isRight() : bool;
 
     /**
-     * 
-     * of method
-     * 
+     * of method.
+     *
      * @param mixed $value
+     *
      * @return object Either
      */
-    abstract public static function of($value) : Either;
+    abstract public static function of($value) : self;
 
     /**
-     * flatMap method
+     * flatMap method.
      *
      * @abstract
      * @abstract
+     *
      * @param callable $function
      */
-
     abstract public function flatMap(callable $function);
 
     /**
@@ -126,44 +127,48 @@ abstract class Either
      *
      * @see FunctionalPHP\FantasyLand\Functor
      * @abstract
+     *
      * @param callable $function
+     *
      * @return object Functor
      */
-
-    abstract public function map(callable $function) : Either;
+    abstract public function map(callable $function) : self;
 
     /**
-     * bind method
-     * 
+     * bind method.
+     *
      * @see FunctionalPHP\FantasyLand\Chain
      * @abstract
+     *
      * @param callable $function
+     *
      * @return object Either
      */
-
-    abstract public function bind(callable $function) : Either;
+    abstract public function bind(callable $function) : self;
 
     /**
-     * ap method
-     * 
+     * ap method.
+     *
      * @see FunctionalPHP\FantasyLand\Apply
      * @abstract
+     *
      * @param Either $app
+     *
      * @return object Either
      */
-
-    abstract public function ap(Either $app) : Either;
+    abstract public function ap(self $app) : self;
 
     /**
      * filter method.
      *
      * @abstract
+     *
      * @param callable $function
-     * @param mixed $error
+     * @param mixed    $error
+     *
      * @return object Either
      */
-
-    abstract public function filter(callable $function, $error) : Either;
+    abstract public function filter(callable $function, $error) : self;
 
     /**
      * orElse method.

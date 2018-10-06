@@ -1,10 +1,10 @@
 <?php
 
 /**
- * mapDeep function
- * 
+ * mapDeep function.
+ *
  * mapDeep :: (a -> b) -> [a] -> [b]
- * 
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */

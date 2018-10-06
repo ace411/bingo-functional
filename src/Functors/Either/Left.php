@@ -27,7 +27,7 @@ class Left extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function isLeft() : bool
     {
@@ -74,7 +74,7 @@ class Left extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function flatMap(callable $function)
     {
@@ -98,7 +98,7 @@ class Left extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function orElse(Either $either) : Either
     {
