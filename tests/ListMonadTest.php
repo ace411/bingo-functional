@@ -1,8 +1,14 @@
 <?php
 
 namespace Chemem\Bingo\Functional\Tests;
+
 use Chemem\Bingo\Functional\Functors\Monads\ListMonad;
-use function Chemem\Bingo\Functional\Functors\Monads\ListMonad\{fromValue, concat, prepend, append, head, tail};
+use function Chemem\Bingo\Functional\Functors\Monads\ListMonad\append;
+use function Chemem\Bingo\Functional\Functors\Monads\ListMonad\concat;
+use function Chemem\Bingo\Functional\Functors\Monads\ListMonad\fromValue;
+use function Chemem\Bingo\Functional\Functors\Monads\ListMonad\head;
+use function Chemem\Bingo\Functional\Functors\Monads\ListMonad\prepend;
+use function Chemem\Bingo\Functional\Functors\Monads\ListMonad\tail;
 
 class ListMonadTest extends \PHPUnit\Framework\TestCase
 {

@@ -12,14 +12,13 @@ namespace Chemem\Bingo\Functional\Functors\Monads;
 class State
 {
     /**
-     * @access private
-     * @var callable $comp The state computation to store
+     * @var callable The state computation to store
      */
     private $comp;
 
     /**
-     * State monad constructor
-     * 
+     * State monad constructor.
+     *
      * @param callable $comp
      */
     public function __construct(callable $comp)
@@ -28,12 +27,13 @@ class State
     }
 
     /**
-     * of method
-     * 
+     * of method.
+     *
      * @param callable $value The initial state
+     *
      * @return object State
      */
-    public static function of($value) : State
+    public static function of($value) : self
     {
         return new static(function ($state) use ($value) {
             return [$value, $state];
@@ -41,12 +41,13 @@ class State
     }
 
     /**
-     * ap method
-     * 
-     * @param object State $monad 
+     * ap method.
+     *
+     * @param object State $monad
+     *
      * @return object State
      */
-    public function ap(State $monad) : State
+    public function ap(self $monad) : self
     {
         return $this->bind(function ($function) use ($monad) {
             return $monad->map($function);
@@ -54,12 +55,13 @@ class State
     }
 
     /**
-     * bind method
-     * 
+     * bind method.
+     *
      * @param callable $function
+     *
      * @return object State
      */
-    public function bind(callable $function) : State
+    public function bind(callable $function) : self
     {
         return new self(function ($state) use ($function) {
             list($initial, $final) = $this->run($state);
@@ -69,12 +71,13 @@ class State
     }
 
     /**
-     * map method
-     * 
+     * map method.
+     *
      * @param callable $function
+     *
      * @return object State
      */
-    public function map(callable $function) : State
+    public function map(callable $function) : self
     {
         return $this->bind(function ($state) use ($function) {
             return self::of($function($state));
@@ -82,9 +85,9 @@ class State
     }
 
     /**
-     * run method
-     * 
-     * @return array 
+     * run method.
+     *
+     * @return array
      */
     public function run($state)
     {

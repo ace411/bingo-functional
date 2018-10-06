@@ -2,23 +2,30 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
-use \Chemem\Bingo\Functional\Functors\Monads\Reader;
-use function \Chemem\Bingo\Functional\Algorithms\{fold, concat};
-use function \Chemem\Bingo\Functional\Functors\Monads\Reader\{reader, runReader, mapReader, withReader, ask};
+use Chemem\Bingo\Functional\Functors\Monads\Reader;
+use function Chemem\Bingo\Functional\Algorithms\concat;
+use function Chemem\Bingo\Functional\Algorithms\fold;
+use function Chemem\Bingo\Functional\Functors\Monads\Reader\ask;
+use function Chemem\Bingo\Functional\Functors\Monads\Reader\mapReader;
+use function Chemem\Bingo\Functional\Functors\Monads\Reader\reader;
+use function Chemem\Bingo\Functional\Functors\Monads\Reader\runReader;
+use function Chemem\Bingo\Functional\Functors\Monads\Reader\withReader;
 
 class ReaderMonadTest extends \PHPUnit\Framework\TestCase
 {
     public function testOfStaticMethodOutputsReaderInstance()
     {
-        $this->assertInstanceOf(Reader::class, reader(function ($name) { return 'Hello ' . $name; }));
+        $this->assertInstanceOf(Reader::class, reader(function ($name) {
+            return 'Hello '.$name;
+        }));
     }
 
     public function testApMethodOuputsReaderInstance()
     {
-        $read = Reader::of(function ($first) { 
-            return function ($last) use ($first) { 
-                return Reader::of(concat(' ', 'Hello', $first, $last)); 
-            }; 
+        $read = Reader::of(function ($first) {
+            return function ($last) use ($first) {
+                return Reader::of(concat(' ', 'Hello', $first, $last));
+            };
         })
             ->ap(Reader::of('Loki'));
 
@@ -27,12 +34,14 @@ class ReaderMonadTest extends \PHPUnit\Framework\TestCase
 
     public function testBindMethodUsesCallbackToTransformInitialReaderValue()
     {
-        $read = Reader::of(function ($name) { return concat(' ', 'Hello', $name . '.'); })
+        $read = Reader::of(function ($name) {
+            return concat(' ', 'Hello', $name.'.');
+        })
             ->bind(
-                function ($content) { 
-                    return Reader::of(function ($name) use ($content) { 
-                        return concat(' ', $content, ($name == 'Loki' ? '' : 'How are you?')); 
-                    }); 
+                function ($content) {
+                    return Reader::of(function ($name) use ($content) {
+                        return concat(' ', $content, ($name == 'Loki' ? '' : 'How are you?'));
+                    });
                 }
             );
 
@@ -42,29 +51,41 @@ class ReaderMonadTest extends \PHPUnit\Framework\TestCase
 
     public function testBindMethodOutputsReaderInstance()
     {
-        $read = Reader::of(function ($name) { return concat(' ', 'Hello', $name . '.'); })
+        $read = Reader::of(function ($name) {
+            return concat(' ', 'Hello', $name.'.');
+        })
             ->bind(
-                function ($content) { 
+                function ($content) {
                     return Reader::of(
-                        function ($name) use ($content) { return concat(' ', $content, ($name == 'Loki' ? '' : 'How are you?')); }
-                    ); 
+                        function ($name) use ($content) {
+                            return concat(' ', $content, ($name == 'Loki' ? '' : 'How are you?'));
+                        }
+                    );
                 }
             );
-        
+
         $this->assertInstanceOf(Reader::class, $read);
     }
 
     public function testMapMethodOutputsReaderInstance()
     {
-        $read = Reader::of(function ($val) { return $val * 2; })
-            ->map(function ($mult) { return Reader::of(function ($val) use ($mult) { return $mult * ($val + 5); }); });
+        $read = Reader::of(function ($val) {
+            return $val * 2;
+        })
+            ->map(function ($mult) {
+                return Reader::of(function ($val) use ($mult) {
+                    return $mult * ($val + 5);
+                });
+            });
 
         $this->assertInstanceOf(Reader::class, $read);
     }
 
     public function testAskMethodOutputsClosure()
     {
-        $read = Reader::of(function ($name) { return concat(' ', 'Hello', $name); })
+        $read = Reader::of(function ($name) {
+            return concat(' ', 'Hello', $name);
+        })
             ->ask();
 
         $this->assertInstanceOf(\Closure::class, $read);
@@ -105,8 +126,8 @@ class ReaderMonadTest extends \PHPUnit\Framework\TestCase
             },
             reader(function (array $ints) {
                 return fold(
-                    function (int $acc, int $val) { 
-                        return $acc + $val; 
+                    function (int $acc, int $val) {
+                        return $acc + $val;
                     },
                     $ints,
                     0

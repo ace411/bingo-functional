@@ -27,9 +27,8 @@ class Right extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function isLeft() : bool
     {
         return false;
@@ -67,9 +66,8 @@ class Right extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
-
     public function filter(callable $function, $error) : Either
     {
         return $function($this->value) ? new static($this->getRight()) : new Left($error);
@@ -78,7 +76,6 @@ class Right extends Either
     /**
      * {@inheritdoc}
      */
-
     public function flatMap(callable $function)
     {
         return $function($this->getRight());
@@ -93,7 +90,7 @@ class Right extends Either
     }
 
     /**
-     * @inheritdoc
+     * {@inheritdoc}
      */
     public function bind(callable $function) : Either
     {

@@ -1,6 +1,6 @@
 <?php
 /**
- * This is an bingo-functional autoloader
+ * This is an bingo-functional autoloader.
  *
  * @param string $class The fully-qualified class name.
  *
@@ -27,7 +27,7 @@ spl_autoload_register(function ($class) {
     // replace the namespace prefix with the base directory, replace namespace
     // separators with directory separators in the relative class name, append
     // with .php
-    $file = $baseDir . str_replace('\\', '/', $relativeClass) . '.php';
+    $file = $baseDir.str_replace('\\', '/', $relativeClass).'.php';
 
     // if the file exists, require it
     if (file_exists($file)) {
@@ -56,7 +56,7 @@ spl_autoload_register(function ($class) {
     // replace the namespace prefix with the base directory, replace namespace
     // separators with directory separators in the relative class name, append
     // with .php
-    $file = $baseDir . str_replace('\\', '/', $relativeClass).'.php';
+    $file = $baseDir.str_replace('\\', '/', $relativeClass).'.php';
 
     // if the file exists, require it
     if (file_exists($file)) {

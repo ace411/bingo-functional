@@ -9,25 +9,24 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-use function \Chemem\Bingo\Functional\Algorithms\{concat, extend, flatten};
+use function Chemem\Bingo\Functional\Algorithms\extend;
+use function Chemem\Bingo\Functional\Algorithms\flatten;
 
 class Writer
 {
     /**
-     * @access private
-     * @var mixed $result
+     * @var mixed
      */
     private $result;
 
     /**
-     * @access private
-     * @var mixed $output
+     * @var mixed
      */
-    private $output = []; 
+    private $output = [];
 
     /**
-     * Writer monad constructor
-     * 
+     * Writer monad constructor.
+     *
      * @param mixed $result
      * @param mixed $output
      */
@@ -41,24 +40,26 @@ class Writer
      * of method.
      *
      * @static of
+     *
      * @param mixed $result
      * @param mixed $output
+     *
      * @return object Writer
      */
-
-    public static function of($result, $output) : Writer
+    public static function of($result, $output) : self
     {
         return new static($result, $output);
     }
 
     /**
-     * ap method
-     * 
+     * ap method.
+     *
      * @param Writer $app
-     * @param mixed $output
+     * @param mixed  $output
+     *
      * @return object Writer
      */
-    public function ap(Writer $app) : Writer
+    public function ap(self $app) : self
     {
         return $this->bind(function ($function) use ($app) {
             return $app->map($function);
@@ -69,11 +70,11 @@ class Writer
      * map method.
      *
      * @param callable $function The morphism used to transform the state value
-     * @param mixed $output
+     * @param mixed    $output
+     *
      * @return object Writer
      */
-
-    public function map(callable $function) : Writer
+    public function map(callable $function) : self
     {
         return self::of($function($this->result), flatten($this->output));
     }
@@ -82,11 +83,11 @@ class Writer
      * bind method.
      *
      * @param callable $function
-     * @param mixed $output
+     * @param mixed    $output
+     *
      * @return object Writer
      */
-
-    public function bind(callable $function) : Writer
+    public function bind(callable $function) : self
     {
         list($result, $output) = $function($this->result)->run();
 
@@ -97,21 +98,20 @@ class Writer
      * flatMap method.
      *
      * @param callable $function
-     * @param mixed $output
+     * @param mixed    $output
+     *
      * @return mixed $result
      */
-
     public function flatMap(callable $function) : array
     {
         return $this->map($function)->run();
     }
 
     /**
-     * run method
-     * 
+     * run method.
+     *
      * @return array [$result, $output]
      */
-
     public function run() : array
     {
         return [$this->result, $this->output];

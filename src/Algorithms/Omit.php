@@ -1,12 +1,10 @@
 <?php
 
 /**
- * 
- * omit function
- * 
+ * omit function.
+ *
  * omit :: [a] -> b -> a[b]
- * 
- * @package bingo-functional
+ *
  * @author Lochemem Bruno Michael
  */
 

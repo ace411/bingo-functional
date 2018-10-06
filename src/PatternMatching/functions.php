@@ -1,9 +1,8 @@
 <?php
 
 /**
- * 
- * Pattern matching functions
- * 
+ * Pattern matching functions.
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -13,13 +12,12 @@ namespace Chemem\Bingo\Functional\PatternMatching;
 use Chemem\Bingo\Functional\Algorithms as A;
 
 /**
- * 
- * match function
- * 
+ * match function.
+ *
  * @param array $options
+ *
  * @return callable $matchCons
  */
-
 const match = 'Chemem\\Bingo\\Functional\\PatternMatching\\match';
 
 function match(array $options) : callable
@@ -62,13 +60,12 @@ function match(array $options) : callable
 }
 
 /**
- * 
- * getNumConditions function
- * 
+ * getNumConditions function.
+ *
  * @param array $conditions
+ *
  * @return array $matches
  */
-
 const getNumConditions = 'Chemem\\Bingo\\Functional\\PatternMatching\\getNumConditions';
 
 function getNumConditions(array $conditions)
@@ -98,16 +95,15 @@ function getNumConditions(array $conditions)
 }
 
 /**
- * 
- * patternMatch function
- * 
+ * patternMatch function.
+ *
  * patternMatch :: [a, b] -> a -> (a())
- * 
+ *
  * @param array $patterns
  * @param mixed $value
+ *
  * @return mixed $result
  */
-
 const patternMatch = 'Chemem\\Bingo\\Functional\\PatternMatching\\patternMatch';
 
 function patternMatch(array $patterns, $value)
@@ -128,16 +124,15 @@ function patternMatch(array $patterns, $value)
 }
 
 /**
- * 
- * evalArrayPattern function
- * 
+ * evalArrayPattern function.
+ *
  * evalArrayPattern :: [a, b] -> [a] -> (a())
- * 
+ *
  * @param array $patterns
  * @param array $value
+ *
  * @return mixed $result
  */
-
 const evalArrayPattern = 'Chemem\\Bingo\\Functional\\PatternMatching\\evalArrayPattern';
 
 function evalArrayPattern(array $patterns, array $comp)
@@ -148,6 +143,7 @@ function evalArrayPattern(array $patterns, array $comp)
             $filter = A\partialLeft(A\filter, function ($pattern) {
                 return substr($pattern, 0, 1) == '[' && substr($pattern, -1) == ']';
             });
+
             return $filter($pttnKeys);
         },
         function (array $pttnKeys) {
@@ -160,11 +156,13 @@ function evalArrayPattern(array $patterns, array $comp)
                     return array_merge(...array_map(function ($token) {
                         return A\fold(function ($acc, $tkn) {
                             $acc[] = preg_match('/[\"]+/', $tkn) ? A\concat('*', '', str_replace('"', '', $tkn)) : $tkn;
+
                             return $acc;
                         }, explode(',', $token), []);
                     }, $tokens));
                 }
             );
+
             return array_combine($pttnKeys, A\map($extract, $pttnKeys));
         },
         function (array $patterns) use ($comp) {
@@ -181,9 +179,10 @@ function evalArrayPattern(array $patterns, array $comp)
             $list = array_map(function ($pttns) use ($comp, $compLen) {
                 $keys = array_map(function ($key) {
                     return str_replace('*', '', $key);
-                }, $pttns);         
+                }, $pttns);
 
                 $intersect = array_intersect_assoc($keys, $comp);
+
                 return A\extend($pttns, ['intersect' => $intersect]);
             }, $patterns);
 
@@ -207,7 +206,8 @@ function evalArrayPattern(array $patterns, array $comp)
             $args = A\fold(function ($acc, $val) use ($comp, $pttn) {
                 if (is_string($val) && !preg_match('/[\"\*]+/', $val)) {
                     $acc[] = $comp[A\indexOf($pttn, $val)];
-                } 
+                }
+
                 return $acc;
             }, $pttn, []);
 
@@ -219,16 +219,15 @@ function evalArrayPattern(array $patterns, array $comp)
 }
 
 /**
- * 
- * evalStringPattern function
- * 
+ * evalStringPattern function.
+ *
  * evalStringPattern :: [a, b] -> a -> (a())
- *  
- * @param array $patterns
+ *
+ * @param array  $patterns
  * @param string $value
+ *
  * @return mixed $result
  */
-
 const evalStringPattern = 'Chemem\\Bingo\\Functional\\PatternMatching\\evalStringPattern';
 
 function evalStringPattern(array $patterns, string $value)
@@ -277,16 +276,15 @@ function evalStringPattern(array $patterns, string $value)
 }
 
 /**
- * 
- * evalObjectPattern function
- * 
+ * evalObjectPattern function.
+ *
  * evalObjectPattern :: [a, b] -> b -> (b())
- * 
- * @param array $patterns
+ *
+ * @param array  $patterns
  * @param object $value
- * @return mixed $result  
+ *
+ * @return mixed $result
  */
-
 const evalObjectPattern = 'Chemem\\Bingo\\Functional\\PatternMatching\\evalObjectPattern';
 
 function evalObjectPattern(array $patterns, $value)
@@ -295,11 +293,17 @@ function evalObjectPattern(array $patterns, $value)
 
     $eval = A\compose(
         'array_keys',
-        A\partialLeft(A\filter, function ($val) { return is_string($val) && preg_match("/([a-zA-Z]+)/", $val); }),
-        A\partialLeft(A\filter, function ($classStr) use ($valObj) { return class_exists($classStr) && $classStr == $valObj; }),
+        A\partialLeft(A\filter, function ($val) {
+            return is_string($val) && preg_match('/([a-zA-Z]+)/', $val);
+        }),
+        A\partialLeft(A\filter, function ($classStr) use ($valObj) {
+            return class_exists($classStr) && $classStr == $valObj;
+        }),
         A\head,
-        function (string $match) { return !empty($match) && !is_null($match) ? A\identity($match) : A\identity('_'); },
-        function (string $key) use ($patterns) { 
+        function (string $match) {
+            return !empty($match) && !is_null($match) ? A\identity($match) : A\identity('_');
+        },
+        function (string $key) use ($patterns) {
             $func = $key == '_' ? isset($patterns['_']) ? A\identity($patterns['_']) : constantFunction(false) : A\identity($patterns[$key]);
 
             return call_user_func($func);

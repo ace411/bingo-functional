@@ -2,18 +2,14 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
-use \Chemem\Bingo\Functional\Functors\Monads\State;
-use function \Chemem\Bingo\Functional\Algorithms\filter;
-use function \Chemem\Bingo\Functional\Functors\Monads\State\{
-    state, 
-    put, 
-    get, 
-    gets, 
-    modify, 
-    runState, 
-    evalState, 
-    execState
-};
+use Chemem\Bingo\Functional\Functors\Monads\State;
+use function Chemem\Bingo\Functional\Functors\Monads\State\evalState;
+use function Chemem\Bingo\Functional\Functors\Monads\State\execState;
+use function Chemem\Bingo\Functional\Functors\Monads\State\gets;
+use function Chemem\Bingo\Functional\Functors\Monads\State\modify;
+use function Chemem\Bingo\Functional\Functors\Monads\State\put;
+use function Chemem\Bingo\Functional\Functors\Monads\State\runState;
+use function Chemem\Bingo\Functional\Functors\Monads\State\state;
 
 class StateMonadTest extends \PHPUnit\Framework\TestCase
 {
@@ -55,7 +51,7 @@ class StateMonadTest extends \PHPUnit\Framework\TestCase
         $state = modify(function ($val) {
             return ($val * 3) - 4;
         });
-        
+
         $this->assertInstanceOf(State::class, $state);
         $this->assertEquals([null, 2], evalState($state, null)(2));
     }
@@ -89,7 +85,7 @@ class StateMonadTest extends \PHPUnit\Framework\TestCase
         };
 
         $state = state(function ($val) use ($fib) {
-            return $fib($val); 
+            return $fib($val);
         })
             ->ap(State::of(3))
             ->run(12);
@@ -106,7 +102,7 @@ class StateMonadTest extends \PHPUnit\Framework\TestCase
                 return State::of($action(2));
             })
             ->run(1);
-        
+
         $this->assertEquals([16, 1], $state);
     }
 
