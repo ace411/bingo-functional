@@ -89,6 +89,11 @@
             "Chemem\\Bingo\\Functional\\Tests\\": "tests/"
         }
     },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.x-dev"
+        }
+    },
     "keywords": [
         "functional",
         "pattern matching",
