@@ -143,9 +143,27 @@ head(array $array)
 The output of the head function is the first value of an array.
 
 ```php
-
 $head = A\head([1, 2, 3, 4]);
 //returns 1
+```
+
+## Last function
+
+```
+last(array $array)
+```
+
+**Since:** v1.10.0
+
+**Arguments:**
+
+- ***array (array)*** - The array whose first element is to be computed
+
+The output of the last function is the last value of an array.
+
+```php
+$last = A\last([4, 5, 6, 1]);
+//outputs 1
 ```
 
 ## Tail function
@@ -301,6 +319,32 @@ $squareOf = A\map(
 ); //should evaluate to [4, 16, 36, 64]
 ```
 
+## mapDeep function
+
+```
+mapDeep(callable $function, array $collection)
+```
+
+**Since:** v1.10.0
+
+**Arguments:**
+
+- ***function (callable)*** - The function to map onto array values
+- ***collection (array)*** - The array whose values are transformed
+
+The mapDeep function applies a function to every value in a multi-dimensional array.
+
+```php
+const NUMBERS = [
+    'prime' => [2, 5, 7, 11],
+    'odd' => [3, 5, [7, 9]]
+];
+
+$list = A\mapDeep(function ($val) { return pow($val, 2); }, NUMBERS);
+//outputs ['prime' => [4, 25, 49, 121], 'odd' => [9, 25, [49, 81]]]
+```
+
+
 ## Filter function
 
 ```
@@ -326,6 +370,28 @@ $even = A\filter(
     $collection
 );
 //should return [2, 4, 6]
+```
+
+## Reject function
+
+```
+reject(callable $function, array $collection)
+```
+
+**Since:** v1.10.0
+
+**Arguments:**
+
+- ***function (callable)*** - The filter function
+- ***collection (array)*** - The array whose values are evaluated
+
+Like the filter function, the reject operation truncates an array based on a boolean predicate. The reject function, however, outputs the values which do not conform to a boolean premise.
+
+```php
+const LIST = [12, 13, 19, 15, 22];
+
+$list = A\reject(function ($val) { return $val % 2 == 0; }, LIST);
+//outputs [13, 19, 15]
 ```
 
 ## Fold/Reduce function
@@ -695,4 +761,78 @@ Finds the largest value in an array.
 $max = A\max([22, 19, 98, 12]);
 
 echo $max; //outputs 98
+```
+
+## Mean function
+
+```
+mean(array $array)
+```
+
+**Since:** v1.10.0
+
+**Arguments**
+
+- ***array (array)*** - The list whose mean value is to be computed
+
+Computes the mean of the values in an array.
+
+```php
+$mean = A\mean([22, 19, 98, 12]);
+
+echo $mean; //outputs 37.75
+```
+
+## Omit function
+
+```
+omit(array $array, mixed ...$keys)
+```
+
+**Since:** v1.10.0
+
+**Arguments**
+
+- ***array (array)*** - The list to be used for the operation
+- ***keys (mixed)*** - The keys to omit from an array
+
+The omit function removes values from an array by key.
+
+```php
+$list = A\omit(
+    [
+        'hbo' => ['game of thrones', 'insecure'],
+        'netflix' => ['daredevil', 'luke cage'],
+        'amc' => ['breaking bad'],
+        'cw' => ['smallville', 'nikita']
+    ],
+    'amc',
+    'cw'
+);
+//outputs ['hbo' => ['game of thrones', 'insecure'], 'netflix' => ['daredevil', 'luke cage']]
+```
+
+## addKeys function
+
+```
+addKeys(array $array, mixed ...$keys)
+```
+
+**Since:** v1.10.0
+
+**Arguments**
+
+- ***array (array)*** - The list to be used for the operation
+- ***keys (mixed)*** - The keys to include
+
+The addKeys function outputs the contents of an array which correspond to specified keys.
+
+```php
+const DD_EPISODES = [
+    'season_one' => ['Into the ring', 'Cut man', 'Rabbit in a snow Storm'],
+    'season_two' => ['Bang', 'Daredevil', 'The Ones we Leave Behind']
+];
+
+$list = A\addKeys(DD_EPISODES, 'season_two');
+//outputs ['Bang', 'Daredevil', 'The Ones we Leave Behind']
 ```

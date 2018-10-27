@@ -17,6 +17,7 @@ The goal of pattern matching is to bind values to successful matches. Pattern ma
 | variable        | Any value identifier      | ```foo```, ```bar```, ```baz``` |
 | array           | [constant, ..., variable] | ```'["foo", "bar", baz]'``` |
 | cons            | (identifier:identifier)   | ```(foo:bar:_)``` |
+| objects		  | An object				  | ```stdClass::class``` |
 | wildcard        | _                         | ```'_'``` |
 <br />
 
@@ -78,7 +79,8 @@ $scalarMatch = PM\patternMatch(
 		'_' => function () { return 'undefined'; }
 	],
 	'foo'
-); //outputs FOO
+); 
+//outputs FOO
 ```
 
 The patternMatch function's primary feature, the array match is possible for multiple values parsed into an array.
@@ -93,5 +95,22 @@ $arrayMatch = PM\patternMatch(
 		'_' => function () { return 'undefined'; }
 	],
 	['foo', 'bar', 'functional']
-); //outputs fUNCTIONAL
+); 
+//outputs fUNCTIONAL
+```
+
+Added in version 1.10.0 is the object match feature - convenient for comparing class instances.
+
+```php
+use \Chemem\Bingo\Functional\Functors\Monads\{IO, Reader};
+
+$objectMatch = PM\patternMatch(
+	[
+		IO::class => function () { return 'IO monad instance'; },
+		Reader::class => function () { return 'Reader monad instance'; },
+		'_' => function () { return 'unrecognized object'; }
+	],
+	IO::of(function () { return 12; })
+);
+//outputs IO monad instance
 ```
