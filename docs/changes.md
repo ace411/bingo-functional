@@ -204,6 +204,8 @@ nextTitle: Installation
 
 ## v1.10.0
 
+- Added [immutable collections](https://medium.com/@SkillzMic/about-the-immutable-collections-i-added-to-bingo-functional-700be1790a37)
+
 - Added object matching capability to patternMatch
 
 - Modified patternMatch array matching to give more concise match results
