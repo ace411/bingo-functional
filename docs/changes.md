@@ -224,3 +224,129 @@ nextTitle: Installation
 ## Modified the following functions
 
 - patternMatch()
+
+## v1.11.0
+
+- Modified pattern matching algorithm to enable usage of wildcards in patterns
+
+- Modified State, List, Writer, and Reader monads
+
+- Added monad helper functions 
+
+- Added Applicative helper functions
+
+- Added ```bind``` and ```of``` methods to Either and Maybe type classes
+
+- Added flip helper function
+
+### New Applicative Helper functions
+
+- Applicative\pure()
+
+- Applicative\liftA2()
+
+### New Monadic Helper functions
+
+- mcompose()
+
+- bind()
+
+- IO\IO
+
+- IO\_print()
+
+- IO\getChar()
+
+- IO\putChar()
+
+- IO\putStr()
+
+- IO\getLine()
+
+- IO\interact()
+
+- IO\readFile()
+
+- IO\writeFile()
+
+- IO\appendFile()
+
+- IO\readIO()
+
+- State\state()
+
+- State\gets()
+
+- State\modify()
+
+- State\evalState()
+
+- State\execState()
+
+- State\put()
+
+- State\runState()
+
+- ListMonad\fromValue()
+
+- ListMonad\concat()
+
+- ListMonad\prepend()
+
+- LIstMonad\append()
+
+- ListMonad\head()
+
+- ListMonad\tail()
+
+- Reader\reader()
+
+- Reader\runReader()
+
+- Reader\mapReader()
+
+- Reader\withReader()
+
+- Reader\ask()
+
+- Writer\writer()
+
+- Writer\runWriter()
+
+- Writer\execWriter()
+
+- Writer\mapWriter()
+
+### New union type helper functions
+
+- Either\either()
+
+- Either\isLeft()
+
+- Either\isRight()
+
+- Either\lefts()
+
+- Either\rights()
+
+- Either\fromLeft()
+
+- Either\partitionEithers()
+
+- Maybe\maybe()
+
+- Maybe\isJust()
+
+- Maybe\isNothing()
+
+- Maybe\fromJust()
+
+- Maybe\fromNothing()
+
+- Maybe\maybeToList()
+
+- Maybe\listToMaybe()
+
+- Maybe\catMaybes()
+
+- Maybe\mapMaybe()
