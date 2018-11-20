@@ -201,4 +201,16 @@ class PatternMatchTest extends TestCase
 
         $this->assertEquals('G.O.A.T', $result);
     }
+
+    public function testLetInDestructuresByPatternMatching()
+    {
+        $list = range(1, 10);
+        $let = PM\letIn(['a', 'b', 'c'], $list);
+        $_in = $let(['c'], function (int $c) {
+            return $c * 10;
+        });
+
+        $this->assertInstanceOf(\Closure::class, $let);
+        $this->assertEquals(30, $_in);
+    }
 }

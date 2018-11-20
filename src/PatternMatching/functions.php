@@ -325,3 +325,24 @@ function evalObjectPattern(array $patterns, $value)
 
     return $eval($patterns);
 }
+
+const letIn = 'Chemem\\Bingo\\Functional\\PatternMatching\\letIn';
+
+function letIn(array $params, array $list) : callable
+{    
+    $patterns = array_merge(...array_map(function ($param, $val) {
+        return [
+            is_null($param) ? '_' : '"' . $param . '"' => function () use ($val, $param) {
+                return !is_null($param) ? $val : false;
+            }
+        ];
+    }, $params, $list));
+
+    return function (array $params, callable $function) use ($patterns) {
+        $values = A\map(function ($param) use ($patterns) {
+            return patternMatch($patterns, $param);
+        }, $params);
+        
+        return $function(...$values);
+    };
+}
