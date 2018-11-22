@@ -49,8 +49,8 @@ The bingo-functional library's utilities are namespaced. Below is a listing of a
 | Applicatives               | ```Chemem\Bingo\Functional\Functors\Applicatives\```     |
 | Union Types                | ```Chemem\Bingo\Functional\Functors\{Either or Maybe}``` | 
 | Pattern Matching Functions | ```Chemem\Bingo\Functional\PatternMatching\```           |
-| Immutable Collections      | ```Chemem\Bingo\Functional\Immutable\Collection```       |
+| Immutable Collections      | ```Chemem\Bingo\Functional\Immutable\Collection\```       |
 
 Recently, I have been working on a book which puts this library at the forefront of many explanations of functional programming in PHP. I advise that you, a visitor of this site and prospective user of the bingo-functional library, consider purchasing the volume set to retail on Leanpub.
-<iframe width='160' height='400' src='https://leanpub.com/functionalprogramminginphp/embed' frameborder='0' allowtransparency='true'></iframe>
+<iframe height="400" src='https://leanpub.com/functionalprogramminginphp/embed' frameborder='0' allowtransparency='true'></iframe>
   
