@@ -294,14 +294,92 @@ The Writer monad is designed to make tracking state changes less cumbersome. Uni
 use Chemem\Bingo\Functional\Functors\Monads\Writer;
 
 list($result, $log) = Writer::of(2, 'Initialize')
-    ->bind(
-        function (int $x) : int { return $x + 2;},
-        'Add 2 to x val'
-    )
     ->run();
 
 echo $log;
 //should output messages 'Initialize' and 'Add 2 to x val'
+```
+
+### Writer functions
+> Adapated from [Haskell](http://hackage.haskell.org/package/mtl-2.2.2/docs/Control-Monad-Writer-Lazy.html#g:2)
+
+#### Writer\writer
+```
+Writer\writer(mixed $result, mixed $output)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***result (mixed)*** - Primary monad input
+- ***output (mixed)*** - Ancillary log data
+
+Calls the ```Writer``` monad constructor thereby initializing a value of type ```Writer```.
+
+```php
+use Chemem\Bingo\Functional\Functors\Monads\Writer;
+
+$data = Writer\writer(12, 'add 12');
+```
+
+#### Writer\runWriter
+```
+Writer\runWriter(Writer $writer)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***writer (Writer)*** - Writer computation
+
+Unwraps a writer computation as a ```[result, output]``` pair.
+
+```php
+$writer = Writer\writer(1, 'put 1');
+
+list($result, $output) = Writer\runWriter($writer);
+```
+
+#### Writer\execWriter
+```
+Writer\execWriter(Writer $writer)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***writer (Writer)*** - Writer computation
+
+Extracts the output from a writer computation.
+
+```php
+$writer = Writer\writer(10, 55);
+
+$output = Writer\execWriter($writer);
+```
+
+#### Writer\mapWriter
+```
+Writer\mapWriter(callable $function, Writer $writer)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***function (callable)*** - Function to map onto result and output
+- ***writer (Writer)*** - Writer computation
+
+```php
+$res = M\bind(
+    A\partial(Writer\mapWriter, function ($val) {
+        return $val / 5;
+    }),
+    Writer\writer(5, 10)
+);
 ```
 
 ### The Reader Monad
