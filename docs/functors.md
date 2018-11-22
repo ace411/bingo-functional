@@ -27,6 +27,8 @@ $addTen = Applicative::pure(function (int $a) : int { return $a + 10; });
 
 ### CollectionApplicatives
 
+- **Note:** This feature is not available in versions ***1.9.0*** and ***upwards***.
+
 Applicatives and CollectionApplicatives are not entirely dissimilar. The latter functors are indeed applicatives but more amenable to the creation of [ziplists](http://hackage.haskell.org/package/base-4.10.0.0/docs/Control-Applicative.html#v:ZipList), which are, fundamentally, traversable data structures.
 
 ```php
@@ -39,14 +41,16 @@ $zipList = CollectionApplicative::pure([
 //should return [11, 12, 13, 10, 20, 30]
 ```        
 
-**Using the apply method**
+**Using the apply method** - For versions **1.9.0** and **lower**
 
 The apply method is simply a means of binding an argument to a function defined in the context of an Applicative. It is especially convenient for state transformations within a functor environment.
 
 ```php
 $addTen->apply($num)
     ->getValue(); //should return 20
-```    
+```
+
+**Using the ap method** - For versions **1.10.0** and **upwards**
 
 ## Monad
 
@@ -77,6 +81,210 @@ $io = IO::of(function () : string { return file_get_contents('path/to/file'); })
     ->exec();
 //should output the contents of a text file in uppercase
 ``` 
+
+### IO functions
+> Adapted from [Haskell](http://hackage.haskell.org/package/base-4.11.1.0/docs/Prelude.html#g:26).
+
+#### IO\IO
+```
+IO\IO(mixed $io)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***io (mixed)*** - An IO operation to store inside the IO monad
+
+Calls the ```IO``` monad constructor thereby initializing a value of type ```IO```.
+
+```php
+use Chemem\Bingo\Functional\Functors\Monads\IO;
+
+$_io = IO\IO(file_get_contents('path/to/file'));
+```
+
+#### IO\putChar
+```
+IO\putChar()
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+> None
+
+Write a character from the standard input device.
+
+```php
+$contents = IO\putChar();
+```
+
+#### IO\getChar
+```
+IO\getChar()
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+> None
+
+Read a character from the standard input device.
+
+```php
+$contents = IO\readChar();
+```
+
+#### IO\putStr
+```
+IO\putChar()
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+> None
+
+Write a string to the standard output device.
+
+```php
+$contents = IO\putStr();
+```
+
+#### IO\getLine
+```
+IO\getLine()
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+> None
+
+Read a line from the standard input device
+
+```php
+$contents = IO\getLine();
+```
+
+#### IO\interact
+```
+IO\interact(callable $function)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***function (callable)*** - A string data manipulation function
+
+Parses Standard Input device string data and maps a function onto it.
+
+```php
+$contents = IO\interact('strtoupper');
+```
+
+#### IO\_print
+```
+IO\_print(IO $printable)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***printable (IO)*** - Data of a printable type
+
+Outputs data of any printable type to an output device.
+
+```php
+use Chemem\Bingo\Functional\Functors\Monads as M;
+
+$contents = M\mcompose(IO\_print, function (string $data) {
+    $ret = A\compose('strtolower', IO\IO, IO\IO);
+    return $ret($data);
+});
+
+$contents(IO\IO('chemem'));
+```
+
+#### IO\readFile
+```
+IO\readFile(string $path)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***path (string)*** - The file path
+
+Reads a file and returns the contents of the file as a string.
+
+```php
+$contents = IO\readFile('path/to/file');
+```
+
+#### IO\writeFile
+```
+IO\writeFile(string $path, string $content)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***path (string)*** - The file path
+- ***content (string)*** - The contents to write to a file
+
+Writes data to a file.
+
+```php
+$contents = IO\writeFile('path/to/file', 'foo');
+```
+
+#### IO\appendFile
+```
+IO\appendFile(string $path, string $content)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***path (string)*** - The file path
+- ***content (string)*** - The data to append
+
+Appends data to a file.
+
+```php
+$contents = IO\appendFile('path/to/file', 'foo');
+```
+
+#### IO\readIO
+```
+IO\readIO(IO $contents)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***contents (IO)*** - String content wrapped inside IO monad
+
+Reads data from an external source and signals a parse failure to the IO monad.
+
+```php
+$contents = M\mcompose(readIO, function () {
+    return M\bind(function ($fgets) {
+        $ret = A\compose($fgets, IO\IO, IO\IO);
+        return $ret(STDIN); //get input from console
+    }, IO\putStr());
+});
+
+$contents(IO\IO(null));
+```
 
 ### The Writer Monad
 
