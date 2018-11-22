@@ -239,6 +239,8 @@ nextTitle: Installation
 
 - Added flip helper function
 
+- Added ```liftIn``` function
+
 ### New Applicative Helper functions
 
 - Applicative\pure()
