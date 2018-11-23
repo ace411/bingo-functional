@@ -527,23 +527,165 @@ Similar to the Reader monad is the State monad which works best in situations wh
 ```php
 use Chemem\Bingo\Functional\Functors\Monads\State;
 
-function addThree(int $val) : int
-{
-    return $val + 3;
-}
+$result = State::of(2)
+    ->bind(function ($state) {
+        return State::of($state + 3);
+    })
+    ->run(3);
+    
+print_r($result); //prints [5, 3]
+```
 
-function multiplyByTen(int $val) : int
-{
-    return $val * 10;
-}
+### State Functions
+> Adapated from [Haskell](http://hackage.haskell.org/package/mtl-2.2.2/docs/Control-Monad-State-Lazy.html)
 
-list($original, $finalState) = State::of(2)
-    ->evalState('addThree')
-    ->map('multiplyByTen')
-    ->exec();
+#### State\state
+```
+State\state(callable $action)
+```
 
-echo $original; //should output 2
-echo $finalState; //should output 50
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***action (callable)*** - action to embed in State monad
+
+Embeds a simple action into the ```State``` monad.
+
+```php
+$state = State\state(function ($val) {
+    return $val * 2;
+});
+```
+
+#### State\put
+```
+State\put(mixed $value)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***value (mixed)*** - value to put in State context
+
+Replaces the state inside the ```State``` monad.
+
+```php
+$put = State\put('foo');
+```
+
+#### State\get
+```
+State\get()
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+> None
+
+Returns the state from the internals of the ```State``` monad.
+
+```php
+$state = State\get();
+```
+
+#### State\gets
+```
+State\gets(callable $projection)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***projection (callable)*** - function to transform a portion of the state
+
+Gets specific component of the state, using a projection function supplied.
+
+```php
+$state = State\gets(function ($state) {
+    $ret = A\compose('strtolower', 'ucfirst');
+    return $ret($state);
+});
+
+$res = State\evalState($state, null)('loki');
+```
+
+#### State\modify
+```
+State\modify(callable $function)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***function (callable)*** - function to map onto old state
+
+Maps an old state to a new state inside a ```State``` monad.
+
+```php
+$modify = State\modify(function ($state) {
+    return pow($state, 2) / 4;
+});
+
+$ret = State\evalState($modify, null)(8);
+```
+
+#### State\runState
+```
+State\runState(State $state, mixed $value)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***state (State)*** - State monad instance
+- ***value (mixed)*** - Value to apply to State monad
+
+Unwraps a ```State``` monad compuation.
+
+```php
+$val = State\runState(State\put(2), 3);
+```
+
+#### State\evalState
+```
+State\evalState(State $state, mixed $value)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***state (State)*** - State monad instance
+- ***value (mixed)*** - Value to apply to State monad
+
+Evaluates a state computation with the given initial state; returns the final value.
+
+```php
+$ret = State\evalState(State\put(2), 3);
+```
+
+#### State\execState
+```
+State\execState(State $state, mixed $value)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***state (State)*** - State monad instance
+- ***value (mixed)*** - Value to apply to State monad
+
+Evaluates a state computation with the given initial state; returns the final state.
+
+```php
+$state = State\evalState(State\put('foo'), 'bar');
 ```
 
 ### The List Monad
