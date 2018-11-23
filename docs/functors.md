@@ -692,6 +692,8 @@ $state = State\evalState(State\put('foo'), 'bar');
 
 The List Monad is used to generate a set of values for a given collection - something akin to a zip list. The List Monad operates on the principle of [non-determinism](https://en.wikipedia.org/wiki/Nondeterministic_algorithm).
 
+The implementation of the ListMonad in this library is reliant on PHP hashtables (arrays).
+
 ```php
 use Chemem\Bingo\Functional\Functors\Monads\ListMonad;
 
@@ -704,6 +706,115 @@ $list = ListMonad::of(1, 2, 3)
     ->bind('multiplyByTwo')
     ->extract();
 //should evaluate to [2, 4, 6, 1, 2, 3]
+```
+
+### ListMonad functions
+> Adapted from [Haskell](http://hackage.haskell.org/package/mtl-2.2.2/docs/Control-Monad-List.html)
+
+#### ListMonad\fromValue
+```
+ListMonad\fromValue(mixed $value)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***value (mixed)*** - An arbitrary value to store in a List
+
+Adds a value to a list - calls the ```ListMonad``` constructor thereby initializing a value of type ```ListMonad```.
+
+```php
+use Chemem\Bingo\Functional\Functors\Monads\ListMonad;
+
+$list = ListMonad\fromValue(2);
+```
+
+#### ListMonad\concat
+```
+ListMonad\concat(ListMonad ...$list)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***list (ListMonad)*** - instance of ListMonad
+
+Creates a large list from multiple instances of the ```ListMonad```.
+
+```php
+$mult = ListMonad\concat(ListMonad\fromValue(12), ListMonad\fromValue(9)); 
+```
+
+#### ListMonad\prepend
+```
+ListMonad\prepend(ListMonad $prep, ListMonad $list)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***list (ListMonad)*** - instance of ListMonad
+- ***prep (ListMonad)*** - instance of ListMonad to add to front of list
+
+Inserts the items of one list into the beginning of another.
+
+```php
+$list = ListMonad\prepend(ListMonad\fromValue(2), ListMonad\fromValue([4, 6, 8, 10]));
+```
+
+#### ListMonad\append
+```
+ListMonad\append(ListMonad $app, ListMonad $list)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***list (ListMonad)*** - instance of ListMonad
+- ***app (ListMonad)*** - instance of ListMonad to add to front of list
+
+Adds the items of one list to the end of another.
+
+```php
+$list = ListMonad\append(ListMonad\fromValue([3, 5, 7, 9]), ListMonad\fromValue(11));
+```
+
+#### ListMonad\head
+```
+ListMonad\head(ListMonad $list)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***list (ListMonad)*** - instance of ListMonad
+
+Returns the first element in a list.
+
+```php
+$head = ListMonad\head(ListMonad\fromValue([3, 4, 5]));
+```
+
+#### ListMonad\tail
+```
+ListMonad\tail(ListMonad $list)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***list (ListMonad)*** - instance of ListMonad
+
+Returns the last element in a list.
+
+```php
+$head = ListMonad\last(ListMonad\fromValue([3, 4, 5]));
 ```
 
 ## Maybe Left/Nothing types
