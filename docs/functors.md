@@ -373,6 +373,8 @@ Writer\mapWriter(callable $function, Writer $writer)
 - ***function (callable)*** - Function to map onto result and output
 - ***writer (Writer)*** - Writer computation
 
+Maps a function onto the result and output of the Writer monad.
+
 ```php
 $res = M\bind(
     A\partial(Writer\mapWriter, function ($val) {
@@ -408,6 +410,114 @@ $reader = Reader::of('sayHello')
     ->run('World');
 
 echo $reader; //should output Hello World
+```
+
+### Reader Functions
+> Adapated from [Haskell](http://hackage.haskell.org/package/mtl-2.2.2/docs/Control-Monad-Reader.html#g:1)
+
+#### Reader\reader
+```
+Reader\reader(mixed $value)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***value (mixed)*** - Value to put in reader environment
+
+Puts a value in a Reader environment - calls the ```Reader``` monad constructor and initializes a value of type ```Reader```.
+
+```php
+$reader = Reader\reader(function ($name) {
+    return A\concat(' ', 'Hello', ($name == 'loki' ? 'Loki' : 'world'));
+});
+```
+
+#### Reader\runReader
+```
+Reader\runReader(Reader $reader, mixed $value)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***reader (Reader)*** - Reader value
+- ***value (mixed)*** - Arbitrary value applied to Reader
+
+Applies an arbitrary value to a ```Reader``` and extracts a value from it.
+
+```php
+$reader = Reader\reader(function ($name) {
+    return 'Hello ' . $name . '.';
+});
+
+$ret = Reader\runReader($reader, 'Loki');
+```
+
+#### Reader\mapReader
+```
+Reader\mapReader(callable $function, Reader $reader)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+- ***function (callable)*** - Function to map onto value in Reader environment
+- ***reader (Reader)*** - Reader value
+
+Applies function to value in ```Reader``` environment.
+
+```php
+$ask = Reader\reader(function (string $name) {
+    return 'Hi ' . $name;
+});
+
+$map = Reader\mapReader(function (string $sal) {
+    return $sal . '. How are you feeling today?';
+}, $ask);
+```
+
+#### Reader\withReader
+```
+Reader\withReader(callable $function, Reader $reader)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+- ***function (callable)*** - Function to map onto value in Reader environment
+- ***reader (Reader)*** - Reader value
+
+Executes a computation in a modified ```Reader``` environment.
+
+```php
+$ask = Reader\reader(function (int $age) {
+    return A\concat(' ', 'You are', $age, 'years old.');
+});
+
+$trans = Reader\withReader(function (string $stmt) {
+    return Reader\reader(function (int $age) use ($stmt) {
+        return $stmt . ($age > 18 ? 'You are an adult.' : 'You\'ll be an adult someday.');
+    });
+}, $ask);
+```
+
+#### Reader\ask
+```
+Reader\ask()
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+> None
+
+Retrieves the ```Reader``` monad environment.
+
+```php
+$env = Reader\ask();
 ```
 
 ### The State Monad
