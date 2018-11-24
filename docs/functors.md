@@ -25,9 +25,53 @@ $addTen = Applicative::pure(function (int $a) : int { return $a + 10; });
 //should return a Closure object encapsulated in an Applicative object
 ```
 
+### Applicative Functions
+> Adapted from [Haskell](http://hackage.haskell.org/package/base-4.12.0.0/docs/Control-Applicative.html)
+
+#### Applicative\pure
+```
+Applicative\pure(mixed $value)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***value (mixed)*** - An arbitrary value
+
+Lifts a value.
+
+```php
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicative;
+
+$app = Applicative\pure(function (string $text) {
+    return substr($text, 0, (5 - mb_strlen($text)));
+});
+```
+
+#### Applicative\liftA2
+```
+Applicative\liftA2(callable $function, Applicative ...$values)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***function (callable)*** - Lift function
+- ***values (Applicative)*** - Instance(s) of Applicative
+
+Lifts a binary function to actions.
+
+```php
+$ret = Applicative\liftA2(function ($val) {
+    return ($val / 2) * pow($val, $val / 5);
+}, Applicative\pure(12), Applicative\pure(9));
+```
+
 ### CollectionApplicatives
 
-- **Note:** This feature is not available in versions ***1.9.0*** and ***upwards***.
+- **Note:** This feature is not available in versions ***1.9.0*** and ***upwards***. Consider using the [ListMonad](#the-list-monad) instead.
 
 Applicatives and CollectionApplicatives are not entirely dissimilar. The latter functors are indeed applicatives but more amenable to the creation of [ziplists](http://hackage.haskell.org/package/base-4.10.0.0/docs/Control-Applicative.html#v:ZipList), which are, fundamentally, traversable data structures.
 
@@ -52,6 +96,12 @@ $addTen->apply($num)
 
 **Using the ap method** - For versions **1.10.0** and **upwards**
 
+```php
+$action = Applicative::pure(function ($val) {
+    return pow($val, 3) / 4;
+})->ap(Applicative::pure(2));
+```
+
 ## Monad
 
 The monad implementation in this library is a simple one. Considering the existence of a complete genealogy of monads, the monad class in this library is a microcosm of the feature. Monads allow us to manipulate values within their context like Applicatives but return monads of the same type when functions are bound to them.
@@ -68,6 +118,54 @@ $val = Monad::return(10)
 
 **Note:** As of version 1.4.0, the Monad class will not be available. Refer to the [change log](https://github.com/ace411/bingo-functional/blob/master/docs/changes.md) for more details.
 
+### Monad functions
+> Adapted from [Haskell](http://hackage.haskell.org/package/base-4.12.0.0/docs/Prelude.html#v:-62--62--61-)
+
+#### Monads\bind
+```
+Monads\bind(callable $actionB, object $actionB)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***actionB (callable)*** - Function that evaluates to a Monadic value
+- ***actionA (object)*** - Monad instance (IO, ListMonad, State, Writer, Reader, Either, Maybe) 
+
+Sequentially composes two actions - passing any value produced by the first as an argument to the second.
+
+```php
+use Chemem\Bingo\Functional\Algorithms as A;
+use Chemem\Bingo\Functional\Functors\Monads\IO;
+use Chemem\Bingo\Functional\Functors\Monads as M;
+
+$ret = M\bind(function (string $contents) {
+    $res = A\compose('json_encode', 'json_decode', IO\IO);
+    return $res($contents);
+}, IO\IO(file_get_contents('path/to/json/file')));
+```
+
+#### Monads\mcompose
+```
+Monads\mcompose(callable $valB, callable $valA)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***valA (callable)*** - Monadic value
+- ***valB (callable)*** - Monadic value
+
+Composes two monadic values from right to left.
+
+```php
+$ret = M\mcompose(A\partial(IO\appendFile, 'path/to/file'), IO\readFile);
+
+$ret(IO\IO('path/to/another/file'));
+```
+
 ### The IO Monad
 
 The IO monad is one built purposely for handling impure operations. Impure operations are those that break referential transparency and immutability. Database interactions, web service interaction, as well as external file reads are impediments to referential transparency.
@@ -75,9 +173,8 @@ The IO monad is one built purposely for handling impure operations. Impure opera
 ```php
 use Chemem\Bingo\Functional\Functors\Monads\IO;
 
-$io = IO::of(function () : string { return file_get_contents('path/to/file'); })
+$io = IO::of(file_get_contents('path/to/file'))
     ->map('strtoupper')
-    ->bind('var_dump')
     ->exec();
 //should output the contents of a text file in uppercase
 ``` 
