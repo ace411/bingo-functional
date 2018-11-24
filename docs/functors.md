@@ -25,6 +25,48 @@ $addTen = Applicative::pure(function (int $a) : int { return $a + 10; });
 //should return a Closure object encapsulated in an Applicative object
 ```
 
+### Applicative Functions
+> Adapted from [Haskell](http://hackage.haskell.org/package/base-4.12.0.0/docs/Control-Applicative.html)
+
+#### Applicative\pure
+```
+Applicative\pure(mixed $value)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***value (mixed)*** - An arbitrary value
+
+Lifts a value.
+
+```php
+$app = Applicative\pure(function (string $text) {
+    return substr($text, 0, (5 - mb_strlen($text)));
+});
+```
+
+#### Applicative\liftA2
+```
+Applicative\liftA2(callable $function, Applicative ...$values)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***function (callable)*** - Lift function
+- ***values (Applicative)*** - Instance(s) of Applicative
+
+Lifts a binary function to actions.
+
+```php
+$ret = Applicative\liftA2(function ($val) {
+    return ($val / 2) * pow($val, $val / 5);
+}, Applicative\pure(12), Applicative\pure(9));
+```
+
 ### CollectionApplicatives
 
 - **Note:** This feature is not available in versions ***1.9.0*** and ***upwards***. Consider using the [ListMonad](#the-list-monad) instead.
@@ -81,9 +123,8 @@ The IO monad is one built purposely for handling impure operations. Impure opera
 ```php
 use Chemem\Bingo\Functional\Functors\Monads\IO;
 
-$io = IO::of(function () : string { return file_get_contents('path/to/file'); })
+$io = IO::of(file_get_contents('path/to/file'))
     ->map('strtoupper')
-    ->bind('var_dump')
     ->exec();
 //should output the contents of a text file in uppercase
 ``` 
