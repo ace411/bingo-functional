@@ -817,7 +817,7 @@ Returns the last element in a list.
 $head = ListMonad\last(ListMonad\fromValue([3, 4, 5]));
 ```
 
-## Maybe Left/Nothing types
+## Maybe Just/Nothing types
 
 Borrowed from Haskell is the Maybe type which is composed of two subtypes, Just, and Nothing. The Just type is a functor to which one can bind a value intended for transformation whereas the Nothing type is a null value.
 
@@ -845,6 +845,181 @@ $var = Maybe::fromValue(33)
 
 $anotherVar = Maybe::fromValue(null)
     ->isNothing(); //returns true
+```
+
+### Maybe functions
+> Adapted from [Haskell](hackage.haskell.org/package/base-4.11.1.0/docs/Data-Maybe.html)
+
+#### Maybe\maybe
+```
+Maybe\maybe(mixed $default, callable $function, Maybe $maybe)
+```
+
+**Since:** - v1.11.0
+
+**Arguments**
+
+- ***default (mixed)*** - arbitrary default value
+- ***function (callable)*** - function to map onto Just-value
+- ***maybe (Maybe)*** - instance of Maybe monad
+
+Performs case analysis for the Maybe monad: applies function to Just-value if ```Maybe``` value is not ```Nothing``` - default value otherwise.
+
+```php
+use Chemem\Bingo\Functional\Functors\Maybe;
+
+$maybe = Maybe\Maybe::fromValue(12)
+    ->filter(function ($val) {
+        return $val > 15;
+    });
+
+$ret = Maybe\maybe('Error: value is lower than 15', function ($val) {
+    return pow($val, 2) / 18;
+}, $maybe);
+```
+
+#### Maybe\isJust
+```
+Maybe\isJust(Maybe $maybe)
+```
+
+**Since:** - v1.11.0
+
+**Arguments**
+
+- ***maybe (Maybe)*** - instance of Maybe monad
+
+Returns ```true``` if the given value is a Just-value, ```false``` otherwise.
+
+```php
+$check = Maybe\isJust(Maybe\Maybe::fromValue(2));
+```
+
+#### Maybe\isNothing
+```
+Maybe\isNothing(Maybe $maybe)
+```
+
+**Since:** - v1.11.0
+
+**Arguments**
+
+- ***maybe (Maybe)*** - instance of Maybe monad
+
+Returns ```true``` if the given value is ```Nothing```, ```false``` otherwise.
+
+```php
+$check = Maybe\isNothing(Maybe\Maybe::fromValue(2, 2));
+```
+
+#### Maybe\fromJust
+```
+Maybe\fromJust(Maybe $maybe)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***maybe (Maybe)*** - instance of Maybe monad
+
+Extracts the element from a ```Just``` instance and throws an error if its argument is ```Nothing```.
+
+```php
+$val = Maybe\fromJust(Maybe\Maybe::fromValue(8));
+```
+
+#### Maybe\fromMaybe
+```
+Maybe\fromMaybe(mixed $default, Maybe $maybe)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***default (mixed)*** - arbitrary default value
+- ***maybe (Maybe)*** - instance of Maybe monad
+
+Works like the ```Maybe\fromJust``` function but returns a default value if the Maybe-value is of type ```Nothing```.
+
+```php
+$val = Maybe\fromMaybe(8, Maybe\Maybe::nothing());
+```
+
+#### Maybe\listToMaybe
+```
+Maybe\listToMaybe(array $list)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***list (array)*** - an array
+
+Returns ```Nothing``` on an empty list or the first element of the list encapsulated in a ```Just``` instance.
+
+```php
+$ret = Maybe\listToMaybe(range(3, 7));
+```
+
+#### Maybe\maybeToList
+```
+Maybe\maybeToList(Maybe $maybe)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***maybe (Maybe)*** - instance of Maybe monad
+
+Returns an empty list when Maybe value is of type Nothing and a Singleton list otherwise.
+
+```php
+$ret = Maybe\maybeToList(Maybe\Maybe::just('foo'));
+```
+
+#### Maybe\catMaybes
+```
+Maybe\catMaybes(array $maybes)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***maybes (array)*** - an array of Maybe-type values
+
+Takes a list of Maybes and returns a list of all the Just values.
+
+```php
+$res = Maybe\catMaybes([
+    Maybe\Maybe::just(12),
+    Maybe\Maybe::nothing(),
+    Maybe\Maybe::just(2)
+]);
+```
+
+#### Maybe\mapMaybe
+```
+Maybe\mapMaybe(callable $function, array $values)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***function (callable)*** - a function to map onto list
+- ***values (array)*** - a list of values
+
+The ```mapMaybe``` function is a version of ```map```, specific to the Maybe type, which can throw out elements.
+
+```php
+$ret = Maybe\mapMaybe(function ($val) {
+    return Maybe\Maybe::just($val * 2);
+}, range(1, 4));
 ```
 
 ## Either Left/Right types
