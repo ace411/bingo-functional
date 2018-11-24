@@ -334,6 +334,33 @@ $fib = A\trampoline(function (int $val) use (&$fib) { return $val < 2 ? $val : $
 echo $fib(11); //outputs 89
 ```
 
+## Flip function
+
+```
+flip(callable $function)(mixed ...$args)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***function (callable)*** - The function whose argument order is to be changed
+- ***args (mixed)*** - The function arguments
+
+The flip function reverses the order of a function's arguments.
+
+```php
+$func = A\flip(function (int $a, int $b, int $c) : array {
+    $ret = pow((abs(pow($b, 2)) - (4 * $a * $c)), 0.5);
+    $den = 2 * $a;
+
+    return [(-$b + $ret) / $den, (-$b - $ret) / $den]; 
+});
+
+list($x1, $x2) = $func(1, 6, 5);
+//x1 = -0.2, x2 = -1
+```
+
 ## Callback signatures
 
 **Note:** Callbacks will not be usable beyond bingo-functional v1.7.2. Check out the [changelog](https://ace411.github.io/bingo-functional/changes).

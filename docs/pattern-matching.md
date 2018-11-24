@@ -99,7 +99,8 @@ $arrayMatch = PM\patternMatch(
 //outputs fUNCTIONAL
 ```
 
-Added in version 1.10.0 is the object match feature - convenient for comparing class instances.
+- Added in version 1.10.0 is the object match feature - convenient for comparing class instances.
+- Added in version 1.11.0 is the wildcard match feature. See [issue #12](https://github.com/ace411/bingo-functional/issues/12).
 
 ```php
 use \Chemem\Bingo\Functional\Functors\Monads\{IO, Reader};
@@ -113,4 +114,43 @@ $objectMatch = PM\patternMatch(
 	IO::of(function () { return 12; })
 );
 //outputs IO monad instance
+```
+
+## letIn function
+
+```
+letIn(array $keys, array $list)(array $args, callable $operation)
+```
+
+**Since:** v1.11.0
+
+**Arguments:**
+
+- ***keys (array)*** - The keys for the deconstruction 
+- ***list (array)*** - The list to deconstruct
+- ***args (array)*** - The arguments to use in the deconstruction operation
+- ***operation (callable)*** - The deconstruction operation
+
+In Elm, it is possible to deconstruct lists (tuples and records) via pattern matching with let-in syntax. An example like the one below is a demonstration of such an operation:
+
+```elm
+numbers = 
+	( 1, 9, 7, 13 )
+
+let (a, b, c, d) = 
+	numbers 
+		in 
+			a + b + c + d
+-- output is 30
+```
+The result of execution of the code in the snippet above is the integer value ```30```. The let segment creates aliases for the values in the numbers tuple - something akin to the usage of the list directive in PHP. Also, said syntax scopes all the aliases (```a```, ```b```, ```c```, and ```d```) to the operations in the in-section of the code. The bingo-functional implementation of the same snippet is as follows:
+
+```php
+$numbers = [1, 9, 7, 13];
+
+$let = PM\letIn(['a', 'b', 'c', 'd'], $numbers);
+
+$in = $let(['a', 'b', 'c', 'd'], function ($a, $b, $c, $d) {
+	return $a + $b + $c + $d;
+});
 ```
