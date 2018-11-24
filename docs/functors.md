@@ -27,7 +27,7 @@ $addTen = Applicative::pure(function (int $a) : int { return $a + 10; });
 
 ### CollectionApplicatives
 
-- **Note:** This feature is not available in versions ***1.9.0*** and ***upwards***.
+- **Note:** This feature is not available in versions ***1.9.0*** and ***upwards***. Consider using the [ListMonad](#the-list-monad) instead.
 
 Applicatives and CollectionApplicatives are not entirely dissimilar. The latter functors are indeed applicatives but more amenable to the creation of [ziplists](http://hackage.haskell.org/package/base-4.10.0.0/docs/Control-Applicative.html#v:ZipList), which are, fundamentally, traversable data structures.
 
@@ -51,6 +51,12 @@ $addTen->apply($num)
 ```
 
 **Using the ap method** - For versions **1.10.0** and **upwards**
+
+```php
+$action = Applicative::pure(function ($val) {
+    return pow($val, 3) / 4;
+})->ap(Applicative::pure(2));
+```
 
 ## Monad
 
