@@ -42,6 +42,8 @@ Applicative\pure(mixed $value)
 Lifts a value.
 
 ```php
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicative;
+
 $app = Applicative\pure(function (string $text) {
     return substr($text, 0, (5 - mb_strlen($text)));
 });
@@ -115,6 +117,54 @@ $val = Monad::return(10)
 ***Monads*** map functions onto values stored inside their contexts whereas ***Applicatives*** bind values to the functions stored inside theirs.
 
 **Note:** As of version 1.4.0, the Monad class will not be available. Refer to the [change log](https://github.com/ace411/bingo-functional/blob/master/docs/changes.md) for more details.
+
+### Monad functions
+> Adapted from [Haskell](http://hackage.haskell.org/package/base-4.12.0.0/docs/Prelude.html#v:-62--62--61-)
+
+#### Monads\bind
+```
+Monads\bind(callable $actionB, object $actionB)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***actionB (callable)*** - Function that evaluates to a Monadic value
+- ***actionA (object)*** - Monad instance (IO, ListMonad, State, Writer, Reader, Either, Maybe) 
+
+Sequentially composes two actions - passing any value produced by the first as an argument to the second.
+
+```php
+use Chemem\Bingo\Functional\Algorithms as A;
+use Chemem\Bingo\Functional\Functors\Monads\IO;
+use Chemem\Bingo\Functional\Functors\Monads as M;
+
+$ret = M\bind(function (string $contents) {
+    $res = A\compose('json_encode', 'json_decode', IO\IO);
+    return $res($contents);
+}, IO\IO(file_get_contents('path/to/json/file')));
+```
+
+#### Monads\mcompose
+```
+Monads\mcompose(callable $valB, callable $valA)
+```
+
+**Since:** v1.11.0
+
+**Arguments**
+
+- ***valA (callable)*** - Monadic value
+- ***valB (callable)*** - Monadic value
+
+Composes two monadic values from right to left.
+
+```php
+$ret = M\mcompose(A\partial(IO\appendFile, 'path/to/file'), IO\readFile);
+
+$ret(IO\IO('path/to/another/file'));
+```
 
 ### The IO Monad
 
