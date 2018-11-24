@@ -871,6 +871,160 @@ $partitionedEithers = Either::partitionEithers($eithers);
 //should return ['left' => ['Invalid Integer'], 'right' => [12, 10]]
 ```
 
+- **Note:** The ```partitionEithers``` function is not available as a static method beyond v1.10.0. It is, in subsequent version(s), exclusively a function in the namespace ```Chemem\Bingo\Functional\Functors\Either```.
+
+### Either functions
+> Adapted from [Haskell](http://hackage.haskell.org/package/base-4.11.1.0/docs/Data-Either.html)
+
+#### Either\either
+```
+Either\either(callable $left, callable $right, Either $either)
+```
+
+**Since:** - v1.11.0
+
+**Arguments**
+
+- ***left (callable)*** - function to apply to an instance of ```Either\Left```
+- ***right (callable)*** - function to apply to an instance of ```Either\Right```
+- ***either (Either)*** - instance of ```Either``` monad
+
+Performs case analysis for the ```Either``` monad: applies the Right-value function to a ```Right``` instance of an Either type and a Left-value function to a ```Left``` instance of the same monad.
+
+```php
+use Chemem\Bingo\Functional\Functors\Either;
+
+$either = Either::right(12)
+    ->filter(function (int $val) {
+        return $val > 15;
+    }, 'Error > Value is less than 15');
+
+$case = Either\either(A\partial('str_replace', ' >', ':'), function ($result) {
+    return pow($result, 2) / 18;
+}, $either);
+```
+
+#### Either\isRight
+```
+Either\isRight(Either $either)
+```
+
+**Since:** - v1.11.0
+
+**Arguments**
+
+- ***either (Either)*** - instance of Either monad
+
+Returns ```true``` if the given value is a Right-value, ```false``` otherwise.
+
+```php
+$check = Either\isRight(Either::right(2));
+```
+
+#### Either\isLeft
+```
+Either\isLeft(Either $either)
+```
+
+**Since:** - v1.11.0
+
+**Arguments**
+
+- ***either (Either)*** - instance of Either monad
+
+Returns ```true``` if the given value is a Left-value, ```false``` otherwise.
+
+```php
+$check = Either\isLeft(Either::left(2));
+```
+
+#### Either\rights
+```
+Either\rights(array $eithers)
+```
+
+**Since:** - v1.11.0
+
+**Arguments**
+
+- ***eithers (array)*** - A list of ```Either``` type values
+
+Extracts from a list of ```Either``` values - all the ```Right``` elements.
+
+```php
+$val = Either\rights([
+    Either::right(12),
+    Either::left('Error!'),
+    Either::right('foo')
+]);
+```
+
+#### Either\lefts
+```
+Either\lefts(array $eithers)
+```
+
+**Since:** - v1.11.0
+
+**Arguments**
+
+- ***eithers (array)*** - A list of ```Either``` type values
+
+Extracts from a list of ```Either``` values - all the ```Left``` elements.
+
+```php
+$val = Either\lefts([
+    Either::right(12),
+    Either::left('Error!'),
+    Either::right('foo')
+]);
+```
+
+#### Either\fromRight
+```
+Either\fromRight(mixed $default, Either $either)
+```
+
+**Since:** - v1.11.0
+
+**Arguments**
+
+- ***default (mixed)*** - Arbitrary default value
+- ***either (Either)*** - Instance of Either monad
+
+Returns the contents of a Right-value or a default value otherwise.
+
+```php
+$eth = Either\fromRight(55, Either::left(10));
+```
+
+#### Either\fromLeft
+```
+Either\fromLeft(mixed $default, Either $either)
+```
+
+**Since:** - v1.11.0
+
+**Arguments**
+
+- ***default (mixed)*** - Arbitrary default value
+- ***either (Either)*** - Instance of Either monad
+
+Returns the contents of a Left-value or a default value otherwise.
+
+```php
+$eth = Either\fromLeft('bar', Either::right('foo'));
+```
+
+#### Either\partitionEithers
+```
+Either\partitionEithers(array $eithers)
+```
+
+**Since:** v1.11.0
+
+Check out the ```partitionEithers``` docs in the antecedent text.
+
 ### Common methods
 
 - **filter()**
@@ -883,10 +1037,10 @@ $justVal = Maybe::just(2)
 //should return 2 encapsulated in a Just type object
 
 $rightval = Either::right('12')
-    ->filter(
-        function (string $a) : bool { return is_numeric($a); },
-        'Value is not a numeric string'
-    ); //should return '12' encapsulated in a Right type object
+    ->filter(function (string $a) : bool { 
+        return is_numeric($a); 
+    }, 'Value is not a numeric string'); 
+//should return '12' encapsulated in a Right type object
 ```
 
 - **map()**
@@ -894,7 +1048,9 @@ $rightval = Either::right('12')
 The ```map()``` method makes it possible to mutate functor context by enabling function binding.
 
 ```php
-$justVal->map(function (int $a) : int { return $a + 10; }); 
+$justVal->map(function (int $a) : int { 
+    return $a + 10; 
+}); 
 //should return 12 encapsulated in a Just type object
 //should work in a similar way for Right type objects
 ```
@@ -904,7 +1060,9 @@ $justVal->map(function (int $a) : int { return $a + 10; });
 The ```flatMap()``` method works in a manner similar to the ```map()``` method but returns a non-encapsulated value.
 
 ```php
-$justVal->flatMap(function (int $a) : int { return $a * 10; }); 
+$justVal->flatMap(function (int $a) : int { 
+    return $a * 10; 
+}); 
 //should return 20
 ```
 
