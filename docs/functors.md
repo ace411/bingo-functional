@@ -1069,7 +1069,7 @@ Performs case analysis for the ```Either``` monad: applies the Right-value funct
 ```php
 use Chemem\Bingo\Functional\Functors\Either;
 
-$either = Either::right(12)
+$either = Either\Either::right(12)
     ->filter(function (int $val) {
         return $val > 15;
     }, 'Error > Value is less than 15');
@@ -1093,7 +1093,7 @@ Either\isRight(Either $either)
 Returns ```true``` if the given value is a Right-value, ```false``` otherwise.
 
 ```php
-$check = Either\isRight(Either::right(2));
+$check = Either\isRight(Either\Either::right(2));
 ```
 
 #### Either\isLeft
@@ -1110,7 +1110,7 @@ Either\isLeft(Either $either)
 Returns ```true``` if the given value is a Left-value, ```false``` otherwise.
 
 ```php
-$check = Either\isLeft(Either::left(2));
+$check = Either\isLeft(Either\Either::left(2));
 ```
 
 #### Either\rights
@@ -1128,9 +1128,9 @@ Extracts from a list of ```Either``` values - all the ```Right``` elements.
 
 ```php
 $val = Either\rights([
-    Either::right(12),
-    Either::left('Error!'),
-    Either::right('foo')
+    Either\Either::right(12),
+    Either\Either::left('Error!'),
+    Either\Either::right('foo')
 ]);
 ```
 
@@ -1149,9 +1149,9 @@ Extracts from a list of ```Either``` values - all the ```Left``` elements.
 
 ```php
 $val = Either\lefts([
-    Either::right(12),
-    Either::left('Error!'),
-    Either::right('foo')
+    Either\Either::right(12),
+    Either\Either::left('Error!'),
+    Either\Either::right('foo')
 ]);
 ```
 
@@ -1170,7 +1170,7 @@ Either\fromRight(mixed $default, Either $either)
 Returns the contents of a Right-value or a default value otherwise.
 
 ```php
-$eth = Either\fromRight(55, Either::left(10));
+$eth = Either\fromRight(55, Either\Either::left(10));
 ```
 
 #### Either\fromLeft
@@ -1188,7 +1188,7 @@ Either\fromLeft(mixed $default, Either $either)
 Returns the contents of a Left-value or a default value otherwise.
 
 ```php
-$eth = Either\fromLeft('bar', Either::right('foo'));
+$eth = Either\fromLeft('bar', Either\Either::right('foo'));
 ```
 
 #### Either\partitionEithers
