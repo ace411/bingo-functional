@@ -25,3 +25,10 @@ function compose(callable ...$functions)
         identity
     );
 }
+
+const composeR = 'Chemem\\Bingo\\Functional\\Algorithms\\composeR';
+
+function composeR(callable ...$functions) : callable
+{
+    return compose(...array_reverse($functions));
+}
