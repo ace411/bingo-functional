@@ -23,16 +23,16 @@ function fold(callable $func, array $collection, $acc)
 }
 
 /**
- * foldRight function.
+ * foldR function.
  *
- * foldRight :: (a -> b) -> [a] -> a
+ * foldR :: (a -> b) -> [a] -> a
  *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
-const foldRight = 'Chemem\\Bingo\\Functional\\Algorithms\\foldRight';
+const foldR = 'Chemem\\Bingo\\Functional\\Algorithms\\foldR';
 
-function foldRight(callable $func, array $collection, $acc)
+function foldR(callable $func, array $collection, $acc)
 {
     foreach (array_reverse($collection) as $index => $value) {
         $acc = $func($acc, $value);
@@ -42,18 +42,18 @@ function foldRight(callable $func, array $collection, $acc)
 }
 
 /**
- * reduceRight function.
+ * reduceR function.
  *
- * foldRight :: (a -> b) -> [a] -> a
+ * foldR :: (a -> b) -> [a] -> a
  *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
-const reduceRight = 'Chemem\\Bingo\\Functional\\Algorithms\\reduceRight';
+const reduceR = 'Chemem\\Bingo\\Functional\\Algorithms\\reduceR';
 
-function reduceRight(callable $func, array $collection, $acc)
+function reduceR(callable $func, array $collection, $acc)
 {
-    return foldRight($func, $collection, $acc);
+    return foldR($func, $collection, $acc);
 }
 
 /**

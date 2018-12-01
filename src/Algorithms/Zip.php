@@ -13,9 +13,15 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const zip = 'Chemem\\Bingo\\Functional\\Algorithms\\zip';
 
-function zip(callable $fn = null, array ...$args) : array
+function zip(array ...$lists) : array
 {
-    return is_null($fn) ?
-        array_map(null, ...$args) :
-        array_map($fn, ...$args);
+    $acc = [];
+    foreach ($lists as $key => $list) {
+        foreach ($list as $index => $val) {
+            if (indexOf($list, $val) == $index) {
+                $acc[$index][] = $val; 
+            }
+        }
+    }
+    return $acc;
 }

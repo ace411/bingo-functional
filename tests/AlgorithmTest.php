@@ -48,14 +48,9 @@ class AlgorithmTest extends TestCase
         $nums = [1, 2];
         $positions = ['PG', 'SG'];
 
-        $zipped = A\zip(
-            function ($num, $pos) {
-                return $num.' is '.$pos;
-            },
-            $nums,
-            $positions
-        );
-        $this->assertEquals(['1 is PG', '2 is SG'], $zipped);
+        $zipped = A\zip($nums, $positions);
+
+        $this->assertEquals([[1, 'PG'], [2, 'SG']], $zipped);
     }
 
     public function testCurryReturnsClosure()
@@ -88,7 +83,7 @@ class AlgorithmTest extends TestCase
 
     public function testUnzipReturnsArrayOfInitiallyGroupedArrays()
     {
-        $zipped = A\zip(null, [1, 2], ['PG', 'SG']);
+        $zipped = A\zip(range(1, 2), ['PG', 'SG']);
         $unzipped = A\unzip($zipped);
 
         $this->assertEquals(
@@ -235,7 +230,7 @@ class AlgorithmTest extends TestCase
             return $acc.'-'.$val;
         };
 
-        $fold = A\foldRight($foldFn, $strings, 'fum');
+        $fold = A\foldR($foldFn, $strings, 'fum');
 
         $this->assertEquals('fum-baz-bar-foo', $fold);
     }
