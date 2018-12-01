@@ -63,6 +63,8 @@
             "src/Algorithms/Unique.php",
             "src/Algorithms/Compact.php",
             "src/Algorithms/Flatten.php",
+            "src/Algorithms/Union.php",
+            "src/Algorithms/UnionWith.php",
             "src/Algorithms/DropLeft.php",
             "src/Algorithms/DropRight.php",
             "src/Algorithms/Partition.php",
