@@ -522,4 +522,32 @@ class AlgorithmTest extends TestCase
 
         $this->assertEquals(15, $flip(2, 10));
     }
+
+    public function testUnionFunctionCombinesArrays()
+    {
+        $union = A\union(range(1, 3), [2, 4, 9, 11]);
+
+        $this->assertInternalType('array', $union);
+        $this->assertEquals([1, 2, 3, 4, 9, 11], array_values($union));
+    }
+
+    public function testUnionWithFunctionCombinesArraysUponFulfillmentOfCondition()
+    {
+        $union = A\unionWith(function (array $num, array $str) {
+            return A\isArrayOf($num) == 'integer' && A\isArrayOf($str) == 'string';            
+        }, range(1, 3), range(4, 9));
+
+        $this->assertInternalType('array', $union);
+        $this->assertEquals([], $union);
+    }
+
+    public function testZipWithFunctionZipsListsBasedOnFunctionPredicate()
+    {
+        $zipped = A\zipWith(function (int $int, string $str) : int {
+            return $int + strlen($str);
+        }, range(1, 3), ['foo', 'bar', 'baz']);
+
+        $this->assertInternalType('array', $zipped);
+        $this->assertEquals([4, 5, 6], $zipped);
+    }
 }
