@@ -64,6 +64,7 @@
             "src/Algorithms/Compact.php",
             "src/Algorithms/Flatten.php",
             "src/Algorithms/Union.php",
+            "src/Algorithms/FilePath.php",
             "src/Algorithms/UnionWith.php",
             "src/Algorithms/DropLeft.php",
             "src/Algorithms/ZipWith.php",
