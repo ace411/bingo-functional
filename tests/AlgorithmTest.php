@@ -550,4 +550,12 @@ class AlgorithmTest extends TestCase
         $this->assertInternalType('array', $zipped);
         $this->assertEquals([4, 5, 6], $zipped);
     }
+
+    public function testFilePathFunctionOutputsStringSeparatedBySlashes()
+    {
+        $path = A\filePath(1, 'composer.json');
+
+        $this->assertInternalType('string', $path);
+        $this->assertRegExp('/([\/\\\])+/', $path);
+    }
 }
