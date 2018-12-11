@@ -42,8 +42,12 @@ The bingo-functional library's utilities are namespaced. Below is a listing of a
 | Pattern Matching Functions | ```Chemem\Bingo\Functional\PatternMatching\```           |
 | Immutable Collections      | ```Chemem\Bingo\Functional\Immutable\Collection\```       |
 
-Recently, I have been working on a book which puts this library at the forefront of many explanations of functional programming in PHP. I advise that you, a visitor of this site and prospective user of the bingo-functional library, consider purchasing the volume set to retail on Leanpub.
+Recently, I have been working on a book which puts this library at the forefront of many explanations of functional programming in PHP. I advise that you, a visitor of this site and prospective user of the bingo-functional library, consider purchasing the volume currently retailing on [Leanpub](https://leanpub.com/functionalprogramminginphp).
 
 <p align="center">
     <img src="https://s3.amazonaws.com/titlepages.leanpub.com/functionalprogramminginphp/hero?1540289375" onClick="location.href='https://leanpub.com/functionalprogramminginphp'" style="cursor:hover;" height="480">
 </p>  
+
+## Ownership
+
+Built by [Lochemem Bruno Michael](https://github.com/ace411) and licensed under <strong>Apache-2.0</strong>
