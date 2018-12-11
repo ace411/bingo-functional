@@ -4,7 +4,6 @@
 
 > A simple functional programming library for PHP.
 
-- Simple and easy to install
 - Helper Functions
 - Monads
 - Pattern Matching
