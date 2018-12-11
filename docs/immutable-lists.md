@@ -1,12 +1,3 @@
----
-logo: bingo-functional-logo.png
-description: Documentation for Immutable Collections
-prev: /pattern-matching.html
-prevTitle: Pattern Matching
-next: /functors.html
-nextTitle: Functors
----
-
 # Immutable Lists
 
 An immutable collection is a data structure which is convenient for functional programming because it is [inherently persistent](https://en.wikipedia.org/wiki/Persistent_data_structure). Persistence implies state maintenance - this is especially important for graceful mutation.

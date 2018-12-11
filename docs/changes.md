@@ -1,12 +1,3 @@
----
-logo: bingo-functional-logo.png
-description: Change log for the project
-prev: /repl.html
-prevTitle: Console
-next: /index.html
-nextTitle: Installation
----
-
 # Change log
 
 ## v1.0.0

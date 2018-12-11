@@ -1,12 +1,3 @@
----
-logo: bingo-functional-logo.png
-description: Documentation for helper functions used on functions
-prev: /index.html
-prevTitle: Installation
-next: /collection.html
-nextTitle: Collection Helpers
----
-
 # Function Helpers
 
 ## Composing functions
