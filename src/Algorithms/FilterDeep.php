@@ -17,7 +17,7 @@ function filterDeep(callable $function, array $values) : array
 {
     $acc = [];
     foreach ($values as $key => $value) {
-        $acc[$key] = is_array($value) ? filter($function, $value) : filter($function, [$value]);
+        $acc[$key] = is_array($value) ? filterDeep($function, $value) : filter($function, [$value]);
     }
     return flatten($acc);
 }
