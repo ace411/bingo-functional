@@ -58,6 +58,7 @@
             "src/Algorithms/Flip.php",
             "src/Algorithms/Mean.php",
             "src/Algorithms/Filter.php",
+            "src/Algorithms/FilterDeep.php",
             "src/Algorithms/Reject.php",
             "src/Algorithms/Fold.php",
             "src/Algorithms/Unique.php",
