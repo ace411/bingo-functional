@@ -498,6 +498,16 @@ class AlgorithmTest extends TestCase
         $this->assertEquals([2, 4, [6, 8], [10, [12, 14]]], $deep);
     }
 
+    public function testFilterDeepFunctionEvaluatesEachValueMultidimensionalArrayBasedOnBooleanPredicate()
+    {
+        $filter = A\filterDeep(function ($val) {
+            return $val > 5;
+        }, [1, 2, [3, 4], [5, [6, 7, 99]]]);
+
+        $this->assertEquals([6, 7, 99], $filter);
+        $this->assertInternalType('array', $filter);
+    }
+
     public function testOmitFunctionOutputsArrayWithoutSpecifiedKeys()
     {
         $omit = A\omit(['foo' => 12, 'bar' => 13, 'baz' => 13], 'foo', 'baz');
