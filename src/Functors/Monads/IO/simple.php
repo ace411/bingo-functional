@@ -150,3 +150,23 @@ function _print(IOMonad $interaction) : IOMonad
             return printf('%s', concat(PHP_EOL, $result, identity(''))); 
         });
 }
+
+const IOException = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\IOException';
+
+function IOException(string $message) : IOMonad
+{
+    return IO(function () use ($message) {
+        return function () use ($message) {
+            throw new IOException($message);
+        };
+    });
+}
+
+const catchIO = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\catchIO';
+
+function catchIO(IOMonad $exception) : IOMonad
+{
+    return $exception->bind(function (callable $exception) {
+        return IO(toException($exception));
+    });
+}

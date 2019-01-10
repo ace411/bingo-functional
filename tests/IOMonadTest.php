@@ -100,4 +100,19 @@ class IOMonadTest extends PHPUnit\Framework\TestCase
         $this->assertInternalType('string', $file->exec());
         $this->assertEquals('THIS IS AN IO MONAD TEST FILE.', $file->flatMap('strtoupper'));
     }
+
+    public function testIOExceptionThrowsIOException()
+    {
+        $this->expectException(IO\IOException::class);
+        $exception = IO\IOException('some random exception')->exec()();
+    }
+
+    public function testCatchIOCatchesIOException()
+    {
+        $catch = IO\catchIO(IO\IOException('another exception'));
+
+        $this->assertInstanceOf(IO::class, $catch);
+        $this->assertEquals('another exception', $catch->exec());
+        $this->assertInternalType('string', $catch->exec());
+    }
 }
