@@ -328,10 +328,14 @@ const letIn = 'Chemem\\Bingo\\Functional\\PatternMatching\\letIn';
 
 function letIn(array $params, array $list) : callable
 {    
-    $patterns = array_merge(...array_map(function ($param, $val) {
+    $patterns = array_merge(...array_map(function ($param, $val, $acc = []) {
+        if ($param == '_' || is_null($param)) {
+            $acc[] = $val;
+        }
+        
         return [
-            is_null($param) ? '_' : '"' . $param . '"' => function () use ($val, $param) {
-                return !is_null($param) ? $val : false;
+            is_null($param) ? '_' : '"' . $param . '"' => function () use ($acc, $val, $param) {
+                return !is_null($param) ? $val : $acc;
             }
         ];
     }, $params, $list));
