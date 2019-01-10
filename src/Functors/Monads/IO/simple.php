@@ -141,6 +141,15 @@ function _print(IOMonad $interaction) : IOMonad
         });
 }
 
+/**
+ * 
+ * IOException function
+ * throws an IO exception
+ * 
+ * @param string $message
+ * @return object IO
+ */
+
 const IOException = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\IOException';
 
 function IOException(string $message) : IOMonad
@@ -151,6 +160,15 @@ function IOException(string $message) : IOMonad
         };
     });
 }
+
+/**
+ * 
+ * catchIO function
+ * catches an IO Exception in an IO monad environment
+ * 
+ * @param IO $exception
+ * @return object IO
+ */
 
 const catchIO = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\catchIO';
 
