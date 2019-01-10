@@ -10,6 +10,13 @@ use PHPUnit\Framework\TestCase;
 
 class PatternMatchTest extends TestCase
 {
+    public static function letInFunc(array $_let, array $_in, callable $action)
+    {
+        $list = range(1, 10);
+        $let = PM\letIn($_let, $list);
+        return $let($_in, $action);
+    }
+
     public function testGetNumConditionsFunctionOutputsArrayOfArities()
     {
         $numConditions = PM\getNumConditions(['(a:b:_)', '(a:_)', '_']);
@@ -221,5 +228,15 @@ class PatternMatchTest extends TestCase
 
         $this->assertInstanceOf(\Closure::class, $let);
         $this->assertEquals(30, $_in);
+    }
+
+    public function testLetInFunctionAcceptsWildcardParameters()
+    {
+        $letIn = self::letInFunc(['a', '_', '_', 'b'], ['a', 'b'], function ($a, $b) {
+            return $a + $b;
+        });
+
+        $this->assertEquals(5, $letIn);
+        $this->assertInternalType('integer', $letIn);
     }
 }
