@@ -11,10 +11,7 @@
 namespace Chemem\Bingo\Functional\Functors\Monads\IO;
 
 use Chemem\Bingo\Functional\Functors\Monads\IO as IOMonad;
-use function Chemem\Bingo\Functional\Algorithms\compose;
-use function Chemem\Bingo\Functional\Algorithms\concat;
-use function Chemem\Bingo\Functional\Algorithms\identity;
-use function Chemem\Bingo\Functional\Algorithms\toException;
+use \Chemem\Bingo\Functional\Algorithms as A;
 
 /**
  * IO function
@@ -47,7 +44,7 @@ function getChar() : IOMonad
 {
     return putChar()
         ->map(function (callable $fget) {
-            return toException($fget)(\STDIN);
+            return A\toException($fget)(\STDIN);
         });
 }
 
@@ -64,7 +61,7 @@ const putChar = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putChar';
 function putChar() : IOMonad
 {
     return IO(function () {
-        return compose('fgetc', 'trim');
+        return A\compose('fgetc', 'trim');
     });
 }
 
@@ -81,7 +78,7 @@ const putStr = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putStr';
 function putStr() : IOMonad
 {
     return IO(function () {
-        return compose('fgets', 'trim');
+        return A\compose('fgets', 'trim');
     });
 }
 
@@ -99,9 +96,9 @@ function getLine() : IOMonad
 {
     return putStr()
         ->map(function (callable $fget) {
-            $result = toException($fget)(\STDIN);
+            $result = A\toException($fget)(\STDIN);
 
-            return concat(\PHP_EOL, $result, identity(''));
+            return A\concat(\PHP_EOL, $result, A\identity(''));
         });
 }
 
@@ -137,7 +134,7 @@ function _print(IOMonad $interaction) : IOMonad
 {
     return $interaction
         ->map(function (string $result) {
-            return printf('%s', concat(PHP_EOL, $result, identity('')));
+            return printf('%s', A\concat(PHP_EOL, $result, A\identity('')));
         });
 }
 
@@ -172,9 +169,14 @@ function IOException(string $message) : IOMonad
 
 const catchIO = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\catchIO';
 
-function catchIO(IOMonad $exception) : IOMonad
+function catchIO(IOMonad $operation) : IOMonad
 {
-    return $exception->bind(function (callable $exception) {
-        return IO(toException($exception));
+    return $operation->bind(function ($operation) {
+        $exception = A\compose(A\toException, IO);
+        return is_callable($operation) ? 
+            $exception($operation) :
+            $exception(function () use ($operation) {
+                return $operation;
+            });
     });
 }
