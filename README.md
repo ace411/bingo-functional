@@ -33,3 +33,13 @@ Also, a [change log](https://ace411.github.io/bingo-functional/#/changes) exists
 ## Dealing with problems
 
 Endeavor to create an issue on GitHub when the need arises or send an email to lochbm@gmail.com
+
+## Functional Programming in PHP
+
+I recently published a book titled - Functional Programming in PHP - which is currently available on LeanPub. The bingo-functional library features extensively in the text as a tool whose potencies demonstrate usage of Functional Programming ideas in PHP. I advise that you purchase a copy for $9.99.
+
+<p align="center">
+    <a href="https://leanpub.com/functionalprogramminginphp">
+        <img src="https://s3.amazonaws.com/titlepages.leanpub.com/functionalprogramminginphp/hero?1540289375" width="30%">
+    </a>
+</p>
