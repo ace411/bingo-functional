@@ -16,8 +16,10 @@ use function Chemem\Bingo\Functional\Algorithms\fold;
 use function Chemem\Bingo\Functional\Algorithms\mapDeep;
 use function Chemem\Bingo\Functional\Algorithms\partialLeft;
 
-class ListMonad
+class ListMonad implements Monadic
 {
+    const of = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad::of';
+
     /**
      * @var array The collection to transform
      */
@@ -52,7 +54,7 @@ class ListMonad
      *
      * @return object ListMonad
      */
-    public function ap(self $app) : self
+    public function ap(Monadic $app) : Monadic
     {
         $list = $this->extract();
 
@@ -85,7 +87,7 @@ class ListMonad
      *
      * @return object ListMonad
      */
-    public function bind(callable $function) : self
+    public function bind(callable $function) : Monadic
     {
         $concat = compose(
             function (array $list) use ($function) {
@@ -112,7 +114,7 @@ class ListMonad
      *
      * @return object ListMonad
      */
-    public function map(callable $function) : self
+    public function map(callable $function) : Monadic
     {
         return $this->bind(function ($list) use ($function) {
             return self::of($function($list));

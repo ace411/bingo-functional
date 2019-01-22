@@ -9,8 +9,11 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-class State
+class State implements Monadic
 {
+
+    const of = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State::of';
+
     /**
      * @var callable The state computation to store
      */
@@ -47,7 +50,7 @@ class State
      *
      * @return object State
      */
-    public function ap(self $monad) : self
+    public function ap(Monadic $monad) : Monadic
     {
         return $this->bind(function ($function) use ($monad) {
             return $monad->map($function);
@@ -61,7 +64,7 @@ class State
      *
      * @return object State
      */
-    public function bind(callable $function) : self
+    public function bind(callable $function) : Monadic
     {
         return new self(function ($state) use ($function) {
             list($initial, $final) = $this->run($state);
@@ -77,7 +80,7 @@ class State
      *
      * @return object State
      */
-    public function map(callable $function) : self
+    public function map(callable $function) : Monadic
     {
         return $this->bind(function ($state) use ($function) {
             return self::of($function($state));

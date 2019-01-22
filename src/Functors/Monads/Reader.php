@@ -9,8 +9,10 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-class Reader
+class Reader implements Monadic
 {
+    const of = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader::of';
+
     /**
      * @var callable The operation to use to lazily evaluate an environment variable
      */
@@ -45,7 +47,7 @@ class Reader
     /**
      * ap method.
      */
-    public function ap(self $app) : self
+    public function ap(Monadic $app) : Monadic
     {
         return $this->bind(function ($func) use ($app) {
             return $app->map($func);
@@ -59,7 +61,7 @@ class Reader
      *
      * @return object Reader
      */
-    public function map(callable $function) : self
+    public function map(callable $function) : Monadic
     {
         return $this->bind(function ($env) use ($function) {
             return self::of($function($env));
@@ -69,7 +71,7 @@ class Reader
     /**
      * bind method.
      */
-    public function bind(callable $function) : self
+    public function bind(callable $function) : Monadic
     {
         return new self(function ($env) use ($function) {
             return $function($this->run($env))->run($env);
