@@ -12,8 +12,10 @@ namespace Chemem\Bingo\Functional\Functors\Monads;
 use function Chemem\Bingo\Functional\Algorithms\extend;
 use function Chemem\Bingo\Functional\Algorithms\flatten;
 
-class Writer
+class Writer implements Monadic
 {
+    const of = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Writer::of';
+    
     /**
      * @var mixed
      */
@@ -59,7 +61,7 @@ class Writer
      *
      * @return object Writer
      */
-    public function ap(self $app) : self
+    public function ap(Monadic $app) : Monadic
     {
         return $this->bind(function ($function) use ($app) {
             return $app->map($function);
@@ -74,7 +76,7 @@ class Writer
      *
      * @return object Writer
      */
-    public function map(callable $function) : self
+    public function map(callable $function) : Monadic
     {
         return self::of($function($this->result), flatten($this->output));
     }
@@ -87,7 +89,7 @@ class Writer
      *
      * @return object Writer
      */
-    public function bind(callable $function) : self
+    public function bind(callable $function) : Monadic
     {
         list($result, $output) = $function($this->result)->run();
 
