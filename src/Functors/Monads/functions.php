@@ -46,7 +46,7 @@ function mcompose(callable $funcA, callable $funcB)
  */
 const bind = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\bind';
 
-function bind(callable $function, $value = null)
+function bind(callable $function, Monadic $value = null) : Monadic
 {
     return A\curry(function ($function, $value) {
         return $value->bind($function);
