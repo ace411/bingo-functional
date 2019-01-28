@@ -28,4 +28,15 @@ class MonadHelperTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(4, $res->exec());
         $this->assertInternalType('integer', $res->exec());
     }
+
+    public function testFoldMFunctionWorksLikeFoldFunction()
+    {
+        $fold = M\foldM(function (int $acc, int $val) : M\Monadic {
+            return $val < 3 ? M\IO::of($val + $acc) : M\IO::of($val - $acc);
+        }, [4, 7, 9, 2, 1], 0);
+
+        $this->assertInstanceOf(M\IO::class, $fold);
+        $this->assertEquals(9, $fold->exec());
+        $this->assertInternalType('integer', $fold->exec());
+    }
 }
