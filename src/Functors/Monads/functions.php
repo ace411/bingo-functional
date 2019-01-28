@@ -52,3 +52,34 @@ function bind(callable $function, Monadic $value = null) : Monadic
         return $value->bind($function);
     })(...func_get_args());
 }
+
+/**
+ * 
+ * foldM function
+ * Analogous to fold except its result is encapsulated within a monad.
+ * 
+ * foldM :: (a -> b -> m a) -> [b] -> c -> m b
+ * 
+ * @param callable $function
+ * @param array $list
+ * @param mixed $acc
+ */
+const foldM = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\foldM';
+
+function foldM(callable $function, array $list, $acc) : Monadic
+{
+    $monad = $function($acc, A\head($list));
+
+    $fold = function ($acc, $collection) use (&$fold, $monad, $function) {
+        if (count($collection) == 0) {
+            return $monad::of($acc);
+        }
+        $tail = A\tail($collection);
+        $head = A\head($collection);
+
+        return $function($acc, $head)->bind(function ($result) use ($tail, $fold) {
+            return $fold($result, $tail);
+        });
+    };
+    return $fold($acc, $list);
+}
