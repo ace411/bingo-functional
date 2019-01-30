@@ -9,6 +9,8 @@
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
+use \Chemem\Bingo\Functional\Functors\Monads as M;
+
 class Just extends Maybe
 {
     private $value;
@@ -76,7 +78,7 @@ class Just extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function ap(Maybe $app) : Maybe
+    public function ap(M\Monadic $app) : M\Monadic
     {
         return $app->map($this);
     }
@@ -84,7 +86,7 @@ class Just extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function map(callable $fn) : Maybe
+    public function map(callable $fn) : M\Monadic
     {
         return new static($fn($this->getJust()));
     }
@@ -92,7 +94,7 @@ class Just extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function bind(callable $function) : Maybe
+    public function bind(callable $function) : M\Monadic
     {
         return $function($this->getJust());
     }
