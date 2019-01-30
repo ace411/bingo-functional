@@ -83,3 +83,35 @@ function foldM(callable $function, array $list, $acc) : Monadic
     };
     return $fold($acc, $list);
 }
+
+/**
+ * 
+ * filterM function
+ * Analogous to filter except its result is encapsulated in a monad
+ * 
+ * filterM :: (a -> m a) -> [a] -> m [a]
+ * 
+ * @param callable $function
+ * @param array $list
+ */
+const filterM = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\filterM';
+
+function filterM(callable $function, array $list) : Monadic
+{
+    $monad = $function(A\head($list));
+
+    $filter = function ($collection) use (&$filter, $function, $monad) {
+        if (count($collection) == 0) return $monad::of([]);
+        $tail = A\tail($collection);
+        $head = A\head($collection);
+
+        return $function($head)->bind(function ($result) use ($tail, $monad, $head, $filter) {
+            return $filter($tail)->bind(function ($ret) use ($result, $head, $monad) {
+                if ($result) array_unshift($ret, $head);
+                return $monad::of($ret);
+            });
+        });
+    };
+
+    return $filter($list);
+}
