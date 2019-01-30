@@ -9,6 +9,8 @@
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
+use \Chemem\Bingo\Functional\Functors\Monads as M;
+
 class Nothing extends Maybe
 {
     private $nothing;
@@ -69,7 +71,7 @@ class Nothing extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function ap(Maybe $app) : Maybe
+    public function ap(M\Monadic $app) : M\Monadic
     {
         return $this;
     }
@@ -85,7 +87,7 @@ class Nothing extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function map(callable $function) : Maybe
+    public function map(callable $function) : M\Monadic
     {
         return $this;
     }
@@ -101,7 +103,7 @@ class Nothing extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function bind(callable $function) : Maybe
+    public function bind(callable $function) : M\Monadic
     {
         return $this;
     }

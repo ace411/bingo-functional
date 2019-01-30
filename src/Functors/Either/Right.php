@@ -9,6 +9,8 @@
 
 namespace Chemem\Bingo\Functional\Functors\Either;
 
+use \Chemem\Bingo\Functional\Functors\Monads as M;
+
 class Right extends Either
 {
     private $value;
@@ -60,7 +62,7 @@ class Right extends Either
     /**
      * {@inheritdoc}
      */
-    public function ap(Either $app) : Either
+    public function ap(M\Monadic $app) : M\Monadic
     {
         return $app->bind($this->value);
     }
@@ -84,7 +86,7 @@ class Right extends Either
     /**
      * {@inheritdoc}
      */
-    public function map(callable $function) : Either
+    public function map(callable $function) : M\Monadic
     {
         return new static($function($this->getRight()));
     }
@@ -92,7 +94,7 @@ class Right extends Either
     /**
      * {@inheritdoc}
      */
-    public function bind(callable $function) : Either
+    public function bind(callable $function) : M\Monadic
     {
         return $function($this->getRight());
     }

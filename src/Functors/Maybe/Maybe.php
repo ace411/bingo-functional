@@ -9,7 +9,9 @@
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
-abstract class Maybe
+use \Chemem\Bingo\Functional\Functors\Monads as M;
+
+abstract class Maybe implements M\Monadic
 {
     /**
      * just method.
@@ -140,7 +142,7 @@ abstract class Maybe
      *
      * @return object Maybe
      */
-    abstract public function ap(self $app) : self;
+    abstract public function ap(M\Monadic $app) : M\Monadic;
 
     /**
      * getOrElse method.
@@ -162,7 +164,7 @@ abstract class Maybe
      *
      * @return object Maybe
      */
-    abstract public function map(callable $function) : self;
+    abstract public function map(callable $function) : M\Monadic;
 
     /**
      * bind method.
@@ -173,7 +175,7 @@ abstract class Maybe
      *
      * @return object Maybe
      */
-    abstract public function bind(callable $function) : self;
+    abstract public function bind(callable $function) : M\Monadic;
 
     /**
      * filter method.

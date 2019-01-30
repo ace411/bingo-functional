@@ -9,7 +9,9 @@
 
 namespace Chemem\Bingo\Functional\Functors\Either;
 
-abstract class Either
+use \Chemem\Bingo\Functional\Functors\Monads as M;
+
+abstract class Either implements M\Monadic
 {
     /**
      * left method.
@@ -132,7 +134,7 @@ abstract class Either
      *
      * @return object Functor
      */
-    abstract public function map(callable $function) : self;
+    abstract public function map(callable $function) : M\Monadic;
 
     /**
      * bind method.
@@ -144,7 +146,7 @@ abstract class Either
      *
      * @return object Either
      */
-    abstract public function bind(callable $function) : self;
+    abstract public function bind(callable $function) : M\Monadic;
 
     /**
      * ap method.
@@ -156,7 +158,7 @@ abstract class Either
      *
      * @return object Either
      */
-    abstract public function ap(self $app) : self;
+    abstract public function ap(M\Monadic $app) : M\Monadic;
 
     /**
      * filter method.
