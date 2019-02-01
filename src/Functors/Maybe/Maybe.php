@@ -13,6 +13,14 @@ use \Chemem\Bingo\Functional\Functors\Monads as M;
 
 abstract class Maybe implements M\Monadic
 {
+    const just = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\Maybe::just';
+
+    const nothing = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\Maybe::nothing';
+
+    const fromValue = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\Maybe::fromValue';
+
+    const lift = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\Maybe::lift';
+    
     /**
      * just method.
      *

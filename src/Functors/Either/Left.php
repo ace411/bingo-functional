@@ -13,6 +13,8 @@ use \Chemem\Bingo\Functional\Functors\Monads as M;
 
 class Left extends Either
 {
+    const of = 'Chemem\\Bingo\\Functional\\Functors\\Either\\Left::of';
+
     private $value;
 
     public function __construct($value)

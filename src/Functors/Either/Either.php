@@ -13,6 +13,11 @@ use \Chemem\Bingo\Functional\Functors\Monads as M;
 
 abstract class Either implements M\Monadic
 {
+    const left = 'Chemem\\Bingo\\Functional\\Functors\\Either\\Either::left';
+
+    const right = 'Chemem\\Bingo\\Functional\\Functors\\Either\\Either::right';
+
+    const lift = 'Chemem\\Bingo\\Functional\\Functors\\Either\\Either::lift';
     /**
      * left method.
      *
