@@ -13,6 +13,8 @@ use \Chemem\Bingo\Functional\Functors\Monads as M;
 
 class Nothing extends Maybe
 {
+    const of = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\Nothing::of';
+
     private $nothing;
 
     public function __construct()
