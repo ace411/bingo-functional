@@ -18,7 +18,7 @@ const truncate = 'Chemem\\Bingo\\Functional\\Algorithms\\truncate';
 function truncate(string $string, int $limit) : string
 {
     $strlen = 0;
-    if (!extension_loaded('ext-mbstring')) {
+    if (!function_exists('mb_strlen')) {
         $strlen += strlen($string);
     }
     $strlen += mb_strlen($string, 'utf-8');
