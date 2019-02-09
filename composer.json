@@ -11,7 +11,7 @@
     ],
     "minimum-stability": "dev",
     "require-dev": {
-        "phpunit/phpunit": "~6"
+        "phpunit/phpunit": "~7"
     },
     "require": {
         "php": ">=7.0.0"
@@ -76,6 +76,10 @@
             "src/Algorithms/PartialRight.php",
             "src/Algorithms/ArrayKeysExist.php",
             "src/Algorithms/ConstantFunction.php",
+            "src/Algorithms/Intersects.php",
+            "src/Algorithms/Slugify.php",
+            "src/Algorithms/ToWords.php",
+            "src/Algorithms/Truncate.php",
             "src/Functors/Monads/functions.php",
             "src/Functors/Monads/IO/files.php",
             "src/Functors/Monads/IO/simple.php",

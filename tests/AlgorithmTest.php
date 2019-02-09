@@ -568,4 +568,37 @@ class AlgorithmTest extends TestCase
         $this->assertInternalType('string', $path);
         $this->assertRegExp('/([\/\\\])+/', $path);
     }
+
+    public function testToWordsFunctionTransformsStringIntoArrayOfWords()
+    {
+        $words = A\toWords('lorem ipsum dolor sit & amet', '/[\s\&]+/');
+
+        $this->assertInternalType('array', $words);
+        $this->assertEquals(['lorem', 'ipsum', 'dolor', 'sit', 'amet'], $words);
+    }
+
+    public function testTruncateFunctionShortensStringAndAppendsEllipsisToIt()
+    {
+        $truncated = A\truncate('lorem ipsum dolor sit amet', 5);
+
+        $this->assertInternalType('string', $truncated);
+        $this->assertEquals('lorem...', $truncated);
+    }
+
+    public function testSlugifyReplacesSpacesWithDashesInText()
+    {
+        $slugified = A\slugify('lorem ipsum dolor');
+
+        $this->assertInternalType('string', $slugified);
+        $this->assertEquals('lorem-ipsum-dolor', $slugified);
+    }
+
+    public function testIntersectsFunctionDeterminesIfTwoArraysHaveAtLeastACommonItem()
+    {
+        $intersect = A\partial(A\intersects, range(1, 15));
+
+        $this->assertTrue($intersect(range(12, 19)));
+        $this->assertFalse($intersect(range(19, 22)));
+        $this->assertInternalType('boolean', $intersect(range(2, 4)));
+    }
 }
