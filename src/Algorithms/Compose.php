@@ -26,9 +26,9 @@ function compose(callable ...$functions)
     );
 }
 
-const composeR = 'Chemem\\Bingo\\Functional\\Algorithms\\composeR';
+const composeRight = 'Chemem\\Bingo\\Functional\\Algorithms\\composeRight';
 
-function composeR(callable ...$functions) : callable
+function composeRight(callable ...$functions) : callable
 {
     return compose(...array_reverse($functions));
 }
