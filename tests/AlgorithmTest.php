@@ -27,6 +27,14 @@ class AlgorithmTest extends TestCase
         $this->assertEquals([110, 120, 130], $transformed);
     }
 
+    public function testComposeRightFunctionChainsFunctionsFromRightToLeft()
+    {
+        $compose = A\composeRight('lcfirst', 'strtoupper');
+
+        $this->assertInstanceOf(\Closure::class, $compose);
+        $this->assertEquals('mIKE', $compose('mike'));
+    }
+
     public function testPickGetsArrayIndexValue()
     {
         $toPick = ['bar', 'foo'];
@@ -230,7 +238,7 @@ class AlgorithmTest extends TestCase
             return $acc.'-'.$val;
         };
 
-        $fold = A\foldR($foldFn, $strings, 'fum');
+        $fold = A\foldRight($foldFn, $strings, 'fum');
 
         $this->assertEquals('fum-baz-bar-foo', $fold);
     }
