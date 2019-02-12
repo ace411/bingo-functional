@@ -19,6 +19,9 @@
     "suggest": {
         "chemem/bingo-functional-repl": "A simple REPL for the bingo-functional library"
     },
+    "scripts": {
+        "test": "phpunit -c phpunit.xml.dist"
+    },
     "autoload": {
         "psr-4": {
             "Chemem\\Bingo\\Functional\\": "src/"
