@@ -11,8 +11,9 @@
 [![Latest Stable Version](https://poser.pugx.org/chemem/bingo-functional/v/stable)](https://packagist.org/packages/chemem/bingo-functional)
 [![License](https://poser.pugx.org/chemem/bingo-functional/license)](https://packagist.org/packages/chemem/bingo-functional)
 [![Total Downloads](https://poser.pugx.org/chemem/bingo-functional/downloads)](https://packagist.org/packages/chemem/bingo-functional)
+[![Monthly Downloads](https://poser.pugx.org/chemem/bingo-functional/d/monthly)](https://packagist.org/packages/chemem/bingo-functional)
+[![composer.lock](https://poser.pugx.org/chemem/bingo-functional/composerlock)](https://packagist.org/packages/chemem/bingo-functional)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/ace411/bingo-functional.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Face411%2Fbingo-functional)
-
 
 A simple functional programming library for PHP.
 
