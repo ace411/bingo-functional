@@ -21,10 +21,14 @@ function memoize(callable $function) : callable
         $args = func_get_args();
         $key = md5(serialize($args));
 
+        if (function_exists('apcu_add')) {
+            apcu_add($key, $function(...$args));
+        }
+
         if (!isset($cache[$key])) {
             $cache[$key] = call_user_func_array($function, $args);
         }
 
-        return $cache[$key];
+        return !function_exists('apcu_fetch') ? $cache[$key] : apcu_fetch($key);
     };
 }

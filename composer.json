@@ -17,7 +17,8 @@
         "php": ">=7.0.0"
     },
     "suggest": {
-        "chemem/bingo-functional-repl": "A simple REPL for the bingo-functional library"
+        "chemem/bingo-functional-repl": "A simple REPL for the bingo-functional library",
+        "ext-apcu": "In-memory key-value PHP userland store"
     },
     "scripts": {
         "test": "phpunit -c phpunit.xml.dist"
