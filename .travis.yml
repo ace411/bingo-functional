@@ -7,7 +7,9 @@ php:
 
 before_script: 
     - composer install
-    - pecl install apcu_bc   
+    - if [[ $TRAVIS_PHP_VERSION = "7.0" ]]; then echo yes | pecl install apcu 5.1.5; fi
+    - if [[ $TRAVIS_PHP_VERSION = "7.1" ]]; then echo yes | pecl install apcu 5.1.6; fi
+    - echo $'apc.enabled=1\napc.enable_cli=1' >> ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/travis.ini
 
 script: vendor/bin/phpunit --coverage-clover=coverage.xml
 
