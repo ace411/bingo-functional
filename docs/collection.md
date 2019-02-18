@@ -47,7 +47,7 @@ $plucked = A\pluck($list, 'SF'); //returns 'Durant'
 ## Zipping
 
 ```
-zip(callable $function = null, array ...$arrays)
+zip(array ...$arrays)
 ```
 
 **Since:** v1.0.0
@@ -64,17 +64,30 @@ Also used to manipulate lists is zipping. A zipped array is a multidimensional a
 $pos = ['PG', 'SG', 'SF'];
 $players = ['Dragic', 'Reddick', 'Durant'];
 
-$zippedKeys = A\zip(null, $pos, $players); //key combination
+$zippedKeys = A\zip($pos, $players); //key combination
 //should return [['PG', 'Dragic'], ['SG', 'Reddick'], ['SF', 'Durant']]
+```
 
-$zippedFn = A\zip(
-    function (string $player, string $pos) : string {
-        return $player . ' is a ' . $pos;
-    },
-    $players,
-    $pos
-);
-//should return ['Dragic is a PG', 'Reddick is a SG', 'Durant is a SF']
+## zipWith function
+
+```
+zipWith(callable $function, array ...$list)
+```
+
+**Since:** v1.12.0
+
+**Argument(s):**
+
+- ***function (callable)*** - The zip function
+- ***list (array)*** - The arrays to zip 
+
+Zips two lists based on the result of a zip function.
+
+```php
+$zipped = A\zipWith(function (int $num, int $str) : int {
+    return $num + mb_strlen($str, 'utf-8');
+}, range(1, 3), ['foo', 'bar', 'baz']);
+//outputs [4, 5, 6]
 ```
 
 ## Unzipping
@@ -262,28 +275,6 @@ echo A\isArrayOf($integers);
 //prints 'integer'
 ```
 
-## concat function
-
-```
-concat(string $wildcard, string ...strings)
-```
-
-**Since:** v1.4.0
-
-**Arguments:**
-
-- ***wildcard (string)*** - The wildcard to be used
-- ***strings (string)*** - The strings to concatenate
-
-The concat() function concatenates strings. It appends strings onto each other sequentially. It requires a wildcard separator though.
-
-```php 
-$wildcard = ' ';
-
-echo A\concat($wildcard, 'Kampala', 'is', 'hot');
-//should print 'Kampala is hot'
-```
-
 ## Map function
 
 ```
@@ -395,7 +386,7 @@ fold/reduce(callable $function, array $collection, mixed $acc)
 
 **Arguments:**
 
-- ***function (callable)*** - The filter function
+- ***function (callable)*** - The fold function
 - ***collection (array)*** - The array whose values are evaluated
 - ***acc (mixed)*** - The accumulator value
 
@@ -543,6 +534,25 @@ The arrayKeysExist function determines whether specified keys match the indexes 
 $attributes = ['username' => 'foo', 'password' => 'bar'];
 
 $keysExist = A\arrayKeysExist($attributes, 'username', 'password'); //should evaluate to true
+```
+
+## intersects function
+
+```
+intersects(array $listA, array $listB)
+```
+
+**Since:** v1.12.0
+
+**Arguments:**
+
+- ***listX (array)*** - Arrays to be used for comparison
+
+Checks if two arrays have at least one element in common.
+
+```php
+$intersects = A\intersects(range(1, 50), range(46, 56));
+//outputs true
 ```
 
 ## Reverse function
@@ -826,4 +836,45 @@ const DD_EPISODES = [
 
 $list = A\addKeys(DD_EPISODES, 'season_two');
 //outputs ['Bang', 'Daredevil', 'The Ones we Leave Behind']
+```
+
+## union function
+
+```
+union(array ...$list)
+```
+
+**Since:** v1.12.0
+
+**Argument(s):**
+
+- ***list (array)*** - The lists to merge
+
+Combines multiple arrays into a single array of unique elements.
+
+```php
+$union = A\union(range(1, 5), [4, 3, 99, 48]);
+//prints [1, 2, 3, 4, 5, 99, 48]
+```
+
+## unionWith function
+
+```
+unionWith(callable $function, array ...$list)
+```
+
+**Since:** v1.12.0
+
+**Argument(s):**
+
+- ***function (callable)*** - A function whose result is the basis for combining arrays
+- ***list (array)*** - The lists to merge
+
+Combines multiple arrays on fulfillment of a condition.
+
+```php
+$union = A\unionWith(function (array $num, array $str) : bool {
+    return A\isArrayOf($num) == 'integer' && A\isArrayOf($str) == 'string';
+}, range(1, 5), ['foo', 'bar']);
+//outputs [1, 2, 3, 4, 5, "foo", "bar"]
 ```
