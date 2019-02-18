@@ -5,6 +5,7 @@
 > A simple functional programming library for PHP.
 
 - Helper Functions
+- Functors
 - Monads
 - Pattern Matching
 - Immutable Lists
