@@ -5,6 +5,9 @@
 [![Latest Stable Version](https://poser.pugx.org/chemem/bingo-functional/v/stable)](https://packagist.org/packages/chemem/bingo-functional)
 [![License](https://poser.pugx.org/chemem/bingo-functional/license)](https://packagist.org/packages/chemem/bingo-functional)
 [![Total Downloads](https://poser.pugx.org/chemem/bingo-functional/downloads)](https://packagist.org/packages/chemem/bingo-functional)
+[![Total Downloads](https://poser.pugx.org/chemem/bingo-functional/downloads)](https://packagist.org/packages/chemem/bingo-functional)
+[![Monthly Downloads](https://poser.pugx.org/chemem/bingo-functional/d/monthly)](https://packagist.org/packages/chemem/bingo-functional)
+[![composer.lock](https://poser.pugx.org/chemem/bingo-functional/composerlock)](https://packagist.org/packages/chemem/bingo-functional)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/ace411/bingo-functional.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Face411%2Fbingo-functional)
 
 The bingo-functional library is a functional programming library built in PHP for PHP users. Available in this library are monads, Just/Nothing types, Left/Right types, applicative functors, and function algorithms meant to ease the cognitive burden for those who intend to use them. The subsequent text is documentation of the library which should help you, the reader, understand how to go about using it.
