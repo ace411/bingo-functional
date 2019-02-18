@@ -343,3 +343,43 @@
 - Maybe\catMaybes()
 
 - Maybe\mapMaybe()
+
+## v1.12.0
+
+- Removed function parameter from ```zip``` function
+
+- Created ```Monadic``` interface for Monads
+
+- Added new helper functions
+
+- Added new Monad helper functions
+
+- Added [APCU](https://php.net/apcu)-supported functionality to memoize function
+
+- Added constant static function definitions for ```Monadic``` types
+
+### New Helper functions
+
+- toWords()
+
+- slugify()
+
+- truncate()
+
+- intersects()
+
+- composeRight()
+
+- filePath()
+
+- union()
+
+- unionWith()
+
+- zipWith()
+
+### New Monadic Helper functions
+
+- filterM()
+
+- foldM()
