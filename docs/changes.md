@@ -346,7 +346,7 @@
 
 ## v1.12.0
 
-- Modified ```zip``` function
+- Removed function parameter from ```zip``` function
 
 - Created ```Monadic``` interface for Monads
 
@@ -355,6 +355,8 @@
 - Added new Monad helper functions
 
 - Added [APCU](https://php.net/apcu)-supported functionality to memoize function
+
+- Added constant static function definitions for ```Monadic``` types
 
 ### New Helper functions
 
