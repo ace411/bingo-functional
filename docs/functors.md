@@ -158,6 +158,49 @@ $ret = M\mcompose(A\partial(IO\appendFile, 'path/to/file'), IO\readFile);
 $ret(IO\IO('path/to/another/file'));
 ```
 
+#### Monads\foldM
+
+```
+foldM(callable $function, array $list, mixed $acc)
+```
+
+**Since:** v1.12.0
+
+**Argument(s):**
+
+- ***function (callable)*** - The fold function
+- ***list (array)*** - The array whose values are evaluated
+- ***acc (mixed)*** - The accumulator value
+
+Analogous to [fold](/collection?id=foldreduce-function) except its result is encapsulated within a monad.
+
+```php
+$fold = M\foldM(function (int $acc, int $val) : M\Monadic {
+    return $val < 3 ? M\IO::of($val + $acc) : M\IO::of($val - $acc);
+}, [4, 7, 9, 2, 1], 0);
+```
+
+#### Monads\filterM
+
+```
+filterM(callable $function, array $list)
+```
+
+**Since:** v1.12.0
+
+**Argument(s):**
+
+- ***function (callable)*** - The filter function
+- ***list (array)*** - The array whose values are evaluated
+
+Analogous to [filter](/collection?id=filter-function) except its result is encapsulated within a monad.
+
+```php
+$filter = M\filterM(function (int $val) : M\Monadic {
+    return M\Maybe\Maybe::just($val > 45);
+}, range(1, 50));
+```
+
 ### The IO Monad
 
 The IO monad is one built purposely for handling impure operations. Impure operations are those that break referential transparency and immutability. Database interactions, web service interaction, as well as external file reads are impediments to referential transparency.
