@@ -314,11 +314,11 @@ function evalObjectPattern(array $patterns, $value)
 }
 
 /**
- * 
+ *
  * letIn function
- * 
+ *
  * letIn :: [a] -> [a, b] -> ([a, b] -> c)
- * 
+ *
  * @param array $params
  * @param array $list
  * @return callable
@@ -327,7 +327,7 @@ function evalObjectPattern(array $patterns, $value)
 const letIn = 'Chemem\\Bingo\\Functional\\PatternMatching\\letIn';
 
 function letIn(array $params, array $list) : callable
-{    
+{
     $patterns = array_merge(...array_map(function ($param, $val, $acc = []) {
         if ($param == '_' || is_null($param)) {
             $acc[] = $val;

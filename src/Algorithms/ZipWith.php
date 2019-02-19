@@ -1,11 +1,11 @@
 <?php
 
 /**
- * 
+ *
  * zipWith function
- * 
+ *
  * zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
- * 
+ *
  * @see https://lodash.com/docs/4.17.11#zipWith
  * @author Lochemem Bruno Michael
  * @license Apache-2.0

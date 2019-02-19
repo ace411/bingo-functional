@@ -4,3 +4,4 @@
 composer.lock
 /.couscous/
 /TODO
+/*.cache

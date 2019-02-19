@@ -54,12 +54,12 @@ function bind(callable $function, Monadic $value = null) : Monadic
 }
 
 /**
- * 
+ *
  * foldM function
  * Analogous to fold except its result is encapsulated within a monad.
- * 
+ *
  * foldM :: (a -> b -> m a) -> [b] -> c -> m b
- * 
+ *
  * @param callable $function
  * @param array $list
  * @param mixed $acc
@@ -85,12 +85,12 @@ function foldM(callable $function, array $list, $acc) : Monadic
 }
 
 /**
- * 
+ *
  * filterM function
  * Analogous to filter except its result is encapsulated in a monad
- * 
+ *
  * filterM :: (a -> m a) -> [a] -> m [a]
- * 
+ *
  * @param callable $function
  * @param array $list
  */
@@ -101,13 +101,17 @@ function filterM(callable $function, array $list) : Monadic
     $monad = $function(A\head($list));
 
     $filter = function ($collection) use (&$filter, $function, $monad) {
-        if (count($collection) == 0) return $monad::of([]);
+        if (count($collection) == 0) {
+            return $monad::of([]);
+        }
         $tail = A\tail($collection);
         $head = A\head($collection);
 
         return $function($head)->bind(function ($result) use ($tail, $monad, $head, $filter) {
             return $filter($tail)->bind(function ($ret) use ($result, $head, $monad) {
-                if ($result) array_unshift($ret, $head);
+                if ($result) {
+                    array_unshift($ret, $head);
+                }
                 return $monad::of($ret);
             });
         });

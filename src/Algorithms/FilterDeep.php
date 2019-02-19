@@ -2,9 +2,9 @@
 
 /**
  * filterDeep function
- * 
+ *
  * filterDeep :: (a -> Bool) -> [a] -> [a]
- * 
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */

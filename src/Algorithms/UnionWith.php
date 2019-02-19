@@ -1,11 +1,11 @@
 <?php
 
 /**
- * 
+ *
  * unionWith function
- * 
+ *
  * unionWith :: (a -> b -> Bool) -> [a] -> [b] -> [a, b]
- * 
+ *
  * @see https://lodash.com/docs/4.17.11#unionWith
  * @author Lochemem Bruno Michael
  * @license Apache-2.0

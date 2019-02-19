@@ -1,11 +1,11 @@
 <?php
 
 /**
- * 
+ *
  * slugify function
- * 
+ *
  * slugify :: String -> String
- * 
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */

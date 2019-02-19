@@ -11,7 +11,6 @@ namespace Chemem\Bingo\Functional\Functors\Monads;
 
 class State implements Monadic
 {
-
     const of = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State::of';
 
     /**

@@ -139,10 +139,10 @@ function _print(IOMonad $interaction) : IOMonad
 }
 
 /**
- * 
+ *
  * IOException function
  * throws an IO exception
- * 
+ *
  * @param string $message
  * @return object IO
  */
@@ -159,10 +159,10 @@ function IOException(string $message) : IOMonad
 }
 
 /**
- * 
+ *
  * catchIO function
  * catches an IO Exception in an IO monad environment
- * 
+ *
  * @param IO $exception
  * @return object IO
  */
@@ -173,7 +173,7 @@ function catchIO(IOMonad $operation) : IOMonad
 {
     return $operation->bind(function ($operation) {
         $exception = A\compose(A\toException, IO);
-        return is_callable($operation) ? 
+        return is_callable($operation) ?
             $exception($operation) :
             $exception(function () use ($operation) {
                 return $operation;

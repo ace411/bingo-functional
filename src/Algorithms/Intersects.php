@@ -1,11 +1,11 @@
 <?php
 
 /**
- * 
+ *
  * intersects function
- * 
+ *
  * intersects :: [a] -> [b] -> Bool
- * 
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -22,11 +22,15 @@ function intersects(array $first, array $second) : bool
 
     if ($fSize > $sSize) {
         foreach ($second as $val) {
-            if (in_array($val, $first)) $intersect[] = $val;
+            if (in_array($val, $first)) {
+                $intersect[] = $val;
+            }
         }
     } else {
         foreach ($first as $val) {
-            if (in_array($val, $second)) $intersect[] = $val;
+            if (in_array($val, $second)) {
+                $intersect[] = $val;
+            }
         }
     }
 

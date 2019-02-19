@@ -19,7 +19,7 @@ function zip(array ...$lists) : array
     foreach ($lists as $key => $list) {
         foreach ($list as $index => $val) {
             if (indexOf($list, $val) == $index) {
-                $acc[$index][] = $val; 
+                $acc[$index][] = $val;
             }
         }
     }

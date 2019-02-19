@@ -1,11 +1,11 @@
 <?php
 
 /**
- * 
+ *
  * truncate function
- * 
+ *
  * truncate :: String -> Int -> String
- * 
+ *
  * @see https://lodash.com/docs/4.17.11#truncate
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
@@ -28,7 +28,7 @@ function truncate(string $string, int $limit) : string
     }
 
     $truncate = compose(
-        partialRight('substr', $limit, 0), 
+        partialRight('substr', $limit, 0),
         partialRight(partial(concat, '..'), '.')
     );
 

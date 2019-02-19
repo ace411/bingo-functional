@@ -1,11 +1,11 @@
 <?php
 
 /**
- * 
+ *
  * filePath function
- * 
+ *
  * filePath :: Int -> String -> String
- * 
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
