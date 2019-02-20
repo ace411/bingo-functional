@@ -237,4 +237,188 @@ class CollectionTest extends TestCase
             $list
         );
     }
+
+    public function fetchKeyProvider()
+    {
+        return [
+            [
+                [
+                    ['id' => 35, 'name' => 'Durant'],
+                    ['id' => 6, 'name' => 'LeBron']
+                ],
+                'name',
+                ['Durant', 'LeBron']
+            ],
+            [
+                [
+                    ['show' => 'Game of Thrones', 'network' => 'HBO'],
+                    ['show' => 'The Umbrella Academy', 'network' => 'Netflix']
+                ],
+                'show',
+                ['Game of Thrones', 'The Umbrella Academy']
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider fetchKeyProvider
+     */
+    public function testFetchOutputsCollectionOfDataGroupedByKey($expected, $key, $result)
+    {
+        $collection = Collection::from(...$expected)
+            ->fetch($key);
+
+        $this->assertInstanceOf(Collection::class, $collection);
+        $this->assertEquals($result, $collection->toArray());
+    }
+
+    public function containsCheckProvider()
+    {
+        return [
+            [
+                [
+                    ['id' => 3, 'name' => 'Wade'],
+                    ['id' => 24, 'name' => 'Kobe']
+                ],
+                'Wade',
+                true
+            ],
+            [
+                [
+                    ['id' => 32, 'name' => 'Shaq'],
+                    ['id' => 24, 'name' => 'Kobe']
+                ],
+                'Wade',
+                false
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider containsCheckProvider
+     */
+    public function testContainsChecksWhetherAValueExistsInACollection($list, $check, $result)
+    {
+        $check = Collection::from(...$list)->contains($check);
+
+        $this->assertInternalType('boolean', $check);
+        $this->assertEquals($result, $check);
+    }
+
+    public function uniqueProvider()
+    {
+        return [
+            [
+                range(1, 10),
+                range(8, 12),
+                range(1, 12)
+            ],
+            [
+                range(1, 5),
+                range(5, 6),
+                range(1, 6)
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider uniqueProvider
+     */
+    public function testUniqueFunctionOutputsCollectionWithoutDuplicates($base, $ext, $result)
+    {
+        $list = Collection::from(...$base)
+            ->merge(Collection::from(...$ext))
+            ->unique();
+
+        $this->assertInstanceOf(Collection::class, $list);
+        $this->assertEquals($result, $list->toArray());
+    } 
+
+    public function testHeadOutputsFirstElementInCollection()
+    {
+        $first = Collection::from(...range(1, 20))->head();
+
+        $this->assertInternalType('integer', $first);
+        $this->assertEquals(1, $first);
+    }
+
+    public function testTailOutputsCollectionContainingAllListValuesExceptTheFirst()
+    {
+        $tail = Collection::from(...range(4, 9))->tail();
+
+        $this->assertInstanceOf(Collection::class, $tail);
+        $this->assertEquals(range(5, 9), $tail->toArray());
+    }
+
+    public function testLastOutputsLastElementInACollection()
+    {
+        $last = Collection::from(...['foo', 'bar', 'foo-bar'])->last();
+
+        $this->assertEquals('foo-bar', $last);
+        $this->assertInternalType('string', $last);
+    }
+
+    public function implodeProvider()
+    {
+        return [
+            [
+                ['foo', 'bar', 'baz'],
+                '-',
+                'foo-bar-baz'
+            ],
+            [
+                ['mike', 'has', 6, 'rings'],
+                ' ',
+                'mike has 6 rings'
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider implodeProvider
+     */
+    public function testImplodeFormsStringValueFromDelimiterConcatenatedList($list, $delimiter, $result)
+    {
+        $imploded = Collection::from(...$list)->implode($delimiter);
+
+        $this->assertInternalType('string', $imploded);
+        $this->assertEquals($result, $imploded);
+    }
+
+    public function intersectsProvider()
+    {
+        return [
+            [
+                range(54, 99),
+                range(32, 89),
+                true
+            ],
+            [
+                range(32, 54),
+                range(22, 25),
+                false
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider intersectsProvider
+     */
+    public function testIntersectsChecksIfTwoListsHaveAtLeastAnElementInCommon($list, $ext, $result)
+    {
+        $intersects = Collection::from(...$list)->intersects(Collection::from(...$ext));
+
+        $this->assertInternalType('boolean', $intersects);
+        $this->assertEquals($result, $intersects);
+    }
+
+    public function testOffsetGetsOutputsValueAtSpecifiedOffset()
+    {
+        $list = Collection::from(...range(1, 5));
+
+        $this->assertInternalType('integer', $list->offsetGet(1));
+        $this->assertEquals(3, $list->offsetGet(2));
+        $this->expectException(\OutOfRangeException::class);
+        $list->offsetGet(7);
+    }
 }
