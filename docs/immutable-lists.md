@@ -154,6 +154,176 @@ $list = Collection::from(...range(1, 10))
 //outputs the collection [1, 2, 'foo', 'foo', 'foo', 6, 7, 8, 9, 10]
 ```
 
+## fetch
+
+```
+$list->fetch(mixed $key)
+```
+
+**Since:** v1.12.0
+
+**Argument(s)**
+
+- ***key (mixed)*** - The key on which the search is based
+
+Fetch all the values which correspond to a specified key.
+
+```php
+$collection = Collection::from(...[
+    ['id' => 35, 'name' => 'Durant'],
+    ['id' => 24, 'name' => 'Bryant']
+]);
+
+print_r($collection->fetch('name'));
+```
+
+## contains
+```
+$list->contains(mixed $value)
+```
+
+**Since:** v1.12.0
+
+**Argument(s):** 
+
+- ***value (mixed)*** - The value whose existence is examinable
+
+Checks if a value exists in a collection. Akin to the [key_exists](https://secure.php.net/manual/en/function.key-exists.php) function.
+
+```php
+$contains = Collection::from(...[
+    ['id' => 3, 'name' => 'Wade'],
+    ['id' => 23, 'name' => 'Mike']
+])->contains('name'); //returns true
+```
+
+## offsetGet
+```
+$list->offsetGet(int $offset);
+```
+**Since:** v1.12.0
+
+**Argument(s):**
+
+- ***offset (integer)*** - The numerical key with a unique data value binding
+
+Returns a value which corresponds to a specified numerical key.
+
+```php
+$val = Collection::from(...range(1, 5))->offsetGet(2);
+//outputs 3
+```
+
+## unique
+```
+$list->unique();
+```
+
+**Since:** v1.12.0
+
+**Argument(s):**
+
+> None
+
+Analogous to the [unique](/collection?id=unique-function) function.
+
+```php
+$list = Collection::from(...range(1, 3))
+    ->merge(Collection::from(...range(2, 5)))
+    ->unique();
+//outputs the Collection [1, 2, 3, 4, 5]
+```
+
+## head
+```
+$list->head();
+```
+
+**Since:** v1.12.0
+
+**Argument(s):**
+
+> None
+
+Analogous to the [head](/collection?id=head-function) function
+
+```php
+$arr = range(1, 5);
+$head = Collection::from(...$arr)->head();
+```
+
+## tail
+```
+$list->tail();
+```
+
+**Since:** v1.12.0
+
+**Argument(s):**
+
+> None
+
+Analogous to the [tail](/collection?id=tail-function) function.
+
+```php
+$tail = Collection::from(...$arr)->tail();
+//outputs the Collection [2, 3, 4, 5]
+```
+
+## last
+```
+$list->last();
+```
+
+**Since:** v1.12.0
+
+**Argument(s):**
+
+> None
+
+Analogous to the [last](/collection?id=last-function) function.
+
+```php
+$last = Collection::from(...$arr)->last(); //returns 5
+```
+
+## intersects
+```
+$list->intersects(Collection $list);
+```
+
+**Since:** v1.12.0
+
+**Argument(s):**
+
+- ***list (Collection)*** - The list to compare values with
+
+Analogous to the [intersects](/collection?id=intersects-function) function.
+
+```php
+$intersects = Collection::from(...range(1, 3))
+    ->intersects(Collection::from(...range(5, 7)));
+//returns false
+```
+
+## implode
+```
+$list->implode(string $delimiter);
+```
+
+**Since:** v1.12.0
+
+**Argument(s):**
+
+- ***delimiter (string)*** - The string to insert between elements
+
+Joins Collection elements with a string. Analogous to the [implode](https://secure.php.net/manual/en/function.implode.php) function.
+
+```php
+$str = Collection::from(...['Mike', 'is', 'the', 'GOAT'])->implode(' ');
+//prints "Mike is the GOAT"
+```
+
 ## toArray
 
 ```
