@@ -358,6 +358,8 @@
 
 - Added constant static function definitions for ```Monadic``` types
 
+- Added new ```Collection``` functions
+
 ### New Helper functions
 
 - toWords()
@@ -383,3 +385,23 @@
 - filterM()
 
 - foldM()
+
+### New Collection functions
+
+- fetch()
+
+- contains()
+
+- unique()
+
+- head()
+
+- tail()
+
+- last()
+
+- intersects()
+
+- implode()
+
+- offsetGet()
