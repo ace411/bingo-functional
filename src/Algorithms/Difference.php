@@ -4,7 +4,7 @@
  *
  * difference function
  *
- * difference :: [a] -> [a, c] -> [c] 
+ * difference :: [a] -> [a, c] -> [c]
  *
  * @see https://lodash.com/docs/4.17.11#difference
  * @author Lochemem Bruno Michael
@@ -20,8 +20,9 @@ function difference(array ...$array): array
     $ret = compose(flatten, function (array $data) {
         $res = [];
         foreach ($data as $val) {
-            if (countOfValue($data, $val) < 2)
+            if (countOfValue($data, $val) < 2) {
                 $res[] = $val;
+            }
         }
 
         return $res;

@@ -332,7 +332,7 @@ class CollectionTest extends TestCase
 
         $this->assertInstanceOf(Collection::class, $list);
         $this->assertEquals($result, $list->toArray());
-    } 
+    }
 
     public function testHeadOutputsFirstElementInCollection()
     {
