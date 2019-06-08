@@ -427,14 +427,16 @@ class AlgorithmTest extends TestCase
     {
         $min = A\min([23, 45, 12, 78]);
 
-        $this->assertEquals(12, $min);
+        $this->assertEquals(12, (int) $min);
+        $this->assertInternalType('float', $min);
     }
 
     public function testMaxFunctionComputesLargestValueInList()
     {
         $max = A\max([23, 79, 54, 24]);
 
-        $this->assertEquals(79, $max);
+        $this->assertEquals(79, (int) $max);
+        $this->assertInternalType('float', $max);
     }
 
     public function testToExceptionWrapsFunctionPrintsExceptionMessageIfExceptionIsThrownOrResult()
@@ -552,7 +554,7 @@ class AlgorithmTest extends TestCase
     public function testUnionWithFunctionCombinesArraysUponFulfillmentOfCondition()
     {
         $union = A\unionWith(function (array $num, array $str) {
-            return A\isArrayOf($num) == 'integer' && A\isArrayOf($str) == 'string';            
+            return A\isArrayOf($num) == 'integer' && A\isArrayOf($str) == 'string';
         }, range(1, 3), range(4, 9));
 
         $this->assertInternalType('array', $union);

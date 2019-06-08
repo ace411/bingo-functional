@@ -13,13 +13,9 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const max = 'Chemem\\Bingo\\Functional\\Algorithms\\max';
 
-function max(array $collection) : int
+function max(array $collection): float
 {
-    $maxVal = isArrayOf($collection) == 'integer' ?
-        fold(function ($acc, $val) {
-            return $val > $acc ? $val : $acc;
-        }, $collection, 0) :
-        identity(0);
-
-    return $maxVal;
+    return fold(function (float $acc, float $val) {
+        return $val > $acc ? $val : $acc;
+    }, $collection, 0.0);
 }
