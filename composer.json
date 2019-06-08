@@ -84,6 +84,8 @@
             "src/Algorithms/Slugify.php",
             "src/Algorithms/ToWords.php",
             "src/Algorithms/Truncate.php",
+            "src/Algorithms/Difference.php",
+            "src/Algorithms/CountOf.php",
             "src/Functors/Monads/functions.php",
             "src/Functors/Monads/IO/files.php",
             "src/Functors/Monads/IO/simple.php",

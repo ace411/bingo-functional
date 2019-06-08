@@ -611,4 +611,37 @@ class AlgorithmTest extends TestCase
         $this->assertFalse($intersect(range(19, 22)));
         $this->assertInternalType('boolean', $intersect(range(2, 4)));
     }
+
+    public function testCountOfValueOutputsArrayValueCount()
+    {
+        $count = A\countOfValue([1, 2, 3, [4, 3]], 3);
+
+        $this->assertInternalType('integer', $count);
+        $this->assertEquals(2, $count);
+    }
+
+    public function testCountOfKeyOutputsArrayKeyValueCount()
+    {
+        $count = A\countOfKey([
+            [
+                'player' => 'Wade',
+                'number' => 3
+            ],
+            [
+                'player' => 'Jordan',
+                'number' => 23
+            ]
+        ], 'number');
+
+        $this->assertInternalType('integer', $count);
+        $this->assertEquals(2, $count);
+    }
+
+    public function testDifferenceOutputsDifferenceOfMultipleArrays()
+    {
+        $diff = A\difference(range(1, 5), [99, 3], range(4, 5));
+
+        $this->assertInternalType('array', $diff);
+        $this->assertEquals([1, 2, 99], $diff);
+    }
 }
