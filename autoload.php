@@ -1,6 +1,6 @@
 <?php
 /**
- * This is an bingo-functional autoloader.
+ * This is the bingo-functional autoloader.
  *
  * @param string $class The fully-qualified class name.
  *

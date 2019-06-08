@@ -554,7 +554,7 @@ class AlgorithmTest extends TestCase
     public function testUnionWithFunctionCombinesArraysUponFulfillmentOfCondition()
     {
         $union = A\unionWith(function (array $num, array $str) {
-            return A\isArrayOf($num) == 'integer' && A\isArrayOf($str) == 'string';            
+            return A\isArrayOf($num) == 'integer' && A\isArrayOf($str) == 'string';
         }, range(1, 3), range(4, 9));
 
         $this->assertInternalType('array', $union);
