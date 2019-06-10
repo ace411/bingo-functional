@@ -15,5 +15,27 @@ const extend = 'Chemem\\Bingo\\Functional\\Algorithms\\extend';
 
 function extend(array $primary, array ...$exts) : array
 {
-    return array_merge($primary, ...$exts);
+    $ret = [];
+    
+    if (!empty($primary)) {
+        foreach ($primary as $key => $val) {
+            if (is_string($key)) {
+                $ret[$key] = $val;
+            } else {
+                $ret[] = $val;
+            }            
+        }
+    }
+
+    foreach ($exts as $ext) {
+        foreach ($ext as $key => $val) {
+            if (is_string($key)) {
+                $ret[$key] = $val;
+            } else {
+                $ret[] = $val;
+            }
+        }
+    }
+
+    return $ret;
 }
