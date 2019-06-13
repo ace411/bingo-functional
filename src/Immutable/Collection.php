@@ -88,17 +88,15 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     public function filter(callable $func) : self
     {
         $list = $this->list;
-        $count = 0;
+        $acc = [];
 
         foreach ($list as $index => $val) {
             if ($func($val)) {
-                $count++;
-                $list[$index] = $val;
+                $acc[] = $val;
             }
         }
-        $list->setSize($count);
 
-        return new static($list);
+        return new static(\SplFixedArray::fromArray($acc));
     }
 
     /**
