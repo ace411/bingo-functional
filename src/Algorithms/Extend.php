@@ -13,22 +13,12 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const extend = 'Chemem\\Bingo\\Functional\\Algorithms\\extend';
 
-function extend(array $primary, array ...$exts) : array
+function extend(array ...$lists) : array
 {
     $ret = [];
-    
-    if (!empty($primary)) {
-        foreach ($primary as $key => $val) {
-            if (is_string($key)) {
-                $ret[$key] = $val;
-            } else {
-                $ret[] = $val;
-            }            
-        }
-    }
 
-    foreach ($exts as $ext) {
-        foreach ($ext as $key => $val) {
+    foreach ($lists as $list) {
+        foreach ($list as $key => $val) {
             if (is_string($key)) {
                 $ret[$key] = $val;
             } else {
