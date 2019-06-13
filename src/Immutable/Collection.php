@@ -73,14 +73,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      */
     public function flatMap(callable $func) : array
     {
-        $list = $this->list;
-        $acc = [];
-
-        foreach ($list as $val) {
-            $acc[] = $func($val);
-        }
-
-        return $acc;
+        return $this->map($func)->toArray();
     }
 
     /**
@@ -95,15 +88,17 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     public function filter(callable $func) : self
     {
         $list = $this->list;
-        $acc = [];
+        $count = 0;
 
         foreach ($list as $index => $val) {
             if ($func($val)) {
-                $acc[] = $val;
+                $count++;
+                $list[$index] = $val;
             }
         }
+        $list->setSize($count);
 
-        return new static(\SplFixedArray::fromArray($acc));
+        return new static($list);
     }
 
     /**
