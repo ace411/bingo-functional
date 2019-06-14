@@ -656,7 +656,7 @@ class AlgorithmTest extends TestCase
         
         $this->assertInternalType('array', $func($lists[1]));
         $this->assertEquals([
-            'github' => 'ace411', 
+            'github' => 'ace411',
             'twitter' => '@agiroLoki'
         ], $func($lists[1]));
         $this->assertInternalType('array', $func($lists[2]));

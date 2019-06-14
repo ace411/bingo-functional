@@ -21,7 +21,8 @@
         "ext-apcu": "In-memory key-value PHP userland store"
     },
     "scripts": {
-        "test": "phpunit -c phpunit.xml.dist"
+        "test": "phpunit -c phpunit.xml.dist",
+        "fix": "php-cs-fixer fix --rules=@PSR2"
     },
     "autoload": {
         "psr-4": {
