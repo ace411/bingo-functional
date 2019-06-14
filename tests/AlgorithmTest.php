@@ -644,4 +644,25 @@ class AlgorithmTest extends TestCase
         $this->assertInternalType('array', $diff);
         $this->assertEquals([1, 2, 99], $diff);
     }
+
+    public function testRenameKeysFunctionOutputsArrayWithDifferentNameKeys()
+    {
+        $lists = [
+            [0 => 'ace411', 'twitter' => '@agiroLoki'],
+            [0 => 'github'],
+            ['twitter' => 1]
+        ];
+        $func = A\partial(A\renameKeys, $lists[0]);
+        
+        $this->assertInternalType('array', $func($lists[1]));
+        $this->assertEquals([
+            'github' => 'ace411',
+            'twitter' => '@agiroLoki'
+        ], $func($lists[1]));
+        $this->assertInternalType('array', $func($lists[2]));
+        $this->assertEquals([
+            0 => 'ace411',
+            1 => '@agiroLoki'
+        ], $func($lists[2]));
+    }
 }
