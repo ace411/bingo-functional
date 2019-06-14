@@ -73,14 +73,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      */
     public function flatMap(callable $func) : array
     {
-        $list = $this->list;
-        $acc = [];
-
-        foreach ($list as $val) {
-            $acc[] = $func($val);
-        }
-
-        return $acc;
+        return $this->map($func)->toArray();
     }
 
     /**
