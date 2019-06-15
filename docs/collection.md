@@ -741,7 +741,7 @@ Finds the lowest value in an array.
 ```php
 $min = A\min([22, 19, 12, 98]);
 
-echo $min; //outputs 12
+echo (int) $min; //outputs 12
 ```
 
 ## Max function
@@ -761,7 +761,7 @@ Finds the largest value in an array.
 ```php
 $max = A\max([22, 19, 98, 12]);
 
-echo $max; //outputs 98
+echo (int) $max; //outputs 98
 ```
 
 ## Mean function
@@ -877,4 +877,72 @@ $union = A\unionWith(function (array $num, array $str) : bool {
     return A\isArrayOf($num) == 'integer' && A\isArrayOf($str) == 'string';
 }, range(1, 5), ['foo', 'bar']);
 //outputs [1, 2, 3, 4, 5, "foo", "bar"]
+```
+
+## renameKeys function
+
+```
+renameKeys(array $list, array $keysList)
+```
+
+**Since:** v1.13.0
+
+**Argument(s):**
+
+- ***list (array)*** - The list whose keys are to be renamed
+- ***keysList (array)*** - Key-replacement-key hash-table
+
+Renames the keys of an array.
+
+```php
+$newList = A\renameKeys(['ace411', 'twitter' => '@agiroLoki'], ['github']);
+//outputs ['github' => 'ace411', 'twitter' => '@agiroLoki']
+```
+
+## countOf(Value|Key) function
+
+```
+countOfKey|countOfValue(array $list, mixed $value)
+```
+
+**Since:** v1.13.0
+
+**Argument(s):**
+
+- ***list (array)*** - The array to evaluate
+- ***value (mixed)*** - The value|key whose count is ascertainable
+
+Evaluates the number of times an index or value appears in a hashtable.
+
+```php
+$keyCount = A\countOfKey([
+    'user' => 'ace411',
+    [
+        'user'      => '@agiroLoki',
+        'platform'  => 'Twitter'
+    ]
+], 'user'); //evaluates to 2
+
+$valCount = A\countOfValue([3, 4, 9, [1, 4, [4]]], 4); //evaluates to 3
+```
+
+## difference
+
+```
+difference(array ...$lists)
+```
+
+**Since:** v1.13.0
+
+**Argument(s):**
+
+- ***lists (array)*** - The arrays to evaluate
+
+Computes the difference of arrays. 
+
+> Similar to the [Lodash difference](https://lodash.com/docs/4.17.11#difference) function
+
+```php
+$difference = (['foo', 'bar'], ['foo', 'baz'], ['foo', 'fooz']);
+//outputs ['baz', 'fooz']
 ```
