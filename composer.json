@@ -87,6 +87,7 @@
             "src/Algorithms/Difference.php",
             "src/Algorithms/CountOf.php",
             "src/Algorithms/RenameKeys.php",
+            "src/Algorithms/PartitionBy.php",
             "src/Functors/Monads/functions.php",
             "src/Functors/Monads/IO/files.php",
             "src/Functors/Monads/IO/simple.php",
