@@ -138,6 +138,22 @@ class AlgorithmTest extends TestCase
         );
     }
 
+    public function testPartitionBySubDividesArray()
+    {
+        $list = A\partitionBy(5, range(1, 20));
+        
+        $this->assertEquals(
+            [
+                [1, 2, 3, 4, 5],
+                [6, 7, 8, 9, 10],
+                [11, 12, 13, 14, 15],
+                [16, 17, 18, 19, 20]
+            ],
+            $list
+        );
+        $this->assertTrue(count($list) == 4);
+    }
+
     public function testConstantFunctionAlwaysReturnsFirstArgumentSupplied()
     {
         $const = A\constantFunction(12);
