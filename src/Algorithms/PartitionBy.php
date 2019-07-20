@@ -18,7 +18,7 @@ function partitionBy(int $partitionSize, array $list): array
         return $list;
     }
 
-    $number = ceil(count($list) / $partitionSize);
+    $number = (int) ceil(count($list) / $partitionSize);
 
     return partition($number, $list);
 }
