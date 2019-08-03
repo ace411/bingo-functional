@@ -18,7 +18,7 @@ class Writer implements Monadic
     /**
      * @var callable action
      */
-     private $action;
+    private $action;
 
     public function __construct(callable $action)
     {
