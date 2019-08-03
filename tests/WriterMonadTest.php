@@ -67,7 +67,7 @@ class WriterMonadTest extends \PHPUnit\Framework\TestCase
 
         $this->assertInstanceOf(Writer::class, $writer);
         $this->assertInternalType('array', runWriter($writer));
-        $this->assertEquals([(float) 4.0, [['int', 'float']]], runWriter($writer));
+        $this->assertEquals([(float) 4.0, ['int', 'float']], runWriter($writer));
     }
 
     public function testMapMethodTransformsInnerValue()
@@ -79,6 +79,17 @@ class WriterMonadTest extends \PHPUnit\Framework\TestCase
 
         $this->assertInstanceOf(Writer::class, $writer);
         $this->assertInternalType('array', runWriter($writer));
-        $this->assertEquals([2, [['int']]], runWriter($writer));
+        $this->assertEquals([2, ['int']], runWriter($writer));
+    }
+
+    public function testTellFunctionProducesMonadOutput()
+    {
+        $writer = Writer\tell('add 2')->map(function ($res) {
+            return $res + 2;
+        });
+
+        $this->assertInstanceOf(Writer::class, $writer);
+        $this->assertInternalType('array', runWriter($writer));
+        $this->assertEquals([2, ['add 2']], runWriter($writer));
     }
 }

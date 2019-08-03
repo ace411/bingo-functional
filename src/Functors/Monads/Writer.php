@@ -10,32 +10,19 @@
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
 use function Chemem\Bingo\Functional\Algorithms\extend;
-use function Chemem\Bingo\Functional\Algorithms\flatten;
 
 class Writer implements Monadic
 {
     const of = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Writer::of';
-    
-    /**
-     * @var mixed
-     */
-    private $result;
 
     /**
-     * @var mixed
+     * @var callable action
      */
-    private $output = [];
+    private $action;
 
-    /**
-     * Writer monad constructor.
-     *
-     * @param mixed $result
-     * @param mixed $output
-     */
-    public function __construct($result, $output)
+    public function __construct(callable $action)
     {
-        $this->result = $result;
-        $this->output[] = $output;
+        $this->action = $action;
     }
 
     /**
@@ -50,7 +37,9 @@ class Writer implements Monadic
      */
     public static function of($result, $output) : self
     {
-        return new static($result, $output);
+        return new static(function () use ($result, $output) {
+            return [$result, [$output]];
+        });
     }
 
     /**
@@ -78,7 +67,11 @@ class Writer implements Monadic
      */
     public function map(callable $function) : Monadic
     {
-        return self::of($function($this->result), flatten($this->output));
+        return new static(function () use ($function) {
+            list($result, $output) = $this->run();
+
+            return [$function($result), $output];
+        });
     }
 
     /**
@@ -91,9 +84,12 @@ class Writer implements Monadic
      */
     public function bind(callable $function) : Monadic
     {
-        list($result, $output) = $function($this->result)->run();
+        return new static(function () use ($function) {
+            list($result, $output)  = $this->run();
+            list($res, $out)        = $function($result)->run();
 
-        return self::of($result, flatten(extend($this->output, $output)));
+            return [$res, extend($output, $out)];
+        });
     }
 
     /**
@@ -116,6 +112,6 @@ class Writer implements Monadic
      */
     public function run() : array
     {
-        return [$this->result, $this->output];
+        return call_user_func($this->action);
     }
 }

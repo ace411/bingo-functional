@@ -50,6 +50,26 @@ function runWriter(WriterMonad $writer) : array
 }
 
 /**
+ * tell function
+ * A function that produces a Writer monad's output
+ *
+ * tell :: w -> m ()
+ *
+ * @param mixed $msg
+ *
+ * @return object Writer
+ */
+
+const tell = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Writer\\tell';
+
+function tell($msg) : WriterMonad
+{
+    return new WriterMonad(function () use ($msg) {
+        return [null, [$msg]];
+    });
+}
+
+/**
  * execWriter function
  * Extract the output from a writer computation.
  *
