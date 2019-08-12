@@ -681,4 +681,31 @@ class AlgorithmTest extends TestCase
             1 => '@agiroLoki'
         ], $func($lists[2]));
     }
+
+    public function testContainsChecksIfNeedleExistsInHaystack()
+    {
+        $check = A\partial(A\contains, 'haystack');
+
+        $this->assertInternalType('boolean', $check('hay'));
+        $this->assertEquals(true, $check('hay'));
+        $this->assertEquals(false, $check('buck'));
+    }
+
+    public function testStartsWithChecksIfHaystackStartsWithNeedle()
+    {
+        $check = A\partial(A\startsWith, 'haystack');
+
+        $this->assertInternalType('boolean', $check('hay'));
+        $this->assertEquals(true, $check('hay'));
+        $this->assertEquals(false, $check('stack'));
+    }
+
+    public function testEndsWithChecksIfHaystackEndsWithNeedle()
+    {
+        $check = A\partial(A\endsWith, 'haystack');
+
+        $this->assertInternalType('boolean', $check('hay'));
+        $this->assertEquals(false, $check('hay'));
+        $this->assertEquals(true, $check('stack'));
+    }
 }
