@@ -19,7 +19,7 @@
     "suggest": {
         "chemem/bingo-functional-repl": "A simple REPL for the bingo-functional library",
         "ext-apcu": "In-memory key-value PHP userland store",
-        "ext-mbstring": "PHP extension for accurately determining byte-length of string"
+        "ext-mbstring": "PHP extension for accurately determining byte-length of strings"
     },
     "scripts": {
         "test": "phpunit -c phpunit.xml.dist",
