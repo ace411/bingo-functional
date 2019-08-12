@@ -708,4 +708,40 @@ class AlgorithmTest extends TestCase
         $this->assertEquals(false, $check('hay'));
         $this->assertEquals(true, $check('stack'));
     }
+
+    public function testIndexesOfOutputsIndexesOfValuesInHashTable()
+    {
+        $indexes = A\partial(A\indexesOf, [
+            'foo'   => 1,
+            'bar'   => 2,
+            'baz'   => [2, 3]
+        ]);
+
+        $this->assertEquals(['bar', 0], $indexes(2));
+        $this->assertEquals([], $indexes('foo'));
+    }
+
+    public function testFirstIndexOfOutputsFirstComputedIndexOfArrayValue()
+    {
+        $first = A\partial(A\firstIndexOf, [
+            'foo'   => 1,
+            'bar'   => 2,
+            'baz'   => [2, 3]
+        ]);
+
+        $this->assertEquals('foo', $first(1));
+        $this->assertEquals(false, $first('foo'));
+    }
+
+    public function testLastIndexOfOutputsLastComputedIndexOfArrayValue()
+    {
+        $last = A\partial(A\lastIndexOf, [
+            'foo'   => 1,
+            'bar'   => 2,
+            'baz'   => [2, 3]
+        ]);
+
+        $this->assertEquals(0, $last(2));
+        $this->assertEquals(false, $last('foo'));
+    }
 }
