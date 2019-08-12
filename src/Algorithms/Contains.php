@@ -2,9 +2,9 @@
 
 /**
  * contains function
- * 
+ *
  * contains :: String -> String -> bool
- * 
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */

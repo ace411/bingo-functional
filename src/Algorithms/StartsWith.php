@@ -2,9 +2,9 @@
 
 /**
  * startsWith function
- * 
+ *
  * startsWith :: String -> String -> bool
- * 
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
