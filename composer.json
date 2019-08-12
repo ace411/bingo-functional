@@ -18,7 +18,8 @@
     },
     "suggest": {
         "chemem/bingo-functional-repl": "A simple REPL for the bingo-functional library",
-        "ext-apcu": "In-memory key-value PHP userland store"
+        "ext-apcu": "In-memory key-value PHP userland store",
+        "ext-mbstring": "PHP extension for accurately determining byte-length of string"
     },
     "scripts": {
         "test": "phpunit -c phpunit.xml.dist",
@@ -72,6 +73,9 @@
             "src/Algorithms/Union.php",
             "src/Algorithms/FilePath.php",
             "src/Algorithms/UnionWith.php",
+            "src/Algorithms/Contains.php",
+            "src/Algorithms/StartsWith.php",
+            "src/Algorithms/EndsWith.php",
             "src/Algorithms/DropLeft.php",
             "src/Algorithms/ZipWith.php",
             "src/Algorithms/DropRight.php",
