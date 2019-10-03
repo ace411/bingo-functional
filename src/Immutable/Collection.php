@@ -37,7 +37,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      *
      * @return object Collection
      */
-    public static function from(array $items) : self
+    public static function from(array $items) : Collection
     {
         return new static(\SplFixedArray::fromArray($items));
     }
@@ -51,7 +51,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      *
      * @return object Collection
      */
-    public function map(callable $func) : self
+    public function map(callable $func) : Collection
     {
         $list = $this->getList();
         for ($idx = 0; $idx < $list->count(); $idx++) {
@@ -84,7 +84,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      *
      * @return object Collection
      */
-    public function filter(callable $func) : self
+    public function filter(callable $func) : Collection
     {
         $list   = $this->getList();
         $count  = $list->count();
@@ -131,7 +131,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      *
      * @return object Collection
      */
-    public function slice(int $count) : self
+    public function slice(int $count) : Collection
     {
         $list       = $this->getList();
         $listCount  = $list->count();
@@ -153,7 +153,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      *
      * @return object Collection
      */
-    public function merge(self $list) : self
+    public function merge(self $list) : Collection
     {
         $oldSize        = $this->getSize();
         $combinedSize   = $oldSize + $list->getSize();
@@ -176,7 +176,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      *
      * @return object Collection
      */
-    public function reverse() : self
+    public function reverse() : Collection
     {
         $list   = $this->getList();
         $count  = $list->count();
@@ -200,7 +200,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      *
      * @return object Collection
      */
-    public function fill($value, int $start, int $end): self
+    public function fill($value, int $start, int $end): Collection
     {
         $list = $this->getList();
 
