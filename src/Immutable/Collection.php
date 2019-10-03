@@ -23,7 +23,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      *
      * @param mixed $items
      */
-    public function __construct($items)
+    public function __construct(\SplFixedArray $items)
     {
         $this->list = $items;
     }
@@ -37,7 +37,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      *
      * @return object Collection
      */
-    public static function from(...$items) : self
+    public static function from(array $items) : self
     {
         return new static(\SplFixedArray::fromArray($items));
     }
@@ -53,10 +53,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      */
     public function map(callable $func) : self
     {
-        $list = $this->list;
-
-        foreach ($list as $index => $val) {
-            $list[$index] = $func($val);
+        $list = $this->getList();
+        for ($idx = 0; $idx < $list->count(); $idx++) {
+            $list[$idx] = $func($list[$idx]); 
         }
 
         return new static($list);
@@ -87,16 +86,19 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      */
     public function filter(callable $func) : self
     {
-        $list = $this->list;
-        $acc = [];
+        $list   = $this->getList();
+        $count  = $list->count();
+        $new    = new \SplFixedArray($list->count());
+        $init   = 0;
 
-        foreach ($list as $index => $val) {
-            if ($func($val)) {
-                $acc[] = $val;
+        for ($idx = 0; $idx < $count; $idx++) {
+            if ($func($list[$idx])) {
+                $new[$init++] = $list[$idx];
             }
         }
+        $new->setSize($init);
 
-        return new static(\SplFixedArray::fromArray($acc));
+        return new static($new);
     }
 
     /**
@@ -107,17 +109,17 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      * @param callable $func
      * @param mixed    $acc
      *
-     * @return object Collection
+     * @return mixed $acc
      */
-    public function fold(callable $func, $acc) : self
+    public function fold(callable $func, $acc)
     {
-        $list = $this->list;
+        $list = $this->getList();
 
-        foreach ($list as $val) {
-            $acc = $func($acc, $val);
+        for ($idx = 0; $idx < $list->count(); $idx++) {
+            $acc = $func($acc, $list[$idx]);
         }
 
-        return new static($acc);
+        return $acc;
     }
 
     /**
@@ -131,12 +133,12 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      */
     public function slice(int $count) : self
     {
-        $list = $this->list;
-        $listCount = $list->count();
-        $new = new \SplFixedArray($listCount - $count);
+        $list       = $this->getList();
+        $listCount  = $list->count();
+        $new        = new \SplFixedArray($listCount - $count);
 
-        foreach ($new as $index => $val) {
-            $new[$index] = $list[($index + $count)];
+        for ($idx = 0; $idx < $new->count(); $idx++) {
+            $new[$idx] = $list[$idx + $count];
         }
 
         return new static($new);
@@ -153,14 +155,14 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      */
     public function merge(self $list) : self
     {
-        $oldSize = $this->getSize();
-        $combinedSize = $oldSize + $list->getSize();
-        $old = $this->list;
+        $oldSize        = $this->getSize();
+        $combinedSize   = $oldSize + $list->getSize();
+        $old            = $this->list;
         $old->setSize($combinedSize);
 
-        foreach ($old as $index => $val) {
-            if ($index > $oldSize - 1) {
-                $old[$index] = $list->getList()[($index - $oldSize)];
+        for ($idx = 0; $idx < $old->count(); $idx++) {
+            if ($idx > ($oldSize - 1)) {
+                $old[$idx] = $list->getList()[($idx - $oldSize)];
             }
         }
 
@@ -176,15 +178,15 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      */
     public function reverse() : self
     {
-        $list = $this->list;
-        $count = $this->list->getSize();
-        $newList = new \SplFixedArray($count);
+        $list   = $this->getList();
+        $count  = $list->count();
+        $new    = new \SplFixedArray($count);
 
-        foreach ($newList as $index => $val) {
-            $newList[$index] = $list[$count - $index - 1];
+        for ($idx = 0; $idx < $count; $idx++) {
+            $new[$idx] = $list[($count - $idx - 1)];
         }
 
-        return new static($newList);
+        return new static($new);
     }
 
     /**
@@ -198,12 +200,12 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      *
      * @return object Collection
      */
-    public function fill($value, int $start, int $end)
+    public function fill($value, int $start, int $end): self
     {
-        $list = $this->list;
+        $list = $this->getList();
 
-        foreach ($list as $index => $val) {
-            $list[$index] = $index >= $start && $index <= $end ? $value : $val;
+        for ($idx = 0; $idx < $list->count(); $idx++) {
+            $list[$idx] = $idx >= $start && $idx <= $end ? $value : $list[$idx];
         }
 
         return new static($list);
@@ -218,14 +220,16 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      */
     public function fetch($key) : Collection
     {
+        $list = $this->getList();
         $extr = [];
-        foreach ($this->list as $list) {
-            if (is_array($list) && key_exists($key, $list)) {
-                $extr[] = $list[$key];
+        for ($idx = 0; $idx < $list->count(); $idx++) {
+            $item = $list[$idx];
+            if (is_array($item) && key_exists($key, $item)) {
+                $extr[] = $item[$key];
             }
         }
 
-        return self::from(...$extr);
+        return self::from($extr);
     }
 
     /**
@@ -252,11 +256,17 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      */
     public function contains($element) : bool
     {
-        $acc = [];
-        foreach ($this->list as $item) {
-            $acc[] = is_array($item) ? A\mapDeep(function ($val) use ($element) {
-                return $val == $element;
-            }, $item) : $item == $element;
+        $list   = $this->getList();
+        $count  = $list->count();
+        $acc    = [];
+
+        for ($idx = 0; $idx < $count; $idx++) {
+            $item = $list[$idx];
+            $acc[] = is_array($item) ? 
+                A\mapDeep(function ($val) use ($element): bool {
+                    return $val == $element;
+                }, $item) : 
+                $element == $item;
         }
 
         return self::checkContains($acc);
@@ -269,14 +279,17 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      */
     public function unique() : Collection
     {
-        $acc = [];
-        foreach ($this->list as $item) {
+        $list   = $this->getList();
+        $acc    = [];
+
+        for ($idx = 0; $idx < $list->count(); $idx++) {
+            $item = $list[$idx];
             if (!in_array($item, $acc)) {
                 $acc[] = $item;
             }
         }
 
-        return self::from(...$acc);
+        return self::from($acc);
     }
 
     /**
@@ -296,14 +309,14 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      */
     public function tail() : Collection
     {
-        $acc = [];
-        foreach ($this->list as $index => $item) {
-            if ($index > 0) {
-                $acc[] = $item;
-            }
+        $list   = $this->getList();
+        $acc    = [];
+
+        for ($idx = 1; $idx < $list->count(); $idx++) {
+            $acc[] = $list[$idx];
         }
 
-        return self::from(...$acc);
+        return self::from($acc);
     }
 
     /**
@@ -325,17 +338,17 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      */
     public function intersects(Collection $list) : bool
     {
-        $intersect = [];
-        $main = $this->getSize();
-        $oth = $list->getSize();
+        $intersect  = [];
+        $main       = $this->getSize();
+        $oth        = $list->getSize();
 
         if ($main > $oth) {
-            foreach ($list->getList() as $item) {
-                $intersect[] = in_array($item, $this->toArray());
+            for ($idx = 0; $idx < $oth; $idx++) {
+                $intersect[] = in_array($list->getList()[$idx], $this->toArray());
             }
         } elseif ($oth > $main) {
-            foreach ($this->getList() as $item) {
-                $intersect[] = in_array($item, $list->toArray());
+            for ($idx = 0; $idx < $main; $idx++) {
+                $intersect[] = in_array($this->getList()[$idx], $list->toArray());
             }
         }
 
@@ -354,7 +367,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
         return rtrim($this->fold(function (string $fold, $elem) use ($delimiter) {
             $fold .= A\concat($delimiter, $elem, '');
             return $fold;
-        }, '')->getList(), $delimiter);
+        }, ''), $delimiter);
     }
 
     /**
@@ -378,7 +391,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
      *
      * @return mixed $list
      */
-    public function getList()
+    public function getList(): \SplFixedArray
     {
         return $this->list;
     }

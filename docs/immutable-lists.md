@@ -1,27 +1,25 @@
 # Immutable Lists
 
-An immutable collection is a data structure which is convenient for functional programming because it is [inherently persistent](https://en.wikipedia.org/wiki/Persistent_data_structure). Persistence implies state maintenance - this is especially important for graceful mutation.
+An immutable collection is a data structure which is convenient for functional programming because it is [inherently persistent](https://en.wikipedia.org/wiki/Persistent_data_structure). Persistence implies creating (sometimes almost churning out) new copies of an immutable state - this is especially important for graceful mutation.
 
 The [ad-hoc polymorphism](https://en.wikipedia.org/wiki/Ad_hoc_polymorphism) of the Collection class is an enabler of controlled state transition - the ethos of functional programming. The internal structure of the Collections class is such that an [SPL fixed array](http://php.net/manual/en/class.splfixedarray.php) is used to store list items. Below is a detailed enumeration of the class' methods.
 
 ## from
 
 ```
-Collection::from(mixed ...$items)
+Collection::from(array $items)
 ```
 
 **Argument(s)**
 
-- ***items (mixed)*** - The items to store
+- ***items (array)*** - The items to store
 
 The static method, from, creates an immutable list. It is a variadic function, so, the spread operator is necessary for arrays.
 
 ```php
 use Chemem\Bingo\Functional\Immutable\Collection;
 
-$list = Collection::from(1, 2, 3); //non-array syntax
-
-$fromArray = Collection::from(...[1, 2, 3]); //array spread syntax
+$fromArray = Collection::from([1, 2, 3]); //array spread syntax
 ```
 
 ## map
@@ -38,7 +36,9 @@ The map method applies a function to each item in the list.
 
 ```php
 $list = Collection::from(1, 2, 3)
-    ->map(function (int $val) : int { return $val * 2; }); 
+    ->map(function (int $val) : int { 
+        return $val * 2; 
+    }); 
 //outputs the collection [2, 4, 6]
 ```
 
@@ -56,7 +56,9 @@ The flatMap method, like the map method, iteratively applies a function to items
 
 ```php
 $list = Collection::from(1, 2, 3, 4)
-    ->flatMap(function (int $val) : int { return $val + 1; }); 
+    ->flatMap(function (int $val) : int { 
+        return $val + 1; 
+    }); 
 //outputs the array [2, 3, 4, 5]
 ```
 
@@ -73,8 +75,10 @@ $list->filter(callable $function)
 The filter function generates a list whose values conform to a boolean predicate.
 
 ```php
-$list = Collection::from(12, 13, 15, 19, 24)
-    ->filter(function (int $val) : bool { return $val % 2 == 0; }); 
+$list = Collection::from([12, 13, 15, 19, 24])
+    ->filter(function (int $val) : bool { 
+        return $val % 2 == 0; 
+    }); 
 //outputs the collection [12, 24]
 ```
 
@@ -92,9 +96,11 @@ $list->fold(callable $function, mixed $acc)
 The fold function transforms a list into a single value. 
 
 ```php
-$list = Collection::from(...[1, 2, 3, 4])
-    ->fold(function (string $acc, string $val) { return $val + $acc; }, 1);
-//outputs the collection [11]
+$list = Collection::from([1, 2, 3, 4])
+    ->fold(function (string $acc, string $val) { 
+        return $val + $acc; 
+    }, 1);
+//outputs the value 11
 ```
 
 ## merge
@@ -110,9 +116,9 @@ $list->merge(Collection $list)
 The merge function combines two lists.
 
 ```php
-$even = Collection::from('foo', 'bar');
+$even = Collection::from(['foo', 'bar']);
 
-$odd = Collection::from(...['baz', 'foo-bar']);
+$odd = Collection::from(['baz', 'foo-bar']);
 
 $even->merge($odd); //outputs the collection ['foo', 'bar', 'baz', 'foo-bar']
 ```
@@ -130,7 +136,7 @@ $list->slice(int $count)
 The slice method removes a specified number of items from a list.
 
 ```php
-$list = Collection::from('foo', 'bar', 1, 2, 3)
+$list = Collection::from(['foo', 'bar', 1, 2, 3])
     ->slice(2); //outputs the collection [1, 2, 3]
 ```
 
@@ -149,7 +155,7 @@ $list->fill(mixed $value, int $start, int $end)
 The fill function replaces the values of specified list indexes with an arbitrary value.
 
 ```php
-$list = Collection::from(...range(1, 10))
+$list = Collection::from(range(1, 10))
     ->fill('foo', 2, 4);
 //outputs the collection [1, 2, 'foo', 'foo', 'foo', 6, 7, 8, 9, 10]
 ```
@@ -169,7 +175,7 @@ $list->fetch(mixed $key)
 Fetch all the values which correspond to a specified key.
 
 ```php
-$collection = Collection::from(...[
+$collection = Collection::from([
     ['id' => 35, 'name' => 'Durant'],
     ['id' => 24, 'name' => 'Bryant']
 ]);
@@ -191,7 +197,7 @@ $list->contains(mixed $value)
 Checks if a value exists in a collection. Akin to the [key_exists](https://secure.php.net/manual/en/function.key-exists.php) function.
 
 ```php
-$contains = Collection::from(...[
+$contains = Collection::from([
     ['id' => 3, 'name' => 'Wade'],
     ['id' => 23, 'name' => 'Mike']
 ])->contains('name'); //returns true
@@ -210,7 +216,7 @@ $list->offsetGet(int $offset);
 Returns a value which corresponds to a specified numerical key.
 
 ```php
-$val = Collection::from(...range(1, 5))->offsetGet(2);
+$val = Collection::from(range(1, 5))->offsetGet(2);
 //outputs 3
 ```
 
@@ -228,8 +234,8 @@ $list->unique();
 Analogous to the [unique](/collection?id=unique-function) function.
 
 ```php
-$list = Collection::from(...range(1, 3))
-    ->merge(Collection::from(...range(2, 5)))
+$list = Collection::from(range(1, 3))
+    ->merge(Collection::from(range(2, 5)))
     ->unique();
 //outputs the Collection [1, 2, 3, 4, 5]
 ```
@@ -249,7 +255,7 @@ Analogous to the [head](/collection?id=head-function) function
 
 ```php
 $arr = range(1, 5);
-$head = Collection::from(...$arr)->head();
+$head = Collection::from($arr)->head();
 ```
 
 ## tail
@@ -266,7 +272,7 @@ $list->tail();
 Analogous to the [tail](/collection?id=tail-function) function.
 
 ```php
-$tail = Collection::from(...$arr)->tail();
+$tail = Collection::from($arr)->tail();
 //outputs the Collection [2, 3, 4, 5]
 ```
 
@@ -284,7 +290,7 @@ $list->last();
 Analogous to the [last](/collection?id=last-function) function.
 
 ```php
-$last = Collection::from(...$arr)->last(); //returns 5
+$last = Collection::from($arr)->last(); //returns 5
 ```
 
 ## intersects
@@ -301,8 +307,8 @@ $list->intersects(Collection $list);
 Analogous to the [intersects](/collection?id=intersects-function) function.
 
 ```php
-$intersects = Collection::from(...range(1, 3))
-    ->intersects(Collection::from(...range(5, 7)));
+$intersects = Collection::from(range(1, 3))
+    ->intersects(Collection::from(range(5, 7)));
 //returns false
 ```
 
@@ -320,7 +326,7 @@ $list->implode(string $delimiter);
 Joins Collection elements with a string. Analogous to the [implode](https://secure.php.net/manual/en/function.implode.php) function.
 
 ```php
-$str = Collection::from(...['Mike', 'is', 'the', 'GOAT'])->implode(' ');
+$str = Collection::from(['Mike', 'is', 'the', 'GOAT'])->implode(' ');
 //prints "Mike is the GOAT"
 ```
 
@@ -335,7 +341,7 @@ $list->toArray()
 The toArray method converts the collection to an array.
 
 ```php
-$list = Collection::from('foo', 'bar')
+$list = Collection::from(['foo', 'bar'])
     ->map('strtoupper')
     ->toArray(); //outputs the array ['FOO', 'BAR']
 ```
@@ -345,7 +351,7 @@ $list = Collection::from('foo', 'bar')
 The collection class implements the ```Countable```, ```JsonSerializable```, and ```IteratorAggregate``` interfaces. The implication is that bingo-functional's immutable collections are compatible with ```count()```, ```json_encode()```, and idiomatic PHP recursion constructs such as ```for``` and ```foreach```.
 
 ```php
-$list = Collection::from('foo', 'bar', 'baz');
+$list = Collection::from(['foo', 'bar', 'baz']);
 
 echo count($list); //outputs 3
 
