@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Immutable Collection class.
+ * Immutable ImmutableList class.
  *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
@@ -11,7 +11,7 @@ namespace Chemem\Bingo\Functional\Immutable;
 
 use \Chemem\Bingo\Functional\Algorithms as A;
 
-class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
+class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, ImmutableList
 {
     /**
      * @var mixed
@@ -19,7 +19,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     private $list;
 
     /**
-     * Collection constructor.
+     * ImmutableList constructor.
      *
      * @param mixed $items
      */
@@ -29,29 +29,17 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * from static method.
-     *
-     * @method from
-     *
-     * @param mixed $item
-     *
-     * @return object Collection
+     * {@inheritdoc}
      */
-    public static function from(array $items) : Collection
+    public static function from(array $items) : ImmutableList
     {
         return new static(\SplFixedArray::fromArray($items));
     }
 
     /**
-     * map method.
-     *
-     * @method map
-     *
-     * @param callable $func
-     *
-     * @return object Collection
+     * {@inheritdoc}
      */
-    public function map(callable $func) : Collection
+    public function map(callable $func) : ImmutableList
     {
         $list = $this->getList();
         for ($idx = 0; $idx < $list->count(); $idx++) {
@@ -62,13 +50,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * flatMap method.
-     *
-     * @method flatMap
-     *
-     * @param callable $func
-     *
-     * @return array $flattened
+     * {@inheritdoc}
      */
     public function flatMap(callable $func) : array
     {
@@ -76,15 +58,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * filter method.
-     *
-     * @method filter
-     *
-     * @param callable $func
-     *
-     * @return object Collection
+     * {@inheritdoc}
      */
-    public function filter(callable $func) : Collection
+    public function filter(callable $func) : ImmutableList
     {
         $list   = $this->getList();
         $count  = $list->count();
@@ -102,14 +78,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * fold method.
-     *
-     * @method fold
-     *
-     * @param callable $func
-     * @param mixed    $acc
-     *
-     * @return mixed $acc
+     * {@inheritdoc}
      */
     public function fold(callable $func, $acc)
     {
@@ -123,15 +92,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * slice method.
-     *
-     * @method slice
-     *
-     * @param int $count
-     *
-     * @return object Collection
+     * {@inheritdoc}
      */
-    public function slice(int $count) : Collection
+    public function slice(int $count) : ImmutableList
     {
         $list       = $this->getList();
         $listCount  = $list->count();
@@ -145,15 +108,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * merge method.
-     *
-     * @method merge
-     *
-     * @param Collection $list
-     *
-     * @return object Collection
+     * {@inheritdoc}
      */
-    public function merge(self $list) : Collection
+    public function merge(ImmutableList $list) : ImmutableList
     {
         $oldSize        = $this->getSize();
         $combinedSize   = $oldSize + $list->getSize();
@@ -170,13 +127,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * reverse method.
-     *
-     * @method reverse
-     *
-     * @return object Collection
+     * {@inheritdoc}
      */
-    public function reverse() : Collection
+    public function reverse() : ImmutableList
     {
         $list   = $this->getList();
         $count  = $list->count();
@@ -190,17 +143,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * fill method.
-     *
-     * @method fill
-     *
-     * @param mixed $value
-     * @param int   $start
-     * @param int   $end
-     *
-     * @return object Collection
+     * {@inheritdoc}
      */
-    public function fill($value, int $start, int $end): Collection
+    public function fill($value, int $start, int $end): ImmutableList
     {
         $list = $this->getList();
 
@@ -212,13 +157,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * fetch method
-     *
-     * @method fetch
-     *
-     * @param mixed key
+     * {@inheritdoc}
      */
-    public function fetch($key) : Collection
+    public function fetch($key) : ImmutableList
     {
         $list = $this->getList();
         $extr = [];
@@ -248,11 +189,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * contains method
-     *
-     * @method contains
-     *
-     * @param mixed element
+     * {@inheritdoc}
      */
     public function contains($element) : bool
     {
@@ -273,11 +210,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * unique method
-     *
-     * @method unique
+     * {@inheritdoc}
      */
-    public function unique() : Collection
+    public function unique() : ImmutableList
     {
         $list   = $this->getList();
         $acc    = [];
@@ -293,9 +228,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * head method
-     *
-     * @method head
+     * {@inheritdoc}
      */
     public function head()
     {
@@ -303,11 +236,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * tail method
-     *
-     * @method tail
+     * {@inheritdoc}
      */
-    public function tail() : Collection
+    public function tail() : ImmutableList
     {
         $list   = $this->getList();
         $acc    = [];
@@ -320,9 +251,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * last method
-     *
-     * @method last
+     * {@inheritdoc}
      */
     public function last()
     {
@@ -330,13 +259,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * intersects method
-     *
-     * @method head
-     *
-     * @param object Collection
+     * {@inheritdoc}
      */
-    public function intersects(Collection $list) : bool
+    public function intersects(ImmutableList $list) : bool
     {
         $intersect  = [];
         $main       = $this->getSize();
@@ -356,11 +281,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable
     }
 
     /**
-     * implode function
-     *
-     * @method implode
-     *
-     * @param string $delimiter
+     * {@inheritdoc}
      */
     public function implode(string $delimiter) : string
     {
