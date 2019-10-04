@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const compose = 'Chemem\\Bingo\\Functional\\Algorithms\\compose';
 
-function compose(callable ...$functions)
+function compose(callable ...$functions): callable
 {
     return array_reduce(
         $functions,
