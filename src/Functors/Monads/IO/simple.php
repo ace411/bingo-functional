@@ -23,9 +23,10 @@ use \Chemem\Bingo\Functional\Algorithms as A;
  *
  * @return object IO
  */
+
 const IO = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\IO';
 
-function IO($value) : IOMonad
+function IO($value): IOMonad
 {
     return IOMonad::of($value);
 }
@@ -40,7 +41,7 @@ function IO($value) : IOMonad
  */
 const getChar = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\getChar';
 
-function getChar() : IOMonad
+function getChar(): IOMonad
 {
     return putChar()
         ->map(function (callable $fget) {
@@ -58,7 +59,7 @@ function getChar() : IOMonad
  */
 const putChar = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putChar';
 
-function putChar() : IOMonad
+function putChar(): IOMonad
 {
     return IO(function () {
         return A\compose('fgetc', 'trim');
@@ -75,7 +76,7 @@ function putChar() : IOMonad
  */
 const putStr = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putStr';
 
-function putStr() : IOMonad
+function putStr(): IOMonad
 {
     return IO(function () {
         return A\compose('fgets', 'trim');
@@ -92,7 +93,7 @@ function putStr() : IOMonad
  */
 const getLine = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\getLine';
 
-function getLine() : IOMonad
+function getLine(): IOMonad
 {
     return putStr()
         ->map(function (callable $fget) {
@@ -113,7 +114,7 @@ function getLine() : IOMonad
  */
 const interact = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\interact';
 
-function interact(callable $function) : IOMonad
+function interact(callable $function): IOMonad
 {
     return getLine()->map($function);
 }
@@ -130,7 +131,7 @@ function interact(callable $function) : IOMonad
  */
 const _print = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\_print';
 
-function _print(IOMonad $interaction) : IOMonad
+function _print(IOMonad $interaction): IOMonad
 {
     return $interaction
         ->map(function (string $result) {
@@ -149,7 +150,7 @@ function _print(IOMonad $interaction) : IOMonad
 
 const IOException = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\IOException';
 
-function IOException(string $message) : IOMonad
+function IOException(string $message): IOMonad
 {
     return IO(function () use ($message) {
         return function () use ($message) {
@@ -169,7 +170,7 @@ function IOException(string $message) : IOMonad
 
 const catchIO = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\catchIO';
 
-function catchIO(IOMonad $operation) : IOMonad
+function catchIO(IOMonad $operation): IOMonad
 {
     return $operation->bind(function ($operation) {
         $exception = A\compose(A\toException, IO);

@@ -3,6 +3,7 @@
 namespace Chemem\Bingo\Functional\Tests;
 
 use Chemem\Bingo\Functional\Functors\Monads\State;
+
 use function Chemem\Bingo\Functional\Functors\Monads\State\evalState;
 use function Chemem\Bingo\Functional\Functors\Monads\State\execState;
 use function Chemem\Bingo\Functional\Functors\Monads\State\gets;

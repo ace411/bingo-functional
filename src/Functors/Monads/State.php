@@ -35,7 +35,7 @@ class State implements Monadic
      *
      * @return object State
      */
-    public static function of($value) : self
+    public static function of($value): self
     {
         return new static(function ($state) use ($value) {
             return [$value, $state];
@@ -49,7 +49,7 @@ class State implements Monadic
      *
      * @return object State
      */
-    public function ap(Monadic $monad) : Monadic
+    public function ap(Monadic $monad): Monadic
     {
         return $this->bind(function ($function) use ($monad) {
             return $monad->map($function);
@@ -63,7 +63,7 @@ class State implements Monadic
      *
      * @return object State
      */
-    public function bind(callable $function) : Monadic
+    public function bind(callable $function): Monadic
     {
         return new self(function ($state) use ($function) {
             list($initial, $final) = $this->run($state);
@@ -79,7 +79,7 @@ class State implements Monadic
      *
      * @return object State
      */
-    public function map(callable $function) : Monadic
+    public function map(callable $function): Monadic
     {
         return $this->bind(function ($state) use ($function) {
             return self::of($function($state));

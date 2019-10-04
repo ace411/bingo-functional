@@ -3,6 +3,7 @@
 namespace Chemem\Bingo\Functional\Tests;
 
 use Chemem\Bingo\Functional\Functors\Monads\Reader;
+
 use function Chemem\Bingo\Functional\Algorithms\concat;
 use function Chemem\Bingo\Functional\Algorithms\fold;
 use function Chemem\Bingo\Functional\Functors\Monads\Reader\ask;
@@ -16,7 +17,7 @@ class ReaderMonadTest extends \PHPUnit\Framework\TestCase
     public function testOfStaticMethodOutputsReaderInstance()
     {
         $this->assertInstanceOf(Reader::class, reader(function ($name) {
-            return 'Hello '.$name;
+            return 'Hello ' . $name;
         }));
     }
 
@@ -35,7 +36,7 @@ class ReaderMonadTest extends \PHPUnit\Framework\TestCase
     public function testBindMethodUsesCallbackToTransformInitialReaderValue()
     {
         $read = Reader::of(function ($name) {
-            return concat(' ', 'Hello', $name.'.');
+            return concat(' ', 'Hello', $name . '.');
         })
             ->bind(
                 function ($content) {
@@ -52,7 +53,7 @@ class ReaderMonadTest extends \PHPUnit\Framework\TestCase
     public function testBindMethodOutputsReaderInstance()
     {
         $read = Reader::of(function ($name) {
-            return concat(' ', 'Hello', $name.'.');
+            return concat(' ', 'Hello', $name . '.');
         })
             ->bind(
                 function ($content) {

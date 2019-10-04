@@ -20,7 +20,7 @@ interface Monadic
      *
      * @return object Monadic
      */
-    public function map(callable $function) : Monadic;
+    public function map(callable $function): Monadic;
 
     /**
      * bind method.
@@ -31,7 +31,7 @@ interface Monadic
      *
      * @return object Monadic
      */
-    public function bind(callable $function) : Monadic;
+    public function bind(callable $function): Monadic;
 
     /**
      * ap method.
@@ -42,5 +42,5 @@ interface Monadic
      *
      * @return object Monadic
      */
-    public function ap(Monadic $app) : Monadic;
+    public function ap(Monadic $app): Monadic;
 }

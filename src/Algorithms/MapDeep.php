@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const mapDeep = 'Chemem\\Bingo\\Functional\\Algorithms\\mapDeep';
 
-function mapDeep(callable $func, array $collection) : array
+function mapDeep(callable $func, array $collection): array
 {
     $acc = [];
 

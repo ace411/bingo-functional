@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const reject = 'Chemem\\Bingo\\Functional\\Algorithms\\reject';
 
-function reject(callable $func, array $collection) : array
+function reject(callable $func, array $collection): array
 {
     $acc = [];
 

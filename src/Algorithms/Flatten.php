@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const flatten = 'Chemem\\Bingo\\Functional\\Algorithms\\flatten';
 
-function flatten(array $collection, array $acc = []) : array
+function flatten(array $collection, array $acc = []): array
 {
     $flattened = fold(
         function ($acc, $value) {

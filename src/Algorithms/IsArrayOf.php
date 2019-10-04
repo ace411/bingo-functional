@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const isArrayOf = 'Chemem\\Bingo\\Functional\\Algorithms\\isArrayOf';
 
-function isArrayOf(array $collection) : string
+function isArrayOf(array $collection): string
 {
     $types = [];
 

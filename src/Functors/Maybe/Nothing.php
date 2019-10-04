@@ -25,7 +25,7 @@ class Nothing extends Maybe
     /**
      * {@inheritdoc}
      */
-    public static function of($value) : Maybe
+    public static function of($value): Maybe
     {
         return new self();
     }
@@ -33,7 +33,7 @@ class Nothing extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function isJust() : bool
+    public function isJust(): bool
     {
         return false;
     }
@@ -41,7 +41,7 @@ class Nothing extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function isNothing() : bool
+    public function isNothing(): bool
     {
         return true;
     }
@@ -73,7 +73,7 @@ class Nothing extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function ap(M\Monadic $app) : M\Monadic
+    public function ap(M\Monadic $app): M\Monadic
     {
         return $this;
     }
@@ -89,7 +89,7 @@ class Nothing extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function map(callable $function) : M\Monadic
+    public function map(callable $function): M\Monadic
     {
         return $this;
     }
@@ -97,7 +97,7 @@ class Nothing extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function filter(callable $fn) : Maybe
+    public function filter(callable $fn): Maybe
     {
         return $this;
     }
@@ -105,7 +105,7 @@ class Nothing extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function bind(callable $function) : M\Monadic
+    public function bind(callable $function): M\Monadic
     {
         return $this;
     }
@@ -113,7 +113,7 @@ class Nothing extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function orElse(Maybe $maybe) : Maybe
+    public function orElse(Maybe $maybe): Maybe
     {
         return $maybe;
     }

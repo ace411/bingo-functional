@@ -12,6 +12,7 @@
 namespace Chemem\Bingo\Functional\Functors\Either;
 
 use Chemem\Bingo\Functional\Functors\Either\Either as Etype;
+
 use function Chemem\Bingo\Functional\Algorithms\fold;
 use function Chemem\Bingo\Functional\Algorithms\identity as id;
 
@@ -27,6 +28,7 @@ use function Chemem\Bingo\Functional\Algorithms\identity as id;
  *
  * @return mixed
  */
+
 const either = 'Chemem\\Bingo\\Functional\\Functors\\Either\\either';
 
 function either(callable $left, callable $right, Etype $either)
@@ -61,7 +63,7 @@ function _extract(array $eithers, string $class)
  */
 const isLeft = 'Chemem\\Bingo\\Functional\\Functors\\Either\\isLeft';
 
-function isLeft(Etype $either) : bool
+function isLeft(Etype $either): bool
 {
     return $either->isLeft();
 }
@@ -76,7 +78,7 @@ function isLeft(Etype $either) : bool
  */
 const isRight = 'Chemem\\Bingo\\Functional\\Functors\\Either\\isRight';
 
-function isRight(Etype $either) : bool
+function isRight(Etype $either): bool
 {
     return $either->isRight();
 }
@@ -93,7 +95,7 @@ function isRight(Etype $either) : bool
  */
 const lefts = 'Chemem\\Bingo\\Functional\\Functors\\Either\\lefts';
 
-function lefts(array $eithers) : array
+function lefts(array $eithers): array
 {
     return _extract($eithers, Left::class);
 }
@@ -110,7 +112,7 @@ function lefts(array $eithers) : array
  */
 const rights = 'Chemem\\Bingo\\Functional\\Functors\\Either\\rights';
 
-function rights(array $eithers) : array
+function rights(array $eithers): array
 {
     return _extract($eithers, Right::class);
 }
@@ -163,7 +165,7 @@ function fromLeft($default, $either)
  */
 const partitionEithers = 'Chemem\\Bingo\\Functional\\Functors\\Either\\partitionEithers';
 
-function partitionEithers(array $eithers) : array
+function partitionEithers(array $eithers): array
 {
     return fold(
         function (array $acc, Etype $either) {

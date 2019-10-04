@@ -37,7 +37,7 @@ class Reader implements Monadic
      *
      * @return object Reader
      */
-    public static function of($action) : self
+    public static function of($action): self
     {
         return is_callable($action) ? new static($action) : new static(function ($env) use ($action) {
             return $action;
@@ -47,7 +47,7 @@ class Reader implements Monadic
     /**
      * ap method.
      */
-    public function ap(Monadic $app) : Monadic
+    public function ap(Monadic $app): Monadic
     {
         return $this->bind(function ($func) use ($app) {
             return $app->map($func);
@@ -61,7 +61,7 @@ class Reader implements Monadic
      *
      * @return object Reader
      */
-    public function map(callable $function) : Monadic
+    public function map(callable $function): Monadic
     {
         return $this->bind(function ($env) use ($function) {
             return self::of($function($env));
@@ -71,7 +71,7 @@ class Reader implements Monadic
     /**
      * bind method.
      */
-    public function bind(callable $function) : Monadic
+    public function bind(callable $function): Monadic
     {
         return new self(function ($env) use ($function) {
             return $function($this->run($env))->run($env);

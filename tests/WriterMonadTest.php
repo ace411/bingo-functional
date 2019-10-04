@@ -3,6 +3,7 @@
 namespace Chemem\Bingo\Functional\Tests;
 
 use Chemem\Bingo\Functional\Functors\Monads\Writer;
+
 use function Chemem\Bingo\Functional\Algorithms\extend;
 use function Chemem\Bingo\Functional\Functors\Monads\Writer\execWriter;
 use function Chemem\Bingo\Functional\Functors\Monads\Writer\mapWriter;

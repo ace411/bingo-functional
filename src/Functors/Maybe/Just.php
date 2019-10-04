@@ -25,7 +25,7 @@ class Just extends Maybe
     /**
      * {@inheritdoc}
      */
-    public static function of($value) : Maybe
+    public static function of($value): Maybe
     {
         return new static($value);
     }
@@ -33,7 +33,7 @@ class Just extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function isJust() : bool
+    public function isJust(): bool
     {
         return true;
     }
@@ -41,7 +41,7 @@ class Just extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function isNothing() : bool
+    public function isNothing(): bool
     {
         return false;
     }
@@ -80,7 +80,7 @@ class Just extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function ap(M\Monadic $app) : M\Monadic
+    public function ap(M\Monadic $app): M\Monadic
     {
         return $app->map($this);
     }
@@ -88,7 +88,7 @@ class Just extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function map(callable $fn) : M\Monadic
+    public function map(callable $fn): M\Monadic
     {
         return new static($fn($this->getJust()));
     }
@@ -96,7 +96,7 @@ class Just extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function bind(callable $function) : M\Monadic
+    public function bind(callable $function): M\Monadic
     {
         return $function($this->getJust());
     }
@@ -104,7 +104,7 @@ class Just extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function filter(callable $fn) : Maybe
+    public function filter(callable $fn): Maybe
     {
         return $fn($this->getJust()) ? new static($this->getJust()) : new Nothing();
     }
@@ -112,7 +112,7 @@ class Just extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function orElse(Maybe $maybe) : Maybe
+    public function orElse(Maybe $maybe): Maybe
     {
         return !isset($this->value) ? $maybe : new static($this->value);
     }

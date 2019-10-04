@@ -21,9 +21,10 @@ use Chemem\Bingo\Functional\Functors\Applicatives\Applicative as App;
  *
  * @return object Applicative
  */
+
 const pure = 'Chemem\\Bingo\\Functional\\Functors\\Applicatives\\Applicative\\pure';
 
-function pure($value) : App
+function pure($value): App
 {
     return App::pure($value);
 }
@@ -41,7 +42,7 @@ function pure($value) : App
  */
 const liftA2 = 'Chemem\\Bingo\\Functional\\Functors\\Applicatives\\Applicative\\liftA2';
 
-function liftA2(callable $function, App ...$values) : App
+function liftA2(callable $function, App ...$values): App
 {
     $args = array_map(
         function (App $val) {

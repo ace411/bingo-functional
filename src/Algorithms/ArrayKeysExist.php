@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const arrayKeysExist = 'Chemem\\Bingo\\Functional\\Algorithms\\arrayKeysExist';
 
-function arrayKeysExist(array $toSearch, ...$keys) : bool
+function arrayKeysExist(array $toSearch, ...$keys): bool
 {
     $keysIntersection = array_intersect(array_keys($toSearch), $keys);
 

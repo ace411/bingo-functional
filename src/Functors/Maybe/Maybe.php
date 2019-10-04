@@ -28,7 +28,7 @@ abstract class Maybe implements M\Monadic
      *
      * @return object Just
      */
-    public static function just($value) : Just
+    public static function just($value): Just
     {
         return new Just($value);
     }
@@ -38,7 +38,7 @@ abstract class Maybe implements M\Monadic
      *
      * @return object Nothing
      */
-    public static function nothing() : Nothing
+    public static function nothing(): Nothing
     {
         return new Nothing();
     }
@@ -51,7 +51,7 @@ abstract class Maybe implements M\Monadic
      *
      * @return object Maybe
      */
-    public static function fromValue($just, $nothing = null) : self
+    public static function fromValue($just, $nothing = null): self
     {
         return $just !== $nothing ? self::just($just) : self::nothing();
     }
@@ -63,7 +63,7 @@ abstract class Maybe implements M\Monadic
      *
      * @return callable
      */
-    public static function lift(callable $fn) : callable
+    public static function lift(callable $fn): callable
     {
         return function () use ($fn) {
             if (
@@ -96,7 +96,7 @@ abstract class Maybe implements M\Monadic
      *
      * @return object Maybe
      */
-    abstract public static function of($value) : self;
+    abstract public static function of($value): self;
 
     /**
      * getJust method.
@@ -119,7 +119,7 @@ abstract class Maybe implements M\Monadic
      *
      * @return bool
      */
-    abstract public function isJust() : bool;
+    abstract public function isJust(): bool;
 
     /**
      * isNothing method.
@@ -128,7 +128,7 @@ abstract class Maybe implements M\Monadic
      *
      * @return bool
      */
-    abstract public function isNothing() : bool;
+    abstract public function isNothing(): bool;
 
     /**
      * flatMap method.
@@ -150,7 +150,7 @@ abstract class Maybe implements M\Monadic
      *
      * @return object Maybe
      */
-    abstract public function ap(M\Monadic $app) : M\Monadic;
+    abstract public function ap(M\Monadic $app): M\Monadic;
 
     /**
      * getOrElse method.
@@ -172,7 +172,7 @@ abstract class Maybe implements M\Monadic
      *
      * @return object Maybe
      */
-    abstract public function map(callable $function) : M\Monadic;
+    abstract public function map(callable $function): M\Monadic;
 
     /**
      * bind method.
@@ -183,7 +183,7 @@ abstract class Maybe implements M\Monadic
      *
      * @return object Maybe
      */
-    abstract public function bind(callable $function) : M\Monadic;
+    abstract public function bind(callable $function): M\Monadic;
 
     /**
      * filter method.
@@ -194,7 +194,7 @@ abstract class Maybe implements M\Monadic
      *
      * @return object Maybe
      */
-    abstract public function filter(callable $fn) : self;
+    abstract public function filter(callable $fn): self;
 
     /**
      * orElse method.
@@ -205,5 +205,5 @@ abstract class Maybe implements M\Monadic
      *
      * @return object Maybe
      */
-    abstract public function orElse(self $value) : self;
+    abstract public function orElse(self $value): self;
 }

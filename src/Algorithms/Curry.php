@@ -15,7 +15,7 @@ use Chemem\Bingo\Functional\Algorithms as A;
 
 const curry = 'Chemem\\Bingo\\Functional\\Algorithms\\curry';
 
-function curry(callable $fn, $required = true) : callable
+function curry(callable $fn, $required = true): callable
 {
     $func = new \ReflectionFunction($fn);
 
@@ -37,7 +37,7 @@ function curry(callable $fn, $required = true) : callable
  */
 const curryRight = 'Chemem\\Bingo\\Functional\\Algorithms\\curryRight';
 
-function curryRight(callable $func, $required = true) : callable
+function curryRight(callable $func, $required = true): callable
 {
     $toCurry = new \ReflectionFunction($func);
 

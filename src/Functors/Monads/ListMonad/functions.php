@@ -9,6 +9,7 @@
 namespace Chemem\Bingo\Functional\Functors\Monads\ListMonad;
 
 use Chemem\Bingo\Functional\Functors\Monads\ListMonad as LMonad;
+
 use function Chemem\Bingo\Functional\Algorithms\flatten;
 use function Chemem\Bingo\Functional\Algorithms\fold;
 use function Chemem\Bingo\Functional\Algorithms\head as _head;
@@ -24,9 +25,10 @@ use function Chemem\Bingo\Functional\Algorithms\last;
  *
  * @return object ListMonad
  */
+
 const fromValue = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\fromValue';
 
-function fromValue($value) : LMonad
+function fromValue($value): LMonad
 {
     return LMonad::of($value);
 }
@@ -43,7 +45,7 @@ function fromValue($value) : LMonad
  */
 const concat = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\concat';
 
-function concat(LMonad ...$list) : LMonad
+function concat(LMonad ...$list): LMonad
 {
     $res = fold(
         function (array $return, LMonad $list) {
@@ -71,7 +73,7 @@ function concat(LMonad ...$list) : LMonad
  */
 const prepend = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\prepend';
 
-function prepend(LMonad $value, LMonad $list) : LMonad
+function prepend(LMonad $value, LMonad $list): LMonad
 {
     return concat($value, $list);
 }
@@ -89,7 +91,7 @@ function prepend(LMonad $value, LMonad $list) : LMonad
  */
 const append = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\append';
 
-function append(LMonad $value, LMonad $list) : LMonad
+function append(LMonad $value, LMonad $list): LMonad
 {
     return concat($list, $value);
 }

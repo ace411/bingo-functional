@@ -15,7 +15,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const zipWith = 'Chemem\\Bingo\\Functional\\Algorithms\\zipWith';
 
-function zipWith(callable $function, array ...$values) : array
+function zipWith(callable $function, array ...$values): array
 {
     $zipped = zip(...$values);
 

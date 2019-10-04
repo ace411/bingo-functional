@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const unique = 'Chemem\\Bingo\\Functional\\Algorithms\\unique';
 
-function unique(array $collection) : array
+function unique(array $collection): array
 {
     $acc = [];
 

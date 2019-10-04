@@ -23,9 +23,10 @@ use Chemem\Bingo\Functional\Functors\Monads\Reader as ReaderMonad;
  *
  * @return object Reader
  */
+
 const reader = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\reader';
 
-function reader($value) : ReaderMonad
+function reader($value): ReaderMonad
 {
     return ReaderMonad::of($value);
 }
@@ -61,7 +62,7 @@ function runReader(ReaderMonad $reader, $value)
  */
 const mapReader = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\mapReader';
 
-function mapReader(callable $function, ReaderMonad $reader) : ReaderMonad
+function mapReader(callable $function, ReaderMonad $reader): ReaderMonad
 {
     return $reader->map($function);
 }
@@ -79,7 +80,7 @@ function mapReader(callable $function, ReaderMonad $reader) : ReaderMonad
  */
 const withReader = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\withReader';
 
-function withReader(callable $function, ReaderMonad $reader) : ReaderMonad
+function withReader(callable $function, ReaderMonad $reader): ReaderMonad
 {
     return $reader->bind($function);
 }
@@ -94,7 +95,7 @@ function withReader(callable $function, ReaderMonad $reader) : ReaderMonad
  */
 const ask = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\ask';
 
-function ask() : ReaderMonad
+function ask(): ReaderMonad
 {
     return ReaderMonad::of(function ($value) {
         return $value;

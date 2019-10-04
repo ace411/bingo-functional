@@ -25,9 +25,10 @@ use Chemem\Bingo\Functional\Functors\Monads\Writer as WriterMonad;
  *
  * @return object Writer
  */
+
 const writer = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Writer\\writer';
 
-function writer($result, $output) : WriterMonad
+function writer($result, $output): WriterMonad
 {
     return WriterMonad::of($result, $output);
 }
@@ -44,7 +45,7 @@ function writer($result, $output) : WriterMonad
  */
 const runWriter = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Writer\\runWriter';
 
-function runWriter(WriterMonad $writer) : array
+function runWriter(WriterMonad $writer): array
 {
     return $writer->run();
 }
@@ -62,7 +63,7 @@ function runWriter(WriterMonad $writer) : array
 
 const tell = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Writer\\tell';
 
-function tell($msg) : WriterMonad
+function tell($msg): WriterMonad
 {
     return new WriterMonad(function () use ($msg) {
         return [null, [$msg]];
@@ -101,7 +102,7 @@ function execWriter(WriterMonad $writer)
  */
 const mapWriter = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Writer\\mapWriter';
 
-function mapWriter(callable $function, WriterMonad $writer) : WriterMonad
+function mapWriter(callable $function, WriterMonad $writer): WriterMonad
 {
     list($result, $output) = $function(runWriter($writer));
 

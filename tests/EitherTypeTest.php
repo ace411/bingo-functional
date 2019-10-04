@@ -6,6 +6,7 @@ use Chemem\Bingo\Functional\Functors\Either\Either;
 use Chemem\Bingo\Functional\Functors\Either\Left;
 use Chemem\Bingo\Functional\Functors\Either\Right;
 use PHPUnit\Framework\TestCase;
+
 use function Chemem\Bingo\Functional\Algorithms\concat;
 use function Chemem\Bingo\Functional\Algorithms\identity;
 use function Chemem\Bingo\Functional\Functors\Either\either;
@@ -80,7 +81,7 @@ class EitherTypeTest extends TestCase
     public function testEitherRightTypeFlatMapMethodReturnsNonEncapsulatedValue()
     {
         $value = Either::right(12)
-            ->flatMap(function (int $a) : int {
+            ->flatMap(function (int $a): int {
                 return $a + 10;
             });
 
@@ -90,7 +91,7 @@ class EitherTypeTest extends TestCase
     public function testEitherRightTypeMapMethodReturnsEncapsulatedValue()
     {
         $value = Either::right(12)
-            ->map(function (int $a) : int {
+            ->map(function (int $a): int {
                 return $a + 10;
             });
 
@@ -101,7 +102,7 @@ class EitherTypeTest extends TestCase
     public function testEitherRightTypeFilterMethodReturnsEncapsulatedValueBasedOnPredicate()
     {
         $value = Either::right('foo')
-            ->filter(function (string $str) : bool {
+            ->filter(function (string $str): bool {
                 return is_string($str);
             }, $GLOBALS['ERR_MSG_STR']);
 
@@ -122,7 +123,7 @@ class EitherTypeTest extends TestCase
     public function testEitherRightTypeFilterMethodReturnsLeftValueIfConditionEvaluatesToFalse()
     {
         $value = Either::right(12)
-            ->filter(function (int $val) : bool {
+            ->filter(function (int $val): bool {
                 return is_string($val);
             }, $GLOBALS['ERR_MSG_STR']);
 
@@ -133,7 +134,7 @@ class EitherTypeTest extends TestCase
     public function testMapFlatMapFilterMethodsHaveNoEffectOnLeftValue()
     {
         $error = Either::left($GLOBALS['ERR_MSG'])
-            ->filter(function (string $val) : bool {
+            ->filter(function (string $val): bool {
                 return is_string($val);
             }, $GLOBALS['ERR_MSG_STR'])
             ->map(function (string $val) {

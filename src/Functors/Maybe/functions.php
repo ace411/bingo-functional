@@ -12,6 +12,7 @@
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
 use Chemem\Bingo\Functional\Functors\Maybe\Maybe as Mtype;
+
 use function Chemem\Bingo\Functional\Algorithms\compose;
 use function Chemem\Bingo\Functional\Algorithms\fold;
 use function Chemem\Bingo\Functional\Algorithms\head;
@@ -30,6 +31,7 @@ use function Chemem\Bingo\Functional\Algorithms\partialLeft;
  *
  * @return mixed
  */
+
 const maybe = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\maybe';
 
 function maybe($default, callable $function, Mtype $maybe)
@@ -122,7 +124,7 @@ function fromMaybe($default, Mtype $maybe)
  */
 const listToMaybe = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\listToMaybe';
 
-function listToMaybe(array $list) : Mtype
+function listToMaybe(array $list): Mtype
 {
     return empty($list) ? Mtype::fromValue(id([]), id([])) : Mtype::fromValue(head($list));
 }
@@ -139,7 +141,7 @@ function listToMaybe(array $list) : Mtype
  */
 const maybeToList = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\maybeToList';
 
-function maybeToList(Mtype $maybe) : array
+function maybeToList(Mtype $maybe): array
 {
     return $maybe instanceof Nothing ? id([]) : [$maybe->getJust()];
 }
@@ -156,7 +158,7 @@ function maybeToList(Mtype $maybe) : array
  */
 const catMaybes = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\catMaybes';
 
-function catMaybes(array $maybes) : array
+function catMaybes(array $maybes): array
 {
     return fold(
         function ($list, Mtype $maybe) {
@@ -184,7 +186,7 @@ function catMaybes(array $maybes) : array
  */
 const mapMaybe = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\mapMaybe';
 
-function mapMaybe(callable $function, array $values) : array
+function mapMaybe(callable $function, array $values): array
 {
     $map = compose(partialLeft('array_map', $function), catMaybes);
 

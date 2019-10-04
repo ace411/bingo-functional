@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const map = 'Chemem\\Bingo\\Functional\\Algorithms\\map';
 
-function map(callable $func, array $collection) : array
+function map(callable $func, array $collection): array
 {
     $acc = [];
 

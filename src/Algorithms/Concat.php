@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const concat = 'Chemem\\Bingo\\Functional\\Algorithms\\concat';
 
-function concat(string $wildcard = '', string ...$strings) : string
+function concat(string $wildcard = '', string ...$strings): string
 {
     return implode($wildcard, $strings);
 }

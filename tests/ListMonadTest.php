@@ -3,6 +3,7 @@
 namespace Chemem\Bingo\Functional\Tests;
 
 use Chemem\Bingo\Functional\Functors\Monads\ListMonad;
+
 use function Chemem\Bingo\Functional\Functors\Monads\ListMonad\append;
 use function Chemem\Bingo\Functional\Functors\Monads\ListMonad\concat;
 use function Chemem\Bingo\Functional\Functors\Monads\ListMonad\fromValue;

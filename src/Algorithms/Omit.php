@@ -12,7 +12,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const omit = 'Chemem\\Bingo\\Functional\\Algorithms\\omit';
 
-function omit(array $collection, ...$keys) : array
+function omit(array $collection, ...$keys): array
 {
     $diff = array_diff(array_keys($collection), $keys);
 

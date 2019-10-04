@@ -25,7 +25,7 @@ class Right extends Either
     /**
      * {@inheritdoc}
      */
-    public static function of($value) : Either
+    public static function of($value): Either
     {
         return new static($value);
     }
@@ -33,7 +33,7 @@ class Right extends Either
     /**
      * {@inheritdoc}
      */
-    public function isLeft() : bool
+    public function isLeft(): bool
     {
         return false;
     }
@@ -41,7 +41,7 @@ class Right extends Either
     /**
      * {@inheritdoc}
      */
-    public function isRight() : bool
+    public function isRight(): bool
     {
         return true;
     }
@@ -64,7 +64,7 @@ class Right extends Either
     /**
      * {@inheritdoc}
      */
-    public function ap(M\Monadic $app) : M\Monadic
+    public function ap(M\Monadic $app): M\Monadic
     {
         return $app->bind($this->value);
     }
@@ -72,7 +72,7 @@ class Right extends Either
     /**
      * {@inheritdoc}
      */
-    public function filter(callable $function, $error) : Either
+    public function filter(callable $function, $error): Either
     {
         return $function($this->value) ? new static($this->getRight()) : new Left($error);
     }
@@ -88,7 +88,7 @@ class Right extends Either
     /**
      * {@inheritdoc}
      */
-    public function map(callable $function) : M\Monadic
+    public function map(callable $function): M\Monadic
     {
         return new static($function($this->getRight()));
     }
@@ -96,7 +96,7 @@ class Right extends Either
     /**
      * {@inheritdoc}
      */
-    public function bind(callable $function) : M\Monadic
+    public function bind(callable $function): M\Monadic
     {
         return $function($this->getRight());
     }
@@ -104,7 +104,7 @@ class Right extends Either
     /**
      * {@inheritdoc}
      */
-    public function orElse(Either $either) : Either
+    public function orElse(Either $either): Either
     {
         return !isset($this->value) ? $either : new static($this->value);
     }

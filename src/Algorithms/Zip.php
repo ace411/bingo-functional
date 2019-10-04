@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const zip = 'Chemem\\Bingo\\Functional\\Algorithms\\zip';
 
-function zip(array ...$lists) : array
+function zip(array ...$lists): array
 {
     $acc = [];
     foreach ($lists as $key => $list) {

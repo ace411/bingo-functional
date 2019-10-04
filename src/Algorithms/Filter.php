@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const filter = 'Chemem\\Bingo\\Functional\\Algorithms\\filter';
 
-function filter(callable $func, array $collection) : array
+function filter(callable $func, array $collection): array
 {
     $acc = [];
 

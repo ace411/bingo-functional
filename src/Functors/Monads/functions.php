@@ -22,6 +22,7 @@ use Chemem\Bingo\Functional\Algorithms as A;
  *
  * @return object Monad
  */
+
 const mcompose = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\mcompose';
 
 function mcompose(callable $funcA, callable $funcB)
@@ -46,7 +47,7 @@ function mcompose(callable $funcA, callable $funcB)
  */
 const bind = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\bind';
 
-function bind(callable $function, Monadic $value = null) : Monadic
+function bind(callable $function, Monadic $value = null): Monadic
 {
     return A\curry(function ($function, $value) {
         return $value->bind($function);
@@ -66,7 +67,7 @@ function bind(callable $function, Monadic $value = null) : Monadic
  */
 const foldM = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\foldM';
 
-function foldM(callable $function, array $list, $acc) : Monadic
+function foldM(callable $function, array $list, $acc): Monadic
 {
     $monad = $function($acc, A\head($list));
 
@@ -96,7 +97,7 @@ function foldM(callable $function, array $list, $acc) : Monadic
  */
 const filterM = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\filterM';
 
-function filterM(callable $function, array $list) : Monadic
+function filterM(callable $function, array $list): Monadic
 {
     $monad = $function(A\head($list));
 

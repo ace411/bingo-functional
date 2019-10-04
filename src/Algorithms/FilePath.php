@@ -14,7 +14,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const filePath = 'Chemem\\Bingo\\Functional\\Algorithms\\filePath';
 
-function filePath(int $level, string ...$components) : string
+function filePath(int $level, string ...$components): string
 {
     return concat('/', dirname(__DIR__, 5 + $level), ...$components);
 }

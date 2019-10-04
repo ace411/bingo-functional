@@ -4,6 +4,7 @@ namespace Chemem\Bingo\Functional\Tests;
 
 use \Chemem\Bingo\Functional\Functors\Monads as M;
 use \Chemem\Bingo\Functional\Functors\Maybe;
+
 use function \Chemem\Bingo\Functional\Algorithms\concat;
 
 class MonadHelperTest extends \PHPUnit\Framework\TestCase
@@ -32,7 +33,7 @@ class MonadHelperTest extends \PHPUnit\Framework\TestCase
 
     public function testFoldMFunctionWorksLikeFoldFunction()
     {
-        $fold = M\foldM(function (int $acc, int $val) : M\Monadic {
+        $fold = M\foldM(function (int $acc, int $val): M\Monadic {
             return $val < 3 ? M\IO::of($val + $acc) : M\IO::of($val - $acc);
         }, [4, 7, 9, 2, 1], 0);
 
@@ -43,7 +44,7 @@ class MonadHelperTest extends \PHPUnit\Framework\TestCase
 
     public function testFilterMPerformsFilterOperationInMonadicEnvironment()
     {
-        $filter = M\filterM(function (int $val) : M\Monadic {
+        $filter = M\filterM(function (int $val): M\Monadic {
             return Maybe\Maybe::just($val > 10);
         }, range(1, 50));
 

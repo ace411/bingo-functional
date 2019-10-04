@@ -18,11 +18,12 @@ use Chemem\Bingo\Functional\Algorithms as A;
  *
  * @return callable $matchCons
  */
+
 const match = 'Chemem\\Bingo\\Functional\\PatternMatching\\match';
 
-function match(array $options) : callable
+function match(array $options): callable
 {
-    $matchFn = function (array $options) : array {
+    $matchFn = function (array $options): array {
         return array_key_exists('_', $options) ?
             $options :
             ['_' => function () {
@@ -70,7 +71,7 @@ const getNumConditions = 'Chemem\\Bingo\\Functional\\PatternMatching\\getNumCond
 
 function getNumConditions(array $conditions)
 {
-    $checkOpt = function (string $opt) : string {
+    $checkOpt = function (string $opt): string {
         return preg_match('/([_])+/', $opt) ? $opt : '_';
     };
 
@@ -326,7 +327,7 @@ function evalObjectPattern(array $patterns, $value)
 
 const letIn = 'Chemem\\Bingo\\Functional\\PatternMatching\\letIn';
 
-function letIn(array $params, array $list) : callable
+function letIn(array $params, array $list): callable
 {
     $patterns = array_merge(...array_map(function ($param, $val, $acc = []) {
         if ($param == '_' || is_null($param)) {

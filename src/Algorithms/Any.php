@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const any = 'Chemem\\Bingo\\Functional\\Algorithms\\any';
 
-function any(array $collection, callable $func) : bool
+function any(array $collection, callable $func): bool
 {
     $evalAny = compose(
         partialLeft(filter, $func),

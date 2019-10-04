@@ -25,7 +25,7 @@ abstract class Either implements M\Monadic
      *
      * @return object Left
      */
-    public static function left($value) : Left
+    public static function left($value): Left
     {
         return new Left($value);
     }
@@ -37,7 +37,7 @@ abstract class Either implements M\Monadic
      *
      * @return object Right
      */
-    public static function right($value) : Right
+    public static function right($value): Right
     {
         return new Right($value);
     }
@@ -50,7 +50,7 @@ abstract class Either implements M\Monadic
      *
      * @return callable
      */
-    public static function lift(callable $function, Left $left) : callable
+    public static function lift(callable $function, Left $left): callable
     {
         return function () use ($function, $left) {
             if (
@@ -99,7 +99,7 @@ abstract class Either implements M\Monadic
      *
      * @return bool
      */
-    abstract public function isLeft() : bool;
+    abstract public function isLeft(): bool;
 
     /**
      * isRight method.
@@ -108,7 +108,7 @@ abstract class Either implements M\Monadic
      *
      * @return bool
      */
-    abstract public function isRight() : bool;
+    abstract public function isRight(): bool;
 
     /**
      * of method.
@@ -117,7 +117,7 @@ abstract class Either implements M\Monadic
      *
      * @return object Either
      */
-    abstract public static function of($value) : self;
+    abstract public static function of($value): self;
 
     /**
      * flatMap method.
@@ -139,7 +139,7 @@ abstract class Either implements M\Monadic
      *
      * @return object Functor
      */
-    abstract public function map(callable $function) : M\Monadic;
+    abstract public function map(callable $function): M\Monadic;
 
     /**
      * bind method.
@@ -151,7 +151,7 @@ abstract class Either implements M\Monadic
      *
      * @return object Either
      */
-    abstract public function bind(callable $function) : M\Monadic;
+    abstract public function bind(callable $function): M\Monadic;
 
     /**
      * ap method.
@@ -163,7 +163,7 @@ abstract class Either implements M\Monadic
      *
      * @return object Either
      */
-    abstract public function ap(M\Monadic $app) : M\Monadic;
+    abstract public function ap(M\Monadic $app): M\Monadic;
 
     /**
      * filter method.
@@ -175,7 +175,7 @@ abstract class Either implements M\Monadic
      *
      * @return object Either
      */
-    abstract public function filter(callable $function, $error) : self;
+    abstract public function filter(callable $function, $error): self;
 
     /**
      * orElse method.
@@ -184,5 +184,5 @@ abstract class Either implements M\Monadic
      *
      * @return object Either
      */
-    abstract public function orElse(self $either) : self;
+    abstract public function orElse(self $either): self;
 }

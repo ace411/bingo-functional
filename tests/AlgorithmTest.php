@@ -15,10 +15,10 @@ class AlgorithmTest extends TestCase
 
     public function testComposeFunctionNestsFunctions()
     {
-        $addTen = function (int $a) : int {
+        $addTen = function (int $a): int {
             return $a + 10;
         };
-        $multiplyTen = function (int $b) : int {
+        $multiplyTen = function (int $b): int {
             return $b * 10;
         };
         $composed = A\compose($addTen, $multiplyTen);
@@ -106,7 +106,7 @@ class AlgorithmTest extends TestCase
 
     public function testPartialLeftAppliesArgumentsFromLeftToRight()
     {
-        $fn = function (int $a, int $b) : int {
+        $fn = function (int $a, int $b): int {
             return $a + $b;
         };
         $partial = A\partialLeft($fn, 2)(2);
@@ -251,7 +251,7 @@ class AlgorithmTest extends TestCase
         $strings = ['foo', 'bar', 'baz'];
 
         $foldFn = function ($acc, $val) {
-            return $acc.'-'.$val;
+            return $acc . '-' . $val;
         };
 
         $fold = A\foldRight($foldFn, $strings, 'fum');
@@ -579,7 +579,7 @@ class AlgorithmTest extends TestCase
 
     public function testZipWithFunctionZipsListsBasedOnFunctionPredicate()
     {
-        $zipped = A\zipWith(function (int $int, string $str) : int {
+        $zipped = A\zipWith(function (int $int, string $str): int {
             return $int + strlen($str);
         }, range(1, 3), ['foo', 'bar', 'baz']);
 

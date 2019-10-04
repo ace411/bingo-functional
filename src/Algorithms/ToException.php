@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const toException = 'Chemem\\Bingo\\Functional\\Algorithms\\toException';
 
-function toException(callable $func) : callable
+function toException(callable $func): callable
 {
     return function (...$args) use ($func) {
         try {

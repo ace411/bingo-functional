@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const where = 'Chemem\\Bingo\\Functional\\Algorithms\\where';
 
-function where(array $collection, array $search) : array
+function where(array $collection, array $search): array
 {
     list($searchKey, $searchVal) = head(toPairs($search));
 

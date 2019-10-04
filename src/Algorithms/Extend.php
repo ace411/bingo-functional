@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const extend = 'Chemem\\Bingo\\Functional\\Algorithms\\extend';
 
-function extend(array ...$lists) : array
+function extend(array ...$lists): array
 {
     $ret = [];
 

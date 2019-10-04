@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const filterDeep = 'Chemem\\Bingo\\Functional\\Algorithms\\filterDeep';
 
-function filterDeep(callable $function, array $values) : array
+function filterDeep(callable $function, array $values): array
 {
     $acc = [];
     foreach ($values as $key => $value) {

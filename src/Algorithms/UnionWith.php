@@ -15,7 +15,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const unionWith = 'Chemem\\Bingo\\Functional\\Algorithms\\unionWith';
 
-function unionWith(callable $function, array ...$values) : array
+function unionWith(callable $function, array ...$values): array
 {
     $acc = [];
     if ($function(...$values)) {

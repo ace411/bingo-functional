@@ -21,7 +21,7 @@ trait TransientMutator
      *
      * @return bool
      */
-    public function isMutable() : bool
+    public function isMutable(): bool
     {
         return $this->mutable;
     }

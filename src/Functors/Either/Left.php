@@ -25,7 +25,7 @@ class Left extends Either
     /**
      * {@inheritdoc}
      */
-    public static function of($value) : Either
+    public static function of($value): Either
     {
         return new static($value);
     }
@@ -33,7 +33,7 @@ class Left extends Either
     /**
      * {@inheritdoc}
      */
-    public function isLeft() : bool
+    public function isLeft(): bool
     {
         return true;
     }
@@ -41,7 +41,7 @@ class Left extends Either
     /**
      * {@inheritdoc}
      */
-    public function isRight() : bool
+    public function isRight(): bool
     {
         return false;
     }
@@ -64,7 +64,7 @@ class Left extends Either
     /**
      * {@inheritdoc}
      */
-    public function filter(callable $function, $error) : Either
+    public function filter(callable $function, $error): Either
     {
         return $this;
     }
@@ -72,7 +72,7 @@ class Left extends Either
     /**
      * {@inheritdoc}
      */
-    public function ap(M\Monadic $app) : M\Monadic
+    public function ap(M\Monadic $app): M\Monadic
     {
         return $this;
     }
@@ -88,7 +88,7 @@ class Left extends Either
     /**
      * {@inheritdoc}
      */
-    public function map(callable $function) : M\Monadic
+    public function map(callable $function): M\Monadic
     {
         return $this;
     }
@@ -96,7 +96,7 @@ class Left extends Either
     /**
      * {@inheritdoc}
      */
-    public function bind(callable $function) : M\Monadic
+    public function bind(callable $function): M\Monadic
     {
         return $this;
     }
@@ -104,7 +104,7 @@ class Left extends Either
     /**
      * {@inheritdoc}
      */
-    public function orElse(Either $either) : Either
+    public function orElse(Either $either): Either
     {
         return $either;
     }

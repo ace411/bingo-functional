@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const fromPairs = 'Chemem\\Bingo\\Functional\\Algorithms\\fromPairs';
 
-function fromPairs(array $collection) : array
+function fromPairs(array $collection): array
 {
     $pairs = map(
         function ($value) {

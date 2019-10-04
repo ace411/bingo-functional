@@ -23,9 +23,10 @@ use Chemem\Bingo\Functional\Functors\Monads\State as StateMonad;
  *
  * @return object State
  */
+
 const state = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\state';
 
-function state(callable $action) : StateMonad
+function state(callable $action): StateMonad
 {
     return StateMonad::of(function ($state) use ($action) {
         return $action($state);
@@ -44,7 +45,7 @@ function state(callable $action) : StateMonad
  */
 const put = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\put';
 
-function put($value) : StateMonad
+function put($value): StateMonad
 {
     return state(function ($state) use ($value) {
         return $value;
@@ -61,7 +62,7 @@ function put($value) : StateMonad
  */
 const get = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\get';
 
-function get() : StateMonad
+function get(): StateMonad
 {
     return state(function ($state) {
         return [$state, $state];
@@ -78,7 +79,7 @@ function get() : StateMonad
  *
  * @return object State
  */
-function gets(callable $projection) : StateMonad
+function gets(callable $projection): StateMonad
 {
     return state(function ($state) use ($projection) {
         return [$projection($state), $state];
@@ -97,7 +98,7 @@ function gets(callable $projection) : StateMonad
  */
 const modify = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\modify';
 
-function modify(callable $function) : StateMonad
+function modify(callable $function): StateMonad
 {
     return StateMonad::of(function ($state) use ($function) {
         return [null, $function($state)];
@@ -117,7 +118,7 @@ function modify(callable $function) : StateMonad
  */
 const runState = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\runState';
 
-function runState(StateMonad $monad, $state) : array
+function runState(StateMonad $monad, $state): array
 {
     return $monad->run($state);
 }

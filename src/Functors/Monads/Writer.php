@@ -35,7 +35,7 @@ class Writer implements Monadic
      *
      * @return object Writer
      */
-    public static function of($result, $output) : self
+    public static function of($result, $output): self
     {
         return new static(function () use ($result, $output) {
             return [$result, [$output]];
@@ -50,7 +50,7 @@ class Writer implements Monadic
      *
      * @return object Writer
      */
-    public function ap(Monadic $app) : Monadic
+    public function ap(Monadic $app): Monadic
     {
         return $this->bind(function ($function) use ($app) {
             return $app->map($function);
@@ -65,7 +65,7 @@ class Writer implements Monadic
      *
      * @return object Writer
      */
-    public function map(callable $function) : Monadic
+    public function map(callable $function): Monadic
     {
         return new static(function () use ($function) {
             list($result, $output) = $this->run();
@@ -82,7 +82,7 @@ class Writer implements Monadic
      *
      * @return object Writer
      */
-    public function bind(callable $function) : Monadic
+    public function bind(callable $function): Monadic
     {
         return new static(function () use ($function) {
             list($result, $output)  = $this->run();
@@ -100,7 +100,7 @@ class Writer implements Monadic
      *
      * @return mixed $result
      */
-    public function flatMap(callable $function) : array
+    public function flatMap(callable $function): array
     {
         return $this->map($function)->run();
     }
@@ -110,7 +110,7 @@ class Writer implements Monadic
      *
      * @return array [$result, $output]
      */
-    public function run() : array
+    public function run(): array
     {
         return call_user_func($this->action);
     }

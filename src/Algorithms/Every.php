@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const every = 'Chemem\\Bingo\\Functional\\Algorithms\\every';
 
-function every(array $collection, callable $func) : bool
+function every(array $collection, callable $func): bool
 {
     $valCount = count($collection);
 

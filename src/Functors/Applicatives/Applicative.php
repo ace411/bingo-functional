@@ -43,7 +43,7 @@ class Applicative
     /**
      * of method.
      */
-    public static function of($value) : self
+    public static function of($value): self
     {
         return new static($value);
     }
@@ -51,7 +51,7 @@ class Applicative
     /**
      * ap method.
      */
-    public function ap(self $app) : self
+    public function ap(self $app): self
     {
         return new static($this->getValue()($app->getValue()));
     }
@@ -59,7 +59,7 @@ class Applicative
     /**
      * map method.
      */
-    public function map(callable $function) : self
+    public function map(callable $function): self
     {
         return self::pure($function)->ap($this);
     }

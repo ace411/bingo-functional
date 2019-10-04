@@ -6,6 +6,7 @@ use Chemem\Bingo\Functional\Functors\Maybe\Just;
 use Chemem\Bingo\Functional\Functors\Maybe\Maybe;
 use Chemem\Bingo\Functional\Functors\Maybe\Nothing;
 use PHPUnit\Framework\TestCase;
+
 use function Chemem\Bingo\Functional\Algorithms\toException;
 use function Chemem\Bingo\Functional\Functors\Maybe\catMaybes;
 use function Chemem\Bingo\Functional\Functors\Maybe\fromJust;
@@ -74,7 +75,7 @@ class MaybeTypeTest extends TestCase
 
     public function testMaybeLiftMethodChangesFunctionsToAcceptMaybeTypes()
     {
-        $lifted = Maybe::lift(function (int $a, int $b) : int {
+        $lifted = Maybe::lift(function (int $a, int $b): int {
             return $a + $b;
         });
 
@@ -92,7 +93,7 @@ class MaybeTypeTest extends TestCase
     public function testMaybeJustTypeFlatMapMethodReturnsNonEncapsulatedValue()
     {
         $val = Maybe::just(12)
-            ->flatMap(function (int $a) : int {
+            ->flatMap(function (int $a): int {
                 return $a + 10;
             });
 
@@ -102,7 +103,7 @@ class MaybeTypeTest extends TestCase
     public function testMaybeJustTypeMapMethodReturnsEncapsulatedValue()
     {
         $val = Just::of(12)
-            ->map(function (int $a) : int {
+            ->map(function (int $a): int {
                 return $a + 10;
             });
 
@@ -112,7 +113,7 @@ class MaybeTypeTest extends TestCase
     public function testMaybeJustTypeFilterMethodReturnsEncapsulatedValueBasedOnPredicate()
     {
         $val = Just::of('foo')
-            ->filter(function (string $str) : bool {
+            ->filter(function (string $str): bool {
                 return is_string($str);
             });
 
@@ -124,7 +125,7 @@ class MaybeTypeTest extends TestCase
     {
         $val = Just::of(12)
             ->filter(
-                function (int $val) : bool {
+                function (int $val): bool {
                     return is_string($val);
                 }
             );
@@ -138,10 +139,10 @@ class MaybeTypeTest extends TestCase
             ->filter(function ($val = null) {
                 return is_null($val);
             })
-            ->map(function ($val = null) : string {
+            ->map(function ($val = null): string {
                 return 'null';
             })
-            ->flatMap(function ($val = null) : string {
+            ->flatMap(function ($val = null): string {
                 return 'null';
             });
 
@@ -169,7 +170,7 @@ class MaybeTypeTest extends TestCase
     {
         $maybe = maybe(
             12,
-            function ($val) : int {
+            function ($val): int {
                 return ($val * 2) / 4;
             },
             Maybe::fromValue(12)

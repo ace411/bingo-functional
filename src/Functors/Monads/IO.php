@@ -39,7 +39,7 @@ class IO implements Monadic
      *
      * @return object IO
      */
-    public static function of($operation) : self
+    public static function of($operation): self
     {
         return new static(is_callable($operation) ? $operation : constantFunction($operation));
     }
@@ -51,7 +51,7 @@ class IO implements Monadic
      *
      * @return object IO
      */
-    public function ap(Monadic $app) : Monadic
+    public function ap(Monadic $app): Monadic
     {
         return $app->map($this->exec());
     }
@@ -63,7 +63,7 @@ class IO implements Monadic
      *
      * @return object IO
      */
-    public function map(callable $function) : Monadic
+    public function map(callable $function): Monadic
     {
         return $this->bind(function ($operation) use ($function) {
             return self::of($function($operation));
@@ -77,7 +77,7 @@ class IO implements Monadic
      *
      * @return object IO
      */
-    public function bind(callable $function) : Monadic
+    public function bind(callable $function): Monadic
     {
         return $function($this->exec());
     }

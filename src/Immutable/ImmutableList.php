@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 namespace Chemem\Bingo\Functional\Immutable;
 
@@ -11,7 +13,7 @@ interface ImmutableList
      *
      * @param mixed $array
      *
-     * @return ImmutableList 
+     * @return ImmutableList
      */
     public static function from(array $array): ImmutableList;
 
@@ -22,7 +24,7 @@ interface ImmutableList
      * @see https://ace411.github.io/bingo-functional/#/collection?id=map-function
      * @param callable $func
      *
-     * @return ImmutableList 
+     * @return ImmutableList
      */
     public function map(callable $func): ImmutableList;
 
@@ -33,7 +35,7 @@ interface ImmutableList
      * @see https://ace411.github.io/bingo-functional/#/collection?id=filter-function
      * @param callable $func
      *
-     * @return ImmutableList 
+     * @return ImmutableList
      */
     public function filter(callable $func): ImmutableList;
 
@@ -110,7 +112,7 @@ interface ImmutableList
      * @method fetch
      *
      * @param mixed key
-     * 
+     *
      * @return ImmutableList
      */
     public function fetch($key): ImmutableList;
@@ -121,7 +123,7 @@ interface ImmutableList
      * @method contains
      *
      * @param mixed element
-     * 
+     *
      * @return bool
      */
     public function contains($element): bool;
@@ -131,7 +133,7 @@ interface ImmutableList
      *
      * @method unique
      * @see https://ace411.github.io/bingo-functional/#/collection?id=unique-function
-     * 
+     *
      * @return ImmutableList
      */
     public function unique(): ImmutableList;
@@ -141,7 +143,7 @@ interface ImmutableList
      *
      * @method head
      * @see https://ace411.github.io/bingo-functional/#/collection?id=head-function
-     * 
+     *
      * @return mixed
      */
     public function head();
@@ -151,7 +153,7 @@ interface ImmutableList
      *
      * @method tail
      * @see https://ace411.github.io/bingo-functional/#/collection?id=tail-function
-     * 
+     *
      * @return ImmutableList
      */
     public function tail(): ImmutableList;
@@ -161,7 +163,7 @@ interface ImmutableList
      *
      * @method last
      * @see https://ace411.github.io/bingo-functional/#/collection?id=last-function
-     * 
+     *
      * @return mixed
      */
     public function last();
@@ -172,7 +174,7 @@ interface ImmutableList
      * @method head
      *
      * @param ImmutableList $list
-     * 
+     *
      * @return bool
      */
     public function intersects(ImmutableList $list): bool;
@@ -183,7 +185,7 @@ interface ImmutableList
      * @method implode
      *
      * @param string $delimiter
-     * 
+     *
      * @return string
      */
     public function implode(string $glue): string;

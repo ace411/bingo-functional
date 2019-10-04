@@ -12,7 +12,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const addKeys = 'Chemem\\Bingo\\Functional\\Algorithms\\addKeys';
 
-function addKeys(array $collection, ...$keys) : array
+function addKeys(array $collection, ...$keys): array
 {
     return fold(
         function ($acc, $val) use ($collection) {

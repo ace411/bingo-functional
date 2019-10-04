@@ -11,6 +11,7 @@
 namespace Chemem\Bingo\Functional\Functors\Monads\IO;
 
 use Chemem\Bingo\Functional\Functors\Monads\IO as IOMonad;
+
 use function Chemem\Bingo\Functional\Algorithms\constantFunction;
 use function Chemem\Bingo\Functional\Algorithms\identity;
 use function Chemem\Bingo\Functional\Algorithms\toException;
@@ -25,9 +26,10 @@ use function Chemem\Bingo\Functional\Algorithms\toException;
  *
  * @return object IO
  */
+
 const readFile = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\readFile';
 
-function readFile(string $filePath) : IOMonad
+function readFile(string $filePath): IOMonad
 {
     return IO($filePath)
         ->map(function (string $file) {
@@ -48,7 +50,7 @@ function readFile(string $filePath) : IOMonad
  */
 const writeFile = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\writeFile';
 
-function writeFile(string $filePath, string $content) : IOMonad
+function writeFile(string $filePath, string $content): IOMonad
 {
     return IO($filePath)
         ->map(function (string $file) use ($content) {
@@ -69,7 +71,7 @@ function writeFile(string $filePath, string $content) : IOMonad
  */
 const appendFile = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\appendFile';
 
-function appendFile(string $filePath, string $content) : IOMonad
+function appendFile(string $filePath, string $content): IOMonad
 {
     return IO($filePath)
         ->map(function (string $file) use ($content) {
@@ -91,7 +93,7 @@ function appendFile(string $filePath, string $content) : IOMonad
  */
 const readIO = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\readIO';
 
-function readIO(IOMonad $getStr) : IOMonad
+function readIO(IOMonad $getStr): IOMonad
 {
     return $getStr
         ->map(function (string $input) {

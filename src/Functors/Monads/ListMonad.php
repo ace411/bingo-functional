@@ -42,7 +42,7 @@ class ListMonad implements Monadic
      *
      * @return object ListMonad
      */
-    public static function of($collection) : self
+    public static function of($collection): self
     {
         return new static(is_array($collection) ? $collection : [$collection]);
     }
@@ -54,7 +54,7 @@ class ListMonad implements Monadic
      *
      * @return object ListMonad
      */
-    public function ap(Monadic $app) : Monadic
+    public function ap(Monadic $app): Monadic
     {
         $list = $this->extract();
 
@@ -87,7 +87,7 @@ class ListMonad implements Monadic
      *
      * @return object ListMonad
      */
-    public function bind(callable $function) : Monadic
+    public function bind(callable $function): Monadic
     {
         $concat = compose(
             function (array $list) use ($function) {
@@ -114,7 +114,7 @@ class ListMonad implements Monadic
      *
      * @return object ListMonad
      */
-    public function map(callable $function) : Monadic
+    public function map(callable $function): Monadic
     {
         return $this->bind(function ($list) use ($function) {
             return self::of($function($list));
@@ -140,7 +140,7 @@ class ListMonad implements Monadic
      *
      * @return array $collection
      */
-    public function extract() : array
+    public function extract(): array
     {
         return flatten($this->collection);
     }

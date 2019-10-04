@@ -14,7 +14,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const intersects = 'Chemem\\Bingo\\Functional\\Algorithms\\intersects';
 
-function intersects(array $first, array $second) : bool
+function intersects(array $first, array $second): bool
 {
     $fSize = count($first);
     $sSize = count($second);

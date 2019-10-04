@@ -15,7 +15,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const toWords = 'Chemem\\Bingo\\Functional\\Algorithms\\toWords';
 
-function toWords(string $string, string $regex = '') : array
+function toWords(string $string, string $regex = ''): array
 {
     if ($regex == '') {
         return explode(' ', $string);

@@ -15,7 +15,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const truncate = 'Chemem\\Bingo\\Functional\\Algorithms\\truncate';
 
-function truncate(string $string, int $limit) : string
+function truncate(string $string, int $limit): string
 {
     $strlen = 0;
     if (!function_exists('mb_strlen')) {
