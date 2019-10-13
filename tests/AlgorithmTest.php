@@ -470,6 +470,22 @@ class AlgorithmTest extends TestCase
         $this->assertEquals(24, A\toException($result)(12));
     }
 
+    public function testToExceptionAllowsForOptionalArbitraryExceptionHandlingViaHandler()
+    {
+        $func = function (int $val) {
+            if ($val < 5) {
+                throw new \Exception(A\concat(' ', (string) $val, 'is too low'));
+            }
+
+            return $val + 2;
+        };
+        $expHandler = A\toException($func, function (\Exception $exp) {
+            return strtoupper($exp->getMessage());
+        });
+
+        $this->assertEquals('2 IS TOO LOW', $expHandler(2));
+    }
+
     public function testTrampolineIsCurriedByDefault()
     {
         $fib = A\trampoline(
