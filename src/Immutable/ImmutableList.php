@@ -4,19 +4,8 @@ declare(strict_types=1);
 
 namespace Chemem\Bingo\Functional\Immutable;
 
-interface ImmutableList
+interface ImmutableList extends ImmutableDataStructure
 {
-    /**
-     * from static method.
-     *
-     * @method from
-     *
-     * @param mixed $array
-     *
-     * @return ImmutableList
-     */
-    public static function from(array $array): ImmutableList;
-
     /**
      * map method.
      *
@@ -118,17 +107,6 @@ interface ImmutableList
     public function fetch($key): ImmutableList;
 
     /**
-     * contains method
-     *
-     * @method contains
-     *
-     * @param mixed element
-     *
-     * @return bool
-     */
-    public function contains($element): bool;
-
-    /**
      * unique method
      *
      * @method unique
@@ -137,36 +115,6 @@ interface ImmutableList
      * @return ImmutableList
      */
     public function unique(): ImmutableList;
-
-    /**
-     * head method
-     *
-     * @method head
-     * @see https://ace411.github.io/bingo-functional/#/collection?id=head-function
-     *
-     * @return mixed
-     */
-    public function head();
-
-    /**
-     * tail method
-     *
-     * @method tail
-     * @see https://ace411.github.io/bingo-functional/#/collection?id=tail-function
-     *
-     * @return ImmutableList
-     */
-    public function tail(): ImmutableList;
-
-    /**
-     * last method
-     *
-     * @method last
-     * @see https://ace411.github.io/bingo-functional/#/collection?id=last-function
-     *
-     * @return mixed
-     */
-    public function last();
 
     /**
      * intersects method
@@ -189,4 +137,37 @@ interface ImmutableList
      * @return string
      */
     public function implode(string $glue): string;
+
+    /**
+     * reject method.
+     *
+     * @method reject
+     * @see https://ace411.github.io/bingo-functional/#/collection?id=reject-function
+     * @param callable $func
+     *
+     * @return ImmutableList
+     */
+    public function reject(callable $func): ImmutableList;
+
+    /**
+     * any method
+     * 
+     * @method any
+     * @see 
+     * @param callable $func
+     * 
+     * @return ImmutableList
+     */
+    public function any(callable $func): bool;
+
+    /**
+     * every method
+     * 
+     * @method every
+     * @see 
+     * @param callable $func
+     * 
+     * @return ImmutableList
+     */
+    public function every(callable $func): bool;
 }

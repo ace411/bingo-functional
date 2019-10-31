@@ -13,28 +13,7 @@ use \Chemem\Bingo\Functional\Algorithms as A;
 
 class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, ImmutableList
 {
-    /**
-     * @var mixed
-     */
-    private $list;
-
-    /**
-     * ImmutableList constructor.
-     *
-     * @param mixed $items
-     */
-    public function __construct(\SplFixedArray $items)
-    {
-        $this->list = $items;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public static function from(array $items): ImmutableList
-    {
-        return new static(\SplFixedArray::fromArray($items));
-    }
+    use CommonTrait;
 
     /**
      * {@inheritdoc}
@@ -62,19 +41,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
      */
     public function filter(callable $func): ImmutableList
     {
-        $list   = $this->getList();
-        $count  = $list->count();
-        $new    = new \SplFixedArray($list->count());
-        $init   = 0;
-
-        for ($idx = 0; $idx < $count; $idx++) {
-            if ($func($list[$idx])) {
-                $new[$init++] = $list[$idx];
-            }
-        }
-        $new->setSize($init);
-
-        return new static($new);
+        return $this->filterOperation($func);
     }
 
     /**
@@ -174,42 +141,6 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
     }
 
     /**
-     * checkContains function
-     *
-     * checkContains :: [a] -> Bool
-     *
-     * @param array $list
-     */
-    private static function checkContains(array $list): bool
-    {
-        $comp = A\compose(A\flatten, function (array $val) {
-            return in_array(true, $val);
-        });
-        return $comp($list);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function contains($element): bool
-    {
-        $list   = $this->getList();
-        $count  = $list->count();
-        $acc    = [];
-
-        for ($idx = 0; $idx < $count; $idx++) {
-            $item = $list[$idx];
-            $acc[] = is_array($item) ?
-                A\mapDeep(function ($val) use ($element): bool {
-                    return $val == $element;
-                }, $item) :
-                $element == $item;
-        }
-
-        return self::checkContains($acc);
-    }
-
-    /**
      * {@inheritdoc}
      */
     public function unique(): ImmutableList
@@ -225,37 +156,6 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
         }
 
         return self::from($acc);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function head()
-    {
-        return $this->list[0];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function tail(): ImmutableList
-    {
-        $list   = $this->getList();
-        $acc    = [];
-
-        for ($idx = 1; $idx < $list->count(); $idx++) {
-            $acc[] = $list[$idx];
-        }
-
-        return self::from($acc);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function last()
-    {
-        return $this->list[$this->getSize() - 1];
     }
 
     /**
@@ -289,6 +189,57 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
             $fold .= A\concat($delimiter, $elem, '');
             return $fold;
         }, ''), $delimiter);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function reject(callable $func): ImmutableList
+    {
+        return $this->filterOperation($func, false);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function any(callable $func): bool
+    {
+        return $this->filter($func)->getSize() >= 1 ? true : false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function every(callable $func): bool
+    {
+        $init = $this->getSize();
+
+        return $this->filter($func)->getSize() == $init ? true : false;
+    }
+
+    /**
+     * filterOperation function
+     * 
+     * filterOperation :: (a -> Bool) -> Bool -> ImmutableList
+     * 
+     * @param callable $func
+     * @param bool $pos
+     */
+    private function filterOperation(callable $func, bool $pos = true): ImmutableList
+    {
+        $list   = $this->getList();
+        $count  = $list->count();
+        $new    = new \SplFixedArray($list->count());
+        $init   = 0;
+
+        for ($idx = 0; $idx < $count; $idx++) {
+            if ($pos ? $func($list[$idx]) : !$func($list[$idx])) {
+                $new[$init++] = $list[$idx];
+            }
+        }
+        $new->setSize($init);
+
+        return new static($new);
     }
 
     /**
@@ -334,7 +285,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
      */
     public function getSize(): int
     {
-        return $this->list instanceof \SplFixedArray ? ($this->list->getSize()) : 1;
+        return $this->count();
     }
 
     /**
@@ -357,15 +308,5 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
     public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->toArray());
-    }
-
-    /**
-     * count method.
-     *
-     * @return int $count
-     */
-    public function count(): int
-    {
-        return $this->getSize();
     }
 }
