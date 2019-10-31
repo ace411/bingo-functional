@@ -1,7 +1,39 @@
 {
     "name": "chemem/bingo-functional",
-    "description": "A simple functional programming library.",
     "type": "library",
+    "description": "A simple functional programming library.",
+    "keywords": [
+        "functional",
+        "pattern matching",
+        "curry",
+        "partial application",
+        "helpers",
+        "zip",
+        "map",
+        "reduce",
+        "fold",
+        "filter",
+        "monads",
+        "immutability",
+        "IO monad",
+        "Reader monad",
+        "Writer monad",
+        "State monad",
+        "referential transparency",
+        "fp",
+        "functional programming",
+        "bingo",
+        "Either",
+        "Maybe",
+        "Applicative",
+        "Functor",
+        "fantasy land",
+        "collections",
+        "immutable lists",
+        "union types",
+        "functors",
+        "applicatives"
+    ],
     "license": "Apache-2.0",
     "authors": [
         {
@@ -9,22 +41,22 @@
             "email": "lochbm@gmail.com"
         }
     ],
-    "minimum-stability": "stable",
+    "require": {
+        "php": ">=7.0.0"
+    },
     "require-dev": {
         "phpunit/phpunit": "~6",
         "squizlabs/php_codesniffer": "~3"
     },
-    "require": {
-        "php": ">=7.0.0"
-    },
     "suggest": {
-        "chemem/bingo-functional-repl": "A simple REPL for the bingo-functional library",
         "ext-apcu": "In-memory key-value PHP userland store",
-        "ext-mbstring": "PHP extension for accurately determining byte-length of strings"
+        "ext-mbstring": "PHP extension for accurately determining byte-length of strings",
+        "chemem/bingo-functional-repl": "A simple REPL for the bingo-functional library"
     },
-    "scripts": {
-        "test": "phpunit -c phpunit.xml.dist",
-        "fix": "phpcbf --extensions=php --standard=PSR12"
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.11-dev"
+        }
     },
     "autoload": {
         "psr-4": {
@@ -115,41 +147,9 @@
             "Chemem\\Bingo\\Functional\\Tests\\": "tests/"
         }
     },
-    "extra": {
-        "branch-alias": {
-            "dev-master": "1.11-dev"
-        }
-    },
-    "keywords": [
-        "functional",
-        "pattern matching",
-        "curry",
-        "partial application",
-        "helpers",
-        "zip",
-        "map",
-        "reduce",
-        "fold",
-        "filter",
-        "monads",
-        "immutability",
-        "IO monad",
-        "Reader monad",
-        "Writer monad",
-        "State monad",
-        "referential transparency",
-        "fp",
-        "functional programming",
-        "bingo",
-        "Either",
-        "Maybe",
-        "Applicative",
-        "Functor",
-        "fantasy land",
-        "collections",
-        "immutable lists",
-        "union types",
-        "functors",
-        "applicatives"
-    ]
+    "minimum-stability": "stable",
+    "scripts": {
+        "fix": "phpcbf --extensions=php --standard=PSR12",
+        "test": "phpunit -c phpunit.xml.dist"
+    }
 }
