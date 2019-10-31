@@ -1,4 +1,6 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * ImmutableDataStructure interface
@@ -20,9 +22,8 @@ interface ImmutableDataStructure
      *
      * @return ImmutableDataStructure
      */
-    public static function from(array $list): ImmutableDataStructure; 
-
-    /**
+    public static function from(array $list): ImmutableDataStructure;
+/**
      * contains method
      *
      * @method contains
@@ -32,8 +33,7 @@ interface ImmutableDataStructure
      * @return bool
      */
     public function contains($element): bool;
-
-    /**
+/**
      * head method
      *
      * @method head
@@ -42,8 +42,7 @@ interface ImmutableDataStructure
      * @return mixed
      */
     public function head();
-
-    /**
+/**
      * tail method
      *
      * @method tail
@@ -52,8 +51,7 @@ interface ImmutableDataStructure
      * @return ImmutableDataStructure
      */
     public function tail(): ImmutableDataStructure;
-
-    /**
+/**
      * last method
      *
      * @method last

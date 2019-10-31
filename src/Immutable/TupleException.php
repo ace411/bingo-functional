@@ -1,8 +1,10 @@
-<?php declare(strict_types=1);
+<?php
+
+declare(strict_types=1);
 
 /**
  * TupleException class
- * 
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */

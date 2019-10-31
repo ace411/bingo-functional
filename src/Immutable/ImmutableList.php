@@ -151,22 +151,22 @@ interface ImmutableList extends ImmutableDataStructure
 
     /**
      * any method
-     * 
+     *
      * @method any
-     * @see 
+     * @see
      * @param callable $func
-     * 
+     *
      * @return ImmutableList
      */
     public function any(callable $func): bool;
 
     /**
      * every method
-     * 
+     *
      * @method every
-     * @see 
+     * @see
      * @param callable $func
-     * 
+     *
      * @return ImmutableList
      */
     public function every(callable $func): bool;

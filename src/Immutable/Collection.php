@@ -219,9 +219,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
 
     /**
      * filterOperation function
-     * 
+     *
      * filterOperation :: (a -> Bool) -> Bool -> ImmutableList
-     * 
+     *
      * @param callable $func
      * @param bool $pos
      */

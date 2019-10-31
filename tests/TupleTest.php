@@ -52,7 +52,7 @@ class TupleTest extends \PHPUnit\Framework\TestCase
      */
     public function testFstExtractsFirstComponentOfPair($pair)
     {
-        $tup = t::from($pair); 
+        $tup = t::from($pair);
 
         $this->assertEquals(f\head($pair), $tup->fst());
     }
@@ -62,7 +62,7 @@ class TupleTest extends \PHPUnit\Framework\TestCase
      */
     public function testSndExtractsLastComponentOfPair($pair)
     {
-        $tup = t::from($pair); 
+        $tup = t::from($pair);
 
         $this->assertEquals(f\last($pair), $tup->snd());
     }
