@@ -18,19 +18,14 @@ const truncate = 'Chemem\\Bingo\\Functional\\Algorithms\\truncate';
 function truncate(string $string, int $limit): string
 {
     $strlen = 0;
-    if (!function_exists('mb_strlen')) {
-        $strlen += strlen($string);
-    }
-    $strlen += mb_strlen($string, 'utf-8');
-
-    if ($limit > $strlen) {
-        return $string;
-    }
+    $strlen += !function_exists('mb_strlen') ? 
+        strlen($string) : 
+        mb_strlen($string, 'utf-8');
 
     $truncate = compose(
         partialRight('substr', $limit, 0),
         partialRight(partial(concat, '..'), '.')
     );
 
-    return $truncate($string);
+    return $limit > $strlen ? $string : $truncate($string);
 }
