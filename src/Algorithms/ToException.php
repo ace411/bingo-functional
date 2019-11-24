@@ -3,7 +3,7 @@
 /**
  * toException function.
  *
- * toException :: (a) -> (b(c)) -> d
+ * toException :: (a -> b) -> (c -> d) -> a -> d
  *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
@@ -18,8 +18,10 @@ function toException(callable $func, callable $handler = null): callable
     return function (...$args) use ($func, $handler) {
         try {
             return $func(...$args);
-        } catch (\Exception $exception) {
-            return isset($handler) ? $handler($exception) : $exception->getMessage();
+        } catch (\Throwable $exception) {
+            return isset($handler) ? 
+                $handler($exception) : 
+                $exception->getMessage();
         } finally {
             restore_error_handler();
         }
