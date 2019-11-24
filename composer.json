@@ -150,7 +150,7 @@
     },
     "minimum-stability": "stable",
     "scripts": {
-        "fix": "phpcbf --extensions=php --standard=PSR12",
+        "fix": "phpcbf --ignore=*/vendor/* --extensions=php --standard=PSR12",
         "test": "phpunit -c phpunit.xml.dist"
     }
 }
