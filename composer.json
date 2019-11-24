@@ -85,6 +85,7 @@
             "src/Algorithms/IndexOf.php",
             "src/Algorithms/Unzip.php",
             "src/Algorithms/PartialLeft.php",
+            "src/Algorithms/Intersperse.php",
             "src/Algorithms/Extend.php",
             "src/Algorithms/Memoize.php",
             "src/Algorithms/Tail.php",

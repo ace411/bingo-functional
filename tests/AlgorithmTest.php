@@ -760,4 +760,19 @@ class AlgorithmTest extends TestCase
         $this->assertEquals(0, $last(2));
         $this->assertEquals(false, $last('foo'));
     }
+
+    public function testIntersperseFunctionInterspersesElementBetweenListItems()
+    {
+        $list           = [
+            ['foo', 'bar', 'baz'],
+            range(1, 3)
+        ];
+
+        $intersperse    = A\partial(A\intersperse, ',');
+
+        $this->assertInternalType('array', $intersperse(A\head($list)));
+        $this->assertInternalType('array', $intersperse(A\last($list)));
+        $this->assertEquals(['foo', ',', 'bar', ',', 'baz'], $intersperse(A\head($list)));
+        $this->assertEquals([1, ',', 2, ',', 3], $intersperse(A\last($list)));
+    }
 }
