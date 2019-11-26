@@ -23,7 +23,7 @@ A simple functional programming library for PHP.
 
 ## Rationale
 
-PHP lacks the organic support for functional programming multiple functional programming languages like Haskell and OCaml have. The language, however, offers anonymous functions, classes, interfaces, traits, as well as constants which can be harnessed to attain a functional programming experience. Since functional programming is premised on the use of functions to reduce the cognitive burden, the bingo-functional library aims to serve that purpose. Available for use are simple Monadic helpers, Applicative functors, and helper function algorithms which can be used to improve the functional programming experience.
+PHP, a language not commonly associated with Functional Programming, does support the paradigm - to an extent. The language's Functional Programming affability though substantial is not the same as that of Haskell, OCaml, or F# - purely Functional languages. bingo-functional is an attempt at enhancing the usability of FP techniques - those that warrant the use of helper functions, applicatives, monads, pattern matching, and immutable lists.
 
 ## Documentation
 
@@ -37,10 +37,18 @@ Endeavor to create an issue on GitHub when the need arises or send an email to l
 
 ## Functional Programming in PHP
 
-I recently published a book titled - Functional Programming in PHP - which is currently available on LeanPub. The bingo-functional library features extensively in the text as a tool whose potencies demonstrate usage of Functional Programming ideas in PHP. I advise that you purchase a copy for $9.99.
+I published a book titled - Functional Programming in PHP - which is currently available on LeanPub. The bingo-functional library features extensively in the text as a tool whose potencies demonstrate usage of Functional Programming ideas in PHP. I advise that you purchase a copy for $9.99.
 
 <p align="center">
     <a href="https://leanpub.com/functionalprogramminginphp">
         <img src="https://s3.amazonaws.com/titlepages.leanpub.com/functionalprogramminginphp/hero?1540289375" width="30%">
     </a>
 </p>
+
+## Related Projects
+
+- [**bingo-functional-js**](https://github.com/ace411/bingo-functional-js) A JavaScript port of this library
+
+- [**bingo-functional-repl**](https://github.com/ace411/bingo-functional-repl) A REPL for this library
+
+<style>.bmc-button img{width: 35px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{padding: 7px 5px 7px 10px !important;line-height: 35px !important;height:51px !important;min-width:217px !important;text-decoration: none !important;display:inline-flex !important;color:#000000 !important;background-color:#FFFFFF !important;border-radius: 5px !important;border: 1px solid transparent !important;padding: 7px 5px 7px 10px !important;font-size: 20px !important;letter-spacing:-0.08px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Lato', sans-serif !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;-o-transition: 0.3s all linear !important;-webkit-transition: 0.3s all linear !important;-moz-transition: 0.3s all linear !important;-ms-transition: 0.3s all linear !important;transition: 0.3s all linear !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#000000 !important;}</style><link href="https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/agiroLoki"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a>
