@@ -5,7 +5,6 @@
 [![Latest Stable Version](https://poser.pugx.org/chemem/bingo-functional/v/stable)](https://packagist.org/packages/chemem/bingo-functional)
 [![License](https://poser.pugx.org/chemem/bingo-functional/license)](https://packagist.org/packages/chemem/bingo-functional)
 [![Total Downloads](https://poser.pugx.org/chemem/bingo-functional/downloads)](https://packagist.org/packages/chemem/bingo-functional)
-[![Total Downloads](https://poser.pugx.org/chemem/bingo-functional/downloads)](https://packagist.org/packages/chemem/bingo-functional)
 [![Monthly Downloads](https://poser.pugx.org/chemem/bingo-functional/d/monthly)](https://packagist.org/packages/chemem/bingo-functional)
 [![composer.lock](https://poser.pugx.org/chemem/bingo-functional/composerlock)](https://packagist.org/packages/chemem/bingo-functional)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/ace411/bingo-functional.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Face411%2Fbingo-functional)
@@ -45,11 +44,13 @@ The bingo-functional library's utilities are namespaced. Below is a listing of a
 | Pattern Matching Functions | ```Chemem\Bingo\Functional\PatternMatching\```           |
 | Immutable Collections      | ```Chemem\Bingo\Functional\Immutable\Collection\```       |
 
-Recently, I have been working on a book which puts this library at the forefront of many explanations of functional programming in PHP. I advise that you, a visitor of this site and prospective user of the bingo-functional library, consider purchasing the volume currently retailing on [Leanpub](https://leanpub.com/functionalprogramminginphp).
+I published a book titled Functional Programming in PHP that `bingo-functional` features prominently in. I advise that you, a visitor of this site and prospective user of the bingo-functional library, consider purchasing the volume currently retailing on [Leanpub](https://leanpub.com/functionalprogramminginphp).
 
 <p align="center">
     <img src="https://s3.amazonaws.com/titlepages.leanpub.com/functionalprogramminginphp/hero?1540289375" onClick="location.href='https://leanpub.com/functionalprogramminginphp'" style="cursor:hover;" height="480">
-</p>  
+</p>
+
+<style>.bmc-button img{width: 35px !important;margin-bottom: 1px !important;box-shadow: none !important;border: none !important;vertical-align: middle !important;}.bmc-button{padding: 7px 5px 7px 10px !important;line-height: 35px !important;height:51px !important;min-width:217px !important;text-decoration: none !important;display:inline-flex !important;color:#000000 !important;background-color:#FFFFFF !important;border-radius: 5px !important;border: 1px solid transparent !important;padding: 7px 5px 7px 10px !important;font-size: 20px !important;letter-spacing:-0.08px !important;box-shadow: 0px 1px 2px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;margin: 0 auto !important;font-family:'Lato', sans-serif !important;-webkit-box-sizing: border-box !important;box-sizing: border-box !important;-o-transition: 0.3s all linear !important;-webkit-transition: 0.3s all linear !important;-moz-transition: 0.3s all linear !important;-ms-transition: 0.3s all linear !important;transition: 0.3s all linear !important;}.bmc-button:hover, .bmc-button:active, .bmc-button:focus {-webkit-box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;text-decoration: none !important;box-shadow: 0px 1px 2px 2px rgba(190, 190, 190, 0.5) !important;opacity: 0.85 !important;color:#000000 !important;}</style><link href="https://fonts.googleapis.com/css?family=Lato&subset=latin,latin-ext" rel="stylesheet"><a class="bmc-button" target="_blank" href="https://www.buymeacoffee.com/agiroLoki"><img src="https://cdn.buymeacoffee.com/buttons/bmc-new-btn-logo.svg" alt="Buy me a coffee"><span style="margin-left:15px;font-size:19px !important;">Buy me a coffee</span></a>
 
 ## Ownership
 
