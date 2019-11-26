@@ -352,6 +352,41 @@ list($x1, $x2) = $func(1, 6, 5);
 //x1 = -0.2, x2 = -1
 ```
 
+## toException function
+
+```
+toException(callable $function, callable $handler = null)
+```
+
+**Since:** v1.9.0
+
+**Arguments:**
+
+- ***function (callable)*** The function likely to throw an `Error`|`Exception`
+- ***handler (callable)*** The anomalous condition handler function
+
+Abstracts anomalous situation handling for functions likely to evaluate in an `Error` or `Exception`.
+
+**Note:**
+
+- The `handler` function is v1.13.0 addition
+- In the absence of a `handler`, the result - in the event that an abnormal situation is detected - is the error message
+
+```php
+function divide(float $x, float $y): float
+{
+    if ($y == 0) {
+        throw new \Exception('Division by zero error', 400);
+    }
+
+    return $x / $y;
+}
+
+$divide = A\toException('divide', function (\Throwable $err): string {
+    return A\concat(' ', '[Err]', $err->getCode(), $err->getMessage());
+})(2.0, 0); //prints '[Err] 400 Division by zero error'
+```
+
 ## Callback signatures
 
 **Note:** Callbacks will not be usable beyond bingo-functional v1.7.2. Check out the [changelog](https://ace411.github.io/bingo-functional/changes).
