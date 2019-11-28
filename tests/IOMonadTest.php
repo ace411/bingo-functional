@@ -115,6 +115,13 @@ class IOMonadTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(IO::class, $action);
     }
 
+    public function testPutStrLnOutputsIOInstance()
+    {
+        $action = IO\putStrLn('test>');
+
+        $this->assertInstanceOf(IO::class, $action);
+    }
+
     public function testReadIOMethodReadsStringInput()
     {
         $read = readIO(IO('foo'));

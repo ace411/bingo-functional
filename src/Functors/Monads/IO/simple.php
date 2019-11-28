@@ -88,6 +88,23 @@ function putStr(string $str): IOMonad
 }
 
 /**
+ * putStrLn function
+ * Same as putStr but adds a newline character
+ *
+ * putStrLn :: String -> IO ()
+ *
+ * @return object IO
+ */
+const putStrLn = __NAMESPACE__ . '\\putStrLn';
+
+function putStrLn(string $str): IOMonad
+{
+    return IO(function () use ($str): int {
+        return fputs(STDIN, A\concat("\n", $str, ''));
+    });
+}
+
+/**
  * getLine function
  * Read a line from the standard input device.
  *
