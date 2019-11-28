@@ -63,8 +63,8 @@ const putChar = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putChar';
 
 function putChar(string $char): IOMonad
 {
-    $input = mb_strlen($char, 'utf-8') == 1 ? 
-        $char : 
+    $input = mb_strlen($char, 'utf-8') == 1 ?
+        $char :
         substr($char, 0, 1);
     
     return putStr($input);
