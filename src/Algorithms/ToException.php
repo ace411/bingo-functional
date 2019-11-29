@@ -19,8 +19,8 @@ function toException(callable $func, callable $handler = null): callable
         try {
             return $func(...$args);
         } catch (\Throwable $exception) {
-            return isset($handler) ? 
-                $handler($exception) : 
+            return isset($handler) ?
+                $handler($exception) :
                 $exception->getMessage();
         } finally {
             restore_error_handler();
