@@ -43,10 +43,12 @@ const getChar = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\getChar';
 
 function getChar(): IOMonad
 {
-    return putChar()
-        ->map(function (callable $fget) {
-            return A\toException($fget)(\STDIN);
-        });
+    return IO(function () {
+        $char = trim(fgetc(STDIN));
+        fclose(STDIN);
+
+        return $char;
+    });
 }
 
 /**
@@ -59,11 +61,13 @@ function getChar(): IOMonad
  */
 const putChar = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putChar';
 
-function putChar(): IOMonad
+function putChar(string $char): IOMonad
 {
-    return IO(function () {
-        return A\compose('fgetc', 'trim');
-    });
+    $input = mb_strlen($char, 'utf-8') == 1 ?
+        $char :
+        substr($char, 0, 1);
+    
+    return putStr($input);
 }
 
 /**
@@ -76,10 +80,27 @@ function putChar(): IOMonad
  */
 const putStr = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putStr';
 
-function putStr(): IOMonad
+function putStr(string $str): IOMonad
 {
-    return IO(function () {
-        return A\compose('fgets', 'trim');
+    return IO(function () use ($str): int {
+        return fputs(STDIN, $str);
+    });
+}
+
+/**
+ * putStrLn function
+ * Same as putStr but adds a newline character
+ *
+ * putStrLn :: String -> IO ()
+ *
+ * @return object IO
+ */
+const putStrLn = __NAMESPACE__ . '\\putStrLn';
+
+function putStrLn(string $str): IOMonad
+{
+    return IO(function () use ($str): int {
+        return fputs(STDIN, A\concat("\n", $str, ''));
     });
 }
 
@@ -95,12 +116,12 @@ const getLine = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\getLine';
 
 function getLine(): IOMonad
 {
-    return putStr()
-        ->map(function (callable $fget) {
-            $result = A\toException($fget)(\STDIN);
+    return IO(function () {
+        $res = trim(fgets(STDIN));
+        fclose(STDIN);
 
-            return A\concat(\PHP_EOL, $result, A\identity(''));
-        });
+        return $res;
+    });
 }
 
 /**
