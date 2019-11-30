@@ -74,6 +74,17 @@ interface ImmutableList extends ImmutableDataStructure
     public function merge(ImmutableList $list): ImmutableList;
 
     /**
+     * mergeN method.
+     *
+     * @method merge
+     *
+     * @param ImmutableList... $list
+     *
+     * @return ImmutableList
+     */
+    public function mergeN(ImmutableList ...$lists): ImmutableList;
+    
+    /**
      * reverse method.
      *
      * @method reverse

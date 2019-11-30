@@ -9,11 +9,16 @@
 
 namespace Chemem\Bingo\Functional\Immutable;
 
-use \Chemem\Bingo\Functional\Algorithms as A;
+use \Chemem\Bingo\Functional\{
+    Algorithms as A,
+    Common\Traits\TransientMutator as Transient
+};
+
 
 class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, ImmutableList
 {
     use CommonTrait;
+    use Transient;
 
     /**
      * {@inheritdoc}
@@ -91,7 +96,24 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
             }
         }
 
-        return new static($old);
+        return $this->update($old);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function mergeN(ImmutableList ...$lists): ImmutableList
+    {
+        return $this->merge(
+            array_shift($lists)
+                ->triggerMutation(function ($list) use ($lists) {
+                    for ($idx = 0; $idx < count($lists); $idx++) {
+                        $list->merge($lists[$idx]);
+                    }
+
+                    return $list; 
+                })
+        );
     }
 
     /**
@@ -309,5 +331,18 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
     public function getIterator(): \ArrayIterator
     {
         return new \ArrayIterator($this->toArray());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    private function update(\SplFixedArray $list)
+    {
+        if ($this->isMutable()) {
+            $this->list = $list;
+            return $this;
+        }
+
+        return new static($list);
     }
 }

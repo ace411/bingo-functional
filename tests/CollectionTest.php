@@ -421,4 +421,36 @@ class CollectionTest extends TestCase
         $this->expectException(\OutOfRangeException::class);
         $list->offsetGet(7);
     }
+
+    public function mergeMultipleProvider()
+    {
+        return [
+            [
+                range(1, 5),
+                range(6, 10),
+                range(11, 15),
+                range(1, 15)
+            ]
+        ];
+    }
+
+    /**
+     * @dataProvider mergeMultipleProvider
+     */
+    public function testMergeNMethodFusesMultipleListsIntoOneAmalgam(
+        $fst, 
+        $snd, 
+        $thd, 
+        $res
+    )
+    {
+        $list = Collection::from($fst);
+        $merged = $list->mergeN(
+            Collection::from($snd),
+            Collection::from($thd)
+        );
+
+        $this->assertInstanceOf(Collection::class, $merged);
+        $this->assertEquals(Collection::from($res)->toArray(), $merged->toArray());
+    }
 }
