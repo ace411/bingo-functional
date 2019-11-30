@@ -20,9 +20,10 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
      */
     public function map(callable $func): ImmutableList
     {
-        $list = $this->getList();
-        for ($idx = 0; $idx < $list->count(); $idx++) {
-            $list[$idx] = $func($list[$idx]);
+        $count = $this->count();
+        $list = new \SplFixedArray($count);
+        for ($idx = 0; $idx < $count; $idx++) {
+            $list[$idx] = $func($this->getList()[$idx]);
         }
 
         return new static($list);
