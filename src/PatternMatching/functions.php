@@ -251,6 +251,10 @@ function evalStringPattern(array $patterns, string $value)
                             $valType == 'double' ? (float) $val : $val;
                     },
                     function ($val) use ($value) {
+                        if (empty($value)) {
+                            return '_';
+                        }
+                        
                         return $val == $value ? A\concat('"', '', $val, '') : '_';
                     }
                 );
