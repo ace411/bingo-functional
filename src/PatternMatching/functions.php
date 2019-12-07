@@ -9,7 +9,10 @@
 
 namespace Chemem\Bingo\Functional\PatternMatching;
 
-use Chemem\Bingo\Functional\Algorithms as A;
+use Chemem\Bingo\Functional\{
+    Algorithms as A,
+    Functors\Maybe
+};
 
 /**
  * match function.
@@ -109,19 +112,30 @@ const patternMatch = 'Chemem\\Bingo\\Functional\\PatternMatching\\patternMatch';
 
 function patternMatch(array $patterns, $value)
 {
-    switch ($value) {
-        case is_object($value):
-            return evalObjectPattern($patterns, $value);
-            break;
+    $matches = Maybe\Maybe::just($value)
+        ->filter(function ($value) {
+            return !empty($value) || !isset($value);
+        });
 
-        case is_array($value):
-            return evalArrayPattern($patterns, $value);
-            break;
+    return Maybe\maybe(
+        key_exists('_', $patterns) ? ($patterns['_'])() : false, 
+        function ($value) use ($patterns) {
+            switch ($value) {
+                case is_object($value):
+                    return evalObjectPattern($patterns, $value);
+                    break;
 
-        default:
-            return evalStringPattern($patterns, $value);
-            break;
-    }
+                case is_array($value):
+                    return evalArrayPattern($patterns, $value);
+                    break;
+
+                case is_string($value):
+                    return evalStringPattern($patterns, $value);
+                    break;
+            }
+        }, 
+        $matches
+    );
 }
 
 /**
@@ -248,9 +262,13 @@ function evalStringPattern(array $patterns, string $value)
 
                         return $valType == 'integer' ?
                             (int) $val :
-                            $valType == 'double' ? (float) $val : $val;
+                            ($valType == 'double' ? (float) $val : $val);
                     },
                     function ($val) use ($value) {
+                        if (empty($value)) {
+                            return '_';
+                        }
+                        
                         return $val == $value ? A\concat('"', '', $val, '') : '_';
                     }
                 );

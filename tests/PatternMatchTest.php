@@ -92,6 +92,7 @@ class PatternMatchTest extends TestCase
 
         $this->assertEquals($numbers(1), 'first');
         $this->assertEquals($numbers(24), 'undefined');
+        $this->assertEquals('undefined', $numbers(''));
     }
 
     public function testArrayPatternEvaluatesArrayPatterns()

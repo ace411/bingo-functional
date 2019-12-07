@@ -20,7 +20,7 @@ function countOfValue(array $list, $value): int
     foreach ($list as $val) {
         $count += is_array($val) ?
             countOfValue($val, $value) :
-            $val == $value ? 1 : 0;
+            ($val == $value ? 1 : 0);
     }
 
     return $count;
@@ -44,7 +44,7 @@ function countOfKey(array $list, string $skey): int
     foreach ($list as $key => $val) {
         $count += is_array($val) ?
             countOfKey($val, $skey) :
-            $key == $skey ? 1 : 0;
+            ($key == $skey ? 1 : 0);
     }
 
     return $count;
