@@ -262,7 +262,7 @@ function evalStringPattern(array $patterns, string $value)
 
                         return $valType == 'integer' ?
                             (int) $val :
-                            $valType == 'double' ? (float) $val : $val;
+                            ($valType == 'double' ? (float) $val : $val);
                     },
                     function ($val) use ($value) {
                         if (empty($value)) {
