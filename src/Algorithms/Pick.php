@@ -13,13 +13,15 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const pick = 'Chemem\\Bingo\\Functional\\Algorithms\\pick';
 
-function pick(array $values, $search)
+function pick($values, $search)
 {
     $acc = [];
 
-    foreach ($values as $value) {
-        if ($value == $search) {
-            $acc[] = $value;
+    foreach ($values as $idx => $item) {
+        if (is_array($values) && ($item == $search)) {
+            $acc[] = $item;
+        } elseif (is_object($values) && ($values->{$idx} == $search)) {
+            $acc[] = $item;
         }
     }
 

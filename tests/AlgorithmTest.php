@@ -35,20 +35,47 @@ class AlgorithmTest extends TestCase
         $this->assertEquals('mIKE', $compose('mike'));
     }
 
-    public function testPickGetsArrayIndexValue()
+    public function testPickGetsSpecifiedArrayIndexValue()
     {
         $toPick = ['bar', 'foo'];
 
-        $picked = A\pick($toPick, 'foo');
-        $this->assertEquals('foo', $picked);
+        $pick   = A\partial(A\pick, $toPick);
+        $this->assertEquals('foo', $pick('foo'));
+        $this->assertEquals(null, $pick('baz'));
     }
 
-    public function testPluckReturnsArrayValue()
+    public function testPluckEvaluatesToSpecifiedObjectPropertyValue()
     {
-        $toPluck = ['foo' => 'bar', 'baz' => 'foo-bar'];
+        $toPick = (object)[
+            'foo' => 'bar',
+            'bar' => 'baz'
+        ];
 
-        $plucked = A\pluck($toPluck, 'foo');
-        $this->assertEquals('bar', $plucked);
+        $pick   = A\partial(A\pick, $toPick);
+
+        $this->assertEquals('baz', $pick('baz'));
+        $this->assertEquals(null, $pick('foo'));
+    }
+
+    public function testPluckReturnsSpecifiedArrayValue()
+    {
+        $toPluck    = ['foo' => 'bar', 'baz' => 'foo-bar'];
+
+        $pluck      = A\partial(A\pluck, $toPluck);
+        $this->assertEquals('bar', $pluck('foo'));
+        $this->assertEquals(null, $pluck('bar'));
+    }
+
+    public function testPluckEvaluatesToSpecifiedObjectProperty()
+    {
+        $toPluck    = (object)[
+            'foo' => 'bar',
+            'baz' => 'foo-bar'
+        ];
+
+        $pluck      = A\partial(A\pluck, $toPluck);
+        $this->assertEquals('bar', $pluck('foo'));
+        $this->assertEquals(null, $pluck('bar'));
     }
 
     public function testZipReturnsZippedArray()
