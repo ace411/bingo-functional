@@ -1,9 +1,7 @@
 <?php
 
-use \Chemem\Bingo\Functional\{
-    Algorithms as f,
-    Immutable\Tuple as t
-};
+use \Chemem\Bingo\Functional\Algorithms as f;
+use \Chemem\Bingo\Functional\Immutable\Tuple as t;
 
 class TupleTest extends \PHPUnit\Framework\TestCase
 {

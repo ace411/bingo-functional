@@ -15,13 +15,13 @@ class Tuple implements \Countable, ImmutableDataStructure
 {
     use CommonTrait;
 
-/**
-     * fst method
-     *
-     * fst :: (a, b) -> a
-     * @see https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Tuple.html
-     * @return mixed
-     */
+    /**
+         * fst method
+         *
+         * fst :: (a, b) -> a
+         * @see https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Tuple.html
+         * @return mixed
+         */
     
 
     public function fst()

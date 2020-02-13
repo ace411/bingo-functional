@@ -438,12 +438,11 @@ class CollectionTest extends TestCase
      * @dataProvider mergeMultipleProvider
      */
     public function testMergeNMethodFusesMultipleListsIntoOneAmalgam(
-        $fst, 
-        $snd, 
-        $thd, 
+        $fst,
+        $snd,
+        $thd,
         $res
-    )
-    {
+    ) {
         $list = Collection::from($fst);
         $merged = $list->mergeN(
             Collection::from($snd),

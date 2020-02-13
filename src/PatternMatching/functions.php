@@ -9,10 +9,8 @@
 
 namespace Chemem\Bingo\Functional\PatternMatching;
 
-use Chemem\Bingo\Functional\{
-    Algorithms as A,
-    Functors\Maybe
-};
+use Chemem\Bingo\Functional\Algorithms as A;
+use Chemem\Bingo\Functional\Functors\Maybe;
 
 /**
  * match function.
@@ -118,7 +116,7 @@ function patternMatch(array $patterns, $value)
         });
 
     return Maybe\maybe(
-        key_exists('_', $patterns) ? ($patterns['_'])() : false, 
+        key_exists('_', $patterns) ? ($patterns['_'])() : false,
         function ($value) use ($patterns) {
             switch ($value) {
                 case is_object($value):
@@ -133,7 +131,7 @@ function patternMatch(array $patterns, $value)
                     return evalStringPattern($patterns, $value);
                     break;
             }
-        }, 
+        },
         $matches
     );
 }

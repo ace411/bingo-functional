@@ -57,9 +57,9 @@ const _readline = __NAMESPACE__ . '\\_readline';
 /**
  * _readline function
  * powered by ext-readline, the function reads string or character data from standard input device
- * 
+ *
  * readline :: String -> (String -> Bool) -> IO
- * 
+ *
  * @param string $str
  * @param callable $handler
  * @return IO
@@ -100,9 +100,9 @@ const printToStdout = __NAMESPACE__ . '\\printToStdout';
 /**
  * printToStdout function
  * handles printing to standard input device
- * 
+ *
  * printToStdout :: String -> IO
- * 
+ *
  * @param string $input
  * @return IO
  */

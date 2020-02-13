@@ -9,11 +9,8 @@
 
 namespace Chemem\Bingo\Functional\Immutable;
 
-use \Chemem\Bingo\Functional\{
-    Algorithms as A,
-    Common\Traits\TransientMutator as Transient
-};
-
+use \Chemem\Bingo\Functional\Algorithms as A;
+use \Chemem\Bingo\Functional\Common\Traits\TransientMutator as Transient;
 
 class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, ImmutableList
 {
@@ -111,7 +108,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
                         $list->merge($lists[$idx]);
                     }
 
-                    return $list; 
+                    return $list;
                 })
         );
     }
