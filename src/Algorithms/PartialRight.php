@@ -16,14 +16,6 @@ const partialRight = 'Chemem\\Bingo\\Functional\\Algorithms\\partialRight';
 function partialRight(callable $fn, ...$args)
 {
     return function (...$inner) use ($fn, $args) {
-        return call_user_func_array(
-            $fn,
-            array_reverse(
-                array_merge(
-                    $args,
-                    func_get_args()
-                )
-            )
-        );
+        return $fn(...array_reverse(array_merge($args, $inner)));
     };
 }

@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const pick = 'Chemem\\Bingo\\Functional\\Algorithms\\pick';
 
-function pick($values, $search)
+function pick($values, $search, $default = null)
 {
     $acc = [];
 
@@ -24,6 +24,7 @@ function pick($values, $search)
             $acc[] = $item;
         }
     }
+    $result = head($acc);
 
-    return head($acc);
+    return is_null($result) ? $default : $result;
 }

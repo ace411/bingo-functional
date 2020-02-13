@@ -18,14 +18,13 @@ const difference = __NAMESPACE__ . '\\difference';
 function difference(array ...$array): array
 {
     $ret = compose(flatten, function (array $data) {
-        $res = [];
-        foreach ($data as $val) {
+        return fold(function ($res, $val) use ($data) {
             if (countOfValue($data, $val) < 2) {
                 $res[] = $val;
             }
-        }
 
-        return $res;
+            return $res;
+        }, $data, []);
     });
 
     return $ret($array);
