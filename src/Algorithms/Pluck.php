@@ -13,10 +13,10 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const pluck = 'Chemem\\Bingo\\Functional\\Algorithms\\pluck';
 
-function pluck($values, $search)
+function pluck($values, $search, $default = null)
 {
-    $val = [];
-
+    $val    = [];
+    
     foreach ($values as $idx => $item) {
         if (is_array($values) && $search == $idx) {
             $val[] = $item;
@@ -25,5 +25,7 @@ function pluck($values, $search)
         }
     }
 
-    return head($val);
+    $result = head($val);
+
+    return is_null($result) ? $default : $result;
 }

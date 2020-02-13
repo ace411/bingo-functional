@@ -49,6 +49,7 @@
         "squizlabs/php_codesniffer": "~3"
     },
     "suggest": {
+        "ext-readline": "An interface to the GNU readline library",
         "ext-apcu": "In-memory key-value PHP userland store",
         "ext-mbstring": "PHP extension for accurately determining byte-length of strings",
         "chemem/bingo-functional-repl": "A simple REPL for the bingo-functional library"

@@ -16,13 +16,7 @@ const partialLeft = 'Chemem\\Bingo\\Functional\\Algorithms\\partialLeft';
 function partialLeft(callable $fn, ...$args)
 {
     return function (...$inner) use ($fn, $args) {
-        return call_user_func_array(
-            $fn,
-            array_merge(
-                $args,
-                func_get_args()
-            )
-        );
+        return $fn(...array_merge($args, $inner));
     };
 }
 
