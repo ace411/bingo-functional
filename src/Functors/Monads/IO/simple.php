@@ -12,6 +12,7 @@ namespace Chemem\Bingo\Functional\Functors\Monads\IO;
 
 use Chemem\Bingo\Functional\Functors\Monads\IO as IOMonad;
 use \Chemem\Bingo\Functional\Algorithms as A;
+use function \Chemem\Bingo\Functional\PatternMatching\patternMatch as match;
 
 /**
  * IO function
@@ -41,12 +42,42 @@ function IO($value): IOMonad
  */
 const getChar = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\getChar';
 
-function getChar(): IOMonad
+function getChar(string $str = null): IOMonad
 {
-    return putChar()
-        ->map(function (callable $fget) {
-            return A\toException($fget)(\STDIN);
+    $count = 0;
+    return _readline($str, function ($ret) use ($count) {
+        $count += 1;
+
+        return $count === 1;
+    });
+}
+
+const _readline = __NAMESPACE__ . '\\_readline';
+
+/**
+ * _readline function
+ * powered by ext-readline, the function reads string or character data from standard input device
+ * 
+ * readline :: String -> (String -> Bool) -> IO
+ * 
+ * @param string $str
+ * @param callable $handler
+ * @return IO
+ */
+function _readline(string $str = null, callable $handler = null): IOMonad
+{
+    if (!is_null($handler)) {
+        return IO(function () use ($str, $handler) {
+            readline_callback_handler_install(!is_string($str) ? '' : $str, $handler);
+            readline_callback_read_char();
+
+            return A\concat('', PHP_EOL, readline_info('line_buffer'));
         });
+    }
+
+    return IO(function () use ($str) {
+        return readline($str);
+    });
 }
 
 /**
@@ -59,10 +90,35 @@ function getChar(): IOMonad
  */
 const putChar = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putChar';
 
-function putChar(): IOMonad
+function putChar(string $char): IOMonad
 {
-    return IO(function () {
-        return A\compose('fgetc', 'trim');
+    return printToStdout(mb_strlen($char, 'utf-8') === 1 ? $char : substr($char, 0, 1));
+}
+
+const printToStdout = __NAMESPACE__ . '\\printToStdout';
+
+/**
+ * printToStdout function
+ * handles printing to standard input device
+ * 
+ * printToStdout :: String -> IO
+ * 
+ * @param string $input
+ * @return IO
+ */
+function printToStdout(string $input): IOMonad
+{
+    $print = match([
+        '"cli"' => function () use ($input) {
+            return shell_exec(A\concat('', 'echo', ' ', '"', $input, '"'));
+        },
+        '_'     => function () use ($input) {
+            return $input;
+        }
+    ], php_sapi_name());
+
+    return IO(function () use ($print): int {
+        return printf('%s', $print); // wrap side-effect inside IO instance
     });
 }
 
@@ -76,11 +132,9 @@ function putChar(): IOMonad
  */
 const putStr = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putStr';
 
-function putStr(): IOMonad
+function putStr(string $str): IOMonad
 {
-    return IO(function () {
-        return A\compose('fgets', 'trim');
-    });
+    return printToStdout($str);
 }
 
 /**
@@ -93,14 +147,9 @@ function putStr(): IOMonad
  */
 const getLine = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\getLine';
 
-function getLine(): IOMonad
+function getLine(string $str = null): IOMonad
 {
-    return putStr()
-        ->map(function (callable $fget) {
-            $result = A\toException($fget)(\STDIN);
-
-            return A\concat(\PHP_EOL, $result, A\identity(''));
-        });
+    return _readline($str);
 }
 
 /**
