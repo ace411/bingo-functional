@@ -10,7 +10,12 @@ $finder = Finder::create()
   ->in(__DIR__);
 
 return Config::create()
+  ->setIndent('  ')
   ->setRules([
-    '@PSR2' => true
+    '@PSR2'                   => true,
+    'binary_operator_spaces'  => [
+      'align_double_arrow'  => true,
+      'align_equals'        => true,
+    ]
   ])
   ->setFinder($finder);
