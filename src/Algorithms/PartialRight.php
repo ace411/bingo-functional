@@ -13,9 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const partialRight = 'Chemem\\Bingo\\Functional\\Algorithms\\partialRight';
 
-function partialRight(callable $fn, ...$args)
+function partialRight(callable $func, ...$args)
 {
-    return function (...$inner) use ($fn, $args) {
-        return $fn(...array_reverse(array_merge($args, $inner)));
-    };
+    return partialT($func, $args, false);
 }

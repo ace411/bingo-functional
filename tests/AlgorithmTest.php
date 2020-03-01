@@ -300,16 +300,16 @@ class AlgorithmTest extends TestCase
 
     public function testDropLeftFunctionRemovesArrayItemsFromTheFirstIndexOnwards()
     {
-        $numbers = [1, 2, 3, 4, 5];
+        $numbers = range(1, 5);
 
         $modified = A\dropLeft($numbers, 2);
 
-        $this->assertEquals([2 => 3, 3 => 4, 4 => 5], $modified);
+        $this->assertEquals([3, 4, 5], $modified);
     }
 
     public function testDropRightFunctionRemovesArrayItemsFromTheLastIndexBackwards()
     {
-        $numbers = [1, 2, 3, 4, 5];
+        $numbers = range(1, 5);
 
         $modified = A\dropRight($numbers, 2);
 

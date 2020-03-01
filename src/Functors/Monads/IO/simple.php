@@ -152,6 +152,8 @@ function putStrLn(string $str): IOMonad
     return printToStdout(A\concat('', $str, PHP_EOL));
 }
 
+const putStrLn = __NAMESPACE__ . '\\putStrLn';
+
 /**
  * getLine function
  * Read a line from the standard input device.
