@@ -137,6 +137,23 @@ function putStr(string $str): IOMonad
     return printToStdout($str);
 }
 
+
+/**
+ * putStrLn function
+ * Same as putStr but adds a newline character
+ *
+ * putStrLn :: String -> IO ()
+ *
+ * @param string $str
+ * @return object IO
+ */
+function putStrLn(string $str): IOMonad
+{
+    return printToStdout(A\concat('', $str, PHP_EOL));
+}
+
+const putStrLn = __NAMESPACE__ . '\\putStrLn';
+
 /**
  * getLine function
  * Read a line from the standard input device.
