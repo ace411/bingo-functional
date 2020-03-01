@@ -103,14 +103,15 @@ class IOMonadTest extends \PHPUnit\Framework\TestCase
 
     public function testPutCharFunctionOutputsFunctionWrappedInsideIO()
     {
-        $this->assertInstanceOf(IO::class, putChar());
-        $this->assertInstanceOf(\Closure::class, putChar()->exec());
+        $putChar = putChar('a');
+        $this->assertInstanceOf(IO::class, $putChar);
     }
 
     public function testPutStrFunctionOutputsFunctionWrappedInsideIO()
     {
-        $this->assertInstanceOf(IO::class, putStr());
-        $this->assertInstanceOf(\Closure::class, putStr()->exec());
+        $putStr = putStr('mike');
+
+        $this->assertInstanceOf(IO::class, $putStr);
     }
 
     public function testReadIOMethodReadsStringInput()
