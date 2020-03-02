@@ -141,26 +141,25 @@ class PatternMatchTest extends TestCase
 
     public function testPatternMatchFunctionPerformsMultipleValueSensitiveMatch()
     {
-        $pattern = PM\patternMatch(
-            [
-                '["foo", "bar"]' => function () {
-                    $val = strtoupper('foo-bar');
-
-                    return $val;
-                },
-                '["foo", "bar", baz]' => function ($baz) {
-                    $val = lcfirst(strtoupper($baz));
-
-                    return $val;
-                },
-                '_' => function () {
-                    return 'undefined';
-                },
-            ],
-            explode('/', 'foo/bar/functional')
-        );
-
-        $this->assertEquals($pattern, 'fUNCTIONAL');
+        $pttn = A\partial(PM\patternMatch, [
+            '[_, "book"]' => function () {
+                return 'FP in PHP';
+            },
+            '["hello", name]' => function (string $name) {
+                return A\concat(' ', 'Hello', $name);
+            },
+            '[a, (x:xs), b]' => function () {
+                return 'multiple';
+            },
+            '_' => function () {
+                return 'undefined';
+            }
+        ]);
+        
+        $this->assertEquals($pttn(['api', 'book']), 'FP in PHP');
+        $this->assertEquals($pttn(['hello', 'World']), 'Hello World');
+        $this->assertEquals($pttn([3, [5, 7], 9]), 'multiple');
+        $this->assertEquals($pttn(['pennies']), 'undefined');
     }
 
     public function testEvalObjectPatternMatchesObjects()
@@ -183,40 +182,6 @@ class PatternMatchTest extends TestCase
         );
 
         $this->assertEquals('IO monad', $evalObject);
-    }
-
-    public function testEvalArrayPatternMatchesListPatternWithWildcard()
-    {
-        $pattern = PM\evalArrayPattern(
-            [
-                '[_, "chemem"]' => function () {
-                    return 'chemem';
-                },
-                '_' => function () {
-                    return 'don\'t care';
-                },
-            ],
-            ['func', 'chemem']
-        );
-
-        $this->assertEquals('chemem', $pattern);
-    }
-
-    public function testEvalArrayPatternEvaluatesIrregularWildcardPatterns()
-    {
-        $result = PM\evalArrayPattern(
-            [
-                '["ask", _, "mike"]' => function () {
-                    return 'G.O.A.T';
-                },
-                '_' => function () {
-                    return 'not the greatest';
-                },
-            ],
-            ['ask', 'uncle', 'mike']
-        );
-
-        $this->assertEquals('G.O.A.T', $result);
     }
 
     public function testLetInDestructuresByPatternMatching()
