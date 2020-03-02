@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
     <phpunit
-            colors="true"
-            verbose="true"
-            bootstrap="vendor/autoload.php">
+        colors="true"
+        verbose="true"
+        bootstrap="vendor/autoload.php"
+    >
         <php>
             <var name="ERR_MSG" value="An error occurred" />
             <var name="ERR_MSG_STR" value="Invalid String" />
