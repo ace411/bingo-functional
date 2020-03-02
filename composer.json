@@ -152,8 +152,8 @@
     },
     "minimum-stability": "stable",
     "scripts": {
-        "fix": "php-cs-fixer fix --config=.php_cs --diff --verbose",
-        "fix-dry": "php-cs-fixer fix --config=.php_cs --diff --verbose --dry-run",
+        "cs:fix": "php-cs-fixer fix --config=.php_cs --diff --verbose",
+        "cs:fix-dry": "php-cs-fixer fix --config=.php_cs --diff --verbose --dry-run",
         "test": "phpunit -c phpunit.xml.dist"
     }
 }
