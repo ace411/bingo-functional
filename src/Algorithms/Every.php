@@ -3,7 +3,7 @@
 /**
  * every function.
  *
- * every :: [a] -> (b -> Bool) -> c
+ * every :: [a] -> (a -> Bool) -> Bool
  *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
@@ -15,16 +15,5 @@ const every = 'Chemem\\Bingo\\Functional\\Algorithms\\every';
 
 function every(array $collection, callable $func): bool
 {
-    $valCount = count($collection);
-
-    $everyFn = compose(
-        partialLeft(filter, $func),
-        function (array $result) use ($valCount) {
-            $resCount = count($result);
-
-            return $resCount == $valCount;
-        }
-    );
-
-    return $everyFn($collection);
+    return filterT($collection, $func);
 }
