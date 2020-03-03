@@ -10,13 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class PatternMatchTest extends TestCase
 {
-    public static function letInFunc(array $_let, array $_in, callable $action)
-    {
-        $list = range(1, 10);
-        $let = PM\letIn($_let, $list);
-        return $let($_in, $action);
-    }
-
     public function testGetNumConditionsFunctionOutputsArrayOfArities()
     {
         $numConditions = PM\getNumConditions(['(a:b:_)', '(a:_)', '_']);
@@ -187,7 +180,7 @@ class PatternMatchTest extends TestCase
     public function testLetInDestructuresByPatternMatching()
     {
         $list = range(1, 10);
-        $let = PM\letIn(['a', 'b', 'c'], $list);
+        $let = PM\letIn('[a, b, c, _]', $list);
         $_in = $let(['c'], function (int $c) {
             return $c * 10;
         });
@@ -198,11 +191,12 @@ class PatternMatchTest extends TestCase
 
     public function testLetInFunctionAcceptsWildcardParameters()
     {
-        $letIn = self::letInFunc(['a', '_', '_', 'b'], ['a', 'b'], function ($a, $b) {
-            return $a + $b;
-        });
+        $let    = PM\letIn('[a, _, (x:xs)]', [1, 'foo', [3, 9]]);
+        $in     = $let(['x', 'xs'], function (int $x, array $xs) {
+            return A\head($xs) / $x;
+        }); 
 
-        $this->assertEquals(5, $letIn);
-        $this->assertInternalType('integer', $letIn);
+        $this->assertEquals(3, $in);
+        $this->assertInternalType('integer', $in);
     }
 }

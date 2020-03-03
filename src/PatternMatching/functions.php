@@ -266,25 +266,21 @@ function evalObjectPattern(array $patterns, $value)
 
 const letIn = 'Chemem\\Bingo\\Functional\\PatternMatching\\letIn';
 
-function letIn(array $params, array $list): callable
+function letIn(string $pattern, array $items): callable
 {
-    $patterns = array_merge(...array_map(function ($param, $val, $acc = []) {
-        if ($param == '_' || is_null($param)) {
-            $acc[] = $val;
-        }
-        
-        return [
-            is_null($param) ? '_' : '"' . $param . '"' => function () use ($acc, $val, $param) {
-                return !is_null($param) ? $val : $acc;
-            }
-        ];
-    }, $params, $list));
+    // extract the tokens from the list
+    $tokens = p\extract($pattern, $items);
 
-    return function (array $params, callable $function) use ($patterns) {
-        $values = A\map(function ($param) use ($patterns) {
-            return patternMatch($patterns, $param);
-        }, $params);
-        
-        return $function(...$values);
+    return function (array $keys, callable $func) use ($tokens) {
+        // match keys against extracted tokens
+        $args = A\fold(function (array $acc, string $key) use ($tokens) {
+            if (isset($tokens[$key])) {
+                $acc[] = $tokens[$key];
+            }
+
+            return $acc;
+        }, $keys, []);
+
+        return $func(...$args);
     };
 }
