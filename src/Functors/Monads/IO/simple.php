@@ -18,7 +18,7 @@ use function \Chemem\Bingo\Functional\PatternMatching\patternMatch as match;
  * IO function
  * initialize a value of type IO.
  *
- * IO :: Callable value -> IOMonad ()
+ * IO :: a -> IO ()
  *
  * @param mixed $value
  *
