@@ -51,7 +51,7 @@ trait CommonTrait
         for (
             $idx = 0; $idx < $count; $idx++
         ) {
-            $item = $list[$idx];
+            $item  = $list[$idx];
             $acc[] = is_array($item) ?
                 f\mapDeep(function ($val) use ($element): bool {
                     return $val == $element;

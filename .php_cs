@@ -10,7 +10,6 @@ $finder = Finder::create()
   ->in(__DIR__);
 
 return Config::create()
-  ->setIndent('  ')
   ->setRules([
     '@PSR2'                   => true,
     'binary_operator_spaces'  => [

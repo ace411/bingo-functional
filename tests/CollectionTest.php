@@ -443,7 +443,7 @@ class CollectionTest extends TestCase
         $thd,
         $res
     ) {
-        $list = Collection::from($fst);
+        $list   = Collection::from($fst);
         $merged = $list->mergeN(
             Collection::from($snd),
             Collection::from($thd)

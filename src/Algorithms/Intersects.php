@@ -16,8 +16,8 @@ const intersects = 'Chemem\\Bingo\\Functional\\Algorithms\\intersects';
 
 function intersects(array $first, array $second): bool
 {
-    $fSize = count($first);
-    $sSize = count($second);
+    $fSize     = count($first);
+    $sSize     = count($second);
     $intersect = [];
 
     if ($fSize > $sSize) {

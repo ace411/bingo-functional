@@ -16,7 +16,7 @@ const unzip = 'Chemem\\Bingo\\Functional\\Algorithms\\unzip';
 function unzip(array $zipped, $acc = []): array
 {
     $zippedValues = array_values($zipped);
-    $zippedCount = count($zippedValues[0]); //same for indexes 0 - n
+    $zippedCount  = count($zippedValues[0]); //same for indexes 0 - n
 
     foreach ($zippedValues as $child) {
         $childValues = array_values($child);

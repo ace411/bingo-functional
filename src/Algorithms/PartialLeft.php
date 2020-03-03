@@ -32,14 +32,14 @@ function partialT(callable $func, array $args, bool $left = true)
 
     $acc        = function (...$inner) use (&$acc, $func, $argCount, $left) {
         return function (...$innermost) use (
-            $inner, 
-            $acc, 
-            $func, 
-            $left, 
+            $inner,
+            $acc,
+            $func,
+            $left,
             $argCount
         ) {
-            $final = $left ? 
-                array_merge($inner, $innermost) : 
+            $final = $left ?
+                array_merge($inner, $innermost) :
                 array_merge(array_reverse($innermost), array_reverse($inner));
 
             if ($argCount <= count($final)) {
@@ -48,7 +48,7 @@ function partialT(callable $func, array $args, bool $left = true)
 
             return $acc(...$final);
         };
-    }; 
+    };
 
     return $acc(...$args);
 }

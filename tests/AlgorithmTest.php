@@ -21,7 +21,7 @@ class AlgorithmTest extends TestCase
         $multiplyTen = function (int $b): int {
             return $b * 10;
         };
-        $composed = A\compose($addTen, $multiplyTen);
+        $composed    = A\compose($addTen, $multiplyTen);
         $transformed = array_map($composed, [1, 2, 3]);
 
         $this->assertEquals([110, 120, 130], $transformed);
@@ -80,7 +80,7 @@ class AlgorithmTest extends TestCase
 
     public function testZipReturnsZippedArray()
     {
-        $nums = [1, 2];
+        $nums      = [1, 2];
         $positions = ['PG', 'SG'];
 
         $zipped = A\zip($nums, $positions);
@@ -118,7 +118,7 @@ class AlgorithmTest extends TestCase
 
     public function testUnzipReturnsArrayOfInitiallyGroupedArrays()
     {
-        $zipped = A\zip(range(1, 2), ['PG', 'SG']);
+        $zipped   = A\zip(range(1, 2), ['PG', 'SG']);
         $unzipped = A\unzip($zipped);
 
         $this->assertEquals(
@@ -190,7 +190,7 @@ class AlgorithmTest extends TestCase
     public function testIsArrayOfReturnsArrayType()
     {
         $array = [1, 2, 3, 4];
-        $type = A\isArrayOf($array);
+        $type  = A\isArrayOf($array);
 
         $this->assertEquals('integer', $type);
     }
@@ -218,7 +218,7 @@ class AlgorithmTest extends TestCase
 
     public function testConcatFunctionConcatenatesStrings()
     {
-        $wildcard = '/';
+        $wildcard  = '/';
         $testsPath = A\concat($wildcard, 'path', 'to', 'tests');
 
         $this->assertEquals('path/to/tests', $testsPath);
@@ -708,14 +708,14 @@ class AlgorithmTest extends TestCase
     {
         $lists = [
             [0 => 'ace411', 'twitter' => '@agiroLoki'],
-            [0 => 'github'],
+            [0         => 'github'],
             ['twitter' => 1]
         ];
         $func = A\partial(A\renameKeys, $lists[0]);
         
         $this->assertInternalType('array', $func($lists[1]));
         $this->assertEquals([
-            'github' => 'ace411',
+            'github'  => 'ace411',
             'twitter' => '@agiroLoki'
         ], $func($lists[1]));
         $this->assertInternalType('array', $func($lists[2]));

@@ -19,7 +19,7 @@ function memoize(callable $function): callable
         static $cache = [];
 
         $args = func_get_args();
-        $key = md5(serialize($args));
+        $key  = md5(serialize($args));
 
         if (function_exists('apcu_add')) {
             apcu_add($key, $function(...$args));

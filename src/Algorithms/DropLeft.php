@@ -22,18 +22,17 @@ const dropT = __NAMESPACE__ . '\\dropT';
 
 /**
  * dropT function
- * 
+ *
  * dropT :: Array -> Int -> Array
- * 
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
 function dropT(
-    array $collection, 
+    array $collection,
     int $number = 1,
     bool $left = false
-): array
-{
+): array {
     $acc        = [];
     $count      = 0;
     $toIterate  = $left ? $collection : array_reverse($collection);

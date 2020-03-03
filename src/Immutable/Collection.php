@@ -23,7 +23,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
     public function map(callable $func): ImmutableList
     {
         $count = $this->count();
-        $list = new \SplFixedArray($count);
+        $list  = new \SplFixedArray($count);
         for ($idx = 0; $idx < $count; $idx++) {
             $list[$idx] = $func($this->getList()[$idx]);
         }

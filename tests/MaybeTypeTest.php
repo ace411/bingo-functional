@@ -48,8 +48,8 @@ class MaybeTypeTest extends TestCase
 
     public function testMaybeTypeFromValueReturnsTypeFromValueDefinition()
     {
-        $val = Maybe::fromValue(12);
-        $another = Maybe::fromValue(12, 12);
+        $val        = Maybe::fromValue(12);
+        $another    = Maybe::fromValue(12, 12);
         $yetAnother = Maybe::fromValue(null);
 
         $this->assertInstanceOf(Just::class, $val);

@@ -180,8 +180,8 @@ class PatternMatchTest extends TestCase
     public function testLetInDestructuresByPatternMatching()
     {
         $list = range(1, 10);
-        $let = PM\letIn('[a, b, c, _]', $list);
-        $_in = $let(['c'], function (int $c) {
+        $let  = PM\letIn('[a, b, c, _]', $list);
+        $_in  = $let(['c'], function (int $c) {
             return $c * 10;
         });
 
@@ -194,7 +194,7 @@ class PatternMatchTest extends TestCase
         $let    = PM\letIn('[a, _, (x:xs)]', [1, 'foo', [3, 9]]);
         $in     = $let(['x', 'xs'], function (int $x, array $xs) {
             return A\head($xs) / $x;
-        }); 
+        });
 
         $this->assertEquals(3, $in);
         $this->assertInternalType('integer', $in);
