@@ -257,7 +257,7 @@ function evalObjectPattern(array $patterns, $value)
  *
  * letIn function
  *
- * letIn :: [a] -> [a, b] -> ([a, b] -> c)
+ * letIn :: String -> [a, b] -> (Array -> ((a, b) -> c)) -> c
  *
  * @param array $params
  * @param array $list
