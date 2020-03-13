@@ -80,9 +80,11 @@ class Just extends Maybe
     /**
      * {@inheritdoc}
      */
-    public function ap(M\Monadic $app): M\Monadic
+    public function ap(M\Monadic $just): M\Monadic
     {
-        return $app->map($this);
+        return $this->bind(function ($action) use ($just) {
+            return $just->map($action);
+        });
     }
 
     /**
