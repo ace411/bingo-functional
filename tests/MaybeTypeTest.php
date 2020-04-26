@@ -26,6 +26,14 @@ class MaybeTypeTest extends TestCase
         $this->assertInstanceOf(Just::class, $val);
     }
 
+    public function testApMethodIsAHomomorphism()
+    {
+        $apply = Maybe::fromValue('strtoupper')->ap(Maybe::fromValue('foo'));
+
+        $this->assertInstanceOf(Maybe::class, $apply);
+        $this->assertEquals('FOO', $apply->getJust());
+    }
+
     public function testBindMethodEnablesSequentialChainOfJustType()
     {
         $maybe = Maybe::fromValue(2)
