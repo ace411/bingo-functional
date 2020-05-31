@@ -18,7 +18,7 @@ const mapDeep = 'Chemem\\Bingo\\Functional\\Algorithms\\mapDeep';
 function mapDeep(callable $func, array $collection): array
 {
     return _fold(function ($acc, $val, $idx) use ($func) {
-        $acc[$idx] = is_array($val) ? mapDeep($func, $val) : $func($val);
+        $acc[$idx] = \is_array($val) ? mapDeep($func, $val) : $func($val);
 
         return $acc;
     }, $collection, []);

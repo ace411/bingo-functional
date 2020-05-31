@@ -66,17 +66,17 @@ const _readline = __NAMESPACE__ . '\\_readline';
  */
 function _readline(string $str = null, callable $handler = null): IOMonad
 {
-    if (!is_null($handler)) {
+    if (!\is_null($handler)) {
         return IO(function () use ($str, $handler) {
-            readline_callback_handler_install(!is_string($str) ? '' : $str, $handler);
-            readline_callback_read_char();
+            \readline_callback_handler_install(!\is_string($str) ? '' : $str, $handler);
+            \readline_callback_read_char();
 
-            return A\concat('', PHP_EOL, readline_info('line_buffer'));
+            return A\concat('', PHP_EOL, \readline_info('line_buffer'));
         });
     }
 
     return IO(function () use ($str) {
-        return readline($str);
+        return \readline($str);
     });
 }
 
@@ -92,7 +92,7 @@ const putChar = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putChar';
 
 function putChar(string $char): IOMonad
 {
-    return printToStdout(mb_strlen($char, 'utf-8') === 1 ? $char : substr($char, 0, 1));
+    return printToStdout(\mb_strlen($char, 'utf-8') === 1 ? $char : \substr($char, 0, 1));
 }
 
 const printToStdout = __NAMESPACE__ . '\\printToStdout';
@@ -110,15 +110,15 @@ function printToStdout(string $input): IOMonad
 {
     $print = match([
         '"cli"' => function () use ($input) {
-            return shell_exec(A\concat('', 'echo', ' ', '"', $input, '"'));
+            return \shell_exec(A\concat('', 'echo', ' ', '"', $input, '"'));
         },
         '_'     => function () use ($input) {
             return $input;
         }
-    ], php_sapi_name());
+    ], \php_sapi_name());
 
     return IO(function () use ($print): int {
-        return printf('%s', $print); // wrap side-effect inside IO instance
+        return \printf('%s', $print); // wrap side-effect inside IO instance
     });
 }
 
@@ -201,7 +201,7 @@ function _print(IOMonad $interaction): IOMonad
 {
     return $interaction
         ->map(function (string $result) {
-            return printf('%s', A\concat(PHP_EOL, $result, A\identity('')));
+            return \printf('%s', A\concat(PHP_EOL, $result, A\identity('')));
         });
 }
 
@@ -240,7 +240,7 @@ function catchIO(IOMonad $operation): IOMonad
 {
     return $operation->bind(function ($operation) {
         $exception = A\compose(A\toException, IO);
-        return is_callable($operation) ?
+        return \is_callable($operation) ?
             $exception($operation) :
             $exception(function () use ($operation) {
                 return $operation;

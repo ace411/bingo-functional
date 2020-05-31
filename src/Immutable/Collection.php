@@ -102,9 +102,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
     public function mergeN(ImmutableList ...$lists): ImmutableList
     {
         return $this->merge(
-            array_shift($lists)
+            \array_shift($lists)
                 ->triggerMutation(function ($list) use ($lists) {
-                    for ($idx = 0; $idx < count($lists); $idx++) {
+                    for ($idx = 0; $idx < \count($lists); $idx++) {
                         $list->merge($lists[$idx]);
                     }
 
@@ -152,7 +152,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
         $extr = [];
         for ($idx = 0; $idx < $list->count(); $idx++) {
             $item = $list[$idx];
-            if (is_array($item) && key_exists($key, $item)) {
+            if (\is_array($item) && \key_exists($key, $item)) {
                 $extr[] = $item[$key];
             }
         }
@@ -170,7 +170,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
 
         for ($idx = 0; $idx < $list->count(); $idx++) {
             $item = $list[$idx];
-            if (!in_array($item, $acc)) {
+            if (!\in_array($item, $acc)) {
                 $acc[] = $item;
             }
         }
@@ -189,15 +189,15 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
 
         if ($main > $oth) {
             for ($idx = 0; $idx < $oth; $idx++) {
-                $intersect[] = in_array($list->getList()[$idx], $this->toArray());
+                $intersect[] = \in_array($list->getList()[$idx], $this->toArray());
             }
         } elseif ($oth > $main) {
             for ($idx = 0; $idx < $main; $idx++) {
-                $intersect[] = in_array($this->getList()[$idx], $list->toArray());
+                $intersect[] = \in_array($this->getList()[$idx], $list->toArray());
             }
         }
 
-        return in_array(true, $intersect);
+        return \in_array(true, $intersect);
     }
 
     /**
@@ -205,7 +205,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
      */
     public function implode(string $delimiter): string
     {
-        return rtrim($this->fold(function (string $fold, $elem) use ($delimiter) {
+        return \rtrim($this->fold(function (string $fold, $elem) use ($delimiter) {
             $fold .= A\concat($delimiter, $elem, '');
             return $fold;
         }, ''), $delimiter);

@@ -15,7 +15,7 @@ const throttle = 'Chemem\\Bingo\\Functional\\Algorithms\\throttle';
 
 function throttle(callable $function, int $timeout): callable
 {
-    sleep($timeout);
+    \sleep($timeout);
 
     return function (...$args) use ($function) {
         return $function(...$args);

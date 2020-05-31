@@ -19,5 +19,5 @@ function mean(array $collection): float
         return $val + $acc;
     }, $collection, 0);
 
-    return $divisor / count($collection);
+    return $divisor / \count($collection);
 }

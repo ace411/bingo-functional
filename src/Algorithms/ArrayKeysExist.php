@@ -15,9 +15,9 @@ const arrayKeysExist = __NAMESPACE__ . '\\arrayKeysExist';
 
 function arrayKeysExist(array $list, ...$keys): bool
 {
-    $intersect = array_intersect(array_keys($list), $keys);
+    $intersect = \array_intersect(\array_keys($list), $keys);
 
-    return count($intersect) !== count($keys) ? identity(false) : identity(true);
+    return \count($intersect) !== \count($keys) ? identity(false) : identity(true);
 }
 
 const keysExist = __NAMESPACE__ . '\\keysExist';

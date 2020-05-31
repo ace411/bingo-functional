@@ -15,5 +15,5 @@ const tail = 'Chemem\\Bingo\\Functional\\Algorithms\\tail';
 
 function tail(array $values): array
 {
-    return array_slice($values, 1);
+    return \array_slice($values, 1);
 }

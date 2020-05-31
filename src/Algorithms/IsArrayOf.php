@@ -15,7 +15,7 @@ const isArrayOf = 'Chemem\\Bingo\\Functional\\Algorithms\\isArrayOf';
 
 function isArrayOf(array $collection): string
 {
-    $types = array_unique(map('gettype', $collection));
+    $types = \array_unique(map('gettype', $collection));
 
-    return count($types) > 1 ? 'mixed' : head($types);
+    return \count($types) > 1 ? 'mixed' : head($types);
 }

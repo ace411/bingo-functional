@@ -97,7 +97,7 @@ class StateMonadTest extends \PHPUnit\Framework\TestCase
     public function testBindFunctionChainsStateMonadTransformations()
     {
         $state = state(function ($val) {
-            return pow($val, 4);
+            return \pow($val, 4);
         })
             ->bind(function (callable $action) {
                 return State::of($action(2));

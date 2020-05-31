@@ -20,7 +20,7 @@ function where(array $collection, array $search): array
     $whereFn = function (array $acc = []) use ($searchKey, $searchVal, $collection) {
         foreach ($collection as $index => $value) {
             if (
-                isset($collection[$index][$searchKey]) && 
+                isset($collection[$index][$searchKey]) &&
                 $collection[$index][$searchKey] == $searchVal
             ) {
                 $acc[] = $value;

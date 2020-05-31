@@ -12,8 +12,8 @@ class MonadHelperTest extends \PHPUnit\Framework\TestCase
     public function testMComposeFunctionComposesTwoMonadicFunctionsFromRightToLeft()
     {
         $res = M\mcompose(function ($contents) {
-            return M\IO\IO(strtolower($contents));
-        }, M\IO\readFile)(M\IO\IO(concat('/', dirname(__DIR__), 'io.test.txt')));
+            return M\IO\IO(\strtolower($contents));
+        }, M\IO\readFile)(M\IO\IO(concat('/', \dirname(__DIR__), 'io.test.txt')));
 
         $this->assertInstanceOf(M\IO::class, $res);
         $this->assertInternalType('string', $res->exec());
@@ -46,10 +46,10 @@ class MonadHelperTest extends \PHPUnit\Framework\TestCase
     {
         $filter = M\filterM(function (int $val): M\Monadic {
             return Maybe\Maybe::just($val > 10);
-        }, range(1, 50));
+        }, \range(1, 50));
 
         $this->assertInstanceOf(Maybe\Just::class, $filter);
-        $this->assertEquals(range(11, 50), $filter->getJust());
+        $this->assertEquals(\range(11, 50), $filter->getJust());
         $this->assertInternalType('array', $filter->getJust());
     }
 }

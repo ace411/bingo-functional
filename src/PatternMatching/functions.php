@@ -26,7 +26,7 @@ const match = 'Chemem\\Bingo\\Functional\\PatternMatching\\match';
 function match(array $options): callable
 {
     $matchFn = function (array $options): array {
-        return array_key_exists('_', $options) ?
+        return \array_key_exists('_', $options) ?
             $options :
             ['_' => function () {
                 return false;
@@ -36,14 +36,14 @@ function match(array $options): callable
     $conditionGen = A\compose(
         $matchFn,
         A\partialRight('array_filter', function ($value) {
-            return is_callable($value);
+            return \is_callable($value);
         }),
         'array_keys',
         getNumConditions
     );
 
     return function (array $values) use ($options, $matchFn, $conditionGen) {
-        $valCount = count($values);
+        $valCount = \count($values);
 
         $check = A\compose(
             $conditionGen,
@@ -54,11 +54,11 @@ function match(array $options): callable
         );
 
         return $check($options) > 0 ?
-            call_user_func_array(
+            \call_user_func_array(
                 $options[A\indexOf($conditionGen($options), $valCount)],
                 $values
             ) :
-            call_user_func($matchFn($options)['_']);
+            \call_user_func($matchFn($options)['_']);
     };
 }
 
@@ -74,7 +74,7 @@ const getNumConditions = 'Chemem\\Bingo\\Functional\\PatternMatching\\getNumCond
 function getNumConditions(array $conditions)
 {
     $checkOpt = function (string $opt): string {
-        return preg_match('/([_])+/', $opt) ? $opt : '_';
+        return \preg_match('/([_])+/', $opt) ? $opt : '_';
     };
 
     $extr = A\map(
@@ -94,7 +94,7 @@ function getNumConditions(array $conditions)
         $conditions
     );
 
-    return array_merge(...$extr);
+    return \array_merge(...$extr);
 }
 
 /**
@@ -117,18 +117,18 @@ function patternMatch(array $patterns, $value)
         });
 
     return Maybe\maybe(
-        key_exists('_', $patterns) ? ($patterns['_'])() : false,
+        \key_exists('_', $patterns) ? ($patterns['_'])() : false,
         function ($value) use ($patterns) {
             switch ($value) {
-                case is_object($value):
+                case \is_object($value):
                     return evalObjectPattern($patterns, $value);
                     break;
 
-                case is_array($value):
+                case \is_array($value):
                     return evalArrayPattern($patterns, $value);
                     break;
 
-                case is_string($value):
+                case \is_string($value):
                     return evalStringPattern($patterns, $value);
                     break;
             }
@@ -171,7 +171,7 @@ function evalStringPattern(array $patterns, string $value)
     $evalPattern = A\compose(
         'array_keys',
         A\partialLeft(A\filter, function ($val) {
-            return is_string($val) && preg_match('/([\"]+)/', $val);
+            return \is_string($val) && \preg_match('/([\"]+)/', $val);
         }),
         A\partialLeft(
             A\map,
@@ -179,7 +179,7 @@ function evalStringPattern(array $patterns, string $value)
                 $evaluate = A\compose(
                     A\partialLeft('str_replace', '"', ''),
                     function ($val) {
-                        $valType = gettype($val);
+                        $valType = \gettype($val);
 
                         return $valType == 'integer' ?
                             (int) $val :
@@ -212,7 +212,7 @@ function evalStringPattern(array $patterns, string $value)
         }
     )($patterns);
 
-    return call_user_func($evalPattern);
+    return \call_user_func($evalPattern);
 }
 
 /**
@@ -229,24 +229,24 @@ const evalObjectPattern = 'Chemem\\Bingo\\Functional\\PatternMatching\\evalObjec
 
 function evalObjectPattern(array $patterns, $value)
 {
-    $valObj = get_class($value);
+    $valObj = \get_class($value);
 
     $eval = A\compose(
         'array_keys',
         A\partialLeft(A\filter, function ($val) {
-            return is_string($val) && preg_match('/([a-zA-Z]+)/', $val);
+            return \is_string($val) && \preg_match('/([a-zA-Z]+)/', $val);
         }),
         A\partialLeft(A\filter, function ($classStr) use ($valObj) {
-            return class_exists($classStr) && $classStr == $valObj;
+            return \class_exists($classStr) && $classStr == $valObj;
         }),
         A\head,
         function (string $match) {
-            return !empty($match) && !is_null($match) ? A\identity($match) : A\identity('_');
+            return !empty($match) && !\is_null($match) ? A\identity($match) : A\identity('_');
         },
         function (string $key) use ($patterns) {
             $func = $key == '_' ? isset($patterns['_']) ? A\identity($patterns['_']) : constantFunction(false) : A\identity($patterns[$key]);
 
-            return call_user_func($func);
+            return \call_user_func($func);
         }
     );
 

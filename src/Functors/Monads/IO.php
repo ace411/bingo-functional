@@ -41,7 +41,7 @@ class IO implements Monadic
      */
     public static function of($operation): self
     {
-        return new static(is_callable($operation) ? $operation : constantFunction($operation));
+        return new static(\is_callable($operation) ? $operation : constantFunction($operation));
     }
 
     /**
@@ -89,7 +89,7 @@ class IO implements Monadic
      */
     public function exec()
     {
-        return call_user_func($this->operation);
+        return \call_user_func($this->operation);
     }
 
     /**
@@ -101,6 +101,6 @@ class IO implements Monadic
      */
     public function flatMap(callable $function)
     {
-        return call_user_func($function, $this->exec());
+        return \call_user_func($function, $this->exec());
     }
 }

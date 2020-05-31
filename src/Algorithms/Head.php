@@ -15,5 +15,5 @@ const head = 'Chemem\\Bingo\\Functional\\Algorithms\\head';
 
 function head(array $values)
 {
-    return reset($values);
+    return \reset($values);
 }

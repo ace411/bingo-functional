@@ -51,7 +51,7 @@ function bind(callable $function, Monadic $value = null): Monadic
 {
     return A\curry(function ($function, $value) {
         return $value->bind($function);
-    })(...func_get_args());
+    })(...\func_get_args());
 }
 
 /**
@@ -72,7 +72,7 @@ function foldM(callable $function, array $list, $acc): Monadic
     $monad = $function($acc, A\head($list));
 
     $fold = function ($acc, $collection) use (&$fold, $monad, $function) {
-        if (count($collection) == 0) {
+        if (\count($collection) == 0) {
             return $monad::of($acc);
         }
         $tail = A\tail($collection);
@@ -102,7 +102,7 @@ function filterM(callable $function, array $list): Monadic
     $monad = $function(A\head($list));
 
     $filter = function ($collection) use (&$filter, $function, $monad) {
-        if (count($collection) == 0) {
+        if (\count($collection) == 0) {
             return $monad::of([]);
         }
         $tail = A\tail($collection);
@@ -111,7 +111,7 @@ function filterM(callable $function, array $list): Monadic
         return $function($head)->bind(function ($result) use ($tail, $monad, $head, $filter) {
             return $filter($tail)->bind(function ($ret) use ($result, $head, $monad) {
                 if ($result) {
-                    array_unshift($ret, $head);
+                    \array_unshift($ret, $head);
                 }
                 return $monad::of($ret);
             });

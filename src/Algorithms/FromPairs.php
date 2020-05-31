@@ -17,7 +17,7 @@ function fromPairs(array $collection): array
 {
     $pairs = map(
         function ($value) {
-            list($key, $val) = is_array($value) && count($value) == 2 ?
+            list($key, $val) = \is_array($value) && \count($value) == 2 ?
                 $value :
                 [null, null];
 
@@ -26,5 +26,5 @@ function fromPairs(array $collection): array
         $collection
     );
 
-    return array_merge(...$pairs);
+    return \array_merge(...$pairs);
 }

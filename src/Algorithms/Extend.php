@@ -19,7 +19,7 @@ function extend(array ...$lists): array
 
     foreach ($lists as $list) {
         foreach ($list as $key => $val) {
-            if (is_string($key)) {
+            if (\is_string($key)) {
                 $ret[$key] = $val;
             } else {
                 $ret[] = $val;

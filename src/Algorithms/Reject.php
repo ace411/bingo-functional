@@ -19,13 +19,13 @@ function reject(callable $func, $collection): array
 {
     return _fold(function ($acc, $val, $idx) use ($func) {
         if (!$func($val)) {
-            if (is_object($acc)) {
+            if (\is_object($acc)) {
                 $acc->{$idx} = $val;
             } else {
                 $acc[$idx] = $val;
             }
         } else {
-            if (is_object($acc)) {
+            if (\is_object($acc)) {
                 unset($acc->{$idx});
             } else {
                 unset($acc[$idx]);

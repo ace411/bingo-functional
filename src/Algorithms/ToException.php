@@ -23,7 +23,7 @@ function toException(callable $func, callable $handler = null): callable
                 $handler($exception) :
                 $exception->getMessage();
         } finally {
-            restore_error_handler();
+            \restore_error_handler();
         }
     };
 }

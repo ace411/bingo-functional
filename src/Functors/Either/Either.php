@@ -54,24 +54,24 @@ abstract class Either implements M\Monadic
     {
         return function () use ($function, $left) {
             if (
-                array_reduce(
-                    func_get_args($function),
+                \array_reduce(
+                    \func_get_args($function),
                     function (bool $status, Either $val) {
                         return $val->isLeft() ? false : $status;
                     },
                     true
                 )
             ) {
-                $args = array_map(
+                $args = \array_map(
                     function (Either $either) {
                         return $either
                             ->orElse(Either::right(null))
                             ->getRight();
                     },
-                    func_get_args()
+                    \func_get_args()
                 );
 
-                return self::right(call_user_func($function, ...$args));
+                return self::right(\call_user_func($function, ...$args));
             }
 
             return $left;

@@ -18,7 +18,7 @@ function renameKeys(array $list, array $keyPair): array
 {
     foreach ($list as $key => $val) {
         foreach ($keyPair as $_key => $_val) {
-            if (key_exists($_key, $list)) {
+            if (\key_exists($_key, $list)) {
                 $list[$_val] = $list[$_key];
                 unset($list[$_key]);
             }

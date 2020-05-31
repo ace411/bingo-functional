@@ -18,8 +18,8 @@ const filterDeep = 'Chemem\\Bingo\\Functional\\Algorithms\\filterDeep';
 function filterDeep(callable $function, array $values): array
 {
     return _fold(function ($acc, $val, $idx) use ($function) {
-        $acc[$idx] = is_array($val) ? 
-            filterDeep($function, $val) : 
+        $acc[$idx] = \is_array($val) ?
+            filterDeep($function, $val) :
             head(filter($function, [$val]));
 
         if ($acc[$idx] == null) {

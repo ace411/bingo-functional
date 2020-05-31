@@ -17,13 +17,13 @@ const map = 'Chemem\\Bingo\\Functional\\Algorithms\\map';
 
 function map(callable $func, $collection)
 {
-	return _fold(function ($acc, $val, $idx) use ($func) {
-		if (is_object($acc)) {
-			$acc->{$idx} = $func($val);
-		} else {
-			$acc[$idx] = $func($val);
-		}
+    return _fold(function ($acc, $val, $idx) use ($func) {
+        if (\is_object($acc)) {
+            $acc->{$idx} = $func($val);
+        } else {
+            $acc[$idx] = $func($val);
+        }
 
-		return $acc;
-	}, $collection, $collection);
+        return $acc;
+    }, $collection, $collection);
 }

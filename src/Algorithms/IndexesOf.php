@@ -18,7 +18,7 @@ const indexesOf = __NAMESPACE__ . '\\indexesOf';
 function indexesOf(array $collection, $value): array
 {
     return _fold(function ($acc, $val, $idx) use ($value) {
-        if (is_array($val)) {
+        if (\is_array($val)) {
             $acc[] = indexesOf($val, $value);
         }
 

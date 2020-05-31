@@ -34,8 +34,8 @@ function foldRight(callable $func, $collection, $acc)
 {
     return _fold(
         $func,
-        array_reverse(is_object($collection) ? \get_object_vars($collection) : $collection),
-        $acc  
+        \array_reverse(\is_object($collection) ? \get_object_vars($collection) : $collection),
+        $acc
     );
 }
 

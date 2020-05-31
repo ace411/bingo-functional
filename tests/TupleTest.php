@@ -9,7 +9,7 @@ class TupleTest extends \PHPUnit\Framework\TestCase
     {
         return [
             [
-                range(1, 5),
+                \range(1, 5),
                 [2, 4]
             ]
         ];

@@ -26,7 +26,7 @@ class IOMonadTest extends \PHPUnit\Framework\TestCase
     {
         $apply = IO::of(function () {
             return function ($val) {
-                return strtoupper($val);
+                return \strtoupper($val);
             };
         })
             ->ap(IO::of('foo'))
@@ -62,7 +62,7 @@ class IOMonadTest extends \PHPUnit\Framework\TestCase
             return 'FOO';
         })
             ->bind(function (string $txt) {
-                return IO::of(strtoupper($txt));
+                return IO::of(\strtoupper($txt));
             });
 
         $this->assertInstanceOf(IO::class, $io);
@@ -71,7 +71,7 @@ class IOMonadTest extends \PHPUnit\Framework\TestCase
     public function testBindMethodPerformsMapOperation()
     {
         $io = IO::of(function () {
-            return range(1, 5);
+            return \range(1, 5);
         })
             ->bind(function ($ints) {
                 return IO::of(reduce(function ($acc, $val) {
@@ -132,7 +132,7 @@ class IOMonadTest extends \PHPUnit\Framework\TestCase
 
     public function testReadFileOutputsFileContents()
     {
-        $file = readfile(concat('/', dirname(__DIR__), 'io.test.txt'));
+        $file = readfile(concat('/', \dirname(__DIR__), 'io.test.txt'));
 
         $this->assertInstanceOf(IO::class, $file);
         $this->assertInternalType('string', $file->exec());

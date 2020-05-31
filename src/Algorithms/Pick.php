@@ -17,11 +17,11 @@ const pick = 'Chemem\\Bingo\\Functional\\Algorithms\\pick';
 
 function pick($values, $search, $default = null)
 {
-  return _fold(function ($acc, $val) use ($search) {
-		if ($search == $val) {
-			$acc = $val;
-		}
+    return _fold(function ($acc, $val) use ($search) {
+        if ($search == $val) {
+            $acc = $val;
+        }
 
-		return $acc;
-	}, $values, $default);
+        return $acc;
+    }, $values, $default);
 }

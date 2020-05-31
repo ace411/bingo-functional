@@ -94,7 +94,7 @@ class PatternMatchTest extends TestCase
             PM\evalArrayPattern,
             [
                 '["foo", "bar", baz]' => function ($baz) {
-                    return strtoupper($baz);
+                    return \strtoupper($baz);
                 },
                 '["foo", "bar"]' => function () {
                     return 'foo-bar';
@@ -115,7 +115,7 @@ class PatternMatchTest extends TestCase
         $pattern = PM\patternMatch(
             [
                 '"foo"' => function () {
-                    $val = strtoupper('FOO');
+                    $val = \strtoupper('FOO');
 
                     return $val;
                 },
@@ -179,7 +179,7 @@ class PatternMatchTest extends TestCase
 
     public function testLetInDestructuresByPatternMatching()
     {
-        $list = range(1, 10);
+        $list = \range(1, 10);
         $let  = PM\letIn('[a, b, c, _]', $list);
         $_in  = $let(['c'], function (int $c) {
             return $c * 10;

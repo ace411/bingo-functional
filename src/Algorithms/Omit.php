@@ -16,11 +16,11 @@ const omit = 'Chemem\\Bingo\\Functional\\Algorithms\\omit';
 
 function omit(array $collection, ...$keys): array
 {
-  return _fold(function ($acc, $val, $idx) use ($keys) {
-		if (!in_array($idx, $keys)) {
-			$acc[$idx] = $val;
-		}
+    return _fold(function ($acc, $val, $idx) use ($keys) {
+        if (!\in_array($idx, $keys)) {
+            $acc[$idx] = $val;
+        }
 
-		return $acc;
-	}, $collection, []);
+        return $acc;
+    }, $collection, []);
 }
