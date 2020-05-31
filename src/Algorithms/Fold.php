@@ -3,7 +3,7 @@
 /**
  * fold function.
  *
- * fold :: (a -> b) -> [a] -> a
+ * fold :: (a -> b -> a) -> a -> [b] -> a
  *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
@@ -11,40 +11,38 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 const fold = 'Chemem\\Bingo\\Functional\\Algorithms\\fold';
 
-function fold(callable $func, array $collection, $acc)
+function fold(callable $func, $collection, $acc)
 {
-    foreach ($collection as $index => $value) {
-        $acc = $func($acc, $value);
-    }
-
-    return $acc;
+    return _fold($func, $collection, $acc);
 }
 
 /**
  * foldRight function.
  *
- * foldRight :: (a -> b) -> [a] -> a
+ * foldRight :: (a -> b -> a) -> a -> [b] -> a
  *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
  */
 const foldRight = 'Chemem\\Bingo\\Functional\\Algorithms\\foldRight';
 
-function foldRight(callable $func, array $collection, $acc)
+function foldRight(callable $func, $collection, $acc)
 {
-    foreach (array_reverse($collection) as $index => $value) {
-        $acc = $func($acc, $value);
-    }
-
-    return $acc;
+    return _fold(
+        $func,
+        array_reverse(is_object($collection) ? \get_object_vars($collection) : $collection),
+        $acc  
+    );
 }
 
 /**
  * reduceRight function.
  *
- * foldRight :: (a -> b) -> [a] -> a
+ * foldRight :: (a -> b -> a) -> a -> [b] -> a
  *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
@@ -59,7 +57,7 @@ function reduceRight(callable $func, array $collection, $acc)
 /**
  * reduce function.
  *
- * reduce :: (a -> b) -> [a] -> a
+ * reduce :: (a -> b -> a) -> a -> [b] -> a
  *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0

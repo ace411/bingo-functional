@@ -11,20 +11,17 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 const pick = 'Chemem\\Bingo\\Functional\\Algorithms\\pick';
 
 function pick($values, $search, $default = null)
 {
-    $acc = [];
+  return _fold(function ($acc, $val) use ($search) {
+		if ($search == $val) {
+			$acc = $val;
+		}
 
-    foreach ($values as $idx => $item) {
-        if (is_array($values) && ($item == $search)) {
-            $acc[] = $item;
-        } elseif (is_object($values) && ($values->{$idx} == $search)) {
-            $acc[] = $item;
-        }
-    }
-    $result = head($acc);
-
-    return is_null($result) ? $default : $result;
+		return $acc;
+	}, $values, $default);
 }

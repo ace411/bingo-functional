@@ -11,20 +11,21 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 const indexesOf = __NAMESPACE__ . '\\indexesOf';
 
 function indexesOf(array $collection, $value): array
 {
-    $indexes = [];
-    foreach ($collection as $idx => $val) {
-        if (!is_array($val)) {
-            if ($val === $value) {
-                $indexes[] = $idx;
-            }
-        } else {
-            $indexes[] = indexesOf($val, $value);
+    return _fold(function ($acc, $val, $idx) use ($value) {
+        if (is_array($val)) {
+            $acc[] = indexesOf($val, $value);
         }
-    }
 
-    return flatten($indexes);
+        if ($val == $value) {
+            $acc[] = $idx;
+        }
+
+        return flatten($acc);
+    }, $collection, []);
 }

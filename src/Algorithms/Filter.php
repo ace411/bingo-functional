@@ -11,45 +11,27 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 const filter = 'Chemem\\Bingo\\Functional\\Algorithms\\filter';
 
-function filter(callable $func, array $collection): array
+function filter(callable $func, $collection)
 {
-    $acc = [];
-
-    foreach ($collection as $index => $value) {
-        if ($func($value)) {
-            $acc[$index] = $value;
+    return _fold(function ($acc, $val, $idx) use ($func) {
+        if ($func($val)) {
+            if (is_object($acc)) {
+                $acc->{$idx} = $val;
+            } else {
+                $acc[$idx] = $val;
+            }
+        } else {
+            if (is_object($acc)) {
+                unset($acc->{$idx});
+            } else {
+                unset($acc[$idx]);
+            }
         }
-    }
 
-    return $acc;
-}
-
-const filterT = __NAMESPACE__ . '\\filterT';
-
-/**
- * filterT function
- * 
- * filterT :: [a] -> (a -> Bool) -> Bool -> Bool
- * 
- * @author Lochemem Bruno Michael
- * @license Apache-2.0
- */
-function filterT(
-    array $collection, 
-    callable $func, 
-    bool $every = true
-): bool
-{
-    $listCount  = count($collection);
-    $filter     = compose(partial(filter, $func), function (array $result) use (
-        $every, 
-        $listCount
-    ): bool {
-        $resCount = count($result);
-        return $every ? $listCount === $resCount : $resCount >= 1;
-    });
-
-    return $filter($collection);
+        return $acc;
+    }, $collection, $collection);
 }

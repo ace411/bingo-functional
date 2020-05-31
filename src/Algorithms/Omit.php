@@ -10,19 +10,17 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 const omit = 'Chemem\\Bingo\\Functional\\Algorithms\\omit';
 
 function omit(array $collection, ...$keys): array
 {
-    $diff = array_diff(array_keys($collection), $keys);
+  return _fold(function ($acc, $val, $idx) use ($keys) {
+		if (!in_array($idx, $keys)) {
+			$acc[$idx] = $val;
+		}
 
-    return fold(
-        function ($acc, $val) use ($collection) {
-            $acc[$val] = $collection[$val];
-
-            return $acc;
-        },
-        $diff,
-        identity([])
-    );
+		return $acc;
+	}, $collection, []);
 }

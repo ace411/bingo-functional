@@ -11,11 +11,13 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_partial;
+
 const partialLeft = 'Chemem\\Bingo\\Functional\\Algorithms\\partialLeft';
 
 function partialLeft(callable $func, ...$args)
 {
-    return partialT($func, $args);
+    return _partial($func, $args);
 }
 
 const partial = 'Chemem\\Bingo\\Functional\\Algorithms\\partial';
@@ -25,30 +27,3 @@ function partial(callable $func, ...$args)
     return partialLeft($func, ...$args);
 }
 
-function partialT(callable $func, array $args, bool $left = true)
-{
-    $argCount   = (new \ReflectionFunction($func))
-        ->getNumberOfRequiredParameters();
-
-    $acc        = function (...$inner) use (&$acc, $func, $argCount, $left) {
-        return function (...$innermost) use (
-            $inner, 
-            $acc, 
-            $func, 
-            $left, 
-            $argCount
-        ) {
-            $final = $left ? 
-                array_merge($inner, $innermost) : 
-                array_merge(array_reverse($innermost), array_reverse($inner));
-
-            if ($argCount <= count($final)) {
-                return $func(...$final);
-            }
-
-            return $acc(...$final);
-        };
-    }; 
-
-    return $acc(...$args);
-}
