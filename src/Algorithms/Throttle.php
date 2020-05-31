@@ -18,6 +18,6 @@ function throttle(callable $function, int $timeout): callable
     sleep($timeout);
 
     return function (...$args) use ($function) {
-        return call_user_func_array($function, $args);
+        return $function(...$args);
     };
 }
