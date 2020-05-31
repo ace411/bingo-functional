@@ -573,8 +573,12 @@ class AlgorithmTest extends TestCase
             return $val > 5;
         }, [1, 2, [3, 4], [5, [6, 7, 99]]]);
 
-        $this->assertEquals([6, 7, 99], $filter);
         $this->assertInternalType('array', $filter);
+        $this->assertEquals([
+            3 => [
+                1 => [6, 7, 99]
+            ]
+        ], $filter);
     }
 
     public function testOmitFunctionOutputsArrayWithoutSpecifiedKeys()

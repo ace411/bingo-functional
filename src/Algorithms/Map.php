@@ -11,15 +11,19 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 const map = 'Chemem\\Bingo\\Functional\\Algorithms\\map';
 
-function map(callable $func, array $collection): array
+function map(callable $func, $collection)
 {
-    $acc = [];
+	return _fold(function ($acc, $val, $idx) use ($func) {
+		if (is_object($acc)) {
+			$acc->{$idx} = $func($val);
+		} else {
+			$acc[$idx] = $func($val);
+		}
 
-    foreach ($collection as $index => $value) {
-        $acc[$index] = $func($value);
-    }
-
-    return $acc;
+		return $acc;
+	}, $collection, $collection);
 }

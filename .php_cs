@@ -11,8 +11,12 @@ $finder = Finder::create()
 
 return Config::create()
   ->setRules([
-    '@PSR2'                   => true,
-    'binary_operator_spaces'  => [
+    '@PSR2'                       => true,
+    'no_unused_imports'           => true,
+    'native_function_invocation'  => [
+      'include' => ['@internal'],
+    ],
+    'binary_operator_spaces'      => [
       'align_double_arrow'  => true,
       'align_equals'        => true,
     ]

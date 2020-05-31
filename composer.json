@@ -142,7 +142,8 @@
             "src/Functors/Either/functions.php",
             "src/Functors/Maybe/functions.php",
             "src/Functors/Applicatives/Applicative/functions.php",
-            "src/PatternMatching/functions.php"
+            "src/PatternMatching/functions.php",
+            "src/Algorithms/Internal/functions.php"
         ]
     },
     "autoload-dev": {

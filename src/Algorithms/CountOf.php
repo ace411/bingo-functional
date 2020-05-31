@@ -2,6 +2,8 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 /**
  *
  * countOfValue function
@@ -14,16 +16,16 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const countOfValue = __NAMESPACE__ . '\\countOfValue';
 
-function countOfValue(array $list, $value): int
+function countOfValue($list, $value): int
 {
-    $count = 0;
-    foreach ($list as $val) {
-        $count += is_array($val) ?
-            countOfValue($val, $value) :
-            ($val == $value ? 1 : 0);
-    }
+    return _fold(function ($acc, $val) use ($value) {
+        if (is_array($val)) {
+            $acc += countOfValue($val, $value);
+        }
 
-    return $count;
+        $acc += ($val == $value);
+        return $acc;
+    }, $list, 0);
 }
 
 /**
@@ -38,14 +40,17 @@ function countOfValue(array $list, $value): int
 
 const countOfKey = __NAMESPACE__ . '\\countOfKey';
 
-function countOfKey(array $list, string $skey): int
+function countOfKey($list, $key): int
 {
-    $count = 0;
-    foreach ($list as $key => $val) {
-        $count += is_array($val) ?
-            countOfKey($val, $skey) :
-            ($key == $skey ? 1 : 0);
-    }
+    return _fold(function ($acc, $val, $idx) use ($key) {
+        if (is_array($val)) {
+            $acc += countOfKey($val, $key);
+        }
 
-    return $count;
+        $acc += is_string($key) ? 
+            ((string) $idx == $key ? 1 : 0) : 
+            ($idx == $key ? 1 : 0);
+        
+        return $acc;
+    }, $list, 0);
 }
