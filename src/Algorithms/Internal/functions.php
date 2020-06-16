@@ -146,3 +146,37 @@ function _partial(callable $func, array $args, bool $left = true)
 }
 
 const _partial = __NAMESPACE__ . '\\_partial';
+
+/**
+ * _curryN
+ * 
+ * _curryN :: Int -> (a, (b)) -> Bool -> (b)
+ * 
+ * @param int $argCount
+ * @param callable $function
+ * @param bool $left
+ */
+function _curryN(int $argCount, callable $function, bool $left = true)
+{
+    $acc = function ($args) use ($argCount, $function, $left, &$acc) {
+        return function (...$inner) use (
+            $argCount,
+            $function, 
+            $args, 
+            $left,  
+            $acc
+        ) {
+            $final = \array_merge($args, $inner);
+            if ($argCount <= \count($final)) {
+                return $function(...($left ? $final : \array_reverse($final)));
+            }
+
+            return $acc($final);
+        };
+    };
+
+
+    return $acc([]);
+}
+
+const _curryN = __NAMESPACE__ . '\\_curryN';
