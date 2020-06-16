@@ -405,3 +405,63 @@
 - implode()
 
 - offsetGet()
+
+## v1.13.0
+
+- Modified `putStr`, `getLine`, `putStrLn`, `putChar` IO helper functions
+
+- Added default values to `pick` and `pluck` functions
+
+- Added internal functions namespaced under `Chemem\Bingo\Functional\Algorithms\Internal`
+
+- Modified functions to work on objects as well as hashtables
+
+- Added a Tuple immutable structure
+
+- Replaced original pattern-matching algorithm with that in the [`functional-php/pattern-matching`](https://github.com/functional-php/pattern-matching) library
+
+- Added new helper functions
+
+- Jettisoned docs folder. Moved docs site to [new address](https://bingo-functional-docs.now.sh/)
+
+### New Helper Functions
+
+- intersperse()
+
+- difference()
+
+- countOfKey()
+
+- countOfValue()
+
+- renameKeys()
+
+### Modified functions
+
+- map()
+
+- filter()
+
+- fold()
+
+- reject()
+
+- pluck()
+
+- pick()
+
+- any()
+
+- every()
+
+- partial()
+
+- partialRight()
+
+- dropLeft()
+
+- dropRight()
+
+- mapDeep()
+
+- filterDeep()
