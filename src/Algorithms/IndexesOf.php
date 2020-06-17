@@ -15,10 +15,10 @@ use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
 
 const indexesOf = __NAMESPACE__ . '\\indexesOf';
 
-function indexesOf(array $collection, $value): array
+function indexesOf($list, $value)
 {
     return _fold(function ($acc, $val, $idx) use ($value) {
-        if (\is_array($val)) {
+        if (\is_array($val) || \is_object($val)) {
             $acc[] = indexesOf($val, $value);
         }
 
@@ -27,5 +27,5 @@ function indexesOf(array $collection, $value): array
         }
 
         return flatten($acc);
-    }, $collection, []);
+    }, $list, []);
 }

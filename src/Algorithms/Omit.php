@@ -14,13 +14,23 @@ use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
 
 const omit = 'Chemem\\Bingo\\Functional\\Algorithms\\omit';
 
-function omit(array $collection, ...$keys): array
+function omit($list, ...$keys)
 {
     return _fold(function ($acc, $val, $idx) use ($keys) {
         if (!\in_array($idx, $keys)) {
-            $acc[$idx] = $val;
+            if (\is_object($acc)) {
+                $acc->{$idx} = $val;
+            } elseif (\is_array($acc)) {
+                $acc[$idx] = $val;
+            }
+        } else {
+            if (\is_object($acc)) {
+                unset($acc->{$idx});
+            } elseif (\is_array($acc)) {
+                unset($acc[$idx]);
+            }
         }
 
         return $acc;
-    }, $collection, []);
+    }, $list, $list);
 }

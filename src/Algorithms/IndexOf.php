@@ -15,7 +15,7 @@ use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
 
 const indexOf = 'Chemem\\Bingo\\Functional\\Algorithms\\indexOf';
 
-function indexOf($collection, $value, $default = null)
+function indexOf($list, $value, $default = null)
 {
     return _fold(function ($acc, $val, $idx) use ($value) {
         if ($val === $value) {
@@ -23,5 +23,5 @@ function indexOf($collection, $value, $default = null)
         }
 
         return $acc;
-    }, $collection, $default);
+    }, $list, $default);
 }

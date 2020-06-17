@@ -13,11 +13,11 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const fill = 'Chemem\\Bingo\\Functional\\Algorithms\\fill';
 
-function fill(array $collection, $value, int $start, int $end): array
+function fill(array $list, $value, int $start, int $end): array
 {
-    foreach ($collection as $index => $val) {
-        $collection[$index] = $index >= $start && $index <= $end ? $value : $val;
+    foreach ($list as $index => $val) {
+        $list[$index] = $index >= $start && $index <= $end ? $value : $val;
     }
 
-    return $collection;
+    return $list;
 }

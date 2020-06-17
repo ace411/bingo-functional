@@ -15,7 +15,7 @@ use function Chemem\Bingo\Functional\Algorithms\Internal\_drop;
 
 const dropLeft = __NAMESPACE__ . '\\dropLeft';
 
-function dropLeft(array $collection, int $number = 1): array
+function dropLeft(array $list, int $number = 1): array
 {
-    return _drop($collection, $number);
+    return _drop($list, $number);
 }

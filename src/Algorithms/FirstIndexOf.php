@@ -13,9 +13,9 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const firstIndexOf = __NAMESPACE__ . '\\firstIndexOf';
 
-function firstIndexOf(array $collection, $value)
+function firstIndexOf($list, $value)
 {
-    $func = compose(partial(indexesOf, $collection), head);
+    $func = compose(partial(indexesOf, $list), head);
 
     return $func($value);
 }

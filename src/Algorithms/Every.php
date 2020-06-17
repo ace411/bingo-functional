@@ -15,7 +15,7 @@ use function Chemem\Bingo\Functional\Algorithms\Internal\_anyEvery;
 
 const every = 'Chemem\\Bingo\\Functional\\Algorithms\\every';
 
-function every(array $collection, callable $func): bool
+function every($list, callable $func): bool
 {
-    return _anyEvery($func, $collection);
+    return _anyEvery($func, $list);
 }
