@@ -18,7 +18,7 @@ const fromPairs = 'Chemem\\Bingo\\Functional\\Algorithms\\fromPairs';
 function fromPairs($list)
 {
     return _fold(function ($acc, $val) {
-        if (\is_array($val) && count($val) == 2) {
+        if (\is_array($val) && \count($val) == 2) {
             $acc[head($val)] = last($val);
         }
 
