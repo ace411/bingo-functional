@@ -327,9 +327,9 @@ class AlgorithmTest extends TestCase
 
     public function testFlattenFunctionLowersArrayDimensionsByOneLevel()
     {
-        $collection = [['foo', 'bar'], 1, 2, 3];
+        $list = [['foo', 'bar'], 1, 2, 3];
 
-        $flattened = A\flatten($collection);
+        $flattened = A\flatten($list);
 
         $this->assertEquals(['foo', 'bar', 1, 2, 3], $flattened);
     }

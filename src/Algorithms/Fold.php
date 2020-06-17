@@ -15,9 +15,9 @@ use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
 
 const fold = 'Chemem\\Bingo\\Functional\\Algorithms\\fold';
 
-function fold(callable $func, $collection, $acc)
+function fold(callable $func, $list, $acc)
 {
-    return _fold($func, $collection, $acc);
+    return _fold($func, $list, $acc);
 }
 
 /**
@@ -30,11 +30,11 @@ function fold(callable $func, $collection, $acc)
  */
 const foldRight = 'Chemem\\Bingo\\Functional\\Algorithms\\foldRight';
 
-function foldRight(callable $func, $collection, $acc)
+function foldRight(callable $func, $list, $acc)
 {
     return _fold(
         $func,
-        \array_reverse(\is_object($collection) ? \get_object_vars($collection) : $collection),
+        \array_reverse(\is_object($list) ? \get_object_vars($list) : $list),
         $acc
     );
 }
@@ -49,9 +49,9 @@ function foldRight(callable $func, $collection, $acc)
  */
 const reduceRight = 'Chemem\\Bingo\\Functional\\Algorithms\\reduceRight';
 
-function reduceRight(callable $func, array $collection, $acc)
+function reduceRight(callable $func, array $list, $acc)
 {
-    return foldRight($func, $collection, $acc);
+    return foldRight($func, $list, $acc);
 }
 
 /**
@@ -64,7 +64,7 @@ function reduceRight(callable $func, array $collection, $acc)
  */
 const reduce = 'Chemem\\Bingo\\Functional\\Algorithms\\reduce';
 
-function reduce(callable $func, array $collection, $acc)
+function reduce(callable $func, array $list, $acc)
 {
-    return fold($func, $collection, $acc);
+    return fold($func, $list, $acc);
 }

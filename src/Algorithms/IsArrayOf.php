@@ -13,9 +13,9 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const isArrayOf = 'Chemem\\Bingo\\Functional\\Algorithms\\isArrayOf';
 
-function isArrayOf(array $collection): string
+function isArrayOf(array $list): string
 {
-    $types = \array_unique(map('gettype', $collection));
+    $types = \array_unique(map('gettype', $list));
 
     return \count($types) > 1 ? 'mixed' : head($types);
 }
