@@ -19,7 +19,7 @@ const countOfValue = __NAMESPACE__ . '\\countOfValue';
 function countOfValue($list, $value): int
 {
     return _fold(function ($acc, $val) use ($value) {
-        if (\is_array($val)) {
+        if (\is_array($val) || \is_object($val)) {
             $acc += countOfValue($val, $value);
         }
 
@@ -43,7 +43,7 @@ const countOfKey = __NAMESPACE__ . '\\countOfKey';
 function countOfKey($list, $key): int
 {
     return _fold(function ($acc, $val, $idx) use ($key) {
-        if (\is_array($val)) {
+        if (\is_array($val) || \is_object($val)) {
             $acc += countOfKey($val, $key);
         }
 

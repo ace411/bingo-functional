@@ -15,7 +15,7 @@ use function Chemem\Bingo\Functional\Algorithms\Internal\_anyEvery;
 
 const any = 'Chemem\\Bingo\\Functional\\Algorithms\\any';
 
-function any(array $collection, callable $func): bool
+function any($list, callable $func): bool
 {
-    return _anyEvery($func, $collection, false);
+    return _anyEvery($func, $list, false);
 }

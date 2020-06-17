@@ -13,9 +13,9 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const min = 'Chemem\\Bingo\\Functional\\Algorithms\\min';
 
-function min(array $collection): float
+function min(array $list): float
 {
     return fold(function (float $acc, float $val) {
         return $val < $acc ? $val : $acc;
-    }, $collection, head($collection));
+    }, $list, head($list));
 }

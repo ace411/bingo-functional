@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const head = 'Chemem\\Bingo\\Functional\\Algorithms\\head';
 
-function head(array $values)
+function head($list)
 {
-    return \reset($values);
+    return \reset($list);
 }
