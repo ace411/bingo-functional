@@ -45,7 +45,7 @@ const getChar = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\getChar';
 function getChar(string $str = null): IOMonad
 {
     $count = 0;
-    return _readline($str, function ($ret) use ($count) {
+    return _readline($str, function ($_) use ($count) {
         $count += 1;
 
         return $count === 1;

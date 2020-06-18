@@ -192,8 +192,8 @@ class PatternMatchTest extends TestCase
     public function testLetInFunctionAcceptsWildcardParameters()
     {
         $let    = PM\letIn('[a, _, (x:xs)]', [1, 'foo', [3, 9]]);
-        $in     = $let(['x', 'xs'], function (int $x, array $xs) {
-            return A\head($xs) / $x;
+        $in     = $let(['x', 'xs'], function (int $fst, array $snd) {
+            return A\head($snd) / $fst;
         });
 
         $this->assertEquals(3, $in);
