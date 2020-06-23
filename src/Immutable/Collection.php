@@ -224,7 +224,18 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
      */
     public function any(callable $func): bool
     {
-        return $this->filter($func)->getSize() >= 1 ? true : false;
+        $list   = $this->getList();
+        $size   = $list->count();
+        $result = false;
+
+        for ($idx = 0; $idx < $size; $idx += 1) {
+            if ($func($list[$idx])) {
+                $result = true;
+                break;
+            }
+        }
+
+        return $result;
     }
 
     /**
@@ -232,9 +243,7 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
      */
     public function every(callable $func): bool
     {
-        $init = $this->getSize();
-
-        return $this->filter($func)->getSize() == $init ? true : false;
+        return $this->reject($func)->getSize() == 0;
     }
 
     /**
