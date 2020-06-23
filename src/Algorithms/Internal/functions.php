@@ -26,36 +26,6 @@ function _count($list)
 const _count = __NAMESPACE__ . '\\count';
 
 /**
- * _anyEvery
- *
- * _anyEvery :: (a -> Bool) -> [a] -> Bool -> Bool
- *
- * @param callable $func
- * @param mixed $list
- * @param bool $every
- */
-function _anyEvery(
-    callable $func,
-    $list,
-    bool $every = true
-) {
-    $listCount = _count($list);
-
-    $filter = a\compose(
-        a\partial(a\filter, $func),
-        function ($res) use ($every, $listCount) {
-            $resCount = _count($res);
-
-            return $every ? $listCount == $resCount : $resCount >= 1;
-        }
-    );
-
-    return $filter($list);
-}
-
-const _anyEvery = __NAMESPACE__ . '\\_anyEvery';
-
-/**
  * _drop
  *
  * _drop :: [a, b] -> Int -> Bool -> [b]

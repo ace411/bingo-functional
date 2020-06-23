@@ -17,5 +17,5 @@ const every = 'Chemem\\Bingo\\Functional\\Algorithms\\every';
 
 function every($list, callable $func): bool
 {
-    return _anyEvery($func, $list);
+    return count(reject($func, $list)) == 0;
 }

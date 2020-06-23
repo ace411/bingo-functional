@@ -17,5 +17,13 @@ const any = 'Chemem\\Bingo\\Functional\\Algorithms\\any';
 
 function any($list, callable $func): bool
 {
-    return _anyEvery($func, $list, false);
+    $result = false;
+    foreach ($list as $idx => $val) {
+        if ($func($val)) {
+            $result = true;
+            break;
+        }
+    }
+
+    return $result;
 }
