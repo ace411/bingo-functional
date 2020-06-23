@@ -11,8 +11,6 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-use function Chemem\Bingo\Functional\Algorithms\Internal\_anyEvery;
-
 const any = 'Chemem\\Bingo\\Functional\\Algorithms\\any';
 
 function any($list, callable $func): bool
