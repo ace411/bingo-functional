@@ -414,7 +414,15 @@
 
 - Added internal functions namespaced under `Chemem\Bingo\Functional\Algorithms\Internal`
 
-- Modified functions to work on objects as well as hashtables
+- Modified some list/collection primitives to work on objects as well as hashtables
+
+- Infused Collection with Transient properties
+
+- Added `mergeN()` Collection method
+
+- Modified `any()` and `every()` Collection methods
+
+- Added `ImmutableDataStructure` and `ImmutableList` interfaces
 
 - Added a Tuple immutable structure
 
@@ -455,6 +463,14 @@
 - every()
 
 - partial()
+
+- indexOf()
+
+- indexesOf()
+
+- addKeys()
+
+- omit()
 
 - partialRight()
 
