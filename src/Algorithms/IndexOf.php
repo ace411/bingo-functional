@@ -11,19 +11,17 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 const indexOf = 'Chemem\\Bingo\\Functional\\Algorithms\\indexOf';
 
-function indexOf(array $collection, $value, int $fromIndex = 0)
+function indexOf($list, $value, $default = null)
 {
-    $indexFn = function ($valIndex) use ($value, $fromIndex, $collection) {
-        foreach ($collection as $index => $val) {
-            if ($val == $value) {
-                $valIndex = $index;
-            }
+    return _fold(function ($acc, $val, $idx) use ($value) {
+        if ($val === $value) {
+            $acc = $idx;
         }
 
-        return $valIndex;
-    };
-
-    return $indexFn(isArrayOf($collection) == 'string' ? identity('') : identity($fromIndex));
+        return $acc;
+    }, $list, $default);
 }

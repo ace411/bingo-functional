@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const last = 'Chemem\\Bingo\Functional\\Algorithms\\last';
 
-function last(array $collection)
+function last($list)
 {
-    return end($collection);
+    return \end($list);
 }

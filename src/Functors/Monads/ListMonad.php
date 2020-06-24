@@ -44,7 +44,7 @@ class ListMonad implements Monadic
      */
     public static function of($collection): self
     {
-        return new static(is_array($collection) ? $collection : [$collection]);
+        return new static(\is_array($collection) ? $collection : [$collection]);
     }
 
     /**
@@ -60,7 +60,7 @@ class ListMonad implements Monadic
 
         $result = compose(
             partialLeft(\Chemem\Bingo\Functional\Algorithms\filter, function ($val) {
-                return is_callable($val);
+                return \is_callable($val);
             }),
             partialLeft(
                 \Chemem\Bingo\Functional\Algorithms\map,

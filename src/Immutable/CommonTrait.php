@@ -20,11 +20,11 @@ trait CommonTrait
      * @access private
      */
     private $list;
-/**
-     * Immutable constructor
-     *
-     * @param array $list
-     */
+    /**
+         * Immutable constructor
+         *
+         * @param array $list
+         */
     public function __construct(\SplFixedArray $list)
     {
         $this->list = $list;
@@ -51,10 +51,9 @@ trait CommonTrait
         for (
             $idx = 0; $idx < $count; $idx++
         ) {
-            $item = $list[$idx];
-            $acc[] = is_array($item) ?
+            $item  = $list[$idx];
+            $acc[] = \is_array($item) ?
                 f\mapDeep(function ($val) use ($element): bool {
-
                     return $val == $element;
                 }, $item) :
                 $element == $item;
@@ -131,8 +130,7 @@ trait CommonTrait
     private static function checkContains(array $list): bool
     {
         $comp = f\compose(f\flatten, function (array $val) {
-
-            return in_array(true, $val);
+            return \in_array(true, $val);
         });
         return $comp($list);
     }

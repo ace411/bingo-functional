@@ -112,6 +112,6 @@ class Writer implements Monadic
      */
     public function run(): array
     {
-        return call_user_func($this->action);
+        return \call_user_func($this->action);
     }
 }

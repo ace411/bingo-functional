@@ -38,9 +38,9 @@ trait TransientMutator
      */
     public function triggerMutation(callable $fn)
     {
-        $new = clone $this;
+        $new          = clone $this;
         $new->mutable = true;
-        $new = call_user_func($fn, $new);
+        $new          = \call_user_func($fn, $new);
         $new->mutable = false;
 
         return $new;

@@ -23,41 +23,41 @@ interface ImmutableDataStructure
      * @return ImmutableDataStructure
      */
     public static function from(array $list): ImmutableDataStructure;
-/**
-     * contains method
-     *
-     * @method contains
-     *
-     * @param mixed element
-     *
-     * @return bool
-     */
+    /**
+         * contains method
+         *
+         * @method contains
+         *
+         * @param mixed element
+         *
+         * @return bool
+         */
     public function contains($element): bool;
-/**
-     * head method
-     *
-     * @method head
-     * @see https://ace411.github.io/bingo-functional/#/collection?id=head-function
-     *
-     * @return mixed
-     */
+    /**
+         * head method
+         *
+         * @method head
+         * @see https://ace411.github.io/bingo-functional/#/collection?id=head-function
+         *
+         * @return mixed
+         */
     public function head();
-/**
-     * tail method
-     *
-     * @method tail
-     * @see https://ace411.github.io/bingo-functional/#/collection?id=tail-function
-     *
-     * @return ImmutableDataStructure
-     */
+    /**
+         * tail method
+         *
+         * @method tail
+         * @see https://ace411.github.io/bingo-functional/#/collection?id=tail-function
+         *
+         * @return ImmutableDataStructure
+         */
     public function tail(): ImmutableDataStructure;
-/**
-     * last method
-     *
-     * @method last
-     * @see https://ace411.github.io/bingo-functional/#/collection?id=last-function
-     *
-     * @return mixed
-     */
+    /**
+         * last method
+         *
+         * @method last
+         * @see https://ace411.github.io/bingo-functional/#/collection?id=last-function
+         *
+         * @return mixed
+         */
     public function last();
 }

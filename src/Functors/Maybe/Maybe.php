@@ -67,22 +67,22 @@ abstract class Maybe implements M\Monadic
     {
         return function () use ($fn) {
             if (
-                array_reduce(
-                    func_get_args($fn),
+                \array_reduce(
+                    \func_get_args($fn),
                     function ($status, Maybe $val) {
                         return $val->isNothing() ? false : $status;
                     },
                     true
                 )
             ) {
-                $args = array_map(
+                $args = \array_map(
                     function (Maybe $maybe) {
                         return $maybe->getOrElse(null);
                     },
-                    func_get_args($fn)
+                    \func_get_args($fn)
                 );
 
-                return self::just(call_user_func($fn, ...$args));
+                return self::just(\call_user_func($fn, ...$args));
             }
 
             return self::nothing();

@@ -44,12 +44,12 @@ const liftA2 = 'Chemem\\Bingo\\Functional\\Functors\\Applicatives\\Applicative\\
 
 function liftA2(callable $function, App ...$values): App
 {
-    $args = array_map(
+    $args = \array_map(
         function (App $val) {
             return $val->getValue();
         },
         $values
     );
 
-    return pure(call_user_func_array($function, $args));
+    return pure(\call_user_func_array($function, $args));
 }

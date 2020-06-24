@@ -93,6 +93,6 @@ class State implements Monadic
      */
     public function run($state)
     {
-        return call_user_func($this->comp, $state);
+        return \call_user_func($this->comp, $state);
     }
 }

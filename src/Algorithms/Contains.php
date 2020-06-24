@@ -15,5 +15,5 @@ const contains = __NAMESPACE__ . '\\contains';
 
 function contains(string $haystack, string $needle): bool
 {
-    return strpos($haystack, $needle) !== false;
+    return \strpos($haystack, $needle) !== false;
 }

@@ -11,17 +11,21 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 const filter = 'Chemem\\Bingo\\Functional\\Algorithms\\filter';
 
-function filter(callable $func, array $collection): array
+function filter(callable $func, $list)
 {
-    $acc = [];
-
-    foreach ($collection as $index => $value) {
-        if ($func($value)) {
-            $acc[$index] = $value;
+    return _fold(function ($acc, $val, $idx) use ($func) {
+        if (!$func($val)) {
+            if (\is_object($acc)) {
+                unset($acc->{$idx});
+            } elseif (\is_array($acc)) {
+                unset($acc[$idx]);
+            }
         }
-    }
 
-    return $acc;
+        return $acc;
+    }, $list, $list);
 }

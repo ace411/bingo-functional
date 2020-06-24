@@ -106,5 +106,5 @@ function mapWriter(callable $function, WriterMonad $writer): WriterMonad
 {
     list($result, $output) = $function(runWriter($writer));
 
-    return writer($result, is_array($output) ? A\head($output) : $output);
+    return writer($result, \is_array($output) ? A\head($output) : $output);
 }

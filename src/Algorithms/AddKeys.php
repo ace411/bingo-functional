@@ -10,19 +10,21 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 const addKeys = 'Chemem\\Bingo\\Functional\\Algorithms\\addKeys';
 
-function addKeys(array $collection, ...$keys): array
+function addKeys($list, ...$keys)
 {
-    return fold(
-        function ($acc, $val) use ($collection) {
-            if (isset($collection[$val])) {
-                $acc[$val] = $collection[$val];
+    return _fold(function ($acc, $val, $idx) use ($keys) {
+        if (!\in_array($idx, $keys)) {
+            if (\is_object($acc)) {
+                unset($acc->{$idx});
+            } elseif (\is_array($acc)) {
+                unset($acc[$idx]);
             }
+        }
 
-            return $acc;
-        },
-        $keys,
-        identity([])
-    );
+        return $acc;
+    }, $list, $list);
 }

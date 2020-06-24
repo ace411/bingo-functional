@@ -3,7 +3,7 @@
 /**
  * DropRight function.
  *
- * dropRight :: [a, b] Int c -> [a]
+ * dropRight :: [a, b] -> Int -> [a]
  *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
@@ -11,15 +11,11 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_drop;
+
 const dropRight = 'Chemem\\Bingo\\Functional\\Algorithms\\dropRight';
 
-function dropRight(array $collection, int $number = 1, $acc = []): array
+function dropRight(array $list, int $number = 1): array
 {
-    foreach (array_reverse($collection) as $index => $value) {
-        if ($index > $number - 1) {
-            $acc[$index] = $value;
-        }
-    }
-
-    return array_reverse($acc);
+    return _drop($list, $number, true);
 }

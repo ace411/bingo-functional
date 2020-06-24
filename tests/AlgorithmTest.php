@@ -21,8 +21,8 @@ class AlgorithmTest extends TestCase
         $multiplyTen = function (int $b): int {
             return $b * 10;
         };
-        $composed = A\compose($addTen, $multiplyTen);
-        $transformed = array_map($composed, [1, 2, 3]);
+        $composed    = A\compose($addTen, $multiplyTen);
+        $transformed = \array_map($composed, [1, 2, 3]);
 
         $this->assertEquals([110, 120, 130], $transformed);
     }
@@ -80,7 +80,7 @@ class AlgorithmTest extends TestCase
 
     public function testZipReturnsZippedArray()
     {
-        $nums = [1, 2];
+        $nums      = [1, 2];
         $positions = ['PG', 'SG'];
 
         $zipped = A\zip($nums, $positions);
@@ -118,7 +118,7 @@ class AlgorithmTest extends TestCase
 
     public function testUnzipReturnsArrayOfInitiallyGroupedArrays()
     {
-        $zipped = A\zip(range(1, 2), ['PG', 'SG']);
+        $zipped   = A\zip(\range(1, 2), ['PG', 'SG']);
         $unzipped = A\unzip($zipped);
 
         $this->assertEquals(
@@ -167,7 +167,7 @@ class AlgorithmTest extends TestCase
 
     public function testPartitionBySubDividesArray()
     {
-        $list = A\partitionBy(5, range(1, 20));
+        $list = A\partitionBy(5, \range(1, 20));
         
         $this->assertEquals(
             [
@@ -178,7 +178,7 @@ class AlgorithmTest extends TestCase
             ],
             $list
         );
-        $this->assertTrue(count($list) == 4);
+        $this->assertTrue(\count($list) == 4);
     }
 
     public function testConstantFunctionAlwaysReturnsFirstArgumentSupplied()
@@ -190,7 +190,7 @@ class AlgorithmTest extends TestCase
     public function testIsArrayOfReturnsArrayType()
     {
         $array = [1, 2, 3, 4];
-        $type = A\isArrayOf($array);
+        $type  = A\isArrayOf($array);
 
         $this->assertEquals('integer', $type);
     }
@@ -218,7 +218,7 @@ class AlgorithmTest extends TestCase
 
     public function testConcatFunctionConcatenatesStrings()
     {
-        $wildcard = '/';
+        $wildcard  = '/';
         $testsPath = A\concat($wildcard, 'path', 'to', 'tests');
 
         $this->assertEquals('path/to/tests', $testsPath);
@@ -300,16 +300,16 @@ class AlgorithmTest extends TestCase
 
     public function testDropLeftFunctionRemovesArrayItemsFromTheFirstIndexOnwards()
     {
-        $numbers = [1, 2, 3, 4, 5];
+        $numbers = \range(1, 5);
 
         $modified = A\dropLeft($numbers, 2);
 
-        $this->assertEquals([2 => 3, 3 => 4, 4 => 5], $modified);
+        $this->assertEquals([3, 4, 5], $modified);
     }
 
     public function testDropRightFunctionRemovesArrayItemsFromTheLastIndexBackwards()
     {
-        $numbers = [1, 2, 3, 4, 5];
+        $numbers = \range(1, 5);
 
         $modified = A\dropRight($numbers, 2);
 
@@ -327,9 +327,9 @@ class AlgorithmTest extends TestCase
 
     public function testFlattenFunctionLowersArrayDimensionsByOneLevel()
     {
-        $collection = [['foo', 'bar'], 1, 2, 3];
+        $list = [['foo', 'bar'], 1, 2, 3];
 
-        $flattened = A\flatten($collection);
+        $flattened = A\flatten($list);
 
         $this->assertEquals(['foo', 'bar', 1, 2, 3], $flattened);
     }
@@ -403,7 +403,7 @@ class AlgorithmTest extends TestCase
         $every = A\every(
             [1, 2, 3, false, true],
             function ($val) {
-                return is_bool($val);
+                return \is_bool($val);
             }
         );
 
@@ -415,7 +415,7 @@ class AlgorithmTest extends TestCase
         $any = A\any(
             [1, 2, 3, false, true],
             function ($val) {
-                return is_bool($val);
+                return \is_bool($val);
             }
         );
 
@@ -507,7 +507,7 @@ class AlgorithmTest extends TestCase
             return $val + 2;
         };
         $expHandler = A\toException($func, function (\Exception $exp) {
-            return strtoupper($exp->getMessage());
+            return \strtoupper($exp->getMessage());
         });
 
         $this->assertEquals('2 IS TOO LOW', $expHandler(2));
@@ -546,7 +546,7 @@ class AlgorithmTest extends TestCase
     public function testRejectFunctionReturnsArrayWhoseValuesDoNotConformToBooleanPredicate()
     {
         $list = A\reject(function ($val) {
-            return strlen($val) > 4;
+            return \strlen($val) > 4;
         }, ['foo', 'bar', 'foobar']);
 
         $this->assertEquals(['foo', 'bar'], $list);
@@ -573,8 +573,12 @@ class AlgorithmTest extends TestCase
             return $val > 5;
         }, [1, 2, [3, 4], [5, [6, 7, 99]]]);
 
-        $this->assertEquals([6, 7, 99], $filter);
         $this->assertInternalType('array', $filter);
+        $this->assertEquals([
+            3 => [
+                1 => [6, 7, 99]
+            ]
+        ], $filter);
     }
 
     public function testOmitFunctionOutputsArrayWithoutSpecifiedKeys()
@@ -604,17 +608,17 @@ class AlgorithmTest extends TestCase
 
     public function testUnionFunctionCombinesArrays()
     {
-        $union = A\union(range(1, 3), [2, 4, 9, 11]);
+        $union = A\union(\range(1, 3), [2, 4, 9, 11]);
 
         $this->assertInternalType('array', $union);
-        $this->assertEquals([1, 2, 3, 4, 9, 11], array_values($union));
+        $this->assertEquals([1, 2, 3, 4, 9, 11], \array_values($union));
     }
 
     public function testUnionWithFunctionCombinesArraysUponFulfillmentOfCondition()
     {
         $union = A\unionWith(function (array $num, array $str) {
             return A\isArrayOf($num) == 'integer' && A\isArrayOf($str) == 'string';
-        }, range(1, 3), range(4, 9));
+        }, \range(1, 3), \range(4, 9));
 
         $this->assertInternalType('array', $union);
         $this->assertEquals([], $union);
@@ -623,8 +627,8 @@ class AlgorithmTest extends TestCase
     public function testZipWithFunctionZipsListsBasedOnFunctionPredicate()
     {
         $zipped = A\zipWith(function (int $int, string $str): int {
-            return $int + strlen($str);
-        }, range(1, 3), ['foo', 'bar', 'baz']);
+            return $int + \strlen($str);
+        }, \range(1, 3), ['foo', 'bar', 'baz']);
 
         $this->assertInternalType('array', $zipped);
         $this->assertEquals([4, 5, 6], $zipped);
@@ -664,11 +668,11 @@ class AlgorithmTest extends TestCase
 
     public function testIntersectsFunctionDeterminesIfTwoArraysHaveAtLeastACommonItem()
     {
-        $intersect = A\partial(A\intersects, range(1, 15));
+        $intersect = A\partial(A\intersects, \range(1, 15));
 
-        $this->assertTrue($intersect(range(12, 19)));
-        $this->assertFalse($intersect(range(19, 22)));
-        $this->assertInternalType('boolean', $intersect(range(2, 4)));
+        $this->assertTrue($intersect(\range(12, 19)));
+        $this->assertFalse($intersect(\range(19, 22)));
+        $this->assertInternalType('boolean', $intersect(\range(2, 4)));
     }
 
     public function testCountOfValueOutputsArrayValueCount()
@@ -698,7 +702,7 @@ class AlgorithmTest extends TestCase
 
     public function testDifferenceOutputsDifferenceOfMultipleArrays()
     {
-        $diff = A\difference(range(1, 5), [99, 3], range(4, 5));
+        $diff = A\difference(\range(1, 5), [99, 3], \range(4, 5));
 
         $this->assertInternalType('array', $diff);
         $this->assertEquals([1, 2, 99], $diff);
@@ -708,14 +712,14 @@ class AlgorithmTest extends TestCase
     {
         $lists = [
             [0 => 'ace411', 'twitter' => '@agiroLoki'],
-            [0 => 'github'],
+            [0         => 'github'],
             ['twitter' => 1]
         ];
         $func = A\partial(A\renameKeys, $lists[0]);
         
         $this->assertInternalType('array', $func($lists[1]));
         $this->assertEquals([
-            'github' => 'ace411',
+            'github'  => 'ace411',
             'twitter' => '@agiroLoki'
         ], $func($lists[1]));
         $this->assertInternalType('array', $func($lists[2]));
@@ -792,7 +796,7 @@ class AlgorithmTest extends TestCase
     {
         $list           = [
             ['foo', 'bar', 'baz'],
-            range(1, 3)
+            \range(1, 3)
         ];
 
         $intersperse    = A\partial(A\intersperse, ',');

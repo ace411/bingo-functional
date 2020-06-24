@@ -16,5 +16,5 @@ const filePath = 'Chemem\\Bingo\\Functional\\Algorithms\\filePath';
 
 function filePath(int $level, string ...$components): string
 {
-    return concat('/', dirname(__DIR__, 5 + $level), ...$components);
+    return concat('/', \dirname(__DIR__, 5 + $level), ...$components);
 }
