@@ -336,11 +336,16 @@ class AlgorithmTest extends TestCase
 
     public function testCompactFunctionPurgesCollectionOfFalseyValues()
     {
-        $mixed = [1, 2, 'foo', false, null];
+        $mixed = [1, 2, 'foo', false, true, null];
 
         $purged = A\compact($mixed);
 
-        $this->assertEquals([1, 2, 'foo'], $purged);
+        $this->assertEquals([
+            0 => 1,
+            1 => 2,
+            2 => 'foo',
+            4 => true
+        ], $purged);
     }
 
     public function testFillFunctionFillsArrayIndexesWithArbitraryValues()
