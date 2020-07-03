@@ -15,7 +15,7 @@ const compose = 'Chemem\\Bingo\\Functional\\Algorithms\\compose';
 
 function compose(callable ...$functions): callable
 {
-    return array_reduce(
+    return \array_reduce(
         $functions,
         function ($id, $fn) {
             return function ($val) use ($id, $fn) {
@@ -30,5 +30,5 @@ const composeRight = 'Chemem\\Bingo\\Functional\\Algorithms\\composeRight';
 
 function composeRight(callable ...$functions): callable
 {
-    return compose(...array_reverse($functions));
+    return compose(...\array_reverse($functions));
 }

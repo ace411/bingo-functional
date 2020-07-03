@@ -11,15 +11,15 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 const mapDeep = 'Chemem\\Bingo\\Functional\\Algorithms\\mapDeep';
 
-function mapDeep(callable $func, array $collection): array
+function mapDeep(callable $func, array $list): array
 {
-    $acc = [];
+    return _fold(function ($acc, $val, $idx) use ($func) {
+        $acc[$idx] = \is_array($val) ? mapDeep($func, $val) : $func($val);
 
-    foreach ($collection as $index => $value) {
-        $acc[$index] = is_array($value) ? mapDeep($func, $value) : $func($value);
-    }
-
-    return $acc;
+        return $acc;
+    }, $list, []);
 }

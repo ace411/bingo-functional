@@ -33,7 +33,7 @@ class EitherTypeTest extends TestCase
                 return Either::right($val + 2);
             })
             ->bind(function ($val) {
-                return Either::right(pow($val, 2));
+                return Either::right(\pow($val, 2));
             });
 
         $this->assertInstanceOf(Either::class, $either);
@@ -103,7 +103,7 @@ class EitherTypeTest extends TestCase
     {
         $value = Either::right('foo')
             ->filter(function (string $str): bool {
-                return is_string($str);
+                return \is_string($str);
             }, $GLOBALS['ERR_MSG_STR']);
 
         $this->assertInstanceOf(Right::class, $value);
@@ -124,7 +124,7 @@ class EitherTypeTest extends TestCase
     {
         $value = Either::right(12)
             ->filter(function (int $val): bool {
-                return is_string($val);
+                return \is_string($val);
             }, $GLOBALS['ERR_MSG_STR']);
 
         $this->assertInstanceOf(Left::class, $value);
@@ -135,7 +135,7 @@ class EitherTypeTest extends TestCase
     {
         $error = Either::left($GLOBALS['ERR_MSG'])
             ->filter(function (string $val): bool {
-                return is_string($val);
+                return \is_string($val);
             }, $GLOBALS['ERR_MSG_STR'])
             ->map(function (string $val) {
                 return concat('/', $val, '/');

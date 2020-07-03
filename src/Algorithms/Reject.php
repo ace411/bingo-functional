@@ -11,17 +11,21 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 const reject = 'Chemem\\Bingo\\Functional\\Algorithms\\reject';
 
-function reject(callable $func, array $collection): array
+function reject(callable $func, $list): array
 {
-    $acc = [];
-
-    foreach ($collection as $index => $value) {
-        if (!$func($value)) {
-            $acc[$index] = $value;
+    return _fold(function ($acc, $val, $idx) use ($func) {
+        if ($func($val)) {
+            if (\is_object($acc)) {
+                unset($acc->{$idx});
+            } elseif (\is_array($acc)) {
+                unset($acc[$idx]);
+            }
         }
-    }
 
-    return $acc;
+        return $acc;
+    }, $list, $list);
 }

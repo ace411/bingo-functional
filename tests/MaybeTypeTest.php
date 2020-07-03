@@ -56,8 +56,8 @@ class MaybeTypeTest extends TestCase
 
     public function testMaybeTypeFromValueReturnsTypeFromValueDefinition()
     {
-        $val = Maybe::fromValue(12);
-        $another = Maybe::fromValue(12, 12);
+        $val        = Maybe::fromValue(12);
+        $another    = Maybe::fromValue(12, 12);
         $yetAnother = Maybe::fromValue(null);
 
         $this->assertInstanceOf(Just::class, $val);
@@ -122,7 +122,7 @@ class MaybeTypeTest extends TestCase
     {
         $val = Just::of('foo')
             ->filter(function (string $str): bool {
-                return is_string($str);
+                return \is_string($str);
             });
 
         $this->assertInstanceOf(Just::class, $val);
@@ -134,7 +134,7 @@ class MaybeTypeTest extends TestCase
         $val = Just::of(12)
             ->filter(
                 function (int $val): bool {
-                    return is_string($val);
+                    return \is_string($val);
                 }
             );
         $this->assertInstanceOf(Nothing::class, $val);
@@ -145,7 +145,7 @@ class MaybeTypeTest extends TestCase
     {
         $val = Nothing::of(null)
             ->filter(function ($val = null) {
-                return is_null($val);
+                return \is_null($val);
             })
             ->map(function ($val = null): string {
                 return 'null';
@@ -212,7 +212,7 @@ class MaybeTypeTest extends TestCase
     public function testListToMaybeFunctionReturnsNothingOnEmptyListOrJustTypeWithFirstListElement()
     {
         $this->assertInstanceOf(Nothing::class, listToMaybe([]));
-        $this->assertInstanceOf(Just::class, listToMaybe(range(1, 3)));
+        $this->assertInstanceOf(Just::class, listToMaybe(\range(1, 3)));
     }
 
     public function testMaybeToListReturnsAnEmptyListWhenSuppliedNothingAndSingletonListOtherwise()
@@ -231,7 +231,7 @@ class MaybeTypeTest extends TestCase
     {
         $map = mapMaybe(
             function (string $value) {
-                return Maybe::fromValue(strtoupper($value));
+                return Maybe::fromValue(\strtoupper($value));
             },
             ['foo', 'bar']
         );

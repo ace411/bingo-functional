@@ -13,11 +13,11 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const mean = 'Chemem\\Bingo\\Functional\\Algorithms\\mean';
 
-function mean(array $collection): float
+function mean(array $list): float
 {
     $divisor = fold(function ($acc, $val) {
         return $val + $acc;
-    }, $collection, 0);
+    }, $list, 0);
 
-    return $divisor / count($collection);
+    return $divisor / \count($list);
 }

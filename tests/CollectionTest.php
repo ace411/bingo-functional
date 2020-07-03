@@ -35,7 +35,7 @@ class CollectionTest extends TestCase
 
     public function testMapFunctionAppliesFunctionToAllValuesInArray()
     {
-        $list = Collection::from(range(1, 4))
+        $list = Collection::from(\range(1, 4))
             ->map(function ($val) {
                 return $val + 2;
             });
@@ -45,7 +45,7 @@ class CollectionTest extends TestCase
 
     public function testFlatMapFunctionCreatesArray()
     {
-        $list = Collection::from(range(1, 4))
+        $list = Collection::from(\range(1, 4))
             ->flatMap(function ($val) {
                 return $val * 2;
             });
@@ -56,7 +56,7 @@ class CollectionTest extends TestCase
 
     public function testFlatMapFunctionAppliesFunctionToAllValuesInArray()
     {
-        $list = Collection::from(range(1, 4))
+        $list = Collection::from(\range(1, 4))
             ->flatMap(function ($val) {
                 return $val * 2;
             });
@@ -67,7 +67,7 @@ class CollectionTest extends TestCase
 
     public function testFilterFunctionCreatesNewCollectionInstance()
     {
-        $list = Collection::from(range(1, 4))
+        $list = Collection::from(\range(1, 4))
             ->filter(function ($val) {
                 return $val > 2;
             });
@@ -77,7 +77,7 @@ class CollectionTest extends TestCase
 
     public function testFilterFunctionOutputsListOfValuesThatMatchFunctionBooleanPredicate()
     {
-        $list = Collection::from(range(1, 4))
+        $list = Collection::from(\range(1, 4))
             ->filter(function ($val) {
                 return $val > 2;
             })
@@ -88,7 +88,7 @@ class CollectionTest extends TestCase
 
     public function testFoldFunctionTransformsCollectionIntoSingleValue()
     {
-        $list = Collection::from(range(1, 4))
+        $list = Collection::from(\range(1, 4))
             ->fold(function ($acc, $val) {
                 return $acc + $val;
             }, 1);
@@ -99,7 +99,7 @@ class CollectionTest extends TestCase
 
     public function testFoldFunctionTransformsListIntoSingleValue()
     {
-        $list = Collection::from(range(1, 4))
+        $list = Collection::from(\range(1, 4))
             ->fold(function ($acc, $val) {
                 return $acc + $val;
             }, 1);
@@ -109,16 +109,16 @@ class CollectionTest extends TestCase
 
     public function testMergeFunctionCreatesNewCollectionInstance()
     {
-        $combined = Collection::from(range(1, 2))
-            ->merge(Collection::from(range(3, 4)));
+        $combined = Collection::from(\range(1, 2))
+            ->merge(Collection::from(\range(3, 4)));
 
         $this->assertInstanceOf(Collection::class, $combined);
     }
 
     public function testMergeFunctionCombinesLists()
     {
-        $combined = Collection::from(range(1, 2))
-            ->merge(Collection::from(range(3, 4)))
+        $combined = Collection::from(\range(1, 2))
+            ->merge(Collection::from(\range(3, 4)))
             ->getList();
 
         $this->assertEquals(\SplFixedArray::fromArray([1, 2, 3, 4]), $combined);
@@ -146,8 +146,8 @@ class CollectionTest extends TestCase
         $list = Collection::from(['foo', 'bar', 'baz'])
             ->map('strtoupper');
 
-        $this->assertContains('JsonSerializable', class_implements($list));
-        $this->assertInternalType('string', json_encode($list));
+        $this->assertContains('JsonSerializable', \class_implements($list));
+        $this->assertInternalType('string', \json_encode($list));
     }
 
     public function testCollectionImplementsIteratorAggregate()
@@ -155,7 +155,7 @@ class CollectionTest extends TestCase
         $list = Collection::from(['FOO', 'BAR'])
             ->map('strtolower');
 
-        $this->assertContains('IteratorAggregate', class_implements($list));
+        $this->assertContains('IteratorAggregate', \class_implements($list));
     }
 
     public function testCollectionClassIsIterable()
@@ -175,7 +175,7 @@ class CollectionTest extends TestCase
         $list = Collection::from(['foo', 'bar'])
             ->map('strtoupper');
 
-        $this->assertContains('Countable', class_implements($list));
+        $this->assertContains('Countable', \class_implements($list));
     }
 
     public function testCollectionIsCountable()
@@ -188,7 +188,7 @@ class CollectionTest extends TestCase
 
     public function testReverseMethodCreatesNewCollectionInstance()
     {
-        $list = Collection::from(range(0, 10))
+        $list = Collection::from(\range(0, 10))
             ->reverse();
 
         $this->assertInstanceOf(Collection::class, $list);
@@ -196,7 +196,7 @@ class CollectionTest extends TestCase
 
     public function testReverseMethodCreatesNewCollectionToArray()
     {
-        $list = Collection::from(range(0, 10))
+        $list = Collection::from(\range(0, 10))
             ->reverse()
             ->toArray();
 
@@ -205,7 +205,7 @@ class CollectionTest extends TestCase
 
     public function testReverseMethodReversesListOrder()
     {
-        $list = Collection::from(range(0, 10))
+        $list = Collection::from(\range(0, 10))
             ->map(function ($val) {
                 return $val * 5;
             })
@@ -220,7 +220,7 @@ class CollectionTest extends TestCase
 
     public function testFillMethodCreatesNewCollectionInstance()
     {
-        $list = Collection::from(range(0, 10))
+        $list = Collection::from(\range(0, 10))
             ->fill('foo', 2, 5);
 
         $this->assertInstanceOf(Collection::class, $list);
@@ -228,7 +228,7 @@ class CollectionTest extends TestCase
 
     public function testFillMethodOutputsListWithArbitraryValuesAffixedToDefinedIndexes()
     {
-        $list = Collection::from(range(1, 10))
+        $list = Collection::from(\range(1, 10))
             ->fill('foo', 2, 5)
             ->getList();
 
@@ -309,14 +309,14 @@ class CollectionTest extends TestCase
     {
         return [
             [
-                range(1, 10),
-                range(8, 12),
-                range(1, 12)
+                \range(1, 10),
+                \range(8, 12),
+                \range(1, 12)
             ],
             [
-                range(1, 5),
-                range(5, 6),
-                range(1, 6)
+                \range(1, 5),
+                \range(5, 6),
+                \range(1, 6)
             ]
         ];
     }
@@ -336,7 +336,7 @@ class CollectionTest extends TestCase
 
     public function testHeadOutputsFirstElementInCollection()
     {
-        $first = Collection::from(range(1, 20))->head();
+        $first = Collection::from(\range(1, 20))->head();
 
         $this->assertInternalType('integer', $first);
         $this->assertEquals(1, $first);
@@ -344,10 +344,10 @@ class CollectionTest extends TestCase
 
     public function testTailOutputsCollectionContainingAllListValuesExceptTheFirst()
     {
-        $tail = Collection::from(range(4, 9))->tail();
+        $tail = Collection::from(\range(4, 9))->tail();
 
         $this->assertInstanceOf(Collection::class, $tail);
-        $this->assertEquals(range(5, 9), $tail->toArray());
+        $this->assertEquals(\range(5, 9), $tail->toArray());
     }
 
     public function testLastOutputsLastElementInACollection()
@@ -389,13 +389,13 @@ class CollectionTest extends TestCase
     {
         return [
             [
-                range(54, 99),
-                range(32, 89),
+                \range(54, 99),
+                \range(32, 89),
                 true
             ],
             [
-                range(32, 54),
-                range(22, 25),
+                \range(32, 54),
+                \range(22, 25),
                 false
             ]
         ];
@@ -414,7 +414,7 @@ class CollectionTest extends TestCase
 
     public function testOffsetGetsOutputsValueAtSpecifiedOffset()
     {
-        $list = Collection::from(range(1, 5));
+        $list = Collection::from(\range(1, 5));
 
         $this->assertInternalType('integer', $list->offsetGet(1));
         $this->assertEquals(3, $list->offsetGet(2));
@@ -426,10 +426,10 @@ class CollectionTest extends TestCase
     {
         return [
             [
-                range(1, 5),
-                range(6, 10),
-                range(11, 15),
-                range(1, 15)
+                \range(1, 5),
+                \range(6, 10),
+                \range(11, 15),
+                \range(1, 15)
             ]
         ];
     }
@@ -438,13 +438,12 @@ class CollectionTest extends TestCase
      * @dataProvider mergeMultipleProvider
      */
     public function testMergeNMethodFusesMultipleListsIntoOneAmalgam(
-        $fst, 
-        $snd, 
-        $thd, 
+        $fst,
+        $snd,
+        $thd,
         $res
-    )
-    {
-        $list = Collection::from($fst);
+    ) {
+        $list   = Collection::from($fst);
         $merged = $list->mergeN(
             Collection::from($snd),
             Collection::from($thd)

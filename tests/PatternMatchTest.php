@@ -10,13 +10,6 @@ use PHPUnit\Framework\TestCase;
 
 class PatternMatchTest extends TestCase
 {
-    public static function letInFunc(array $_let, array $_in, callable $action)
-    {
-        $list = range(1, 10);
-        $let = PM\letIn($_let, $list);
-        return $let($_in, $action);
-    }
-
     public function testGetNumConditionsFunctionOutputsArrayOfArities()
     {
         $numConditions = PM\getNumConditions(['(a:b:_)', '(a:_)', '_']);
@@ -101,7 +94,7 @@ class PatternMatchTest extends TestCase
             PM\evalArrayPattern,
             [
                 '["foo", "bar", baz]' => function ($baz) {
-                    return strtoupper($baz);
+                    return \strtoupper($baz);
                 },
                 '["foo", "bar"]' => function () {
                     return 'foo-bar';
@@ -122,7 +115,7 @@ class PatternMatchTest extends TestCase
         $pattern = PM\patternMatch(
             [
                 '"foo"' => function () {
-                    $val = strtoupper('FOO');
+                    $val = \strtoupper('FOO');
 
                     return $val;
                 },
@@ -141,26 +134,25 @@ class PatternMatchTest extends TestCase
 
     public function testPatternMatchFunctionPerformsMultipleValueSensitiveMatch()
     {
-        $pattern = PM\patternMatch(
-            [
-                '["foo", "bar"]' => function () {
-                    $val = strtoupper('foo-bar');
-
-                    return $val;
-                },
-                '["foo", "bar", baz]' => function ($baz) {
-                    $val = lcfirst(strtoupper($baz));
-
-                    return $val;
-                },
-                '_' => function () {
-                    return 'undefined';
-                },
-            ],
-            explode('/', 'foo/bar/functional')
-        );
-
-        $this->assertEquals($pattern, 'fUNCTIONAL');
+        $pttn = A\partial(PM\patternMatch, [
+            '[_, "book"]' => function () {
+                return 'FP in PHP';
+            },
+            '["hello", name]' => function (string $name) {
+                return A\concat(' ', 'Hello', $name);
+            },
+            '[a, (x:xs), b]' => function () {
+                return 'multiple';
+            },
+            '_' => function () {
+                return 'undefined';
+            }
+        ]);
+        
+        $this->assertEquals($pttn(['api', 'book']), 'FP in PHP');
+        $this->assertEquals($pttn(['hello', 'World']), 'Hello World');
+        $this->assertEquals($pttn([3, [5, 7], 9]), 'multiple');
+        $this->assertEquals($pttn(['pennies']), 'undefined');
     }
 
     public function testEvalObjectPatternMatchesObjects()
@@ -185,45 +177,11 @@ class PatternMatchTest extends TestCase
         $this->assertEquals('IO monad', $evalObject);
     }
 
-    public function testEvalArrayPatternMatchesListPatternWithWildcard()
-    {
-        $pattern = PM\evalArrayPattern(
-            [
-                '[_, "chemem"]' => function () {
-                    return 'chemem';
-                },
-                '_' => function () {
-                    return 'don\'t care';
-                },
-            ],
-            ['func', 'chemem']
-        );
-
-        $this->assertEquals('chemem', $pattern);
-    }
-
-    public function testEvalArrayPatternEvaluatesIrregularWildcardPatterns()
-    {
-        $result = PM\evalArrayPattern(
-            [
-                '["ask", _, "mike"]' => function () {
-                    return 'G.O.A.T';
-                },
-                '_' => function () {
-                    return 'not the greatest';
-                },
-            ],
-            ['ask', 'uncle', 'mike']
-        );
-
-        $this->assertEquals('G.O.A.T', $result);
-    }
-
     public function testLetInDestructuresByPatternMatching()
     {
-        $list = range(1, 10);
-        $let = PM\letIn(['a', 'b', 'c'], $list);
-        $_in = $let(['c'], function (int $c) {
+        $list = \range(1, 10);
+        $let  = PM\letIn('[a, b, c, _]', $list);
+        $_in  = $let(['c'], function (int $c) {
             return $c * 10;
         });
 
@@ -233,11 +191,12 @@ class PatternMatchTest extends TestCase
 
     public function testLetInFunctionAcceptsWildcardParameters()
     {
-        $letIn = self::letInFunc(['a', '_', '_', 'b'], ['a', 'b'], function ($a, $b) {
-            return $a + $b;
+        $let    = PM\letIn('[a, _, (x:xs)]', [1, 'foo', [3, 9]]);
+        $in     = $let(['x', 'xs'], function (int $fst, array $snd) {
+            return A\head($snd) / $fst;
         });
 
-        $this->assertEquals(5, $letIn);
-        $this->assertInternalType('integer', $letIn);
+        $this->assertEquals(3, $in);
+        $this->assertInternalType('integer', $in);
     }
 }

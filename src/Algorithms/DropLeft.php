@@ -3,7 +3,7 @@
 /**
  * DropLeft function.
  *
- * dropLeft :: [a, b] Int c -> [b]
+ * dropLeft :: [a, b] -> Int -> [b]
  *
  * @author Lochemem Bruno Michael
  * @license Apache 2.0
@@ -11,15 +11,11 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const dropLeft = 'Chemem\\Bingo\\Functional\\Algorithms\\dropLeft';
+use function Chemem\Bingo\Functional\Algorithms\Internal\_drop;
 
-function dropLeft(array $collection, int $number = 1, array $acc = []): array
+const dropLeft = __NAMESPACE__ . '\\dropLeft';
+
+function dropLeft(array $list, int $number = 1): array
 {
-    foreach ($collection as $index => $value) {
-        if ($index > $number - 1) {
-            $acc[$index] = $value;
-        }
-    }
-
-    return $acc;
+    return _drop($list, $number);
 }

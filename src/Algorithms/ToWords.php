@@ -18,8 +18,8 @@ const toWords = 'Chemem\\Bingo\\Functional\\Algorithms\\toWords';
 function toWords(string $string, string $regex = ''): array
 {
     if ($regex == '') {
-        return explode(' ', $string);
+        return \explode(' ', $string);
     }
     
-    return preg_split($regex, $string);
+    return \preg_split($regex, $string);
 }

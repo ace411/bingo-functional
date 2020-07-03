@@ -13,13 +13,16 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const where = 'Chemem\\Bingo\\Functional\\Algorithms\\where';
 
-function where(array $collection, array $search): array
+function where(array $list, array $search): array
 {
     list($searchKey, $searchVal) = head(toPairs($search));
 
-    $whereFn = function (array $acc = []) use ($searchKey, $searchVal, $collection) {
-        foreach ($collection as $index => $value) {
-            if (isset($collection[$index][$searchKey]) && $collection[$index][$searchKey] == $searchVal) {
+    $whereFn = function (array $acc = []) use ($searchKey, $searchVal, $list) {
+        foreach ($list as $index => $value) {
+            if (
+                isset($list[$index][$searchKey]) &&
+                $list[$index][$searchKey] == $searchVal
+            ) {
                 $acc[] = $value;
             }
         }
@@ -27,5 +30,5 @@ function where(array $collection, array $search): array
         return $acc;
     };
 
-    return isArrayOf($collection) == 'array' ? $whereFn() : $collection;
+    return isArrayOf($list) == 'array' ? $whereFn() : $list;
 }

@@ -11,19 +11,17 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 const pluck = 'Chemem\\Bingo\\Functional\\Algorithms\\pluck';
 
-function pluck($values, $search)
+function pluck($values, $search, $default = null)
 {
-    $val = [];
-
-    foreach ($values as $idx => $item) {
-        if (is_array($values) && $search == $idx) {
-            $val[] = $item;
-        } elseif (is_object($values) && $search == $idx) {
-            $val[] = $item;
+    return _fold(function ($acc, $val, $idx) use ($search) {
+        if ($search == $idx) {
+            $acc = $val;
         }
-    }
 
-    return head($val);
+        return $acc;
+    }, $values, $default);
 }

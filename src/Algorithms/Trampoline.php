@@ -25,7 +25,7 @@ function trampoline(callable $func)
             $recursing = true;
 
             while (!empty($finalArgs)) {
-                $result = $func(...array_shift($finalArgs));
+                $result = $func(...\array_shift($finalArgs));
             }
 
             $recursing = false;

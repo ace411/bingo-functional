@@ -13,15 +13,15 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const groupBy = 'Chemem\\Bingo\\Functional\\Algorithms\\groupBy';
 
-function groupBy(array $collection, $key): array
+function groupBy(array $list, $key): array
 {
-    $groupFn = function (array $acc = []) use ($collection, $key) {
-        foreach ($collection as $index => $value) {
-            $acc[$value[$key]][] = isset($collection[$index][$key]) ? $value : [];
+    $groupFn = function (array $acc = []) use ($list, $key) {
+        foreach ($list as $index => $value) {
+            $acc[$value[$key]][] = isset($list[$index][$key]) ? $value : [];
         }
 
         return $acc;
     };
 
-    return isArrayOf($collection) == 'array' ? $groupFn() : $collection;
+    return isArrayOf($list) == 'array' ? $groupFn() : $list;
 }

@@ -11,17 +11,15 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 const toPairs = 'Chemem\\Bingo\\Functional\\Algorithms\\toPairs';
 
-function toPairs(array $collection): array
+function toPairs($list): array
 {
-    $pairs = array_map(
-        function ($key, $val) {
-            return [$key, $val];
-        },
-        array_keys($collection),
-        array_values($collection)
-    );
+    return _fold(function ($acc, $val, $idx) {
+        $acc[] = [$idx, $val];
 
-    return $pairs;
+        return $acc;
+    }, $list, []);
 }

@@ -39,7 +39,7 @@ class Reader implements Monadic
      */
     public static function of($action): self
     {
-        return is_callable($action) ? new static($action) : new static(function ($env) use ($action) {
+        return \is_callable($action) ? new static($action) : new static(function ($env) use ($action) {
             return $action;
         });
     }
@@ -97,6 +97,6 @@ class Reader implements Monadic
      */
     public function run($env)
     {
-        return call_user_func($this->action, $env);
+        return \call_user_func($this->action, $env);
     }
 }

@@ -122,7 +122,7 @@ class ReaderMonadTest extends \PHPUnit\Framework\TestCase
         $reader = withReader(
             function ($sum) {
                 return reader(function (array $ints) use ($sum) {
-                    return $sum / count($ints);
+                    return $sum / \count($ints);
                 });
             },
             reader(function (array $ints) {

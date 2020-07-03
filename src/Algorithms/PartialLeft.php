@@ -11,19 +11,13 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_partial;
+
 const partialLeft = 'Chemem\\Bingo\\Functional\\Algorithms\\partialLeft';
 
-function partialLeft(callable $fn, ...$args)
+function partialLeft(callable $func, ...$args)
 {
-    return function (...$inner) use ($fn, $args) {
-        return call_user_func_array(
-            $fn,
-            array_merge(
-                $args,
-                func_get_args()
-            )
-        );
-    };
+    return _partial($func, $args);
 }
 
 const partial = 'Chemem\\Bingo\\Functional\\Algorithms\\partial';

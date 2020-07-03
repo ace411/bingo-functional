@@ -11,19 +11,17 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 const unzip = 'Chemem\\Bingo\\Functional\\Algorithms\\unzip';
 
-function unzip(array $zipped, $acc = []): array
+function unzip(array $zipped): array
 {
-    $zippedValues = array_values($zipped);
-    $zippedCount = count($zippedValues[0]); //same for indexes 0 - n
-
-    foreach ($zippedValues as $child) {
-        $childValues = array_values($child);
-        for ($i = 0; $i < $zippedCount; $i++) {
-            $acc[$i][] = $childValues[$i];
+    return _fold(function ($acc, $val, $idx) {
+        for ($idx = 0; $idx < \count($val); $idx += 1) {
+            $acc[$idx][] = $val[$idx];
         }
-    }
 
-    return $acc;
+        return $acc;
+    }, $zipped, []);
 }

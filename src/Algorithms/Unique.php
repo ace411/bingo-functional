@@ -11,17 +11,17 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 const unique = 'Chemem\\Bingo\\Functional\\Algorithms\\unique';
 
-function unique(array $collection): array
+function unique(array $list): array
 {
-    $acc = [];
-
-    foreach ($collection as $index => $value) {
-        if (!in_array($value, $acc)) {
-            $acc[$index] = $value;
+    return _fold(function ($acc, $val, $idx) {
+        if (!\in_array($val, $acc)) {
+            $acc[$idx] = $val;
         }
-    }
 
-    return $acc;
+        return $acc;
+    }, $list, []);
 }
