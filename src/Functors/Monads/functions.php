@@ -128,7 +128,7 @@ const mapM = __NAMESPACE__ . '\\mapM';
  * mapM function
  * Analogous to map except its result is encapsulated in a monad
  *
- * mapM :: (a -> m a) -> [a] -> m [b]
+ * mapM :: (a -> m b) -> [a] -> m [b]
  *
  * @param callable $function
  * @param array $list
