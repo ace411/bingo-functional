@@ -56,7 +56,7 @@ class MonadHelperTest extends \PHPUnit\Framework\TestCase
     public function testMapMPerformsMapOperationInMonadicEnvironment()
     {
         $map = M\mapM(function (string $str): M\Monadic {
-            return Maybe\Maybe::just(strtoupper($str));
+            return Maybe\Maybe::just(\strtoupper($str));
         }, ['foo', 'bar', 'baz']);
 
         $this->assertInstanceOf(Maybe\Just::class, $map);

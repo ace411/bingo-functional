@@ -124,12 +124,12 @@ function filterM(callable $function, array $list): Monadic
 const mapM = __NAMESPACE__ . '\\mapM';
 
 /**
- * 
+ *
  * mapM function
  * Analogous to map except its result is encapsulated in a monad
  *
  * mapM :: (a -> m a) -> [a] -> m [b]
- *  
+ *
  * @param callable $function
  * @param array $list
  */
@@ -138,7 +138,7 @@ function mapM(callable $function, array $list): Monadic
     $monad  = $function(A\head($list));
 
     $map    = function ($collection) use (&$map, $function, $monad) {
-        if (count($collection) == 0) {
+        if (\count($collection) == 0) {
             return $monad::of([]);
         }
 
