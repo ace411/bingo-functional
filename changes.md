@@ -19,10 +19,10 @@
 
 ### Functors
 
-- Either ```Left/Right```
-- Maybe ```Just/Nothing```
-- Applicatives ```Applicative/CollectionApplicative```
-- Monad ```Monad```
+- Either `Left/Right`
+- Maybe `Just/Nothing`
+- Applicatives `Applicative/CollectionApplicative`
+- Monad `Monad`
 
 ## v1.1.0
 
@@ -42,7 +42,7 @@
 
 ### New Functor features
 
-- TransientMutatorTrait ```TransientMutatorTrait```
+- TransientMutatorTrait `TransientMutatorTrait`
 
 ## v1.2.1
 
@@ -63,9 +63,9 @@
 
 ### Made the following change(s)
 
-- the ```pluck()```, ```pick()```, ```isArrayOf()```, and ```memoize()``` functions have been given callback signatures.
+- the `pluck()`, `pick()`, `isArrayOf()`, and `memoize()` functions have been given callback signatures.
 
-- the ```extractErrorMessage()``` function and all other related callback functions have been replaced.
+- the `extractErrorMessage()` function and all other related callback functions have been replaced.
 
 - the Monad class has been replaced with new Monads: IO, Reader, Writer, and State.
 
@@ -79,7 +79,7 @@
 - invalidArrayKey()
 - invalidArrayValue()
 - emptyArray()
-- memoizationError() 
+- memoizationError()
 
 ### New monads
 
@@ -101,9 +101,9 @@
 
 ### Made the following change(s)
 
-- Modified the ```filter()``` function to accurately filter values whenever a boolean predicate is defined.
+- Modified the `filter()` function to accurately filter values whenever a boolean predicate is defined.
 
-- Changed parameter order of the return value for the ```reduce()``` function.
+- Changed parameter order of the return value for the `reduce()` function.
 
 ### New Helper Functions
 
@@ -124,19 +124,19 @@
 
 ### Made the following change(s)
 
-- Modified the ```throttle()``` function to accept multiple arguments
+- Modified the `throttle()` function to accept multiple arguments
 
 - Added type signatures and doc blocks for functions without any
 
-- Added immutable const definition for ```concat()``` function
+- Added immutable const definition for `concat()` function
 
 ## v1.7.2
 
 ### Made the following change(s)
 
-- Modified the ```orElse()``` methods of the Left, Right, Nothing, and Just functors
+- Modified the `orElse()` methods of the Left, Right, Nothing, and Just functors
 
-- Added the ```flatMap()``` method to the State and List monads
+- Added the `flatMap()` method to the State and List monads
 
 ## v1.8.0
 
@@ -147,7 +147,7 @@
 - invalidArrayKey()
 - invalidArrayValue()
 - emptyArray()
-- memoizationError() 
+- memoizationError()
 
 ### Modified the following function(s)
 
@@ -222,15 +222,15 @@
 
 - Modified State, List, Writer, and Reader monads
 
-- Added monad helper functions 
+- Added monad helper functions
 
 - Added Applicative helper functions
 
-- Added ```bind``` and ```of``` methods to Either and Maybe type classes
+- Added `bind` and `of` methods to Either and Maybe type classes
 
 - Added flip helper function
 
-- Added ```liftIn``` function
+- Added `liftIn` function
 
 ### New Applicative Helper functions
 
@@ -246,7 +246,7 @@
 
 - IO\IO
 
-- IO\_print()
+- IO_print()
 
 - IO\getChar()
 
@@ -346,9 +346,9 @@
 
 ## v1.12.0
 
-- Removed function parameter from ```zip``` function
+- Removed function parameter from `zip` function
 
-- Created ```Monadic``` interface for Monads
+- Created `Monadic` interface for Monads
 
 - Added new helper functions
 
@@ -356,9 +356,9 @@
 
 - Added [APCU](https://php.net/apcu)-supported functionality to memoize function
 
-- Added constant static function definitions for ```Monadic``` types
+- Added constant static function definitions for `Monadic` types
 
-- Added new ```Collection``` functions
+- Added new `Collection` functions
 
 ### New Helper functions
 
@@ -426,6 +426,8 @@
 
 - Added a Tuple immutable structure
 
+- Added `mapM()` Monad function
+
 - Replaced original pattern-matching algorithm with that in the [`functional-php/pattern-matching`](https://github.com/functional-php/pattern-matching) library
 
 - Added new helper functions
@@ -443,6 +445,10 @@
 - countOfValue()
 
 - renameKeys()
+
+### New Monadic Helper functions
+
+- mapM()
 
 ### Modified functions
 
