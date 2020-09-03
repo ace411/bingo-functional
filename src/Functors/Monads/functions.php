@@ -120,3 +120,38 @@ function filterM(callable $function, array $list): Monadic
 
     return $filter($list);
 }
+
+const mapM = __NAMESPACE__ . '\\mapM';
+
+/**
+ * 
+ * mapM function
+ * Analogous to map except its result is encapsulated in a monad
+ *
+ * mapM :: (a -> m a) -> [a] -> m [b]
+ *  
+ * @param callable $function
+ * @param array $list
+ */
+function mapM(callable $function, array $list): Monadic
+{
+    $monad  = $function(A\head($list));
+
+    $map    = function ($collection) use (&$map, $function, $monad) {
+        if (count($collection) == 0) {
+            return $monad::of([]);
+        }
+
+        $tail = A\tail($collection);
+        $head = A\head($collection);
+
+        return $function($head)->bind(function ($result) use ($tail, $monad, $head, $map) {
+            return $map($tail)->bind(function ($ret) use ($result, $head, $monad) {
+                \array_unshift($ret, $result);
+                return $monad::of($ret);
+            });
+        });
+    };
+
+    return $map($list);
+}
