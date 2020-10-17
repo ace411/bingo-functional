@@ -6,7 +6,7 @@
  * assoc :: a -> b -> [b] -> [b]
  *
  * @see https://ramdajs.com/docs/#assoc
- * 
+ *
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -19,21 +19,21 @@ const assoc = __NAMESPACE__ . '\\assoc';
 
 function assoc($key, $val, $list)
 {
-  return _fold(function ($acc, $entry, $idx) use ($key, $val) {
-    if (\is_object($acc)) {
-      if ($key == $idx) {
-        $acc->{$idx} = $entry;
-      }
+    return _fold(function ($acc, $entry, $idx) use ($key, $val) {
+        if (\is_object($acc)) {
+            if ($key == $idx) {
+                $acc->{$idx} = $entry;
+            }
 
-      $acc->{$key} = $val;
-    } elseif (\is_array($acc)) {
-      if ($key == $idx) {
-        $acc[$idx] = $entry;
-      }
+            $acc->{$key} = $val;
+        } elseif (\is_array($acc)) {
+            if ($key == $idx) {
+                $acc[$idx] = $entry;
+            }
 
-      $acc[$key] = $val;
-    }
+            $acc[$key] = $val;
+        }
 
-    return $acc;
-  }, $list, $list);
+        return $acc;
+    }, $list, $list);
 }

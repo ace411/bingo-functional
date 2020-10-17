@@ -83,8 +83,8 @@ class AlgorithmTest extends TestCase
         $arr        = [
             'foo' => ['foo', 'bar'],
             'baz' => [
-                'x' => range(1, 2),
-                range(3, 6)
+                'x' => \range(1, 2),
+                \range(3, 6)
             ]
         ];
         $obj        = (object) $arr;
@@ -843,7 +843,7 @@ class AlgorithmTest extends TestCase
 
     public function testAssocPathReturnsListCloneWithOverridenContent()
     {
-        $arr    = ['foo' => range(1, 3), 'bar' => 'bar'];
+        $arr    = ['foo' => \range(1, 3), 'bar' => 'bar'];
         $obj    = (object) $arr;
         $assoc  = A\partial(A\assocPath, ['foo', 1], 'baz');
         $result = [

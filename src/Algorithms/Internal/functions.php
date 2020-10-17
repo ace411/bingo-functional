@@ -92,19 +92,19 @@ const _fold = __NAMESPACE__ . '\\_fold';
 function _partial(callable $func, array $args, bool $left = true)
 {
     $argCount = (new \ReflectionFunction($func))
-    ->getNumberOfRequiredParameters();
+        ->getNumberOfRequiredParameters();
 
     $acc      = function (...$inner) use (&$acc, $func, $argCount, $left) {
         return function (...$innermost) use (
-      $inner,
-      $acc,
-      $func,
-      $left,
-      $argCount
-    ) {
+            $inner,
+            $acc,
+            $func,
+            $left,
+            $argCount
+        ) {
             $final = $left ?
-        \array_merge($inner, $innermost) :
-        \array_merge(\array_reverse($innermost), \array_reverse($inner));
+                \array_merge($inner, $innermost) :
+                \array_merge(\array_reverse($innermost), \array_reverse($inner));
 
             if ($argCount <= \count($final)) {
                 return $func(...$final);
