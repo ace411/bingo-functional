@@ -27,7 +27,7 @@ const _const = __NAMESPACE__ . '\\_const';
  * @param mixed $entity
  * @return object
  */
-function _const($entity): object
+function _const($entity)
 {
     return new class($entity) {
         public $val;
@@ -55,7 +55,7 @@ const _identity = __NAMESPACE__ . '\\_identity';
  * @param mixed $entity
  * @return object
  */
-function _identity($entity): object
+function _identity($entity)
 {
     return new class($entity) {
         public $val;
