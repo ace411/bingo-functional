@@ -69,8 +69,10 @@ function _fold(
     $list,
     $acc
 ) {
-    foreach ($list as $idx => $val) {
-        $acc = $func($acc, $val, $idx);
+    if (\is_array($list) || \is_object($list)) {
+        foreach ($list as $idx => $val) {
+            $acc = $func($acc, $val, $idx);
+        }
     }
 
     return $acc;
