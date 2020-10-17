@@ -78,6 +78,24 @@ class AlgorithmTest extends TestCase
         $this->assertEquals(null, $pluck('bar'));
     }
 
+    public function testPluckPathPerformsListKeyPathSearch()
+    {
+        $arr        = [
+            'foo' => ['foo', 'bar'],
+            'baz' => [
+                'x' => \range(1, 2),
+                \range(3, 6)
+            ]
+        ];
+        $obj        = (object) $arr;
+        $pluck      = A\partial(A\pluckPath, ['baz', 'x', 1]);
+        $altPluck   = A\partialRight(A\pluckPath, 'undefined');
+
+        $this->assertEquals(2, $pluck($arr));
+        $this->assertEquals(2, $pluck($obj));
+        $this->assertEquals('undefined', $altPluck($arr, ['baz', 'make']));
+    }
+
     public function testZipReturnsZippedArray()
     {
         $nums      = [1, 2];
@@ -810,5 +828,30 @@ class AlgorithmTest extends TestCase
         $this->assertInternalType('array', $intersperse(A\last($list)));
         $this->assertEquals(['foo', ',', 'bar', ',', 'baz'], $intersperse(A\head($list)));
         $this->assertEquals([1, ',', 2, ',', 3], $intersperse(A\last($list)));
+    }
+
+    public function testAssocReturnsListCloneWithOverridenContent()
+    {
+        $arr    = ['foo' => 'foo', 'bar' => 'bar'];
+        $obj    = (object) $arr;
+        $assoc  = A\partial(A\assoc, 'bar', 2);
+        $result = ['foo' => 'foo', 'bar' => 2];
+
+        $this->assertEquals($result, $assoc($arr));
+        $this->assertEquals((object) $result, $assoc($obj));
+    }
+
+    public function testAssocPathReturnsListCloneWithOverridenContent()
+    {
+        $arr    = ['foo' => \range(1, 3), 'bar' => 'bar'];
+        $obj    = (object) $arr;
+        $assoc  = A\partial(A\assocPath, ['foo', 1], 'baz');
+        $result = [
+            'foo' => [1, 'baz', 3],
+            'bar' => 'bar'
+        ];
+
+        $this->assertEquals($result, $assoc($arr));
+        $this->assertEquals((object) $result, $assoc($obj));
     }
 }
