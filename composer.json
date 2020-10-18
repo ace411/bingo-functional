@@ -46,13 +46,13 @@
         "functional-php/pattern-matching": "~0"
     },
     "require-dev": {
-        "phpunit/phpunit": "~6",
-        "friendsofphp/php-cs-fixer": "~2"
+        "friendsofphp/php-cs-fixer": "~2",
+        "phpunit/phpunit": "~6"
     },
     "suggest": {
-        "ext-readline": "An interface to the GNU readline library",
         "ext-apcu": "In-memory key-value PHP userland store",
         "ext-mbstring": "PHP extension for accurately determining byte-length of strings",
+        "ext-readline": "An interface to the GNU readline library",
         "chemem/bingo-functional-repl": "A simple REPL for the bingo-functional library"
     },
     "extra": {
@@ -71,6 +71,7 @@
             "src/Algorithms/CurryN.php",
             "src/Algorithms/Pick.php",
             "src/Algorithms/Pluck.php",
+            "src/Algorithms/PluckPath.php",
             "src/Algorithms/Zip.php",
             "src/Algorithms/Any.php",
             "src/Algorithms/Max.php",
@@ -132,6 +133,9 @@
             "src/Algorithms/CountOf.php",
             "src/Algorithms/RenameKeys.php",
             "src/Algorithms/PartitionBy.php",
+            "src/Algorithms/Assoc.php",
+            "src/Algorithms/AssocPath.php",
+            "src/Functors/Lens/functions.php",
             "src/Functors/Monads/functions.php",
             "src/Functors/Monads/IO/files.php",
             "src/Functors/Monads/IO/simple.php",
