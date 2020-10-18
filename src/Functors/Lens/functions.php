@@ -27,7 +27,7 @@ const _const = __NAMESPACE__ . '\\_const';
  * @param mixed $entity
  * @return object
  */
-function _const($entity): object
+function _const($entity)
 {
     return new class($entity) {
         public $val;
@@ -55,7 +55,7 @@ const _identity = __NAMESPACE__ . '\\_identity';
  * @param mixed $entity
  * @return object
  */
-function _identity($entity): object
+function _identity($entity)
 {
     return new class($entity) {
         public $val;
@@ -65,7 +65,7 @@ function _identity($entity): object
             $this->val = $val;
         }
 
-        public function map(callable $operation): object
+        public function map(callable $operation)
         {
             return new static($operation($this->val));
         }
@@ -93,9 +93,9 @@ function lens(callable $get, callable $set): callable
             return $func($get($list))
               ->map(
                   function ($replacement) use ($set, $list) {
-                    // apply setter to list item
-                    return $set($replacement, $list);
-                }
+                      // apply setter to list item
+                      return $set($replacement, $list);
+                  }
               );
         };
     };
@@ -114,15 +114,15 @@ const lensFromKey = __NAMESPACE__ . '\\lensFromKey';
  * @param mixed $list
  * @return object
  */
-function lensFromKey($key, callable $getter, $list): object
+function lensFromKey($key, callable $getter, $list)
 {
     // transform key-specific value with getter
     return $getter(f\pluck($list, $key))
       ->map(
           function ($replacement) use ($list, $key) {
-            // create shallow list clone
-            return f\assoc($key, $replacement, $list);
-        }
+              // create shallow list clone
+              return f\assoc($key, $replacement, $list);
+          }
       );
 }
 
