@@ -27,7 +27,7 @@ PHP, a language not commonly associated with Functional Programming, does suppor
 
 ## Documentation
 
-Please check out the [documentation](https://https://bingo-functional-docs.now.sh) for more knowledge on how to use this library.
+Please check out the [documentation](https://bingo-functional-docs.now.sh) for more knowledge on how to use this library.
 
 Also, a [changelog](https://github.com/ace411/bingo-functional/blob/master/README.md) exists and can be used to track changes made to the project.
 
