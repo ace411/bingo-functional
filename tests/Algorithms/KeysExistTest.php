@@ -6,9 +6,9 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class KeysExistTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
-  {
-    return [
+    public function contextProvider()
+    {
+        return [
       [
         [
           'foo' => 'foo',
@@ -24,15 +24,15 @@ class KeysExistTest extends \PHPUnit\Framework\TestCase
         false,
       ],
     ];
-  }
+    }
 
-  /**
-   * @dataProvider contextProvider
-   */
-  public function testkeysExistChecksIfSpecifiedKeysExistInList($list, $keys, $res)
-  {
-    $keysExist = f\keysExist($list, ...$keys);
+    /**
+     * @dataProvider contextProvider
+     */
+    public function testkeysExistChecksIfSpecifiedKeysExistInList($list, $keys, $res)
+    {
+        $keysExist = f\keysExist($list, ...$keys);
 
-    $this->assertEquals($res, $keysExist);
-  }
+        $this->assertEquals($res, $keysExist);
+    }
 }

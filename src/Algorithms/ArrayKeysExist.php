@@ -17,20 +17,20 @@ const arrayKeysExist = __NAMESPACE__ . '\\arrayKeysExist';
 
 function arrayKeysExist(array $list, ...$keys): bool
 {
-  return keysExist($list, ...$keys);
+    return keysExist($list, ...$keys);
 }
 
 const keysExist = __NAMESPACE__ . '\\keysExist';
 
 function keysExist($list, ...$keys): bool
 {
-  $check = _fold(function ($acc, $val, $idx) use ($keys) {
-    if (\in_array($idx, $keys)) {
-      $acc[] = $val;
-    }
+    $check = _fold(function ($acc, $val, $idx) use ($keys) {
+        if (\in_array($idx, $keys)) {
+            $acc[] = $val;
+        }
 
-    return $acc;
-  }, $list, []);
+        return $acc;
+    }, $list, []);
 
-  return \count($check) == \count($keys);
+    return \count($check) == \count($keys);
 }

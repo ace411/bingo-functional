@@ -6,12 +6,12 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class CurryNTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
-  {
-    return [
+    public function contextProvider()
+    {
+        return [
       [
         function ($fst, $snd = 2) {
-          return $fst ** $snd;
+            return $fst ** $snd;
         },
         1,
         [2],
@@ -19,26 +19,26 @@ class CurryNTest extends \PHPUnit\Framework\TestCase
       ],
       [
         function ($fst, $snd, $thd = 4) {
-          return ($fst + $snd) / $thd;
+            return ($fst + $snd) / $thd;
         },
         2,
         [4, 4],
         2,
       ],
     ];
-  }
+    }
 
-  /**
-   * @dataProvider contextProvider
-   */
-  public function testcurryNCreatesCurriedFunction($func, $argcount, $args, $res)
-  {
-    $curried  = f\curryN($argcount, $func);
-    $ret      = f\fold(function ($acc, $arg) {
-      return $acc($arg);
-    }, $args, $curried);
+    /**
+     * @dataProvider contextProvider
+     */
+    public function testcurryNCreatesCurriedFunction($func, $argcount, $args, $res)
+    {
+        $curried  = f\curryN($argcount, $func);
+        $ret      = f\fold(function ($acc, $arg) {
+            return $acc($arg);
+        }, $args, $curried);
 
-    $this->assertInstanceOf(\Closure::class, $curried);
-    $this->assertEquals($res, $ret);
-  }
+        $this->assertInstanceOf(\Closure::class, $curried);
+        $this->assertEquals($res, $ret);
+    }
 }

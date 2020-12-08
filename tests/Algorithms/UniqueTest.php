@@ -6,9 +6,9 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class UniqueTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
-  {
-    return [
+    public function contextProvider()
+    {
+        return [
       [
         [1, 3, 'foo', 9, 'foo', 'baz'],
         [1, 3, 'foo', 9, 'baz'],
@@ -18,15 +18,15 @@ class UniqueTest extends \PHPUnit\Framework\TestCase
         ['foo', 'bar', 'baz', 'fooz'],
       ],
     ];
-  }
+    }
   
-  /**
-   * @dataProvider contextProvider
-   */
-  public function testuniquePurgesDuplicatesFromArray($list, $res)
-  {
-    $unique = f\unique($list);
+    /**
+     * @dataProvider contextProvider
+     */
+    public function testuniquePurgesDuplicatesFromArray($list, $res)
+    {
+        $unique = f\unique($list);
 
-    $this->assertEquals($res, \array_values($unique));
-  }
+        $this->assertEquals($res, \array_values($unique));
+    }
 }

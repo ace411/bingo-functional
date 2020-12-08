@@ -6,9 +6,9 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class WhereTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
-  {
-    return [
+    public function contextProvider()
+    {
+        return [
       [
         [
           ['name' => 'dwayne', 'pos' => 'sg'],
@@ -19,15 +19,15 @@ class WhereTest extends \PHPUnit\Framework\TestCase
         [['name' => 'demarcus', 'pos' => 'c']],
       ],
     ];
-  }
+    }
 
-  /**
-   * @dataProvider contextProvider
-   */
-  public function testwhereSearchesArrayForSpecifiedKeyValuePair($list, $search, $res)
-  {
-    $result = f\where($list, $search);
+    /**
+     * @dataProvider contextProvider
+     */
+    public function testwhereSearchesArrayForSpecifiedKeyValuePair($list, $search, $res)
+    {
+        $result = f\where($list, $search);
 
-    $this->assertEquals($res, $result);
-  }
+        $this->assertEquals($res, $result);
+    }
 }

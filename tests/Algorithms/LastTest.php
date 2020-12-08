@@ -6,21 +6,21 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class LastTest extends \PHPunit\Framework\TestCase
 {
-  public function contextProvider()
-  {
-    return [
+    public function contextProvider()
+    {
+        return [
       [\range(1, 20), 20],
       [(object) ['foo', 'bar'], 'bar'],
     ];
-  }
+    }
 
-  /**
-   * @dataProvider contextProvider
-   */
-  public function testlastComputesTheFinalValueInAList($list, $res)
-  {
-    $head = f\last($list);
+    /**
+     * @dataProvider contextProvider
+     */
+    public function testlastComputesTheFinalValueInAList($list, $res)
+    {
+        $head = f\last($list);
 
-    $this->assertEquals($res, $head);
-  }
+        $this->assertEquals($res, $head);
+    }
 }

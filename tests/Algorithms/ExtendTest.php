@@ -6,9 +6,9 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class ExtendTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
-  {
-    return [
+    public function contextProvider()
+    {
+        return [
       [
         [\range(1, 3), \range(4, 6)],
         \range(1, 6),
@@ -22,15 +22,15 @@ class ExtendTest extends \PHPUnit\Framework\TestCase
         ],
       ],
     ];
-  }
+    }
 
-  /**
-   * @dataProvider contextProvider
-   */
-  public function testextendConcatenatesMultipleLists($lists, $res)
-  {
-    $final = f\extend(...$lists);
+    /**
+     * @dataProvider contextProvider
+     */
+    public function testextendConcatenatesMultipleLists($lists, $res)
+    {
+        $final = f\extend(...$lists);
 
-    $this->assertEquals($res, $final);
-  }
+        $this->assertEquals($res, $final);
+    }
 }

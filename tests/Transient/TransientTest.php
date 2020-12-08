@@ -9,29 +9,29 @@ use Chemem\Bingo\Functional\Common\Traits\TransientMutator as Transient;
 
 class TransientTest extends \PHPUnit\Framework\TestCase
 {
-  use \Eris\TestTrait;
+    use \Eris\TestTrait;
 
-  /**
-   * @test
-   */
-  public function TransientMutatorEnablesControlledMutation()
-  {
-    $this
+    /**
+     * @test
+     */
+    public function TransientMutatorEnablesControlledMutation()
+    {
+        $this
       ->forAll(
-        Generator\constant(0.0),
-        Generator\float()
+          Generator\constant(0.0),
+          Generator\float()
       )
       ->then(function (float $base, float $val) {
-        $fst = new Money($base);
-        $snd = new Money($val);
+          $fst = new Money($base);
+          $snd = new Money($val);
 
-        $sum = Money::sum($fst, $snd);
+          $sum = Money::sum($fst, $snd);
 
-        $this->assertIsFloat($sum->getWallet());
-        $this->assertInstanceOf(Money::class, $sum);
-        $this->assertEquals([
+          $this->assertIsFloat($sum->getWallet());
+          $this->assertInstanceOf(Money::class, $sum);
+          $this->assertEquals([
           Transient::class => Transient::class,
         ], \class_uses(__NAMESPACE__ . '\\Money'));
       });
-  }
+    }
 }

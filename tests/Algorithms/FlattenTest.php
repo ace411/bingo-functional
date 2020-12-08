@@ -6,9 +6,9 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class FlattenTest extends \PHPunit\Framework\TestCase
 {
-  public function contextProvider()
-  {
-    return [
+    public function contextProvider()
+    {
+        return [
       [
         [\range(1, 3), 'foo', ['bar', [9]]],
         [1, 2, 3, 'foo', 'bar', 9],
@@ -18,16 +18,16 @@ class FlattenTest extends \PHPunit\Framework\TestCase
         ['bar', 'baz', 3, 'foo'],
       ],
     ];
-  }
+    }
 
-  /**
-   * @dataProvider contextProvider
-   */
-  public function testflattenReducesArrayDimensionalityToOne($list, $res)
-  {
-    $flat = f\flatten($list);
+    /**
+     * @dataProvider contextProvider
+     */
+    public function testflattenReducesArrayDimensionalityToOne($list, $res)
+    {
+        $flat = f\flatten($list);
 
-    $this->assertIsArray($flat);
-    $this->assertEquals($res, $flat);
-  }
+        $this->assertIsArray($flat);
+        $this->assertEquals($res, $flat);
+    }
 }

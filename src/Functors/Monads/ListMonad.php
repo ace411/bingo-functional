@@ -36,7 +36,7 @@ class ListMonad implements Monadic
     public static function of($val): Monadic
     {
         return new static(function () use ($val) {
-            return is_array($val) ? $val : [$val];
+            return \is_array($val) ? $val : [$val];
         });
     }
 

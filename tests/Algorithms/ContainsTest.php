@@ -6,21 +6,21 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class ContainsTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
-  {
-    return [
+    public function contextProvider()
+    {
+        return [
       ['bingo-functional', 'func', true],
       ['agiroLoki', 'chemem', false],
     ];
-  }
+    }
 
-  /**
-   * @dataProvider contextProvider
-   */
-  public function testcontainsChecksIfStringContainsStringFragment($str, $frag, $res)
-  {
-    $contains = f\contains($str, $frag);
+    /**
+     * @dataProvider contextProvider
+     */
+    public function testcontainsChecksIfStringContainsStringFragment($str, $frag, $res)
+    {
+        $contains = f\contains($str, $frag);
 
-    $this->assertEquals($res, $contains);
-  }
+        $this->assertEquals($res, $contains);
+    }
 }

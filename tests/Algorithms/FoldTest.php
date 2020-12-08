@@ -6,12 +6,12 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class FoldTest extends \PHPunit\Framework\TestCase
 {
-  public function contextProvider()
-  {
-    return [
+    public function contextProvider()
+    {
+        return [
       [
         function ($acc, $val) {
-          return $acc + $val;
+            return $acc + $val;
         },
         \range(1, 5),
         0,
@@ -19,22 +19,22 @@ class FoldTest extends \PHPunit\Framework\TestCase
       ],
       [
         function ($acc, $val) {
-          return f\concat(',', $val, $acc);
+            return f\concat(',', $val, $acc);
         },
         ['foo', 'bar', 'baz'],
         '',
         'baz,bar,foo,',
       ],
     ];
-  }
+    }
 
-  /**
-   * @dataProvider contextProvider
-   */
-  public function testFoldTransformsListIntoSingleValue($func, $list, $acc, $res)
-  {
-    $reduce = f\fold($func, $list, $acc);
+    /**
+     * @dataProvider contextProvider
+     */
+    public function testFoldTransformsListIntoSingleValue($func, $list, $acc, $res)
+    {
+        $reduce = f\fold($func, $list, $acc);
 
-    $this->assertEquals($res, $reduce);
-  }
+        $this->assertEquals($res, $reduce);
+    }
 }

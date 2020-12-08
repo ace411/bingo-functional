@@ -38,7 +38,7 @@ class Writer implements Monadic
     public static function of($result, $output = null): self
     {
         return new static(function () use ($result, $output) {
-            return [$result, is_null($output) ? [] : [$output]];
+            return [$result, \is_null($output) ? [] : [$output]];
         });
     }
 

@@ -16,23 +16,23 @@ const renameKeys = __NAMESPACE__ . '\\renameKeys';
 
 function renameKeys($list, array ...$pairs)
 {
-  return fold(function ($acc, $val) {
-    [$orig, $new] = $val;
+    return fold(function ($acc, $val) {
+        [$orig, $new] = $val;
 
-    if (\is_object($acc)) {
-      if (isset($acc->{$orig})) {
-        $acc->{$new} = $acc->{$orig};
-        unset($acc->{$orig});
-      }
-    } else {
-      if (\is_array($acc)) {
-        if (isset($acc[$orig])) {
-          $acc[$new] = $acc[$orig];
-          unset($acc[$orig]);
+        if (\is_object($acc)) {
+            if (isset($acc->{$orig})) {
+                $acc->{$new} = $acc->{$orig};
+                unset($acc->{$orig});
+            }
+        } else {
+            if (\is_array($acc)) {
+                if (isset($acc[$orig])) {
+                    $acc[$new] = $acc[$orig];
+                    unset($acc[$orig]);
+                }
+            }
         }
-      }
-    }
 
-    return $acc;
-  }, $pairs, $list);
+        return $acc;
+    }, $pairs, $list);
 }

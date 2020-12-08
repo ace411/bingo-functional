@@ -2,39 +2,37 @@
 
 /**
  * test functions for assertions
- * 
+ *
  * @license Apache-2.0
  * @author Lochemem Bruno Michael
  */
 
 namespace Chemem\Bingo\Functional\Tests;
 
-use Chemem\Bingo\Functional\{
-  Algorithms as f,
-  Functors\Lens as l,
-  Functors\Monads as m,
-  PatternMatching as p
-};
+use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional\Functors\Lens as l;
+use Chemem\Bingo\Functional\Functors\Monads as m;
+use Chemem\Bingo\Functional\PatternMatching as p;
 
 /**
  * getClassShortName
  * outputs the short name of a class - sans-namespace
  *
  * getClassShortName :: Object -> String
- * 
+ *
  * @param object $obj
  * @return string
  */
 function getClassShortName($obj): string
 {
-  $ref = function ($item) {
-    return new \ReflectionClass($item);
-  };
+    $ref = function ($item) {
+        return new \ReflectionClass($item);
+    };
 
-  $name   = $ref($obj)->getName();
-  $parent = $ref($name)->getParentClass();
+    $name   = $ref($obj)->getName();
+    $parent = $ref($name)->getParentClass();
 
-  return $parent == false ?
+    return $parent == false ?
     $ref($obj)->getShortName() :
     $ref(f\head($parent))->getShortName();
 }
@@ -46,7 +44,7 @@ const getClassShortName = __NAMESPACE__ . '\\getClassShortName';
  * performs equality check on two functors
  *
  * assertEquals :: Object -> Object -> a -> Bool
- * 
+ *
  * @param object $fst
  * @param object $snd
  * @param string $property
@@ -55,33 +53,33 @@ const getClassShortName = __NAMESPACE__ . '\\getClassShortName';
  */
 function assertEquals(object $fst, object $snd, $env = null): bool
 {
-  return p\patternMatch([
+    return p\patternMatch([
     '["Maybe", "Maybe"]'          => function () use ($fst, $snd) {
-      return $fst->getJust() == $snd->getJust();
+        return $fst->getJust() == $snd->getJust();
     },
     '["Either", "Either"]'        => function () use ($fst, $snd) {
-      return $fst->isLeft() == $snd->isLeft() || $fst->isRight() == $fst->isRight();
+        return $fst->isLeft() == $snd->isLeft() || $fst->isRight() == $fst->isRight();
     },
     '["ListMonad", "ListMonad"]'  => function () use ($fst, $snd) {
-      return $fst->extract() == $snd->extract();
+        return $fst->extract() == $snd->extract();
     },
     '["IO", "IO"]'                => function () use ($fst, $snd) {
-      return $fst->exec() == $snd->exec();
+        return $fst->exec() == $snd->exec();
     },
     '["Reader", "Reader"]'        => function () use ($fst, $snd, $env) {
-      return $fst->run($env) == $snd->run($env);
+        return $fst->run($env) == $snd->run($env);
     },
     '["State", "State"]'          => function () use ($fst, $snd, $env) {
-      return $fst->run($env) == $snd->run($env);
+        return $fst->run($env) == $snd->run($env);
     },
     '["Writer", "Writer"]'        => function () use ($fst, $snd) {
-      return $fst->run() == $snd->run();
+        return $fst->run() == $snd->run();
     },
     '["Applicative", "Applicative"]' => function () use ($fst, $snd) {
-      return $fst->getValue() == $snd->getValue();
+        return $fst->getValue() == $snd->getValue();
     },
     '_'                           => function () {
-      return false;
+        return false;
     },
   ], f\map(getClassShortName, [$fst, $snd]));
 }
@@ -93,7 +91,7 @@ const assertEquals = __NAMESPACE__ . '\\assertEquals';
  * performs necessary proof checks for Lenses
  *
  * lensLaws :: (s -> a) -> ((a, s) -> s) -> [a] -> b -> Array
- * 
+ *
  * @param callable $get
  * @param callable $set
  * @param array|object $store
@@ -101,14 +99,14 @@ const assertEquals = __NAMESPACE__ . '\\assertEquals';
  * @return array
  */
 function lensLaws(
-  callable $get,
-  callable $set,
-  $store,
-  $val = null
+    callable $get,
+    callable $set,
+    $store,
+    $val = null
 ): array {
-  $lens = l\lens($get, $set);
+    $lens = l\lens($get, $set);
 
-  return [
+    return [
     // view l (set l x) = x
     'first'   => l\view($lens, l\set($lens, $val, $store)) == $val,
     // set s y . set s x = set s y
@@ -123,7 +121,7 @@ const lensLaws = __NAMESPACE__ . '\\lensLaws';
 /**
  * lensFunctorLaws
  * performs Functor law proof checks on lenses
- * 
+ *
  * lensFunctorLaws :: (s -> a) -> ((a, s) -> s) -> [a] -> (a -> b) -> (a -> c) -> Array
  *
  * @param callable $get
@@ -134,15 +132,15 @@ const lensLaws = __NAMESPACE__ . '\\lensLaws';
  * @return array
  */
 function lensFunctorLaws(
-  callable $get,
-  callable $set,
-  $store,
-  callable $fnx,
-  callable $fny
+    callable $get,
+    callable $set,
+    $store,
+    callable $fnx,
+    callable $fny
 ): array {
-  $lens = l\lens($get, $set);
+    $lens = l\lens($get, $set);
 
-  return [
+    return [
     'identity'    => l\over($lens, f\identity, $store) == $store,
     'composition' =>
       l\over($lens, f\compose($fnx, $fny), $store) ==
@@ -155,28 +153,28 @@ const lensFunctorLaws = __NAMESPACE__ . '\\lensFunctorLaws';
 /**
  * functorLaws
  * performs Functor law proof checks on functors
- * 
+ *
  * functorLaws :: f a -> (a -> f b) -> (a -> f c) -> Array
- * 
+ *
  * @param object $functor
  * @param callable $fnx
  * @param callable $fny
  * @return array
  */
 function functorLaws(
-  object $functor,
-  callable $fnx,
-  callable $fny,
-  $aux = null
+    object $functor,
+    callable $fnx,
+    callable $fny,
+    $aux = null
 ): array {
-  return [
+    return [
     // F(id) = id
     'identity'    => assertEquals($functor, $functor->map(f\identity), $aux),
     // F(g o f) = F(g) o F(f)
     'composition' => assertEquals(
-      $functor->map(f\compose($fnx, $fny)),
-      $functor->map($fnx)->map($fny),
-      $aux
+        $functor->map(f\compose($fnx, $fny)),
+        $functor->map($fnx)->map($fny),
+        $aux
     ),
   ];
 }
@@ -186,9 +184,9 @@ const functorLaws = __NAMESPACE__ . '\\functorLaws';
 /**
  * monadLaws
  * performs Monad law proof checks on monads
- * 
+ *
  * monadLaws :: m a -> (a -> m b) -> (a -> m c) -> a -> d -> Array
- * 
+ *
  * @param Monadic $monad
  * @param callable $fnx
  * @param callable $fny
@@ -198,25 +196,25 @@ const functorLaws = __NAMESPACE__ . '\\functorLaws';
  * @return array
  */
 function monadLaws(
-  object $monad,
-  callable $fnx,
-  callable $fny,
-  callable $return,
-  $val,
-  $aux = null
+    object $monad,
+    callable $fnx,
+    callable $fny,
+    callable $return,
+    $val,
+    $aux = null
 ): array {
-  return [
+    return [
     // x >>= f = f o x
     'left-identity'   => assertEquals($monad->bind($fnx), $fnx($val), $aux),
     // m >>= return = m
     'right-identity'  => assertEquals(m\bind($return, $monad), $monad, $aux),
     // (m >>= f) >>= g = m >>= (x -> f o x >>= g)
     'associativity'   => assertEquals(
-      $monad->bind($fnx)->bind($fny),
-      $monad->bind(function ($res) use ($fnx, $fny) {
-        return $fnx($res)->bind($fny);
+        $monad->bind($fnx)->bind($fny),
+        $monad->bind(function ($res) use ($fnx, $fny) {
+          return $fnx($res)->bind($fny);
       }),
-      $aux
+        $aux
     ),
   ];
 }
@@ -228,7 +226,7 @@ const monadLaws = __NAMESPACE__ . '\\monadLaws';
  * performs Applicative law proof checks on Applicatives
  *
  * applicativeLaws :: f a -> (a -> b) -> Array
- * 
+ *
  * @param object $app
  * @param callable $func
  * @param mixed $val
@@ -236,42 +234,42 @@ const monadLaws = __NAMESPACE__ . '\\monadLaws';
  */
 function applicativeLaws(object $app, callable $func, $val): array
 {
-  // place value in applicative
-  $purex = $app->pure($val);
+    // place value in applicative
+    $purex = $app->pure($val);
 
-  // place function in applicative context
-  $puref = $app->pure($func);
+    // place function in applicative context
+    $puref = $app->pure($func);
 
-  return [
+    return [
     // pure id <*> v = v
     'identity' => $app->pure(f\identity)->ap($purex)->getValue() == $val,
     // u <*> pure v = pure ($ v) <*> u
     'interchange' => assertEquals(
-      $app->ap($purex),
-      $app
+        $app->ap($purex),
+        $app
         ->pure(function ($func) use ($val) {
-          return $func($val);
+            return $func($val);
         })
         ->ap($app)
     ),
     // pure f <*> pure x = pure (f x)
     'homomorphism' => assertEquals(
-      $app->pure($func)->ap($purex),
-      $app->pure($func($val))
+        $app->pure($func)->ap($purex),
+        $app->pure($func($val))
     ),
     // pure (.) <*> u <*> v <*> w = u <*> (v <*> w)
     'composition' => assertEquals(
-      $app
+        $app
         ->pure(f\compose)
         ->ap($app)
         ->ap($puref)
         ->ap($purex),
-      $app->ap($puref->ap($purex))
+        $app->ap($puref->ap($purex))
     ),
     // map f x = pure f <*> x
     'map' => assertEquals(
-      $puref->ap($purex),
-      $purex->map($func)
+        $puref->ap($purex),
+        $purex->map($func)
     ),
   ];
 }

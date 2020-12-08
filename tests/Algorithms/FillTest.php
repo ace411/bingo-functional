@@ -6,9 +6,9 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class FillTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
-  {
-    return [
+    public function contextProvider()
+    {
+        return [
       [\range(1, 4), 'foo', [1, 2], [1, 'foo', 'foo', 4]],
       [
         (object) ['foo', 2, 'bar', 'baz'],
@@ -17,15 +17,15 @@ class FillTest extends \PHPUnit\Framework\TestCase
         (object) ['foo', 2, 3, 3],
       ],
     ];
-  }
+    }
 
-  /**
-   * @dataProvider contextProvider
-   */
-  public function testfillReplacesValuesInSpecifiedIndexRangeWithArbitraryValue($list, $val, $range, $res)
-  {
-    $assoc = f\fill($list, $val, ...$range);
+    /**
+     * @dataProvider contextProvider
+     */
+    public function testfillReplacesValuesInSpecifiedIndexRangeWithArbitraryValue($list, $val, $range, $res)
+    {
+        $assoc = f\fill($list, $val, ...$range);
 
-    $this->assertEquals($res, $assoc);
-  }
+        $this->assertEquals($res, $assoc);
+    }
 }

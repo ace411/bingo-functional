@@ -6,9 +6,9 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class FromPairsTest extends \PHPunit\Framework\TestCase
 {
-  public function contextProvider()
-  {
-    return [
+    public function contextProvider()
+    {
+        return [
       [
         [['foo', 'bar'], ['baz', 'fooz']],
         [
@@ -21,15 +21,15 @@ class FromPairsTest extends \PHPunit\Framework\TestCase
         [2 => 4, 0 => 'foo'],
       ],
     ];
-  }
+    }
 
-  /**
-   * @dataProvider contextProvider
-   */
-  public function testfromPairsConstructsAssociativeArrayFromArrayPairs($list, $res)
-  {
-    $assoc = f\fromPairs($list);
+    /**
+     * @dataProvider contextProvider
+     */
+    public function testfromPairsConstructsAssociativeArrayFromArrayPairs($list, $res)
+    {
+        $assoc = f\fromPairs($list);
 
-    $this->assertEquals($res, $assoc);
-  }
+        $this->assertEquals($res, $assoc);
+    }
 }

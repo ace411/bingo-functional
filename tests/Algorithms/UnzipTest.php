@@ -6,9 +6,9 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class UnzipTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
-  {
-    return [
+    public function contextProvider()
+    {
+        return [
       [
         [[1, 'pg'], [2, 'sg']],
         [[1, 2], ['pg', 'sg']]
@@ -18,15 +18,15 @@ class UnzipTest extends \PHPUnit\Framework\TestCase
         [['foo'], ['bar'], ['baz']]
       ]
     ];
-  }
+    }
 
-  /**
-   * @dataProvider contextProvider
-   */
-  public function testunzipUnzipsZippedArrays($list, $res)
-  {
-    $unzipped = f\unzip($list);
+    /**
+     * @dataProvider contextProvider
+     */
+    public function testunzipUnzipsZippedArrays($list, $res)
+    {
+        $unzipped = f\unzip($list);
 
-    $this->assertEquals($res, $unzipped);
-  }
+        $this->assertEquals($res, $unzipped);
+    }
 }

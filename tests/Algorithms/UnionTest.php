@@ -6,9 +6,9 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class UnionTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
-  {
-    return [
+    public function contextProvider()
+    {
+        return [
       [
         [\range(1, 3), \range(2, 6)],
         \range(1, 6),
@@ -18,15 +18,15 @@ class UnionTest extends \PHPUnit\Framework\TestCase
         ['foo', 'bar', 'baz'],
       ],
     ];
-  }
+    }
 
-  /**
-   * @dataProvider contextProvider
-   */
-  public function testunionCombinesMultipleLists($args, $res)
-  {
-    $union = f\union(...$args);
+    /**
+     * @dataProvider contextProvider
+     */
+    public function testunionCombinesMultipleLists($args, $res)
+    {
+        $union = f\union(...$args);
 
-    $this->assertEquals($res, \array_values($union));
-  }
+        $this->assertEquals($res, \array_values($union));
+    }
 }
