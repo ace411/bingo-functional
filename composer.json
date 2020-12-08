@@ -8,7 +8,21 @@
         "curry",
         "partial application",
         "helpers",
+        "tuples",
         "zip",
+        "i/o",
+        "input-output",
+        "unzip",
+        "compose",
+        "partial",
+        "filterM",
+        "foldM",
+        "lenses",
+        "lens",
+        "monad laws",
+        "applicative laws",
+        "composition",
+        "persistent data structures",
         "map",
         "reduce",
         "fold",
@@ -21,6 +35,8 @@
         "State monad",
         "referential transparency",
         "fp",
+        "pure functions",
+        "higher-order functions",
         "functional programming",
         "bingo",
         "Either",
@@ -43,13 +59,13 @@
     ],
     "require": {
         "php": "~7 || ~8",
-        "functional-php/pattern-matching": "~0",
-        "widmogrod/php-functional": "^6.0"
+        "functional-php/pattern-matching": "~0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "~2",
         "giorgiosironi/eris": "~0",
-        "phpunit/phpunit": "~8 || 9.3.*"
+        "phpunit/phpunit": "~8 || 9.3.*",
+        "widmogrod/php-functional": "^6.0"
     },
     "suggest": {
         "ext-apcu": "In-memory key-value PHP userland store",
