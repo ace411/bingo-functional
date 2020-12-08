@@ -148,7 +148,7 @@ function fromRight($default, Etype $either)
  */
 const fromLeft = 'Chemem\\Bingo\\Functional\\Functors\\Either\\fromLeft';
 
-function fromLeft($default, $either)
+function fromLeft($default, Etype $either)
 {
     return $either->isLeft() ? $either->getLeft() : $default;
 }

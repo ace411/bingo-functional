@@ -13,15 +13,17 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const flatten = 'Chemem\\Bingo\\Functional\\Algorithms\\flatten';
 
-function flatten(array $list, array $acc = []): array
+function flatten(array $list): array
 {
-    $flattened = fold(
-        function ($acc, $value) {
-            return \is_array($value) ? \array_merge($acc, flatten($value)) : \array_merge($acc, [$value]);
-        },
-        $list,
-        $acc
-    );
+  $flattened = fold(
+    function ($acc, $value) {
+      return \is_array($value) ?
+        extend($acc, flatten($value)) :
+        extend($acc, [$value]);
+    },
+    $list,
+    []
+  );
 
-    return $flattened;
+  return $flattened;
 }

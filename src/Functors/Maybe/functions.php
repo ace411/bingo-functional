@@ -36,7 +36,7 @@ const maybe = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\maybe';
 
 function maybe($default, callable $function, Mtype $maybe)
 {
-    return $maybe instanceof Nothing ? $default : $maybe->flatMap($function);
+  return $maybe instanceof Nothing ? $default : $maybe->flatMap($function);
 }
 
 /**
@@ -53,7 +53,7 @@ const isJust = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\isJust';
 
 function isJust(Mtype $maybe)
 {
-    return $maybe->isJust();
+  return $maybe->isJust();
 }
 
 /**
@@ -70,7 +70,7 @@ const isNothing = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\isNothing';
 
 function isNothing(Mtype $maybe)
 {
-    return $maybe->isNothing();
+  return $maybe->isNothing();
 }
 
 /**
@@ -87,11 +87,11 @@ const fromJust = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\fromJust';
 
 function fromJust(Mtype $maybe)
 {
-    if ($maybe instanceof Nothing) {
-        throw new \Exception('Maybe.fromJust: Nothing');
-    }
+  if ($maybe instanceof Nothing) {
+    throw new \Exception('Maybe.fromJust: Nothing');
+  }
 
-    return $maybe->getJust();
+  return $maybe->getJust();
 }
 
 /**
@@ -109,7 +109,7 @@ const fromMaybe = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\fromMaybe';
 
 function fromMaybe($default, Mtype $maybe)
 {
-    return $maybe instanceof Nothing ? $default : $maybe->getJust();
+  return $maybe instanceof Nothing ? $default : $maybe->getJust();
 }
 
 /**
@@ -126,7 +126,7 @@ const listToMaybe = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\listToMaybe';
 
 function listToMaybe(array $list): Mtype
 {
-    return empty($list) ? Mtype::fromValue(id([]), id([])) : Mtype::fromValue(head($list));
+  return empty($list) ? Mtype::nothing() : Mtype::fromValue(head($list));
 }
 
 /**
@@ -143,7 +143,7 @@ const maybeToList = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\maybeToList';
 
 function maybeToList(Mtype $maybe): array
 {
-    return $maybe instanceof Nothing ? id([]) : [$maybe->getJust()];
+  return $maybe instanceof Nothing ? id([]) : [$maybe->getJust()];
 }
 
 /**
@@ -160,13 +160,13 @@ const catMaybes = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\catMaybes';
 
 function catMaybes(array $maybes): array
 {
-    return fold(
+  return fold(
         function ($list, Mtype $maybe) {
-            if ($maybe instanceof Just) {
-                $list[] = $maybe->getJust();
-            }
+          if ($maybe instanceof Just) {
+            $list[] = $maybe->getJust();
+          }
 
-            return $list;
+          return $list;
         },
         $maybes,
         id([])
@@ -188,7 +188,7 @@ const mapMaybe = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\mapMaybe';
 
 function mapMaybe(callable $function, array $values): array
 {
-    $map = compose(partialLeft('array_map', $function), catMaybes);
+  $map = compose(partialLeft('array_map', $function), catMaybes);
 
-    return $map($values);
+  return $map($values);
 }

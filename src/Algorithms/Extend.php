@@ -15,17 +15,19 @@ const extend = 'Chemem\\Bingo\\Functional\\Algorithms\\extend';
 
 function extend(array ...$lists): array
 {
-    $ret = [];
+  $ret = [];
 
-    foreach ($lists as $list) {
-        foreach ($list as $key => $val) {
-            if (\is_string($key)) {
-                $ret[$key] = $val;
-            } else {
-                $ret[] = $val;
-            }
-        }
+  for ($idx = 0; $idx < \count($lists); ++$idx) {
+    $list = $lists[$idx];
+    
+    foreach ($list as $key => $val) {
+      if (\is_string($key)) {
+        $ret[$key] = $val;
+      } else {
+        $ret[] = $val;
+      }
     }
+  }
 
-    return $ret;
+  return $ret;
 }

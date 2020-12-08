@@ -14,16 +14,25 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const renameKeys = __NAMESPACE__ . '\\renameKeys';
 
-function renameKeys(array $list, array $keyPair): array
+function renameKeys($list, array ...$pairs)
 {
-    foreach ($list as $key => $val) {
-        foreach ($keyPair as $_key => $_val) {
-            if (\key_exists($_key, $list)) {
-                $list[$_val] = $list[$_key];
-                unset($list[$_key]);
-            }
+  return fold(function ($acc, $val) {
+    [$orig, $new] = $val;
+
+    if (\is_object($acc)) {
+      if (isset($acc->{$orig})) {
+        $acc->{$new} = $acc->{$orig};
+        unset($acc->{$orig});
+      }
+    } else {
+      if (\is_array($acc)) {
+        if (isset($acc[$orig])) {
+          $acc[$new] = $acc[$orig];
+          unset($acc[$orig]);
         }
+      }
     }
 
-    return $list;
+    return $acc;
+  }, $pairs, $list);
 }

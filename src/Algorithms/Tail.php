@@ -13,7 +13,24 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const tail = 'Chemem\\Bingo\\Functional\\Algorithms\\tail';
 
-function tail(array $values): array
+function tail($list)
 {
-    return \array_slice($values, 1);
+  [, $final] = fold(function ($acc, $val) {
+    [$count, $lst] = $acc;
+    $count = $count + 1;
+
+    if ($count < 2) {
+      if (\is_object($lst)) {
+        unset($lst->{indexOf($lst, $val)});
+      } else {
+        if (\is_array($lst)) {
+          unset($lst[indexOf($lst, $val)]);
+        }
+      }
+    }
+
+    return [$count, $lst];
+  }, $list, [0, $list]);
+
+  return $final;
 }

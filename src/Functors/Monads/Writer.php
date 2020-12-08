@@ -35,10 +35,10 @@ class Writer implements Monadic
      *
      * @return object Writer
      */
-    public static function of($result, $output): self
+    public static function of($result, $output = null): self
     {
         return new static(function () use ($result, $output) {
-            return [$result, [$output]];
+            return [$result, is_null($output) ? [] : [$output]];
         });
     }
 

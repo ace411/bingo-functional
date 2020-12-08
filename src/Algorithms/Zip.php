@@ -15,13 +15,16 @@ const zip = 'Chemem\\Bingo\\Functional\\Algorithms\\zip';
 
 function zip(array ...$lists): array
 {
-    $acc = [];
-    foreach ($lists as $key => $list) {
-        foreach ($list as $index => $val) {
-            if (indexOf($list, $val) == $index) {
-                $acc[$index][] = $val;
-            }
-        }
+  $acc = [];
+  for ($idx = 0; $idx < \count($lists); ++$idx) {
+    $list = $lists[$idx];
+    
+    foreach ($list as $index => $val) {
+      if (indexOf($list, $val) == $index) {
+        $acc[$index][] = $val;
+      }
     }
-    return $acc;
+  }
+
+  return $acc;
 }

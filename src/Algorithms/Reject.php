@@ -15,7 +15,7 @@ use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
 
 const reject = 'Chemem\\Bingo\\Functional\\Algorithms\\reject';
 
-function reject(callable $func, $list): array
+function reject(callable $func, $list)
 {
     return _fold(function ($acc, $val, $idx) use ($func) {
         if ($func($val)) {

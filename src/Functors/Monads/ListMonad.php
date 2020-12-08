@@ -9,139 +9,81 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-use function Chemem\Bingo\Functional\Algorithms\compose;
-use function Chemem\Bingo\Functional\Algorithms\extend;
-use function Chemem\Bingo\Functional\Algorithms\flatten;
-use function Chemem\Bingo\Functional\Algorithms\fold;
-use function Chemem\Bingo\Functional\Algorithms\mapDeep;
-use function Chemem\Bingo\Functional\Algorithms\partialLeft;
+use Chemem\Bingo\Functional\Algorithms as f;
 
 class ListMonad implements Monadic
 {
-    const of = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad::of';
+    const of = __CLASS__ . '::of';
 
     /**
-     * @var array The collection to transform
-     */
-    private $collection;
-
-    /**
-     * ListMonad constructor.
+     * list operation
      *
-     * @param mixed $collection
+     * @var callable $listop
      */
-    public function __construct(array $collection)
+    private $listop;
+
+    public function __construct(callable $listop)
     {
-        $this->collection = $collection;
+        $this->listop = $listop;
     }
 
     /**
-     * of method.
+     * of method
      *
-     * @param mixed $collection
-     *
-     * @return object ListMonad
+     * @param mixed $val
+     * @return Monadic
      */
-    public static function of($collection): self
+    public static function of($val): Monadic
     {
-        return new static(\is_array($collection) ? $collection : [$collection]);
-    }
-
-    /**
-     * ap method.
-     *
-     * @param object ListMonad
-     *
-     * @return object ListMonad
-     */
-    public function ap(Monadic $app): Monadic
-    {
-        $list = $this->extract();
-
-        $result = compose(
-            partialLeft(\Chemem\Bingo\Functional\Algorithms\filter, function ($val) {
-                return \is_callable($val);
-            }),
-            partialLeft(
-                \Chemem\Bingo\Functional\Algorithms\map,
-                function ($func) use ($list) {
-                    $app = function (array $acc = []) use ($func, $list) {
-                        return mapDeep($func, $list);
-                    };
-
-                    return $app();
-                }
-            ),
-            function ($result) use ($list) {
-                return extend($list, ...$result);
-            }
-        );
-
-        return new static($result($app->extract()));
-    }
-
-    /**
-     * bind method.
-     *
-     * @param callable $function
-     *
-     * @return object ListMonad
-     */
-    public function bind(callable $function): Monadic
-    {
-        $concat = compose(
-            function (array $list) use ($function) {
-                return fold(
-                    function ($acc, $item) use ($function) {
-                        $acc[] = $function($item)->extract();
-
-                        return $acc;
-                    },
-                    $list,
-                    []
-                );
-            },
-            partialLeft('array_merge', $this->collection)
-        );
-
-        return self::of(flatten($concat($this->collection)));
-    }
-
-    /**
-     * map method.
-     *
-     * @param callable $function
-     *
-     * @return object ListMonad
-     */
-    public function map(callable $function): Monadic
-    {
-        return $this->bind(function ($list) use ($function) {
-            return self::of($function($list));
+        return new static(function () use ($val) {
+            return is_array($val) ? $val : [$val];
         });
     }
 
     /**
-     * flatMap method.
-     *
-     * @param callable $function
-     *
-     * @return mixed $result
+     * @inheritdoc
      */
-    public function flatMap(callable $function)
+    public function ap(Monadic $list): Monadic
     {
-        return $this
-            ->map($function)
-            ->extract();
+        return $list->map(...$this->extract());
     }
 
     /**
-     * extract method.
-     *
-     * @return array $collection
+     * @inheritdoc
      */
-    public function extract(): array
+    public function map(callable $function): Monadic
     {
-        return flatten($this->collection);
+        return new static(function () use ($function) {
+            return f\mapDeep($function, $this->extract());
+        });
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function bind(callable $function): Monadic
+    {
+        return self::merge($function, $this->extract());
+    }
+
+    public function extract()
+    {
+        return ($this->listop)();
+    }
+
+    private static function merge(callable $function, $list)
+    {
+        $merge = f\compose(
+            // transform every list entry in the list
+            f\partial(f\fold, function ($acc, $val) use ($function) {
+                $acc[] = $function($val)->extract();
+                return $acc;
+            }, $list),
+            f\flatten
+        );
+
+        return new static(function () use ($merge) {
+            return $merge([]);
+        });
     }
 }

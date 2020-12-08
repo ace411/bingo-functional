@@ -13,9 +13,9 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const lastIndexOf = __NAMESPACE__ . '\\lastIndexOf';
 
-function lastIndexOf($list, $value)
+function lastIndexOf($list, $value, $def = null)
 {
-    $func = compose(partial(indexesOf, $list), last);
+  $last = last(indexesOf($list, $value));
 
-    return $func($value);
+  return !$last ? $def : $last;
 }

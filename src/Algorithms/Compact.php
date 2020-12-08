@@ -13,9 +13,9 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const compact = 'Chemem\\Bingo\\Functional\\Algorithms\\compact';
 
-function compact(array $list): array
+function compact($list)
 {
-    return filter(function ($value) {
-        return $value !== false && !\is_null($value);
-    }, $list);
+  return filter(function ($value) {
+    return $value !== false && !\is_null($value);
+  }, $list);
 }

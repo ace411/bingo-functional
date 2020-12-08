@@ -11,18 +11,26 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
+
 const arrayKeysExist = __NAMESPACE__ . '\\arrayKeysExist';
 
 function arrayKeysExist(array $list, ...$keys): bool
 {
-    $intersect = \array_intersect(\array_keys($list), $keys);
-
-    return \count($intersect) !== \count($keys) ? identity(false) : identity(true);
+  return keysExist($list, ...$keys);
 }
 
 const keysExist = __NAMESPACE__ . '\\keysExist';
 
-function keysExist(array $list, ...$keys): bool
+function keysExist($list, ...$keys): bool
 {
-    return arrayKeysExist($list, ...$keys);
+  $check = _fold(function ($acc, $val, $idx) use ($keys) {
+    if (\in_array($idx, $keys)) {
+      $acc[] = $val;
+    }
+
+    return $acc;
+  }, $list, []);
+
+  return \count($check) == \count($keys);
 }
