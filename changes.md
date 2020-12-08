@@ -487,3 +487,57 @@
 - mapDeep()
 
 - filterDeep()
+
+## v1.14.0
+
+- Modified functions
+
+- Added lenses
+
+- Modified List and Writer monads
+
+- Revamped project test suite
+
+  - Split Algorithm tests into individual files
+
+  - Replaced Monad, Applicative, and Immutable tests with Eris-powered fuzzing
+
+  - Added Functor, Applicative, and Monad law evaluations
+
+- Removed `readIO()` function
+
+### Modified Monadic functions
+
+- ListMonad\head()
+
+- ListMonad\tail()
+
+### Modified functions
+
+- compact()
+
+- keysExist()
+
+- reject()
+
+- renameKeys()
+
+- max()
+
+- min()
+
+- firstIndexOf()
+
+- fill()
+
+- every()
+
+- compact()
+
+- mean()
+
+- intersects()
+
+- tail()
+
+- zip()
