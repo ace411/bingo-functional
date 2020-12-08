@@ -42,12 +42,14 @@
         }
     ],
     "require": {
-        "php": ">=7.0.0",
-        "functional-php/pattern-matching": "~0"
+        "php": "~7 || ~8",
+        "functional-php/pattern-matching": "~0",
+        "widmogrod/php-functional": "^6.0"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "~2",
-        "phpunit/phpunit": "~6"
+        "giorgiosironi/eris": "~0",
+        "phpunit/phpunit": "~8 || 9.3.*"
     },
     "suggest": {
         "ext-apcu": "In-memory key-value PHP userland store",
@@ -147,7 +149,8 @@
             "src/Functors/Maybe/functions.php",
             "src/Functors/Applicatives/Applicative/functions.php",
             "src/PatternMatching/functions.php",
-            "src/Algorithms/Internal/functions.php"
+            "src/Algorithms/Internal/functions.php",
+            "tests/functions.php"
         ]
     },
     "autoload-dev": {
