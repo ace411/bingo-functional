@@ -207,4 +207,38 @@ class EitherTest extends \PHPUnit\Framework\TestCase
     $this->assertEquals($res, $partitioned);
     $this->assertTrue(f\keysExist($partitioned, 'left', 'right'));
   }
+
+  public function liftProvider()
+  {
+    return [
+      [
+        function ($fst, $snd) {
+          return $fst / $snd;
+        },
+        0,
+        [null, 3],
+      ],
+      [
+        function ($fst) {
+          return $fst ** 2;
+        },
+        1,
+        [null],
+      ],
+    ];
+  }
+
+  /**
+   * @dataProvider liftProvider
+   */
+  public function testEitherIsLiftable($func, $def, $args)
+  {
+    $lifted = Either\Either::lift($func, Either\Either::left($def));
+    $params = f\map(function ($arg) {
+      return Either\Either::right($arg);
+    }, $args);
+
+    $this->assertInstanceOf(\Closure::class, $lifted);
+    $this->assertInstanceOf(Either\Either::class, $lifted(...$params));
+  }
 }
