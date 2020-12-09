@@ -6,23 +6,23 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class IdentityTest extends \PHPUnit\Framework\TestCase
 {
-    public function contextProvider()
-    {
-        return [
+  public function contextProvider()
+  {
+    return [
       ['foo'],
       [\range(1, 3)],
       [new \stdClass(3)],
       [12],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider contextProvider
-     */
-    public function testidentityReturnsItsArgument($res)
-    {
-        $id = f\identity($res);
+  /**
+   * @dataProvider contextProvider
+   */
+  public function testidentityReturnsItsArgument($res)
+  {
+    $id = f\identity($res);
 
-        $this->assertEquals($id, $res);
-    }
+    $this->assertEquals($id, $res);
+  }
 }

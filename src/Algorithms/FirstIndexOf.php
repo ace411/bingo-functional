@@ -15,17 +15,17 @@ const firstIndexOf = __NAMESPACE__ . '\\firstIndexOf';
 
 function firstIndexOf($list, $value, $def = null)
 {
-    $acc = $def;
+  $acc = $def;
 
-    foreach ($list as $key => $entry) {
-        if ($value == $entry) {
-            $acc = $key;
-        }
-
-        if (\is_object($entry) || \is_array($entry)) {
-            $acc = firstIndexOf($entry, $value, $def);
-        }
+  foreach ($list as $key => $entry) {
+    if ($value == $entry) {
+      $acc = $key;
     }
 
-    return $acc;
+    if (\is_object($entry) || \is_array($entry)) {
+      $acc = firstIndexOf($entry, $value, $def);
+    }
+  }
+
+  return $acc;
 }

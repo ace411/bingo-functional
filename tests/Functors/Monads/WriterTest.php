@@ -11,55 +11,55 @@ use Chemem\Bingo\Functional\Tests as t;
 
 class WriterTest extends \PHPUnit\Framework\TestCase
 {
-    use \Eris\TestTrait;
+  use \Eris\TestTrait;
 
-    /**
-     * @test
-     */
-    public function WriterObeysFunctorLaws()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function WriterObeysFunctorLaws()
+  {
+    $this
       ->forAll(
           Generator\map(function ($int) {
             return [$int, f\concat(' ', 'put', $int)];
-        }, Generator\int())
+          }, Generator\int())
       )
       ->then(function ($input) {
-          $writer = Writer::of(...$input);
-          $fnx = function ($res) {
-              return $res ** 2;
-          };
+        $writer = Writer::of(...$input);
+        $fnx = function ($res) {
+          return $res ** 2;
+        };
 
-          $fny = function ($res) {
-              return $res + 10;
-          };
+        $fny = function ($res) {
+          return $res + 10;
+        };
 
-          $this->assertEquals([
+        $this->assertEquals([
           'identity'    => true,
           'composition' => true,
         ], t\functorLaws($writer, $fnx, $fny));
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function WriterObeysMonadLaws()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function WriterObeysMonadLaws()
+  {
+    $this
       ->forAll(
           Generator\int()
       )
       ->then(function ($input) {
-          $writer = Writer::of($input);
-          $fnx    = function ($res) {
-              return Writer::of($res ** 2, 'square');
-          };
-          $fny    = function ($res) {
-              return Writer::of($res + 10, 'add 10');
-          };
+        $writer = Writer::of($input);
+        $fnx    = function ($res) {
+          return Writer::of($res ** 2, 'square');
+        };
+        $fny    = function ($res) {
+          return Writer::of($res + 10, 'add 10');
+        };
 
-          $this->assertEquals(
+        $this->assertEquals(
               [
             'left-identity'   => true,
             'right-identity'  => true,
@@ -74,42 +74,42 @@ class WriterTest extends \PHPUnit\Framework\TestCase
           )
           );
       });
-    }
+  }
 
-    public function tellProvider()
-    {
-        return [['foo'], [12]];
-    }
+  public function tellProvider()
+  {
+    return [['foo'], [12]];
+  }
 
-    /**
-     * @dataProvider tellProvider
-     */
-    public function testtellProducesWriterMonadOutput($val)
-    {
-        $tell   = Writer\tell($val);
-        $output = Writer\execWriter($tell);
+  /**
+   * @dataProvider tellProvider
+   */
+  public function testtellProducesWriterMonadOutput($val)
+  {
+    $tell   = Writer\tell($val);
+    $output = Writer\execWriter($tell);
 
-        $this->assertInstanceOf(Writer::class, $tell);
-        $this->assertEquals([$val], $output);
-    }
+    $this->assertInstanceOf(Writer::class, $tell);
+    $this->assertEquals([$val], $output);
+  }
 
-    public function mapWriterProvider()
-    {
-        return [
+  public function mapWriterProvider()
+  {
+    return [
       [
         function ($writer) {
-            [$result, [$output]] = $writer;
+          [$result, [$output]] = $writer;
 
-            return [$result ** 2, $output % 2 == 0 ? 'even' : 'odd'];
+          return [$result ** 2, $output % 2 == 0 ? 'even' : 'odd'];
         },
         [2, 5],
         [4, ['odd']],
       ],
       [
         function ($writer) {
-            [$result, [$output]] = $writer;
+          [$result, [$output]] = $writer;
 
-            return [
+          return [
             f\concat('-', 'foo', $result),
             f\concat(':', $output, 'bar'),
           ];
@@ -118,16 +118,16 @@ class WriterTest extends \PHPUnit\Framework\TestCase
         ['foo-foo', ['bar:bar']],
       ],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider mapWriterProvider
-     */
-    public function testmapWriterTransformsBothReturnAndOuputWriterValues($func, $data, $res)
-    {
-        $writer = Writer\mapWriter($func, Writer\writer(...$data));
+  /**
+   * @dataProvider mapWriterProvider
+   */
+  public function testmapWriterTransformsBothReturnAndOuputWriterValues($func, $data, $res)
+  {
+    $writer = Writer\mapWriter($func, Writer\writer(...$data));
 
-        $this->assertInstanceOf(Writer::class, $writer);
-        $this->assertEquals($res, $writer->run());
-    }
+    $this->assertInstanceOf(Writer::class, $writer);
+    $this->assertEquals($res, $writer->run());
+  }
 }

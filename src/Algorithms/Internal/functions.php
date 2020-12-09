@@ -20,7 +20,7 @@ use Chemem\Bingo\Functional\Algorithms as a;
  */
 function _count($list)
 {
-    return \count(\is_array($list) ? $list : \get_object_vars($list));
+  return \count(\is_array($list) ? $list : \get_object_vars($list));
 }
 
 const _count = __NAMESPACE__ . '\\count';
@@ -35,22 +35,22 @@ const _count = __NAMESPACE__ . '\\count';
  * @param bool $left
  */
 function _drop(
-    array $list,
-    int $number,
-    bool $left = false
+  array $list,
+  int $number,
+  bool $left = false
 ): array {
-    $acc        = [];
-    $count      = 0;
-    $toIterate  = $left ? $list : \array_reverse($list);
+  $acc        = [];
+  $count      = 0;
+  $toIterate  = $left ? $list : \array_reverse($list);
 
-    foreach ($toIterate as $idx => $val) {
-        $count += 1;
-        if ($count <= (\count($list) - $number)) {
-            $acc[$idx] = $val;
-        }
+  foreach ($toIterate as $idx => $val) {
+    $count += 1;
+    if ($count <= (\count($list) - $number)) {
+      $acc[$idx] = $val;
     }
+  }
 
-    return $left ? $acc : \array_reverse($acc);
+  return $left ? $acc : \array_reverse($acc);
 }
 
 const _drop = __NAMESPACE__ . '\\_drop';
@@ -64,18 +64,15 @@ const _drop = __NAMESPACE__ . '\\_drop';
  * @param mixed $list
  * @param mixed $acc
  */
-function _fold(
-    callable $func,
-    $list,
-    $acc
-) {
-    if (\is_array($list) || \is_object($list)) {
-        foreach ($list as $idx => $val) {
-            $acc = $func($acc, $val, $idx);
-        }
+function _fold(callable $func, $list, $acc)
+{
+  if (\is_array($list) || \is_object($list)) {
+    foreach ($list as $idx => $val) {
+      $acc = $func($acc, $val, $idx);
     }
+  }
 
-    return $acc;
+  return $acc;
 }
 
 const _fold = __NAMESPACE__ . '\\_fold';
@@ -91,30 +88,30 @@ const _fold = __NAMESPACE__ . '\\_fold';
  */
 function _partial(callable $func, array $args, bool $left = true)
 {
-    $argCount = (new \ReflectionFunction($func))
+  $argCount = (new \ReflectionFunction($func))
         ->getNumberOfRequiredParameters();
 
-    $acc      = function (...$inner) use (&$acc, $func, $argCount, $left) {
-        return function (...$innermost) use (
-            $inner,
-            $acc,
-            $func,
-            $left,
-            $argCount
-        ) {
-            $final = $left ?
-                \array_merge($inner, $innermost) :
-                \array_merge(\array_reverse($innermost), \array_reverse($inner));
+  $acc      = function (...$inner) use (&$acc, $func, $argCount, $left) {
+    return function (...$innermost) use (
+      $inner,
+      $acc,
+      $func,
+      $left,
+      $argCount
+    ) {
+      $final = $left ?
+        \array_merge($inner, $innermost) :
+        \array_merge(\array_reverse($innermost), \array_reverse($inner));
 
-            if ($argCount <= \count($final)) {
-                return $func(...$final);
-            }
+      if ($argCount <= \count($final)) {
+        return $func(...$final);
+      }
 
-            return $acc(...$final);
-        };
+      return $acc(...$final);
     };
+  };
 
-    return $acc(...$args);
+  return $acc(...$args);
 }
 
 const _partial = __NAMESPACE__ . '\\_partial';
@@ -130,25 +127,25 @@ const _partial = __NAMESPACE__ . '\\_partial';
  */
 function _curryN(int $argCount, callable $function, bool $left = true)
 {
-    $acc = function ($args) use ($argCount, $function, $left, &$acc) {
-        return function (...$inner) use (
-            $argCount,
-            $function,
-            $args,
-            $left,
-            $acc
-        ) {
-            $final = \array_merge($args, $inner);
-            if ($argCount <= \count($final)) {
-                return $function(...($left ? $final : \array_reverse($final)));
-            }
+  $acc = function ($args) use ($argCount, $function, $left, &$acc) {
+    return function (...$inner) use (
+      $argCount,
+      $function,
+      $args,
+      $left,
+      $acc
+    ) {
+      $final = \array_merge($args, $inner);
+      if ($argCount <= \count($final)) {
+        return $function(...($left ? $final : \array_reverse($final)));
+      }
 
-            return $acc($final);
-        };
+      return $acc($final);
     };
+  };
 
 
-    return $acc([]);
+  return $acc([]);
 }
 
 const _curryN = __NAMESPACE__ . '\\_curryN';

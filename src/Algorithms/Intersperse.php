@@ -18,8 +18,8 @@ const intersperse = __NAMESPACE__ . '\\intersperse';
 
 function intersperse($element, array $list): array
 {
-    $elem = \array_pad([], \count($list), $element);
-    $res  = \array_merge(...\array_map(null, $list, $elem));
+  $elem = \array_pad([], \count($list), $element);
+  $res  = \array_merge(...\array_map(null, $list, $elem));
 
-    return dropRight($res, 1);
+  return dropRight($res, 1);
 }

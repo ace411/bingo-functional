@@ -6,33 +6,33 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class FilterTest extends \PHPUnit\Framework\TestCase
 {
-    public function contextProvider()
-    {
-        return [
+  public function contextProvider()
+  {
+    return [
       [
         function ($val) {
-            return $val % 2 == 0;
+          return $val % 2 == 0;
         },
         \range(1, 5),
         [1 => 2, 3 => 4],
       ],
       [
         function ($val) {
-            return \mb_strlen($val, 'utf-8') > 3;
+          return \mb_strlen($val, 'utf-8') > 3;
         },
         (object) ['foo', 'bar', 'foo-bar'],
         (object) [2 => 'foo-bar'],
       ],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider contextProvider
-     */
-    public function testfilterRemovesItemsThatDoNotConformToBooleanPredicate($func, $list, $res)
-    {
-        $filter = f\filter($func, $list);
+  /**
+   * @dataProvider contextProvider
+   */
+  public function testfilterRemovesItemsThatDoNotConformToBooleanPredicate($func, $list, $res)
+  {
+    $filter = f\filter($func, $list);
 
-        $this->assertEquals($res, $filter);
-    }
+    $this->assertEquals($res, $filter);
+  }
 }

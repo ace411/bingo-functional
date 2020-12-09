@@ -17,5 +17,5 @@ const dropLeft = __NAMESPACE__ . '\\dropLeft';
 
 function dropLeft(array $list, int $number = 1): array
 {
-    return _drop($list, $number);
+  return _drop($list, $number);
 }

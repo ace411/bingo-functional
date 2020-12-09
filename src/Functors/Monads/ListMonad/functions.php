@@ -28,7 +28,7 @@ const fromValue = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\fromV
 
 function fromValue($value): LMonad
 {
-    return LMonad::of($value);
+  return LMonad::of($value);
 }
 
 /**
@@ -45,17 +45,13 @@ const concat = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\concat';
 
 function concat(LMonad ...$list): LMonad
 {
-    $res = fold(
-        function (array $return, LMonad $list) {
-        $return[] = $list->extract();
+  $res = fold(function (array $return, LMonad $list) {
+    $return[] = $list->extract();
 
-        return $return;
-    },
-        $list,
-        []
-    );
+    return $return;
+  }, $list, []);
 
-    return fromValue(extend(...$res));
+  return fromValue(extend(...$res));
 }
 
 /**
@@ -73,7 +69,7 @@ const prepend = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\prepend
 
 function prepend(LMonad $value, LMonad $list): LMonad
 {
-    return concat($value, $list);
+  return concat($value, $list);
 }
 
 /**
@@ -91,7 +87,7 @@ const append = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\append';
 
 function append(LMonad $value, LMonad $list): LMonad
 {
-    return concat($list, $value);
+  return concat($list, $value);
 }
 
 /**
@@ -107,7 +103,7 @@ const head = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\head';
 
 function head(LMonad $list)
 {
-    return $list->extract();
+  return $list->extract();
 }
 
 /**
@@ -123,8 +119,8 @@ const tail = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\tail';
 
 function tail(LMonad $list)
 {
-    // replace monoid with class containing unit type
-    return new class() {
-        public $value = null;
-    };
+  // replace monoid with class containing unit type
+  return new class() {
+    public $value = null;
+  };
 }

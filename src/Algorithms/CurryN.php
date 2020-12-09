@@ -17,7 +17,7 @@ const curryN = 'Chemem\\Bingo\\Functional\\Algorithms\\curryN';
 
 function curryN(int $paramCount, callable $function)
 {
-    return _curryN($paramCount, $function);
+  return _curryN($paramCount, $function);
 }
 
 /**
@@ -32,5 +32,5 @@ const curryRightN = 'Chemem\\Bingo\\Functional\\Algorithms\\curryRightN';
 
 function curryRightN(int $paramCount, callable $function)
 {
-    return _curryN($paramCount, $function, false);
+  return _curryN($paramCount, $function, false);
 }

@@ -6,9 +6,9 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class IndexesOfTest extends \PHPUnit\Framework\TestCase
 {
-    public function contextProvider()
-    {
-        return [
+  public function contextProvider()
+  {
+    return [
       [
         ['foo' => 'foo', 'bar' => ['baz' => 12]],
         12,
@@ -17,15 +17,15 @@ class IndexesOfTest extends \PHPUnit\Framework\TestCase
       [(object) \range(1, 4), 2, [1]],
       [(object) ['foo', 'bar' => ['bar']], 'baz', []],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider contextProvider
-     */
-    public function testIndexesOfReturnsIndexAssociatedWithSpecifiedValue($list, $val, $res)
-    {
-        $index = f\indexesOf($list, $val);
+  /**
+   * @dataProvider contextProvider
+   */
+  public function testIndexesOfReturnsIndexAssociatedWithSpecifiedValue($list, $val, $res)
+  {
+    $index = f\indexesOf($list, $val);
 
-        $this->assertEquals($res, $index);
-    }
+    $this->assertEquals($res, $index);
+  }
 }

@@ -6,12 +6,12 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class ZipWithTest extends \PHPUnit\Framework\TestCase
 {
-    public function contextProvider()
-    {
-        return [
+  public function contextProvider()
+  {
+    return [
       [
         function ($int, $str) {
-            return $int + \mb_strlen($str, 'utf-8');
+          return $int + \mb_strlen($str, 'utf-8');
         },
         [\range(1, 3), ['foo', 'bar', 'baz']],
         \range(4, 6),
@@ -22,15 +22,15 @@ class ZipWithTest extends \PHPUnit\Framework\TestCase
         ['foo, fooz', 'bar, baz'],
       ],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider contextProvider
-     */
-    public function testzipWithZipsListInAccordanceWithFunctionRubric($func, $lists, $res)
-    {
-        $zipped = f\zipWith($func, ...$lists);
+  /**
+   * @dataProvider contextProvider
+   */
+  public function testzipWithZipsListInAccordanceWithFunctionRubric($func, $lists, $res)
+  {
+    $zipped = f\zipWith($func, ...$lists);
 
-        $this->assertEquals($res, $zipped);
-    }
+    $this->assertEquals($res, $zipped);
+  }
 }

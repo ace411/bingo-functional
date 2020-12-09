@@ -25,14 +25,14 @@ use Chemem\Bingo\Functional\PatternMatching as p;
  */
 function getClassShortName($obj): string
 {
-    $ref = function ($item) {
-        return new \ReflectionClass($item);
-    };
+  $ref = function ($item) {
+    return new \ReflectionClass($item);
+  };
 
-    $name   = $ref($obj)->getName();
-    $parent = $ref($name)->getParentClass();
+  $name   = $ref($obj)->getName();
+  $parent = $ref($name)->getParentClass();
 
-    return $parent == false ?
+  return $parent == false ?
     $ref($obj)->getShortName() :
     $ref(f\head($parent))->getShortName();
 }
@@ -53,33 +53,33 @@ const getClassShortName = __NAMESPACE__ . '\\getClassShortName';
  */
 function assertEquals(object $fst, object $snd, $env = null): bool
 {
-    return p\patternMatch([
+  return p\patternMatch([
     '["Maybe", "Maybe"]'          => function () use ($fst, $snd) {
-        return $fst->getJust() == $snd->getJust();
+      return $fst->getJust() == $snd->getJust();
     },
     '["Either", "Either"]'        => function () use ($fst, $snd) {
-        return $fst->isLeft() == $snd->isLeft() || $fst->isRight() == $fst->isRight();
+      return $fst->isLeft() == $snd->isLeft() || $fst->isRight() == $fst->isRight();
     },
     '["ListMonad", "ListMonad"]'  => function () use ($fst, $snd) {
-        return $fst->extract() == $snd->extract();
+      return $fst->extract() == $snd->extract();
     },
     '["IO", "IO"]'                => function () use ($fst, $snd) {
-        return $fst->exec() == $snd->exec();
+      return $fst->exec() == $snd->exec();
     },
     '["Reader", "Reader"]'        => function () use ($fst, $snd, $env) {
-        return $fst->run($env) == $snd->run($env);
+      return $fst->run($env) == $snd->run($env);
     },
     '["State", "State"]'          => function () use ($fst, $snd, $env) {
-        return $fst->run($env) == $snd->run($env);
+      return $fst->run($env) == $snd->run($env);
     },
     '["Writer", "Writer"]'        => function () use ($fst, $snd) {
-        return $fst->run() == $snd->run();
+      return $fst->run() == $snd->run();
     },
     '["Applicative", "Applicative"]' => function () use ($fst, $snd) {
-        return $fst->getValue() == $snd->getValue();
+      return $fst->getValue() == $snd->getValue();
     },
     '_'                           => function () {
-        return false;
+      return false;
     },
   ], f\map(getClassShortName, [$fst, $snd]));
 }
@@ -104,9 +104,9 @@ function lensLaws(
     $store,
     $val = null
 ): array {
-    $lens = l\lens($get, $set);
+  $lens = l\lens($get, $set);
 
-    return [
+  return [
     // view l (set l x) = x
     'first'   => l\view($lens, l\set($lens, $val, $store)) == $val,
     // set s y . set s x = set s y
@@ -138,9 +138,9 @@ function lensFunctorLaws(
     callable $fnx,
     callable $fny
 ): array {
-    $lens = l\lens($get, $set);
+  $lens = l\lens($get, $set);
 
-    return [
+  return [
     'identity'    => l\over($lens, f\identity, $store) == $store,
     'composition' =>
       l\over($lens, f\compose($fnx, $fny), $store) ==
@@ -167,7 +167,7 @@ function functorLaws(
     callable $fny,
     $aux = null
 ): array {
-    return [
+  return [
     // F(id) = id
     'identity'    => assertEquals($functor, $functor->map(f\identity), $aux),
     // F(g o f) = F(g) o F(f)
@@ -203,7 +203,7 @@ function monadLaws(
     $val,
     $aux = null
 ): array {
-    return [
+  return [
     // x >>= f = f o x
     'left-identity'   => assertEquals($monad->bind($fnx), $fnx($val), $aux),
     // m >>= return = m
@@ -213,7 +213,7 @@ function monadLaws(
         $monad->bind($fnx)->bind($fny),
         $monad->bind(function ($res) use ($fnx, $fny) {
           return $fnx($res)->bind($fny);
-      }),
+        }),
         $aux
     ),
   ];
@@ -234,13 +234,13 @@ const monadLaws = __NAMESPACE__ . '\\monadLaws';
  */
 function applicativeLaws(object $app, callable $func, $val): array
 {
-    // place value in applicative
-    $purex = $app->pure($val);
+  // place value in applicative
+  $purex = $app->pure($val);
 
-    // place function in applicative context
-    $puref = $app->pure($func);
+  // place function in applicative context
+  $puref = $app->pure($func);
 
-    return [
+  return [
     // pure id <*> v = v
     'identity' => $app->pure(f\identity)->ap($purex)->getValue() == $val,
     // u <*> pure v = pure ($ v) <*> u
@@ -248,7 +248,7 @@ function applicativeLaws(object $app, callable $func, $val): array
         $app->ap($purex),
         $app
         ->pure(function ($func) use ($val) {
-            return $func($val);
+          return $func($val);
         })
         ->ap($app)
     ),

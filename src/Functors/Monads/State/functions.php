@@ -28,9 +28,9 @@ const state = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\state';
 
 function state(callable $action): StateMonad
 {
-    return StateMonad::of(function ($state) use ($action) {
-        return $action($state);
-    });
+  return StateMonad::of(function ($state) use ($action) {
+    return $action($state);
+  });
 }
 
 /**
@@ -47,9 +47,9 @@ const put = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\put';
 
 function put($value): StateMonad
 {
-    return state(function ($state) use ($value) {
-        return $value;
-    });
+  return state(function ($state) use ($value) {
+    return $value;
+  });
 }
 
 /**
@@ -64,9 +64,9 @@ const get = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\get';
 
 function get(): StateMonad
 {
-    return state(function ($state) {
-        return [$state, $state];
-    });
+  return state(function ($state) {
+    return [$state, $state];
+  });
 }
 
 /**
@@ -81,9 +81,9 @@ function get(): StateMonad
  */
 function gets(callable $projection): StateMonad
 {
-    return state(function ($state) use ($projection) {
-        return [$projection($state), $state];
-    });
+  return state(function ($state) use ($projection) {
+    return [$projection($state), $state];
+  });
 }
 
 /**
@@ -100,9 +100,9 @@ const modify = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\modify';
 
 function modify(callable $function): StateMonad
 {
-    return StateMonad::of(function ($state) use ($function) {
-        return [null, $function($state)];
-    });
+  return StateMonad::of(function ($state) use ($function) {
+    return [null, $function($state)];
+  });
 }
 
 /**
@@ -120,7 +120,7 @@ const runState = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\runState';
 
 function runState(StateMonad $monad, $state): array
 {
-    return $monad->run($state);
+  return $monad->run($state);
 }
 
 /**
@@ -138,9 +138,9 @@ const evalState = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\evalState
 
 function evalState(StateMonad $monad, $state)
 {
-    list($final) = $monad->run($state);
+  list($final) = $monad->run($state);
 
-    return $final;
+  return $final;
 }
 
 /**
@@ -158,7 +158,7 @@ const execState = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\execState
 
 function execState(StateMonad $monad, $state)
 {
-    list(, $final) = $monad->run($state);
+  list(, $final) = $monad->run($state);
 
-    return $final;
+  return $final;
 }

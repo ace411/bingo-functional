@@ -17,15 +17,15 @@ const reject = 'Chemem\\Bingo\\Functional\\Algorithms\\reject';
 
 function reject(callable $func, $list)
 {
-    return _fold(function ($acc, $val, $idx) use ($func) {
-        if ($func($val)) {
-            if (\is_object($acc)) {
-                unset($acc->{$idx});
-            } elseif (\is_array($acc)) {
-                unset($acc[$idx]);
-            }
-        }
+  return _fold(function ($acc, $val, $idx) use ($func) {
+    if ($func($val)) {
+      if (\is_object($acc)) {
+        unset($acc->{$idx});
+      } elseif (\is_array($acc)) {
+        unset($acc[$idx]);
+      }
+    }
 
-        return $acc;
-    }, $list, $list);
+    return $acc;
+  }, $list, $list);
 }

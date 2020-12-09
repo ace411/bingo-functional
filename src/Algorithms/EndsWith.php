@@ -15,11 +15,11 @@ const endsWith = __NAMESPACE__ . '\\endsWith';
 
 function endsWith(string $haystack, string $needle): bool
 {
-    $strLen = \mb_strlen($needle, 'utf-8');
+  $strLen = \mb_strlen($needle, 'utf-8');
 
-    if ($strLen == 0) {
-        return false;
-    }
+  if ($strLen == 0) {
+    return false;
+  }
 
-    return \substr($haystack, -$strLen) === $needle;
+  return \substr($haystack, -$strLen) === $needle;
 }

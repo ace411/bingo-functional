@@ -15,7 +15,7 @@ const lastIndexOf = __NAMESPACE__ . '\\lastIndexOf';
 
 function lastIndexOf($list, $value, $def = null)
 {
-    $last = last(indexesOf($list, $value));
+  $last = last(indexesOf($list, $value));
 
-    return !$last ? $def : $last;
+  return !$last ? $def : $last;
 }

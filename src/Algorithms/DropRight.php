@@ -17,5 +17,5 @@ const dropRight = 'Chemem\\Bingo\\Functional\\Algorithms\\dropRight';
 
 function dropRight(array $list, int $number = 1): array
 {
-    return _drop($list, $number, true);
+  return _drop($list, $number, true);
 }

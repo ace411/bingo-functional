@@ -15,11 +15,11 @@ const mean = 'Chemem\\Bingo\\Functional\\Algorithms\\mean';
 
 function mean($list)
 {
-    [$dividend, $divisor] = fold(function ($acc, $val) {
-        [$div, $count] = $acc;
+  [$dividend, $divisor] = fold(function ($acc, $val) {
+    [$div, $count] = $acc;
 
-        return [$div + $val, $count + 1];
-    }, $list, [0, 0]);
+    return [$div + $val, $count + 1];
+  }, $list, [0, 0]);
 
-    return $dividend / $divisor;
+  return $dividend / $divisor;
 }

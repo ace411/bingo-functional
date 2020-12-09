@@ -6,9 +6,9 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class FirstIndexOfTest extends \PHPUnit\Framework\TestCase
 {
-    public function contextProvider()
-    {
-        return [
+  public function contextProvider()
+  {
+    return [
       [
         [
           'foo' => [
@@ -22,15 +22,15 @@ class FirstIndexOfTest extends \PHPUnit\Framework\TestCase
       ],
       [(object) ['foo', 'bar'], 'baz', 'undefined', 'undefined'],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider contextProvider
-     */
-    public function testfirstIndexOfComputesFirstIndexOfValue($list, $key, $def, $res)
-    {
-        $first = f\firstIndexOf($list, $key, $def);
+  /**
+   * @dataProvider contextProvider
+   */
+  public function testfirstIndexOfComputesFirstIndexOfValue($list, $key, $def, $res)
+  {
+    $first = f\firstIndexOf($list, $key, $def);
 
-        $this->assertEquals($res, $first);
-    }
+    $this->assertEquals($res, $first);
+  }
 }

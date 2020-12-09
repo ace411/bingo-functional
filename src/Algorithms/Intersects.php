@@ -16,36 +16,36 @@ const intersects = 'Chemem\\Bingo\\Functional\\Algorithms\\intersects';
 
 function intersects($first, $second): bool
 {
-    if (\is_object($first) && \is_object($snd)) {
-        $first  = \get_object_vars($first);
-        $second = \get_object_vars($second);
-    }
+  if (\is_object($first) && \is_object($snd)) {
+    $first  = \get_object_vars($first);
+    $second = \get_object_vars($second);
+  }
 
-    $fsize     = \count($first);
-    $ssize     = \count($second);
-    $intersect = false;
+  $fsize     = \count($first);
+  $ssize     = \count($second);
+  $intersect = false;
 
-    if ($fsize > $ssize) {
-        foreach ($second as $val) {
-            if (\in_array($val, $first)) {
-                $intersect = true;
+  if ($fsize > $ssize) {
+    foreach ($second as $val) {
+      if (\in_array($val, $first)) {
+        $intersect = true;
         
-                if ($intersect == true) {
-                    break;
-                }
-            }
+        if ($intersect == true) {
+          break;
         }
-    } else {
-        foreach ($first as $val) {
-            if (\in_array($val, $second)) {
-                $intersect = true;
-
-                if ($intersect == true) {
-                    break;
-                }
-            }
-        }
+      }
     }
+  } else {
+    foreach ($first as $val) {
+      if (\in_array($val, $second)) {
+        $intersect = true;
 
-    return $intersect;
+        if ($intersect == true) {
+          break;
+        }
+      }
+    }
+  }
+
+  return $intersect;
 }

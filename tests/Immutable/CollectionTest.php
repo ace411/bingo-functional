@@ -11,14 +11,14 @@ use Chemem\Bingo\Functional\Immutable\Collection;
 
 class CollectionTest extends \PHPUnit\Framework\TestCase
 {
-    use \Eris\TestTrait;
+  use \Eris\TestTrait;
 
-    /**
-     * @test
-     */
-    public function mapTransformsEveryValueInCollection()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function mapTransformsEveryValueInCollection()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\names(),
@@ -26,20 +26,20 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($list) {
-          $lst = Collection::from($list)->map('strtoupper');
+        $lst = Collection::from($list)->map('strtoupper');
 
-          $this->assertInstanceOf(Collection::class, $lst);
-          $this->assertEquals(f\map('strtoupper', $list), $lst->toArray());
-          $this->assertEquals(\count($list), $lst->getSize());
+        $this->assertInstanceOf(Collection::class, $lst);
+        $this->assertEquals(f\map('strtoupper', $list), $lst->toArray());
+        $this->assertEquals(\count($list), $lst->getSize());
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function flatMapWorksLikeMapButReturnsArray()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function flatMapWorksLikeMapButReturnsArray()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\names(),
@@ -47,20 +47,20 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($list) {
-          $lst = Collection::from($list)->flatMap('strtoupper');
+        $lst = Collection::from($list)->flatMap('strtoupper');
 
-          $this->assertIsArray($lst);
-          $this->assertEquals(f\map('strtoupper', $list), $lst);
-          $this->assertEquals(\count($list), \count($lst));
+        $this->assertIsArray($lst);
+        $this->assertEquals(f\map('strtoupper', $list), $lst);
+        $this->assertEquals(\count($list), \count($lst));
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function filterRemovesElementsThatConformToBooleanPredicate()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function filterRemovesElementsThatConformToBooleanPredicate()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\names(),
@@ -68,19 +68,19 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($list) {
-          $lst = Collection::from($list)->filter('is_string');
+        $lst = Collection::from($list)->filter('is_string');
 
-          $this->assertInstanceOf(Collection::class, $lst);
-          $this->assertEquals(f\filter('is_string', $list), $lst->toArray());
+        $this->assertInstanceOf(Collection::class, $lst);
+        $this->assertEquals(f\filter('is_string', $list), $lst->toArray());
       });
-    }
+  }
   
-    /**
-     * @test
-     */
-    public function rejectRemovesElementsThatConformToBooleanPredicate()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function rejectRemovesElementsThatConformToBooleanPredicate()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\names(),
@@ -88,19 +88,19 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($list) {
-          $lst = Collection::from($list)->reject('is_string');
+        $lst = Collection::from($list)->reject('is_string');
 
-          $this->assertInstanceOf(Collection::class, $lst);
-          $this->assertEquals(f\reject('is_string', $list), $lst->toArray());
+        $this->assertInstanceOf(Collection::class, $lst);
+        $this->assertEquals(f\reject('is_string', $list), $lst->toArray());
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function anyChecksIfAnyElementInCollectionConformsToBooleanPredicate()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function anyChecksIfAnyElementInCollectionConformsToBooleanPredicate()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\names(),
@@ -108,18 +108,18 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($list) {
-          $any = Collection::from($list)->any('is_string');
+        $any = Collection::from($list)->any('is_string');
 
-          $this->assertIsBool($any);
+        $this->assertIsBool($any);
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function everyChecksIfEachElementInCollectionConformsToBooleanPredicate()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function everyChecksIfEachElementInCollectionConformsToBooleanPredicate()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\names(),
@@ -127,18 +127,18 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($list) {
-          $every = Collection::from($list)->every('is_string');
+        $every = Collection::from($list)->every('is_string');
 
-          $this->assertIsBool($every);
+        $this->assertIsBool($every);
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function foldTransformsCollectionIntoSingleValue()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function foldTransformsCollectionIntoSingleValue()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\names(),
@@ -148,23 +148,23 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
           Generator\constant('')
       )
       ->then(function ($list, $acc) {
-          $names = Collection::from($list)
+        $names = Collection::from($list)
           ->fold(function ($acc, $name) {
-              $acc .= f\concat(', ', $name, '');
+            $acc .= f\concat(', ', $name, '');
 
-              return $acc;
+            return $acc;
           }, $acc);
 
-          $this->assertTrue(\gettype($names) == \gettype($acc));
+        $this->assertTrue(\gettype($names) == \gettype($acc));
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function mergeConcatenatesTwoCollections()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function mergeConcatenatesTwoCollections()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\names(),
@@ -176,20 +176,20 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($fst, $snd) {
-          $lst = Collection::from($fst)->merge(Collection::from($snd));
+        $lst = Collection::from($fst)->merge(Collection::from($snd));
 
-          $this->assertInstanceOf(Collection::class, $lst);
-          $this->assertEquals(4, $lst->count());
-          $this->assertEquals(f\extend($fst, $snd), $lst->toArray());
+        $this->assertInstanceOf(Collection::class, $lst);
+        $this->assertEquals(4, $lst->count());
+        $this->assertEquals(f\extend($fst, $snd), $lst->toArray());
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function mergeNConcatenatesMultipleCollections()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function mergeNConcatenatesMultipleCollections()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\names(),
@@ -203,21 +203,21 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($fst, $snd, $thd) {
-          $lst = Collection::from($fst)
+        $lst = Collection::from($fst)
           ->mergeN(Collection::from($snd), Collection::from($thd));
 
-          $this->assertInstanceOf(Collection::class, $lst);
-          $this->assertEquals(4, $lst->getSize());
-          $this->assertEquals(f\extend($fst, $snd, $thd), $lst->toArray());
+        $this->assertInstanceOf(Collection::class, $lst);
+        $this->assertEquals(4, $lst->getSize());
+        $this->assertEquals(f\extend($fst, $snd, $thd), $lst->toArray());
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function sliceRemovesElementsFromTheFrontOfCollection()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function sliceRemovesElementsFromTheFrontOfCollection()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\string(),
@@ -226,20 +226,20 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($list) {
-          $lst = Collection::from($list)->slice(1);
+        $lst = Collection::from($list)->slice(1);
 
-          $this->assertEquals(2, $lst->count());
-          $this->assertInstanceOf(Collection::class, $lst);
-          $this->assertEquals(\array_slice($list, 1), $lst->toArray());
+        $this->assertEquals(2, $lst->count());
+        $this->assertInstanceOf(Collection::class, $lst);
+        $this->assertEquals(\array_slice($list, 1), $lst->toArray());
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function reversePerformsListOrderReversal()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function reversePerformsListOrderReversal()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\string(),
@@ -248,19 +248,19 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($list) {
-          $lst = Collection::from($list)->reverse();
+        $lst = Collection::from($list)->reverse();
 
-          $this->assertEquals(3, $lst->getSize());
-          $this->assertEquals(\array_reverse($list), $lst->toArray());
+        $this->assertEquals(3, $lst->getSize());
+        $this->assertEquals(\array_reverse($list), $lst->toArray());
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function fillOutputsCollectionWithArbitraryValuesAffixedToDefinedIndexes()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function fillOutputsCollectionWithArbitraryValuesAffixedToDefinedIndexes()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\int(),
@@ -270,23 +270,23 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
           Generator\constant('foo')
       )
       ->then(function ($list, $const) {
-          $lst = Collection::from($list)->fill($const, 1, 2);
+        $lst = Collection::from($list)->fill($const, 1, 2);
 
-          $this->assertEquals(3, $lst->getSize());
-          $this->assertInstanceOf(Collection::class, $lst);
-          $this->assertEquals(
+        $this->assertEquals(3, $lst->getSize());
+        $this->assertInstanceOf(Collection::class, $lst);
+        $this->assertEquals(
               f\extend([f\head($list)], [$const], [$const]),
               $lst->toArray()
           );
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function fetchOutputsKeyGroupedDataInCollection()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function fetchOutputsKeyGroupedDataInCollection()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\associative([
@@ -301,22 +301,22 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
           Generator\elements('num', 'name')
       )
       ->then(function ($list, $key) {
-          $lst = Collection::from($list)->fetch($key);
+        $lst = Collection::from($list)->fetch($key);
 
-          $this->assertInstanceOf(Collection::class, $lst);
-          $this->assertTrue(
+        $this->assertInstanceOf(Collection::class, $lst);
+        $this->assertTrue(
               $lst->toArray() == [35, 6] ||
           $lst->toArray() == ['Durant', 'LeBron']
           );
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function containsChecksIfValueExistsInCollection()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function containsChecksIfValueExistsInCollection()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\constant('lib'),
@@ -325,19 +325,19 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($list) {
-          $lst = Collection::from($list);
+        $lst = Collection::from($list);
 
-          $this->assertIsBool($lst->contains('lib'));
-          $this->assertIsBool($lst->contains('bingo_functional'));
+        $this->assertIsBool($lst->contains('lib'));
+        $this->assertIsBool($lst->contains('bingo_functional'));
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function uniqueOutputsCollectionWithoutDuplicateEntries()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function uniqueOutputsCollectionWithoutDuplicateEntries()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\constant('foo'),
@@ -346,19 +346,19 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($list) {
-          $lst = Collection::from($list)->unique();
+        $lst = Collection::from($list)->unique();
 
-          $this->assertInstanceOf(Collection::class, $lst);
-          $this->assertEquals(\array_values(f\unique($list)), $lst->toArray());
+        $this->assertInstanceOf(Collection::class, $lst);
+        $this->assertEquals(\array_values(f\unique($list)), $lst->toArray());
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function implodeJoinsCollectionElementsWithString()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function implodeJoinsCollectionElementsWithString()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\constant('foo'),
@@ -367,19 +367,19 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($list) {
-          $str = Collection::from($list)->implode(':');
+        $str = Collection::from($list)->implode(':');
 
-          $this->assertIsString($str);
-          $this->assertEquals('foo:bar:baz', $str);
+        $this->assertIsString($str);
+        $this->assertEquals('foo:bar:baz', $str);
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function headOutputsFirstElementInCollection()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function headOutputsFirstElementInCollection()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\constant('foo'),
@@ -387,18 +387,18 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($list) {
-          $fst = Collection::from($list)->head();
+        $fst = Collection::from($list)->head();
 
-          $this->assertEquals('foo', $fst);
+        $this->assertEquals('foo', $fst);
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function lastOutputsLastElementInCollection()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function lastOutputsLastElementInCollection()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\int(),
@@ -406,18 +406,18 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($list) {
-          $lst = Collection::from($list)->last();
+        $lst = Collection::from($list)->last();
 
-          $this->assertEquals('foo', $lst);
+        $this->assertEquals('foo', $lst);
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function tailOutputsAllCollectionElementsButTheFirst()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function tailOutputsAllCollectionElementsButTheFirst()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\int(),
@@ -426,20 +426,20 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($list) {
-          $lst = Collection::from($list)->tail();
+        $lst = Collection::from($list)->tail();
 
-          $this->assertInstanceOf(Collection::class, $lst);
-          $this->assertEquals(2, \count($lst));
-          $this->assertEquals(\array_values(f\tail($list)), $lst->toArray());
+        $this->assertInstanceOf(Collection::class, $lst);
+        $this->assertEquals(2, \count($lst));
+        $this->assertEquals(\array_values(f\tail($list)), $lst->toArray());
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function intersectsChecksIfTwoCollectionsIntersect()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function intersectsChecksIfTwoCollectionsIntersect()
+  {
+    $this
       ->forAll(
           Generator\tuple(
             Generator\int(),
@@ -451,10 +451,10 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         )
       )
       ->then(function ($fst, $snd) {
-          $intersects = Collection::from($fst)
+        $intersects = Collection::from($fst)
           ->intersects(Collection::from($snd));
 
-          $this->assertIsBool($intersects);
+        $this->assertIsBool($intersects);
       });
-    }
+  }
 }

@@ -17,15 +17,15 @@ const difference = __NAMESPACE__ . '\\difference';
 
 function difference(array ...$array): array
 {
-    $ret = compose(flatten, function (array $data) {
-        return fold(function ($res, $val) use ($data) {
-            if (countOfValue($data, $val) < 2) {
-                $res[] = $val;
-            }
+  $ret = compose(flatten, function (array $data) {
+    return fold(function ($res, $val) use ($data) {
+      if (countOfValue($data, $val) < 2) {
+        $res[] = $val;
+      }
 
-            return $res;
-        }, $data, []);
-    });
+      return $res;
+    }, $data, []);
+  });
 
-    return $ret($array);
+  return $ret($array);
 }

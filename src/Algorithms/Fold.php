@@ -17,7 +17,7 @@ const fold = 'Chemem\\Bingo\\Functional\\Algorithms\\fold';
 
 function fold(callable $func, $list, $acc)
 {
-    return _fold($func, $list, $acc);
+  return _fold($func, $list, $acc);
 }
 
 /**
@@ -32,7 +32,7 @@ const foldRight = 'Chemem\\Bingo\\Functional\\Algorithms\\foldRight';
 
 function foldRight(callable $func, $list, $acc)
 {
-    return _fold(
+  return _fold(
         $func,
         \array_reverse(\is_object($list) ? \get_object_vars($list) : $list),
         $acc
@@ -51,7 +51,7 @@ const reduceRight = 'Chemem\\Bingo\\Functional\\Algorithms\\reduceRight';
 
 function reduceRight(callable $func, array $list, $acc)
 {
-    return foldRight($func, $list, $acc);
+  return foldRight($func, $list, $acc);
 }
 
 /**
@@ -66,5 +66,5 @@ const reduce = 'Chemem\\Bingo\\Functional\\Algorithms\\reduce';
 
 function reduce(callable $func, array $list, $acc)
 {
-    return fold($func, $list, $acc);
+  return fold($func, $list, $acc);
 }

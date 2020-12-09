@@ -15,14 +15,14 @@ const partition = 'Chemem\\Bingo\\Functional\\Algorithms\\partition';
 
 function partition(int $number, array $list): array
 {
-    $count = \count($list);
-    if ($number < 2 || $count < 2) {
-        return [$list];
-    }
+  $count = \count($list);
+  if ($number < 2 || $count < 2) {
+    return [$list];
+  }
 
-    $pSize = \ceil($count / $number);
+  $pSize = \ceil($count / $number);
 
-    return \array_merge(
+  return \array_merge(
         [\array_slice($list, 0, $pSize)],
         partition($number - 1, \array_slice($list, $pSize))
     );

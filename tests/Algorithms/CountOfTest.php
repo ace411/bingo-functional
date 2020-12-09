@@ -6,9 +6,9 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class CountOfTest extends \PHPUnit\Framework\TestCase
 {
-    public function contextProvider()
-    {
-        return [
+  public function contextProvider()
+  {
+    return [
       [
         [
           'foo' => [
@@ -31,31 +31,31 @@ class CountOfTest extends \PHPUnit\Framework\TestCase
         [1, 2],
       ],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider contextProvider
-     */
-    public function testcountOfValueComputesFrequencyOfSpecifiedListValue($list, $search, $res)
-    {
-        [$value,] = $search;
-        [$ret,]   = $res;
+  /**
+   * @dataProvider contextProvider
+   */
+  public function testcountOfValueComputesFrequencyOfSpecifiedListValue($list, $search, $res)
+  {
+    [$value,] = $search;
+    [$ret,]   = $res;
 
-        $count = f\countOfValue($list, $value);
+    $count = f\countOfValue($list, $value);
 
-        $this->assertEquals($ret, $count);
-    }
+    $this->assertEquals($ret, $count);
+  }
 
-    /**
-     * @dataProvider contextProvider
-     */
-    public function testcountOfKeyComputesFrequencyOfSpecifiedListKey()
-    {
-        [, $key] = $search;
-        [, $ret] = $res;
+  /**
+   * @dataProvider contextProvider
+   */
+  public function testcountOfKeyComputesFrequencyOfSpecifiedListKey()
+  {
+    [, $key] = $search;
+    [, $ret] = $res;
 
-        $count = f\countOfKey($list, $key);
+    $count = f\countOfKey($list, $key);
 
-        $this->assertEquals($ret, $count);
-    }
+    $this->assertEquals($ret, $count);
+  }
 }

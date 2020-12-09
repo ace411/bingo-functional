@@ -15,11 +15,11 @@ const partitionBy = __NAMESPACE__ . '\\partitionBy';
 
 function partitionBy(int $partitionSize, array $list): array
 {
-    if ($partitionSize == 0) {
-        return $list;
-    }
+  if ($partitionSize == 0) {
+    return $list;
+  }
 
-    $number = (int) \ceil(\count($list) / $partitionSize);
+  $number = (int) \ceil(\count($list) / $partitionSize);
 
-    return partition($number, $list);
+  return partition($number, $list);
 }

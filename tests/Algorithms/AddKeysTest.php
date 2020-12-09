@@ -6,9 +6,9 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class AddKeysTest extends \PHPUnit\Framework\TestCase
 {
-    public function contextProvider()
-    {
-        return [
+  public function contextProvider()
+  {
+    return [
       [
         [
           'foo' => 'foo',
@@ -24,15 +24,15 @@ class AddKeysTest extends \PHPUnit\Framework\TestCase
         (object) [],
       ],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider contextProvider
-     */
-    public function testAddKeysReturnsListContainingValuesAssociatedWithSpecifiedKeys($list, $keys, $res)
-    {
-        $assoc = f\addKeys($list, ...$keys);
+  /**
+   * @dataProvider contextProvider
+   */
+  public function testAddKeysReturnsListContainingValuesAssociatedWithSpecifiedKeys($list, $keys, $res)
+  {
+    $assoc = f\addKeys($list, ...$keys);
 
-        $this->assertEquals($res, $assoc);
-    }
+    $this->assertEquals($res, $assoc);
+  }
 }

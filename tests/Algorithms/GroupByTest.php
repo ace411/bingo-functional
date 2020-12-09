@@ -6,9 +6,9 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class GroupByTest extends \PHPunit\Framework\TestCase
 {
-    public function contextProvider()
-    {
-        return [
+  public function contextProvider()
+  {
+    return [
       [
         [
           ['name' => 'butler', 'pos' => 'sg'],
@@ -27,15 +27,15 @@ class GroupByTest extends \PHPunit\Framework\TestCase
         ],
       ],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider contextProvider
-     */
-    public function testgroupBycreatesArraysGroupedByValueAssociatedWithSpecifiedKey($list, $key, $res)
-    {
-        $group = f\groupBy($list, $key);
+  /**
+   * @dataProvider contextProvider
+   */
+  public function testgroupBycreatesArraysGroupedByValueAssociatedWithSpecifiedKey($list, $key, $res)
+  {
+    $group = f\groupBy($list, $key);
 
-        $this->assertEquals($res, $group);
-    }
+    $this->assertEquals($res, $group);
+  }
 }

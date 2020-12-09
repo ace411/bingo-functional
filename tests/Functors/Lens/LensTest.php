@@ -11,14 +11,14 @@ use Chemem\Bingo\Functional\Tests as t;
 
 class LensTest extends \PHPUnit\Framework\TestCase
 {
-    use \Eris\TestTrait;
+  use \Eris\TestTrait;
 
-    /**
-     * @test
-     */
-    public function LensObeysLensLaws()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function LensObeysLensLaws()
+  {
+    $this
       ->forAll(
           Generator\associative([
           'foo' => Generator\string(),
@@ -28,27 +28,27 @@ class LensTest extends \PHPUnit\Framework\TestCase
           Generator\float(),
       )
       ->then(function ($list, $val) {
-          $laws = t\lensLaws(
+        $laws = t\lensLaws(
               f\partialRight(f\pluck, 'foo'),
               f\curry(f\assoc)('foo'),
               $list,
               $val
           );
 
-          $this->assertEquals([
+        $this->assertEquals([
           'first'   => true,
           'second'  => true,
           'third'   => true,
         ], $laws);
       });
-    }
+  }
 
-    /**
-     * @test
-     */
-    public function lensObeysFunctorLaws()
-    {
-        $this
+  /**
+   * @test
+   */
+  public function lensObeysFunctorLaws()
+  {
+    $this
       ->forAll(
           Generator\associative([
           'foo' => Generator\string(),
@@ -57,7 +57,7 @@ class LensTest extends \PHPUnit\Framework\TestCase
         ])
       )
       ->then(function ($store) {
-          $laws = t\lensFunctorLaws(
+        $laws = t\lensFunctorLaws(
               f\partialRight(f\pluck, 'foo'),
               f\curry(f\assoc)('foo'),
               $store,
@@ -65,16 +65,16 @@ class LensTest extends \PHPUnit\Framework\TestCase
               'lcfirst'
           );
 
-          $this->assertEquals([
+        $this->assertEquals([
           'identity'    => true,
           'composition' => true,
         ], $laws);
       });
-    }
+  }
 
-    public function lensPathProvider()
-    {
-        return [
+  public function lensPathProvider()
+  {
+    return [
       [
         ['foo', 0],
         ['foo' => \range(1, 3)],
@@ -86,35 +86,35 @@ class LensTest extends \PHPUnit\Framework\TestCase
         \range(1, 2),
       ],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider lensPathProvider
-     */
-    public function testlensPathCreatesLensFromTraversablePath($path, $store, $res)
-    {
-        $lens = l\lensPath(...$path);
+  /**
+   * @dataProvider lensPathProvider
+   */
+  public function testlensPathCreatesLensFromTraversablePath($path, $store, $res)
+  {
+    $lens = l\lensPath(...$path);
 
-        $this->assertInstanceOf(\Closure::class, $lens);
-        $this->assertEquals($res, l\view($lens, $store));
-    }
+    $this->assertInstanceOf(\Closure::class, $lens);
+    $this->assertEquals($res, l\view($lens, $store));
+  }
 
-    public function lensKeyProvider()
-    {
-        return [
+  public function lensKeyProvider()
+  {
+    return [
       ['bar', ['foo' => 'fooz', 'bar' => 'baz'], 'baz'],
       [1, \range(4, 7), 5],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider lensKeyProvider
-     */
-    public function testlensKeyCreatesLensWhoseFocalPointIsArbitraryListKey($key, $store, $res)
-    {
-        $lens = l\lensKey($key);
+  /**
+   * @dataProvider lensKeyProvider
+   */
+  public function testlensKeyCreatesLensWhoseFocalPointIsArbitraryListKey($key, $store, $res)
+  {
+    $lens = l\lensKey($key);
 
-        $this->assertInstanceOf(\Closure::class, $lens);
-        $this->assertEquals($res, l\view($lens, $store));
-    }
+    $this->assertInstanceOf(\Closure::class, $lens);
+    $this->assertEquals($res, l\view($lens, $store));
+  }
 }

@@ -17,9 +17,9 @@ const curry = 'Chemem\\Bingo\\Functional\\Algorithms\\curry';
 
 function curry(callable $fn, $required = true): callable
 {
-    $func = new \ReflectionFunction($fn);
+  $func = new \ReflectionFunction($fn);
 
-    return A\curryN(
+  return A\curryN(
         $required === true ?
             $func->getNumberOfRequiredParameters() :
             $func->getNumberOfParameters(),
@@ -39,11 +39,11 @@ const curryRight = 'Chemem\\Bingo\\Functional\\Algorithms\\curryRight';
 
 function curryRight(callable $func, $required = true): callable
 {
-    $toCurry = new \ReflectionFunction($func);
+  $toCurry = new \ReflectionFunction($func);
 
-    $paramCount = $required ?
+  $paramCount = $required ?
         $toCurry->getNumberOfRequiredParameters() :
         $toCurry->getNumberOfParameters();
 
-    return curryRightN($paramCount, $func);
+  return curryRightN($paramCount, $func);
 }

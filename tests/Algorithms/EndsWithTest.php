@@ -6,21 +6,21 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class EndsWithTest extends \PHPUnit\Framework\TestCase
 {
-    public function contextProvider()
-    {
-        return [
+  public function contextProvider()
+  {
+    return [
       ['bingo-functional', 'functional', true],
       ['chemem', 'mike', false],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider contextProvider
-     */
-    public function testendsWithChecksIfStringEndsWithSpecifiedStringFragment($haystack, $needle, $res)
-    {
-        $check = f\endsWith($haystack, $needle);
+  /**
+   * @dataProvider contextProvider
+   */
+  public function testendsWithChecksIfStringEndsWithSpecifiedStringFragment($haystack, $needle, $res)
+  {
+    $check = f\endsWith($haystack, $needle);
 
-        $this->assertEquals($res, $check);
-    }
+    $this->assertEquals($res, $check);
+  }
 }

@@ -6,9 +6,9 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class AssocTest extends \PHPUnit\Framework\TestCase
 {
-    public function contextProvider()
-    {
-        return [
+  public function contextProvider()
+  {
+    return [
       [
         ['foo' => 'foo', 'bar' => 'bar'],
         'bar',
@@ -26,15 +26,15 @@ class AssocTest extends \PHPUnit\Framework\TestCase
         ],
       ],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider contextProvider
-     */
-    public function testAssocClonesListAndOverwritesValueAtSpecifiedIndex($list, $key, $val, $res)
-    {
-        $assoc = f\assoc($key, $val, $list);
+  /**
+   * @dataProvider contextProvider
+   */
+  public function testAssocClonesListAndOverwritesValueAtSpecifiedIndex($list, $key, $val, $res)
+  {
+    $assoc = f\assoc($key, $val, $list);
 
-        $this->assertEquals($res, $assoc);
-    }
+    $this->assertEquals($res, $assoc);
+  }
 }

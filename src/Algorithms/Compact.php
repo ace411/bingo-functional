@@ -15,7 +15,7 @@ const compact = 'Chemem\\Bingo\\Functional\\Algorithms\\compact';
 
 function compact($list)
 {
-    return filter(function ($value) {
-        return $value !== false && !\is_null($value);
-    }, $list);
+  return filter(function ($value) {
+    return $value !== false && !\is_null($value);
+  }, $list);
 }

@@ -27,11 +27,11 @@ const mcompose = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\mcompose';
 
 function mcompose(callable $funcA, callable $funcB)
 {
-    return A\fold(function (callable $acc, callable $monadFn) {
-        return function ($val) use ($acc, $monadFn) {
-            return bind($acc, bind($monadFn, $val));
-        };
-    }, [$funcB], $funcA);
+  return A\fold(function (callable $acc, callable $monadFn) {
+    return function ($val) use ($acc, $monadFn) {
+      return bind($acc, bind($monadFn, $val));
+    };
+  }, [$funcB], $funcA);
 }
 
 /**
@@ -49,9 +49,9 @@ const bind = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\bind';
 
 function bind(callable $function, Monadic $value = null): Monadic
 {
-    return A\curry(function ($function, $value) {
-        return $value->bind($function);
-    })(...\func_get_args());
+  return A\curry(function ($function, $value) {
+    return $value->bind($function);
+  })(...\func_get_args());
 }
 
 /**
@@ -69,20 +69,21 @@ const foldM = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\foldM';
 
 function foldM(callable $function, array $list, $acc): Monadic
 {
-    $monad = $function($acc, A\head($list));
+  $monad = $function($acc, A\head($list));
 
-    $fold = function ($acc, $collection) use (&$fold, $monad, $function) {
-        if (\count($collection) == 0) {
-            return $monad::of($acc);
-        }
-        $tail = A\tail($collection);
-        $head = A\head($collection);
+  $fold = function ($acc, $collection) use (&$fold, $monad, $function) {
+    if (\count($collection) == 0) {
+      return $monad::of($acc);
+    }
+    $tail = A\tail($collection);
+    $head = A\head($collection);
 
-        return $function($acc, $head)->bind(function ($result) use ($tail, $fold) {
-            return $fold($result, $tail);
-        });
-    };
-    return $fold($acc, $list);
+    return $function($acc, $head)->bind(function ($result) use ($tail, $fold) {
+      return $fold($result, $tail);
+    });
+  };
+
+  return $fold($acc, $list);
 }
 
 /**
@@ -99,26 +100,27 @@ const filterM = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\filterM';
 
 function filterM(callable $function, array $list): Monadic
 {
-    $monad = $function(A\head($list));
+  $monad = $function(A\head($list));
 
-    $filter = function ($collection) use (&$filter, $function, $monad) {
-        if (\count($collection) == 0) {
-            return $monad::of([]);
+  $filter = function ($collection) use (&$filter, $function, $monad) {
+    if (\count($collection) == 0) {
+      return $monad::of([]);
+    }
+    $tail = A\tail($collection);
+    $head = A\head($collection);
+
+    return $function($head)->bind(function ($result) use ($tail, $monad, $head, $filter) {
+      return $filter($tail)->bind(function ($ret) use ($result, $head, $monad) {
+        if ($result) {
+          \array_unshift($ret, $head);
         }
-        $tail = A\tail($collection);
-        $head = A\head($collection);
 
-        return $function($head)->bind(function ($result) use ($tail, $monad, $head, $filter) {
-            return $filter($tail)->bind(function ($ret) use ($result, $head, $monad) {
-                if ($result) {
-                    \array_unshift($ret, $head);
-                }
-                return $monad::of($ret);
-            });
-        });
-    };
+        return $monad::of($ret);
+      });
+    });
+  };
 
-    return $filter($list);
+  return $filter($list);
 }
 
 const mapM = __NAMESPACE__ . '\\mapM';
@@ -135,23 +137,24 @@ const mapM = __NAMESPACE__ . '\\mapM';
  */
 function mapM(callable $function, array $list): Monadic
 {
-    $monad  = $function(A\head($list));
+  $monad  = $function(A\head($list));
 
-    $map    = function ($collection) use (&$map, $function, $monad) {
-        if (\count($collection) == 0) {
-            return $monad::of([]);
-        }
+  $map    = function ($collection) use (&$map, $function, $monad) {
+    if (\count($collection) == 0) {
+      return $monad::of([]);
+    }
 
-        $tail = A\tail($collection);
-        $head = A\head($collection);
+    $tail = A\tail($collection);
+    $head = A\head($collection);
 
-        return $function($head)->bind(function ($result) use ($tail, $monad, $head, $map) {
-            return $map($tail)->bind(function ($ret) use ($result, $head, $monad) {
-                \array_unshift($ret, $result);
-                return $monad::of($ret);
-            });
-        });
-    };
+    return $function($head)->bind(function ($result) use ($tail, $monad, $head, $map) {
+      return $map($tail)->bind(function ($ret) use ($result, $head, $monad) {
+        \array_unshift($ret, $result);
 
-    return $map($list);
+        return $monad::of($ret);
+      });
+    });
+  };
+
+  return $map($list);
 }

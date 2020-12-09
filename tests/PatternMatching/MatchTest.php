@@ -8,60 +8,60 @@ use Chemem\Bingo\Functional\PatternMatching as p;
 
 class MatchTest extends \PHPUnit\Framework\TestCase
 {
-    public function matchProvider()
-    {
-        return [
+  public function matchProvider()
+  {
+    return [
       [
         [
           '(x:xs:_)' => function ($fst, $snd) {
-              return $fst / $snd;
+            return $fst / $snd;
           },
           '(x:_)' => function ($fst) {
-              return $fst / 2;
+            return $fst / 2;
           },
           '_' => function () {
-              return 0;
+            return 0;
           },
         ],
         [[4, 2], [12], []],
         [2, 6, 0],
       ],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider matchProvider
-     */
-    public function testmatchComputesExactMatches($patterns, $entries, $res)
-    {
-        $eval                 = p\match($patterns);
-        [$fst, $snd, $thd]    = $entries;
-        [$rfst, $rsnd, $rthd] = $res;
+  /**
+   * @dataProvider matchProvider
+   */
+  public function testmatchComputesExactMatches($patterns, $entries, $res)
+  {
+    $eval                 = p\match($patterns);
+    [$fst, $snd, $thd]    = $entries;
+    [$rfst, $rsnd, $rthd] = $res;
     
-        $this->assertEquals($rfst, $eval($fst));
-        $this->assertEquals($rsnd, $eval($snd));
-        $this->assertEquals($rthd, $eval($thd));
-    }
+    $this->assertEquals($rfst, $eval($fst));
+    $this->assertEquals($rsnd, $eval($snd));
+    $this->assertEquals($rthd, $eval($thd));
+  }
 
-    public function evalArrayProvider()
-    {
-        return [
+  public function evalArrayProvider()
+  {
+    return [
       [
         [
           '[_, "bar"]' => function () {
-              return 2;
+            return 2;
           },
           '["get", name]' => function ($name) {
-              return f\concat(' ', 'Hello', $name);
+            return f\concat(' ', 'Hello', $name);
           },
           '["foo", "baz"]' => function () {
-              return 'foo-bar';
+            return 'foo-bar';
           },
           '[a, (x:xs), b]' => function () {
-              return 12;
+            return 12;
           },
           '_' => function () {
-              return 'undefined';
+            return 'undefined';
           },
         ],
         [
@@ -72,136 +72,136 @@ class MatchTest extends \PHPUnit\Framework\TestCase
         ['Hello World', 12, 'undefined'],
       ],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider evalArrayProvider
-     */
-    public function testevalArrayPatternPerformsConstraintSensitiveMatch($patterns, $entries, $res)
-    {
-        $eval                 = f\partial(p\evalArrayPattern, $patterns);
-        [$fst, $snd, $thd]    = $entries;
-        [$rfst, $rsnd, $rthd] = $res;
+  /**
+   * @dataProvider evalArrayProvider
+   */
+  public function testevalArrayPatternPerformsConstraintSensitiveMatch($patterns, $entries, $res)
+  {
+    $eval                 = f\partial(p\evalArrayPattern, $patterns);
+    [$fst, $snd, $thd]    = $entries;
+    [$rfst, $rsnd, $rthd] = $res;
 
-        $this->assertEquals($rfst, $eval($fst));
-        $this->assertEquals($rsnd, $eval($snd));
-        $this->assertEquals($rthd, $eval($thd));
-    }
+    $this->assertEquals($rfst, $eval($fst));
+    $this->assertEquals($rsnd, $eval($snd));
+    $this->assertEquals($rthd, $eval($thd));
+  }
 
-    public function evalStringProvider()
-    {
-        return [
+  public function evalStringProvider()
+  {
+    return [
       [
         [
           '"1"' => function () {
-              return 1;
+            return 1;
           },
           '"foo"' => function () {
-              return 'fooz';
+            return 'fooz';
           },
           '_' => function () {
-              return 'undefined';
+            return 'undefined';
           },
         ],
         ['1', 'foo', 'undef'],
         [1, 'fooz', 'undefined'],
       ],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider evalStringProvider
-     */
-    public function testevalStringPatternPerformsStringConstraintSensitiveMatch($patterns, $entries, $res)
-    {
-        $eval                 = f\partial(p\evalStringPattern, $patterns);
-        [$fst, $snd, $thd]    = $entries;
-        [$rfst, $rsnd, $rthd] = $res;
+  /**
+   * @dataProvider evalStringProvider
+   */
+  public function testevalStringPatternPerformsStringConstraintSensitiveMatch($patterns, $entries, $res)
+  {
+    $eval                 = f\partial(p\evalStringPattern, $patterns);
+    [$fst, $snd, $thd]    = $entries;
+    [$rfst, $rsnd, $rthd] = $res;
 
-        $this->assertEquals($rfst, $eval($fst));
-        $this->assertEquals($rsnd, $eval($snd));
-        $this->assertEquals($rthd, $eval($thd));
-    }
+    $this->assertEquals($rfst, $eval($fst));
+    $this->assertEquals($rsnd, $eval($snd));
+    $this->assertEquals($rthd, $eval($thd));
+  }
 
-    public function evalObjectProvider()
-    {
-        return [
+  public function evalObjectProvider()
+  {
+    return [
       [
         [
           \stdClass::class => function () {
-              return 'std';
+            return 'std';
           },
           IO::class => function () {
-              return 'i/o';
+            return 'i/o';
           },
           '_' => function () {
-              return 'undefined';
+            return 'undefined';
           },
         ],
         [IO\IO(3), (object) [3, 'foo'], 'xyz'],
         ['i/o', 'std', 'undefined'],
       ],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider evalObjectProvider
-     */
-    public function testevalObjectPatternPerformsObjectConstraintSensitiveMatch($patterns, $entries, $res)
-    {
-        $eval                 = f\partial(p\evalObjectPattern, $patterns);
-        [$fst, $snd, $thd]    = $entries;
-        [$rfst, $rsnd, $rthd] = $res;
+  /**
+   * @dataProvider evalObjectProvider
+   */
+  public function testevalObjectPatternPerformsObjectConstraintSensitiveMatch($patterns, $entries, $res)
+  {
+    $eval                 = f\partial(p\evalObjectPattern, $patterns);
+    [$fst, $snd, $thd]    = $entries;
+    [$rfst, $rsnd, $rthd] = $res;
 
-        $this->assertEquals($rfst, $eval($fst));
-        $this->assertEquals($rsnd, $eval($snd));
-        $this->assertEquals($rthd, $eval($thd));
-    }
+    $this->assertEquals($rfst, $eval($fst));
+    $this->assertEquals($rsnd, $eval($snd));
+    $this->assertEquals($rthd, $eval($thd));
+  }
 
-    public function patternMatchProvider()
-    {
-        return [
+  public function patternMatchProvider()
+  {
+    return [
       [
         [
           '["hello", name]' => function ($name) {
-              return f\concat(' ', 'Hello', $name);
+            return f\concat(' ', 'Hello', $name);
           },
           IO::class => function () {
-              return 'i/o';
+            return 'i/o';
           },
           '_' => function () {
-              return 'undefined';
+            return 'undefined';
           },
         ],
         [IO::of(3), ['hello', 'World'], 'pennies'],
         ['i/o', 'Hello World', 'undefined'],
       ],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider patternMatchProvider
-     */
-    public function testpatternMatchPerformsExhaustiveMatch($patterns, $entries, $res)
-    {
-        $eval                 = f\partial(p\patternMatch, $patterns);
-        [$fst, $snd, $thd]    = $entries;
-        [$rfst, $rsnd, $rthd] = $res;
+  /**
+   * @dataProvider patternMatchProvider
+   */
+  public function testpatternMatchPerformsExhaustiveMatch($patterns, $entries, $res)
+  {
+    $eval                 = f\partial(p\patternMatch, $patterns);
+    [$fst, $snd, $thd]    = $entries;
+    [$rfst, $rsnd, $rthd] = $res;
 
-        $this->assertEquals($rfst, $eval($fst));
-        $this->assertEquals($rsnd, $eval($snd));
-        $this->assertEquals($rthd, $eval($thd));
-    }
+    $this->assertEquals($rfst, $eval($fst));
+    $this->assertEquals($rsnd, $eval($snd));
+    $this->assertEquals($rthd, $eval($thd));
+  }
 
-    public function letInProvider()
-    {
-        return [
+  public function letInProvider()
+  {
+    return [
       [
         \range(1, 3),
         '[a, b, _]',
         ['b'],
         function ($res) {
-            return $res ** 2;
+          return $res ** 2;
         },
         4,
       ],
@@ -210,25 +210,25 @@ class MatchTest extends \PHPUnit\Framework\TestCase
         '[a, _, (x:xs)]',
         ['x', 'xs'],
         function ($fst, $snd) {
-            return f\concat('_', $fst, ...$snd);
+          return f\concat('_', $fst, ...$snd);
         },
         'baz_fooz',
       ],
     ];
-    }
+  }
 
-    /**
-     * @dataProvider letInProvider
-     */
-    public function testletInPerformsDestructuringByPatternMatching(
+  /**
+   * @dataProvider letInProvider
+   */
+  public function testletInPerformsDestructuringByPatternMatching(
         $list,
         $pattern,
         $arg,
         $func,
         $res
     ) {
-        $let = p\letIn($pattern, $list);
+    $let = p\letIn($pattern, $list);
 
-        $this->assertEquals($res, $let($arg, $func));
-    }
+    $this->assertEquals($res, $let($arg, $func));
+  }
 }

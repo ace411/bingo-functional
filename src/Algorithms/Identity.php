@@ -15,5 +15,5 @@ const identity = 'Chemem\\Bingo\\Functional\\Algorithms\\identity';
 
 function identity($value)
 {
-    return $value;
+  return $value;
 }

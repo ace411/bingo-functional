@@ -16,9 +16,9 @@ const slugify = 'Chemem\\Bingo\\Functional\\Algorithms\\slugify';
 
 function slugify(string $string): string
 {
-    $slugify = compose(partial('explode', ' '), function (array $words) {
-        return concat('-', ...$words);
-    });
+  $slugify = compose(partial('explode', ' '), function (array $words) {
+    return concat('-', ...$words);
+  });
 
-    return $slugify($string);
+  return $slugify($string);
 }
