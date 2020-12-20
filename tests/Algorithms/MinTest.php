@@ -23,7 +23,7 @@ class MinTest extends \PHPUnit\Framework\TestCase
 
     $this->assertEquals($res, $min);
     $this->assertTrue(
-      \is_int($min) || \is_double($min) || \is_float($min)
-    );
+            \is_int($min) || \is_double($min) || \is_float($min)
+        );
   }
 }

@@ -16,14 +16,14 @@ const flatten = 'Chemem\\Bingo\\Functional\\Algorithms\\flatten';
 function flatten(array $list): array
 {
   $flattened = fold(
-    function ($acc, $value) {
-      return \is_array($value) ?
+        function ($acc, $value) {
+          return \is_array($value) ?
         extend($acc, flatten($value)) :
         extend($acc, [$value]);
-    },
-    $list,
-    []
-  );
+        },
+        $list,
+        []
+    );
 
   return $flattened;
 }

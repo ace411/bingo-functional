@@ -29,7 +29,7 @@ const IO = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\IO';
 
 function IO($value): IOMonad
 {
-    return IOMonad::of($value);
+  return IOMonad::of($value);
 }
 
 /**
@@ -44,12 +44,13 @@ const getChar = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\getChar';
 
 function getChar(string $str = null): IOMonad
 {
-    $count = 0;
-    return _readline($str, function ($_) use ($count) {
-        $count += 1;
+  $count = 0;
 
-        return $count === 1;
-    });
+  return _readline($str, function ($_) use ($count) {
+    $count += 1;
+
+    return $count === 1;
+  });
 }
 
 const _readline = __NAMESPACE__ . '\\_readline';
@@ -66,18 +67,18 @@ const _readline = __NAMESPACE__ . '\\_readline';
  */
 function _readline(string $str = null, callable $handler = null): IOMonad
 {
-    if (!\is_null($handler)) {
-        return IO(function () use ($str, $handler) {
-            \readline_callback_handler_install(!\is_string($str) ? '' : $str, $handler);
-            \readline_callback_read_char();
+  if (!\is_null($handler)) {
+    return IO(function () use ($str, $handler) {
+      \readline_callback_handler_install(!\is_string($str) ? '' : $str, $handler);
+      \readline_callback_read_char();
 
-            return A\concat('', PHP_EOL, \readline_info('line_buffer'));
-        });
-    }
-
-    return IO(function () use ($str) {
-        return \readline($str);
+      return A\concat('', PHP_EOL, \readline_info('line_buffer'));
     });
+  }
+
+  return IO(function () use ($str) {
+    return \readline($str);
+  });
 }
 
 /**
@@ -92,7 +93,7 @@ const putChar = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putChar';
 
 function putChar(string $char): IOMonad
 {
-    return printToStdout(\mb_strlen($char, 'utf-8') === 1 ? $char : \substr($char, 0, 1));
+  return printToStdout(\mb_strlen($char, 'utf-8') === 1 ? $char : \substr($char, 0, 1));
 }
 
 const printToStdout = __NAMESPACE__ . '\\printToStdout';
@@ -108,18 +109,18 @@ const printToStdout = __NAMESPACE__ . '\\printToStdout';
  */
 function printToStdout(string $input): IOMonad
 {
-    $print = match([
-        '"cli"' => function () use ($input) {
-            return \shell_exec(A\concat('', 'echo', ' ', '"', $input, '"'));
-        },
-        '_'     => function () use ($input) {
-            return $input;
-        }
-    ], \php_sapi_name());
+  $print = match([
+    '"cli"' => function () use ($input) {
+      return \shell_exec(A\concat('', 'echo', ' ', '"', $input, '"'));
+    },
+    '_'     => function () use ($input) {
+      return $input;
+    },
+  ], \php_sapi_name());
 
-    return IO(function () use ($print): int {
-        return \printf('%s', $print); // wrap side-effect inside IO instance
-    });
+  return IO(function () use ($print): int {
+    return \printf('%s', $print); // wrap side-effect inside IO instance
+  });
 }
 
 /**
@@ -134,7 +135,7 @@ const putStr = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putStr';
 
 function putStr(string $str): IOMonad
 {
-    return printToStdout($str);
+  return printToStdout($str);
 }
 
 
@@ -149,7 +150,7 @@ function putStr(string $str): IOMonad
  */
 function putStrLn(string $str): IOMonad
 {
-    return printToStdout(A\concat('', $str, PHP_EOL));
+  return printToStdout(A\concat('', $str, PHP_EOL));
 }
 
 const putStrLn = __NAMESPACE__ . '\\putStrLn';
@@ -166,7 +167,7 @@ const getLine = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\getLine';
 
 function getLine(string $str = null): IOMonad
 {
-    return _readline($str);
+  return _readline($str);
 }
 
 /**
@@ -182,7 +183,7 @@ const interact = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\interact';
 
 function interact(callable $function): IOMonad
 {
-    return getLine()->map($function);
+  return getLine()->map($function);
 }
 
 /**
@@ -199,10 +200,10 @@ const _print = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\_print';
 
 function _print(IOMonad $interaction): IOMonad
 {
-    return $interaction
-        ->map(function (string $result) {
-            return \printf('%s', A\concat(PHP_EOL, $result, A\identity('')));
-        });
+  return $interaction
+    ->map(function (string $result) {
+      return \printf('%s', A\concat(PHP_EOL, $result, A\identity('')));
+    });
 }
 
 /**
@@ -218,11 +219,11 @@ const IOException = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\IOExceptio
 
 function IOException(string $message): IOMonad
 {
-    return IO(function () use ($message) {
-        return function () use ($message) {
-            throw new IOException($message);
-        };
-    });
+  return IO(function () use ($message) {
+    return function () use ($message) {
+      throw new IOException($message);
+    };
+  });
 }
 
 /**
@@ -238,12 +239,13 @@ const catchIO = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\catchIO';
 
 function catchIO(IOMonad $operation): IOMonad
 {
-    return $operation->bind(function ($operation) {
-        $exception = A\compose(A\toException, IO);
-        return \is_callable($operation) ?
-            $exception($operation) :
-            $exception(function () use ($operation) {
-                return $operation;
-            });
-    });
+  return $operation->bind(function ($operation) {
+    $exception = A\compose(A\toException, IO);
+
+    return \is_callable($operation) ?
+      $exception($operation) :
+      $exception(function () use ($operation) {
+        return $operation;
+      });
+  });
 }

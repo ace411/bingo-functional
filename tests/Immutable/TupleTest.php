@@ -5,11 +5,9 @@ namespace Chemem\Bingo\Functional\Tests\Immutable;
 \error_reporting(0);
 
 use \Eris\Generator;
-use Chemem\Bingo\Functional\{
-  Algorithms as f,
-  Immutable\Tuple,
-  Immutable as imm
-};
+use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional\Immutable\Tuple;
+use Chemem\Bingo\Functional\Immutable as imm;
 
 class TupleTest extends \PHPUnit\Framework\TestCase
 {
@@ -22,10 +20,10 @@ class TupleTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\tuple(
-          Generator\constant('lib'),
-          Generator\int(),
-          Generator\names()
+          Generator\tuple(
+            Generator\constant('lib'),
+            Generator\int(),
+            Generator\names()
         )
       )
       ->then(function ($list) {
@@ -43,9 +41,9 @@ class TupleTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\tuple(
-          Generator\constant('foo'),
-          Generator\int()
+          Generator\tuple(
+            Generator\constant('foo'),
+            Generator\int()
         )
       )
       ->then(function ($list) {
@@ -62,9 +60,9 @@ class TupleTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\tuple(
-          Generator\int(),
-          Generator\constant('foo')
+          Generator\tuple(
+            Generator\int(),
+            Generator\constant('foo')
         )
       )
       ->then(function ($list) {
@@ -81,17 +79,17 @@ class TupleTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\tuple(
-          Generator\int(),
-          Generator\string(),
-          Generator\float()
+          Generator\tuple(
+            Generator\int(),
+            Generator\string(),
+            Generator\float()
         )
       )
       ->then(function ($list) {
         $lst = Tuple::from($list)->tail();
 
         $this->assertInstanceOf(Tuple::class, $lst);
-        $this->assertEquals(2, count($lst));
+        $this->assertEquals(2, \count($lst));
       });
   }
 
@@ -102,10 +100,10 @@ class TupleTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\tuple(
-          Generator\int(),
-          Generator\constant('foo'),
-          Generator\float()
+          Generator\tuple(
+            Generator\int(),
+            Generator\constant('foo'),
+            Generator\float()
         )
       )
       ->then(function ($list) {
@@ -126,10 +124,10 @@ class TupleTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\tuple(
-          Generator\int(),
-          Generator\string(),
-          Generator\constant(9)
+          Generator\tuple(
+            Generator\int(),
+            Generator\string(),
+            Generator\constant(9)
         )
       )
       ->then(function ($list) {
@@ -149,10 +147,10 @@ class TupleTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\tuple(
-          Generator\int(),
-          Generator\constant('foo'),
-          Generator\constant('bar')
+          Generator\tuple(
+            Generator\int(),
+            Generator\constant('foo'),
+            Generator\constant('bar')
         )
       )
       ->then(function ($list) {

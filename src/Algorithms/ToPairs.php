@@ -17,9 +17,9 @@ const toPairs = 'Chemem\\Bingo\\Functional\\Algorithms\\toPairs';
 
 function toPairs($list): array
 {
-    return _fold(function ($acc, $val, $idx) {
-        $acc[] = [$idx, $val];
+  return _fold(function ($acc, $val, $idx) {
+    $acc[] = [$idx, $val];
 
-        return $acc;
-    }, $list, []);
+    return $acc;
+  }, $list, []);
 }

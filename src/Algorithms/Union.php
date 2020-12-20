@@ -17,6 +17,7 @@ const union = 'Chemem\\Bingo\\Functional\\Algorithms\\union';
 
 function union(array ...$values): array
 {
-    $res = compose(flatten, unique);
-    return $res($values);
+  $res = compose(flatten, unique);
+
+  return $res($values);
 }

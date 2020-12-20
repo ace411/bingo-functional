@@ -5,11 +5,9 @@ namespace Chemem\Bingo\Functional\Tests\Functors\Monads;
 \error_reporting(0);
 
 use \Eris\Generator;
-use Chemem\Bingo\Functional\{
-  Functors\Monads\Writer,
-  Algorithms as f,
-  Tests as t
-};
+use Chemem\Bingo\Functional\Functors\Monads\Writer;
+use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional\Tests as t;
 
 class WriterTest extends \PHPUnit\Framework\TestCase
 {
@@ -22,9 +20,9 @@ class WriterTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\map(function ($int) {
-          return [$int, f\concat(' ', 'put', $int)];
-        }, Generator\int())
+          Generator\map(function ($int) {
+            return [$int, f\concat(' ', 'put', $int)];
+          }, Generator\int())
       )
       ->then(function ($input) {
         $writer = Writer::of(...$input);
@@ -50,7 +48,7 @@ class WriterTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\int()
+          Generator\int()
       )
       ->then(function ($input) {
         $writer = Writer::of($input);
@@ -62,19 +60,19 @@ class WriterTest extends \PHPUnit\Framework\TestCase
         };
 
         $this->assertEquals(
-          [
+              [
             'left-identity'   => true,
             'right-identity'  => true,
             'associativity'   => true,
           ],
-          t\monadLaws(
-            $writer,
-            $fnx,
-            $fny,
-            Writer::of,
-            $input
+              t\monadLaws(
+              $writer,
+              $fnx,
+              $fny,
+              Writer::of,
+              $input
           )
-        );
+          );
       });
   }
 

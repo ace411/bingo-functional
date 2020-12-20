@@ -14,15 +14,15 @@ class FlipTest extends \PHPunit\Framework\TestCase
           return $fst / $snd;
         },
         [2, 4],
-        2
+        2,
       ],
       [
         function ($fst, $snd) {
           return f\concat(', ', $fst, $snd);
         },
         ['bar', 'foo'],
-        'foo, bar'
-      ]
+        'foo, bar',
+      ],
     ];
   }
 

@@ -17,12 +17,12 @@ const partialLeft = 'Chemem\\Bingo\\Functional\\Algorithms\\partialLeft';
 
 function partialLeft(callable $func, ...$args)
 {
-    return _partial($func, $args);
+  return _partial($func, $args);
 }
 
 const partial = 'Chemem\\Bingo\\Functional\\Algorithms\\partial';
 
 function partial(callable $func, ...$args)
 {
-    return partialLeft($func, ...$args);
+  return partialLeft($func, ...$args);
 }

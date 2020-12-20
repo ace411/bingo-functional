@@ -17,15 +17,15 @@ const filterDeep = 'Chemem\\Bingo\\Functional\\Algorithms\\filterDeep';
 
 function filterDeep(callable $function, array $values): array
 {
-    return _fold(function ($acc, $val, $idx) use ($function) {
-        $acc[$idx] = \is_array($val) ?
-            filterDeep($function, $val) :
-            head(filter($function, [$val]));
+  return _fold(function ($acc, $val, $idx) use ($function) {
+    $acc[$idx] = \is_array($val) ?
+			filterDeep($function, $val) :
+      head(filter($function, [$val]));
 
-        if ($acc[$idx] == null) {
-            unset($acc[$idx]);
-        }
+    if ($acc[$idx] == null) {
+      unset($acc[$idx]);
+    }
 
-        return $acc;
-    }, $values, []);
+    return $acc;
+  }, $values, []);
 }

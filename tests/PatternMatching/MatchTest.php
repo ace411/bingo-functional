@@ -2,11 +2,9 @@
 
 namespace Chemem\Bingo\Functional\Tests\PatternMatching;
 
-use Chemem\Bingo\Functional\{
-  Algorithms as f,
-  Functors\Monads\IO,
-  PatternMatching as p
-};
+use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional\Functors\Monads\IO;
+use Chemem\Bingo\Functional\PatternMatching as p;
 
 class MatchTest extends \PHPUnit\Framework\TestCase
 {
@@ -223,12 +221,12 @@ class MatchTest extends \PHPUnit\Framework\TestCase
    * @dataProvider letInProvider
    */
   public function testletInPerformsDestructuringByPatternMatching(
-    $list,
-    $pattern,
-    $arg,
-    $func,
-    $res
-  ) {
+        $list,
+        $pattern,
+        $arg,
+        $func,
+        $res
+    ) {
     $let = p\letIn($pattern, $list);
 
     $this->assertEquals($res, $let($arg, $func));

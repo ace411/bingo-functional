@@ -17,15 +17,15 @@ const indexesOf = __NAMESPACE__ . '\\indexesOf';
 
 function indexesOf($list, $value)
 {
-    return _fold(function ($acc, $val, $idx) use ($value) {
-        if (\is_array($val) || \is_object($val)) {
-            $acc[] = indexesOf($val, $value);
-        }
+  return _fold(function ($acc, $val, $idx) use ($value) {
+    if (\is_array($val) || \is_object($val)) {
+      $acc[] = indexesOf($val, $value);
+    }
 
-        if ($val == $value) {
-            $acc[] = $idx;
-        }
+    if ($val == $value) {
+      $acc[] = $idx;
+    }
 
-        return flatten($acc);
-    }, $list, []);
+    return flatten($acc);
+  }, $list, []);
 }

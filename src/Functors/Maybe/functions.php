@@ -16,7 +16,6 @@ use Chemem\Bingo\Functional\Functors\Maybe\Maybe as Mtype;
 use function Chemem\Bingo\Functional\Algorithms\compose;
 use function Chemem\Bingo\Functional\Algorithms\fold;
 use function Chemem\Bingo\Functional\Algorithms\head;
-use function Chemem\Bingo\Functional\Algorithms\identity as id;
 use function Chemem\Bingo\Functional\Algorithms\partialLeft;
 
 /**
@@ -143,7 +142,7 @@ const maybeToList = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\maybeToList';
 
 function maybeToList(Mtype $maybe): array
 {
-  return $maybe instanceof Nothing ? id([]) : [$maybe->getJust()];
+  return $maybe instanceof Nothing ? [] : [$maybe->getJust()];
 }
 
 /**
@@ -160,17 +159,13 @@ const catMaybes = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\catMaybes';
 
 function catMaybes(array $maybes): array
 {
-  return fold(
-        function ($list, Mtype $maybe) {
-          if ($maybe instanceof Just) {
-            $list[] = $maybe->getJust();
-          }
+  return fold(function ($list, Mtype $maybe) {
+    if ($maybe instanceof Just) {
+      $list[] = $maybe->getJust();
+    }
 
-          return $list;
-        },
-        $maybes,
-        id([])
-    );
+    return $list;
+  }, $maybes, []);
 }
 
 /**

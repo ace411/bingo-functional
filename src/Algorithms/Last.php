@@ -15,5 +15,5 @@ const last = 'Chemem\\Bingo\Functional\\Algorithms\\last';
 
 function last($list)
 {
-    return \end($list);
+  return \end($list);
 }

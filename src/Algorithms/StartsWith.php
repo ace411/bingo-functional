@@ -15,7 +15,7 @@ const startsWith = __NAMESPACE__ . '\\startsWith';
 
 function startsWith(string $haystack, string $needle): bool
 {
-    $strLen = \mb_strlen($needle, 'utf-8');
+  $strLen = \mb_strlen($needle, 'utf-8');
 
-    return \substr($haystack, 0, $strLen) === $needle;
+  return \substr($haystack, 0, $strLen) === $needle;
 }

@@ -5,11 +5,9 @@ namespace Chemem\Bingo\Functional\Tests\Functors\Monads;
 \error_reporting(0);
 
 use \Eris\Generator;
-use Chemem\Bingo\Functional\{
-  Algorithms as f,
-  Functors\Monads\State,
-  Tests as t
-};
+use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional\Functors\Monads\State;
+use Chemem\Bingo\Functional\Tests as t;
 
 class StateTest extends \PHPUnit\Framework\TestCase
 {
@@ -22,7 +20,7 @@ class StateTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\int()
+          Generator\int()
       )
       ->then(function ($val) {
         $functor  = State::of($val);
@@ -47,8 +45,8 @@ class StateTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\int(),
-        Generator\names()
+          Generator\int(),
+          Generator\names()
       )
       ->then(function ($val, $state) {
         $monad  = State::of($val);
@@ -60,20 +58,20 @@ class StateTest extends \PHPUnit\Framework\TestCase
         };
 
         $this->assertEquals(
-          [
+              [
             'left-identity'   => true,
             'right-identity'  => true,
             'associativity'   => true,
           ],
-          t\monadLaws(
-            $monad,
-            $fnx,
-            $fny,
-            State::of,
-            $val,
-            $state
+              t\monadLaws(
+              $monad,
+              $fnx,
+              $fny,
+              State::of,
+              $val,
+              $state
           )
-        );
+          );
       });
   }
 
@@ -180,7 +178,7 @@ class StateTest extends \PHPUnit\Framework\TestCase
   {
     return [
       [2, 3, [2, 3]],
-      ['foo', 12, ['foo', 12]]
+      ['foo', 12, ['foo', 12]],
     ];
   }
 

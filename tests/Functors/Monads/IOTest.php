@@ -5,12 +5,9 @@ namespace Chemem\Bingo\Functional\Tests\Functors\Monads;
 \error_reporting(0);
 
 use \Eris\Generator;
-use Chemem\Bingo\Functional\{
-  Algorithms as f,
-  Functors\Monads\IO,
-  Functors\Monads as m,
-  Tests as t
-};
+use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional\Functors\Monads\IO;
+use Chemem\Bingo\Functional\Tests as t;
 
 class IOTest extends \PHPUnit\Framework\TestCase
 {
@@ -23,9 +20,9 @@ class IOTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\map(
-          IO\readFile,
-          Generator\constant(__DIR__ . '/../../io.test.txt')
+          Generator\map(
+            IO\readFile,
+            Generator\constant(__DIR__ . '/../../io.test.txt')
         )
       )
       ->then(function ($impure) {
@@ -46,7 +43,7 @@ class IOTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\int()
+          Generator\int()
       )
       ->then(function ($val) {
         $impure = IO\IO(function () use ($val) {
@@ -60,19 +57,19 @@ class IOTest extends \PHPUnit\Framework\TestCase
         };
         
         $this->assertEquals(
-          [
+              [
             'left-identity'   => true,
             'right-identity'  => true,
             'associativity'   => true,
           ],
-          t\monadLaws(
-            $impure,
-            $fnx,
-            $fny,
-            IO::of,
-            $val
+              t\monadLaws(
+              $impure,
+              $fnx,
+              $fny,
+              IO::of,
+              $val
           )
-        );
+          );
       });
   }
 

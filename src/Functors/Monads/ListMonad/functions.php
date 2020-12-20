@@ -45,15 +45,11 @@ const concat = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\concat';
 
 function concat(LMonad ...$list): LMonad
 {
-  $res = fold(
-    function (array $return, LMonad $list) {
-      $return[] = $list->extract();
+  $res = fold(function (array $return, LMonad $list) {
+    $return[] = $list->extract();
 
-      return $return;
-    },
-    $list,
-    []
-  );
+    return $return;
+  }, $list, []);
 
   return fromValue(extend(...$res));
 }
@@ -113,9 +109,9 @@ function head(LMonad $list)
 /**
  * tail
  * extracts elements after the head of a list
- * 
+ *
  * tail :: [a] -> [a]
- * 
+ *
  * @param object $list
  * @return object
  */

@@ -23,7 +23,7 @@ class MeanTest extends \PHPUnit\Framework\TestCase
 
     $this->assertEquals($avg, $mean);
     $this->assertTrue(
-      \is_int($mean) || \is_double($mean) || \is_float($mean)
-    );
+            \is_int($mean) || \is_double($mean) || \is_float($mean)
+        );
   }
 }

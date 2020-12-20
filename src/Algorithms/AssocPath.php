@@ -17,19 +17,19 @@ const assocPath = __NAMESPACE__ . '\\assocPath';
 
 function assocPath(array $keys, $val, $list)
 {
-    $pathLen = \count($keys);
-    if ($pathLen == 0) {
-        return $list;
-    }
+  $pathLen = \count($keys);
+  if ($pathLen == 0) {
+    return $list;
+  }
 
-    $idx = head($keys);
-    if ($pathLen > 1) {
-        $next = pluck($list, $idx);
+  $idx = head($keys);
+  if ($pathLen > 1) {
+    $next = pluck($list, $idx);
     
-        if (\is_object($next) || \is_array($next)) {
-            $val = assocPath(dropLeft($keys, 1), $val, $next);
-        }
+    if (\is_object($next) || \is_array($next)) {
+      $val = assocPath(dropLeft($keys, 1), $val, $next);
     }
+  }
 
-    return assoc($idx, $val, $list);
+  return assoc($idx, $val, $list);
 }

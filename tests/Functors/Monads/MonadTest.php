@@ -2,14 +2,11 @@
 
 namespace Chemem\Bingo\Functional\Tests\Functors\Monads;
 
-use Chemem\Bingo\Functional\{
-  Algorithms as f,
-  Functors\Monads as m,
-  Functors\Maybe\Maybe,
-  Functors\Either\Either,
-  Functors\Either\Right,
-  Functors\Maybe\Just
-};
+use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional\Functors\Monads as m;
+use Chemem\Bingo\Functional\Functors\Maybe\Maybe;
+use Chemem\Bingo\Functional\Functors\Either\Right;
+use Chemem\Bingo\Functional\Functors\Maybe\Just;
 
 class MonadTest extends \PHPUnit\Framework\TestCase
 {
@@ -39,9 +36,9 @@ class MonadTest extends \PHPUnit\Framework\TestCase
   public function testbindSequentiallyComposesTwoMonadActions($func, $arg, $res)
   {
     $impure = m\bind(
-      f\partialRight($func, m\IO::class),
-      m\IO\IO($arg)
-    );
+            f\partialRight($func, m\IO::class),
+            m\IO\IO($arg)
+        );
 
     $this->assertTrue($impure instanceof m\Monadic);
     $this->assertEquals($res, $impure->exec());
@@ -74,10 +71,10 @@ class MonadTest extends \PHPUnit\Framework\TestCase
   public function testmcomposeComposesMonadicFunctionsFromRightToLeft($funcs, $arg, $res)
   {
     $ops = m\mcompose(
-      ...f\map(function ($closure) {
-        return f\partialRight($closure, Just::class);
-      }, $funcs)
-    );
+            ...f\map(function ($closure) {
+              return f\partialRight($closure, Just::class);
+            }, $funcs)
+        );
 
     $this->assertInstanceOf(\Closure::class, $ops);
     $this->assertEquals($res, $ops(Maybe::just($arg))->getJust());

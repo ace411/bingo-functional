@@ -5,11 +5,9 @@ namespace Chemem\Bingo\Functional\Tests\Functors\Lens;
 \error_reporting(0);
 
 use \Eris\Generator;
-use Chemem\Bingo\Functional\{
-  Algorithms as f,
-  Functors\Lens as l,
-  Tests as t
-};
+use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional\Functors\Lens as l;
+use Chemem\Bingo\Functional\Tests as t;
 
 class LensTest extends \PHPUnit\Framework\TestCase
 {
@@ -22,20 +20,20 @@ class LensTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\associative([
+          Generator\associative([
           'foo' => Generator\string(),
           'bar' => Generator\int(),
           'baz' => Generator\names(),
         ]),
-        Generator\float(),
+          Generator\float(),
       )
       ->then(function ($list, $val) {
         $laws = t\lensLaws(
-          f\partialRight(f\pluck, 'foo'),
-          f\curry(f\assoc)('foo'),
-          $list,
-          $val
-        );
+              f\partialRight(f\pluck, 'foo'),
+              f\curry(f\assoc)('foo'),
+              $list,
+              $val
+          );
 
         $this->assertEquals([
           'first'   => true,
@@ -52,7 +50,7 @@ class LensTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\associative([
+          Generator\associative([
           'foo' => Generator\string(),
           'bar' => Generator\int(),
           'baz' => Generator\names(),
@@ -60,12 +58,12 @@ class LensTest extends \PHPUnit\Framework\TestCase
       )
       ->then(function ($store) {
         $laws = t\lensFunctorLaws(
-          f\partialRight(f\pluck, 'foo'),
-          f\curry(f\assoc)('foo'),
-          $store,
-          'strtoupper',
-          'lcfirst'
-        );
+              f\partialRight(f\pluck, 'foo'),
+              f\curry(f\assoc)('foo'),
+              $store,
+              'strtoupper',
+              'lcfirst'
+          );
 
         $this->assertEquals([
           'identity'    => true,

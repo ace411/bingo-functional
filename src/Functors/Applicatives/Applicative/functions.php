@@ -10,6 +10,7 @@
 namespace Chemem\Bingo\Functional\Functors\Applicatives\Applicative;
 
 use Chemem\Bingo\Functional\Functors\Applicatives\Applicative as App;
+use Chemem\Bingo\Functional\Algorithms as f;
 
 /**
  * pure function
@@ -26,7 +27,7 @@ const pure = 'Chemem\\Bingo\\Functional\\Functors\\Applicatives\\Applicative\\pu
 
 function pure($value): App
 {
-    return App::pure($value);
+  return App::pure($value);
 }
 
 /**
@@ -44,12 +45,9 @@ const liftA2 = 'Chemem\\Bingo\\Functional\\Functors\\Applicatives\\Applicative\\
 
 function liftA2(callable $function, App ...$values): App
 {
-    $args = \array_map(
-        function (App $val) {
-            return $val->getValue();
-        },
-        $values
-    );
+  $args = f\map(function (App $val) {
+    return $val->getValue();
+  }, $values);
 
-    return pure(\call_user_func_array($function, $args));
+  return pure($function(...$args));
 }

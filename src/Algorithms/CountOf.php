@@ -18,14 +18,15 @@ const countOfValue = __NAMESPACE__ . '\\countOfValue';
 
 function countOfValue($list, $value): int
 {
-    return _fold(function ($acc, $val) use ($value) {
-        if (\is_array($val) || \is_object($val)) {
-            $acc += countOfValue($val, $value);
-        }
+  return _fold(function ($acc, $val) use ($value) {
+    if (\is_array($val) || \is_object($val)) {
+      $acc += countOfValue($val, $value);
+    }
 
-        $acc += ($val == $value);
-        return $acc;
-    }, $list, 0);
+    $acc += ($val == $value);
+
+    return $acc;
+  }, $list, 0);
 }
 
 /**
@@ -42,15 +43,15 @@ const countOfKey = __NAMESPACE__ . '\\countOfKey';
 
 function countOfKey($list, $key): int
 {
-    return _fold(function ($acc, $val, $idx) use ($key) {
-        if (\is_array($val) || \is_object($val)) {
-            $acc += countOfKey($val, $key);
-        }
+  return _fold(function ($acc, $val, $idx) use ($key) {
+    if (\is_array($val) || \is_object($val)) {
+      $acc += countOfKey($val, $key);
+    }
 
-        $acc += \is_string($key) ?
+    $acc += \is_string($key) ?
             ((string) $idx == $key ? 1 : 0) :
             ($idx == $key ? 1 : 0);
         
-        return $acc;
-    }, $list, 0);
+    return $acc;
+  }, $list, 0);
 }

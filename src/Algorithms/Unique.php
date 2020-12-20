@@ -17,11 +17,11 @@ const unique = 'Chemem\\Bingo\\Functional\\Algorithms\\unique';
 
 function unique(array $list): array
 {
-    return _fold(function ($acc, $val, $idx) {
-        if (!\in_array($val, $acc)) {
-            $acc[$idx] = $val;
-        }
+  return _fold(function ($acc, $val, $idx) {
+    if (!\in_array($val, $acc)) {
+      $acc[$idx] = $val;
+    }
 
-        return $acc;
-    }, $list, []);
+    return $acc;
+  }, $list, []);
 }

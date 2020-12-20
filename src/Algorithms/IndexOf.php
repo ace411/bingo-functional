@@ -17,11 +17,11 @@ const indexOf = 'Chemem\\Bingo\\Functional\\Algorithms\\indexOf';
 
 function indexOf($list, $value, $default = null)
 {
-    return _fold(function ($acc, $val, $idx) use ($value) {
-        if ($val === $value) {
-            $acc = $idx;
-        }
+  return _fold(function ($acc, $val, $idx) use ($value) {
+    if ($val === $value) {
+      $acc = $idx;
+    }
 
-        return $acc;
-    }, $list, $default);
+    return $acc;
+  }, $list, $default);
 }

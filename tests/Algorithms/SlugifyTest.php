@@ -11,7 +11,7 @@ class SlugifyTest extends \PHPUnit\Framework\TestCase
     return [
       ['lorem ipsum dolor', 'lorem-ipsum-dolor'],
       ['foo bar', 'foo-bar'],
-      ['loki', 'loki']
+      ['loki', 'loki'],
     ];
   }
 

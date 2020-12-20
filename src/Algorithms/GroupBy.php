@@ -15,13 +15,13 @@ const groupBy = 'Chemem\\Bingo\\Functional\\Algorithms\\groupBy';
 
 function groupBy(array $list, $key): array
 {
-    $groupFn = function (array $acc = []) use ($list, $key) {
-        foreach ($list as $index => $value) {
-            $acc[$value[$key]][] = isset($list[$index][$key]) ? $value : [];
-        }
+  $groupFn = function (array $acc = []) use ($list, $key) {
+    foreach ($list as $index => $value) {
+      $acc[$value[$key]][] = isset($list[$index][$key]) ? $value : [];
+    }
 
-        return $acc;
-    };
+    return $acc;
+  };
 
-    return isArrayOf($list) == 'array' ? $groupFn() : $list;
+  return isArrayOf($list) == 'array' ? $groupFn() : $list;
 }

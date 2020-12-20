@@ -17,11 +17,11 @@ const unzip = 'Chemem\\Bingo\\Functional\\Algorithms\\unzip';
 
 function unzip(array $zipped): array
 {
-    return _fold(function ($acc, $val, $idx) {
-        for ($idx = 0; $idx < \count($val); $idx += 1) {
-            $acc[$idx][] = $val[$idx];
-        }
+  return _fold(function ($acc, $val, $idx) {
+    for ($idx = 0; $idx < \count($val); $idx += 1) {
+      $acc[$idx][] = $val[$idx];
+    }
 
-        return $acc;
-    }, $zipped, []);
+    return $acc;
+  }, $zipped, []);
 }

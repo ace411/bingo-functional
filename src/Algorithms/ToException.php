@@ -15,15 +15,15 @@ const toException = 'Chemem\\Bingo\\Functional\\Algorithms\\toException';
 
 function toException(callable $func, callable $handler = null): callable
 {
-    return function (...$args) use ($func, $handler) {
-        try {
-            return $func(...$args);
-        } catch (\Throwable $exception) {
-            return isset($handler) ?
+  return function (...$args) use ($func, $handler) {
+    try {
+      return $func(...$args);
+    } catch (\Throwable $exception) {
+      return isset($handler) ?
                 $handler($exception) :
                 $exception->getMessage();
-        } finally {
-            \restore_error_handler();
-        }
-    };
+    } finally {
+      \restore_error_handler();
+    }
+  };
 }

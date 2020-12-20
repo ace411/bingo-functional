@@ -17,9 +17,10 @@ const unionWith = 'Chemem\\Bingo\\Functional\\Algorithms\\unionWith';
 
 function unionWith(callable $function, array ...$values): array
 {
-    $acc = [];
-    if ($function(...$values)) {
-        $acc = union(...$values);
-    }
-    return $acc;
+  $acc = [];
+  if ($function(...$values)) {
+    $acc = union(...$values);
+  }
+
+  return $acc;
 }

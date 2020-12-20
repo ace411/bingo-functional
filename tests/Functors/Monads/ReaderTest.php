@@ -5,11 +5,9 @@ namespace Chemem\Bingo\Functional\Tests\Functors\Monads;
 \error_reporting(0);
 
 use \Eris\Generator;
-use Chemem\Bingo\Functional\{
-  Algorithms as f,
-  Functors\Monads\Reader,
-  Tests as t
-};
+use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional\Functors\Monads\Reader;
+use Chemem\Bingo\Functional\Tests as t;
 
 class ReaderTest extends \PHPUnit\Framework\TestCase
 {
@@ -22,7 +20,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\names()
+          Generator\names()
       )
       ->then(function ($env) {
         $reader = Reader\reader(function ($name) {
@@ -46,7 +44,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-        Generator\int()
+          Generator\int()
       )
       ->then(function ($env) {
         $reader = Reader\reader($env);
@@ -58,20 +56,20 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
         };
 
         $this->assertEquals(
-          [
+              [
             'left-identity'   => true,
             'right-identity'  => true,
             'associativity'   => true,
           ],
-          t\monadLaws(
-            $reader,
-            $fnx,
-            $fny,
-            Reader::of,
-            $env,
-            $env
+              t\monadLaws(
+              $reader,
+              $fnx,
+              $fny,
+              Reader::of,
+              $env,
+              $env
           )
-        );
+          );
       });
   }
 

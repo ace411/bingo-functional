@@ -10,7 +10,7 @@ class ToWordsTest extends \PHPUnit\Framework\TestCase
   {
     return [
       ['foo-bar:baz', '/([-:])+/', ['foo', 'bar', 'baz']],
-      ['http://foo.com/bar', '/([:\/])+/', ['http', 'foo.com', 'bar']]
+      ['http://foo.com/bar', '/([:\/])+/', ['http', 'foo.com', 'bar']],
     ];
   }
 

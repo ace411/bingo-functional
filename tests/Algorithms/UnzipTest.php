@@ -11,12 +11,12 @@ class UnzipTest extends \PHPUnit\Framework\TestCase
     return [
       [
         [[1, 'pg'], [2, 'sg']],
-        [[1, 2], ['pg', 'sg']]
+        [[1, 2], ['pg', 'sg']],
       ],
       [
         [['foo', 'bar', 'baz']],
-        [['foo'], ['bar'], ['baz']]
-      ]
+        [['foo'], ['bar'], ['baz']],
+      ],
     ];
   }
 

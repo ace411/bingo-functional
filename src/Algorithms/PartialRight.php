@@ -17,5 +17,5 @@ const partialRight = 'Chemem\\Bingo\\Functional\\Algorithms\\partialRight';
 
 function partialRight(callable $func, ...$args)
 {
-    return _partial($func, $args, false);
+  return _partial($func, $args, false);
 }
