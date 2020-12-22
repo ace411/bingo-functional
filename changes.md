@@ -492,6 +492,8 @@
 
 - Modified functions
 
+- Removed functions
+
 - Added lenses
 
 - Modified List and Writer monads
@@ -504,13 +506,25 @@
 
   - Added Functor, Applicative, and Monad law evaluations
 
-- Removed `readIO()` function
-
 ### Modified Monadic functions
 
 - ListMonad\head()
 
 - ListMonad\tail()
+
+- IO\getChar()
+
+- IO\putChar()
+
+- IO\putStr()
+
+- IO\getLine()
+
+### Deleted functions
+
+- IO\readIO()
+
+- Reader\ask()
 
 ### Modified functions
 
