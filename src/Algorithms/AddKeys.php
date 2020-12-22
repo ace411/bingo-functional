@@ -1,19 +1,33 @@
 <?php
 
 /**
- * addKeys function.
- *
- * addKeys :: [a, b] -> [a] -> [a]
- *
+ * addKeys function
+ * 
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
 use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
 
-const addKeys = 'Chemem\\Bingo\\Functional\\Algorithms\\addKeys';
+const addKeys = __NAMESPACE__ . '\\addKeys';
 
+/**
+ * addKeys
+ * extracts specified keys from a list
+ * 
+ * addKeys :: [a] -> b -> [a]
+ * 
+ * @param array|object $list
+ * @param string|int ...$keys
+ * @return array|object
+ * @example
+ * 
+ * addKeys(['foo' => 2, 'bar' => 'bar'], 'foo')
+ * //=> ['foo' => 2]
+ */
 function addKeys($list, ...$keys)
 {
   return _fold(function ($acc, $val, $idx) use ($keys) {

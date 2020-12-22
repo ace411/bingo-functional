@@ -3,6 +3,7 @@
 /**
  * Immutable ImmutableList class.
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -248,36 +249,8 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
   }
 
   /**
-   * filterOperation function
-   *
-   * filterOperation :: (a -> Bool) -> Bool -> ImmutableList
-   *
-   * @param callable $func
-   * @param bool $pos
-   */
-  private function filterOperation(callable $func, bool $pos = true): ImmutableList
-  {
-    $list   = $this->getList();
-    $count  = $list->count();
-    $new    = new \SplFixedArray($list->count());
-    $init   = 0;
-
-    for ($idx = 0; $idx < $count; $idx++) {
-      if ($pos ? $func($list[$idx]) : !$func($list[$idx])) {
-        $new[$init++] = $list[$idx];
-      }
-    }
-    $new->setSize($init);
-
-    return new static($new);
-  }
-
-  /**
-   * offsetGet function
-   *
-   * @method offsetGet
-   *
-   * @param int $offset
+   * @see ArrayIterator
+   * {@inheritDoc}
    */
   public function offsetGet(int $offset)
   {
@@ -289,9 +262,12 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
   }
 
   /**
-   * getList method.
+   * getList
+   * unwraps collection - revealing list inside of it
    *
-   * @return mixed $list
+   * getList :: Collection => c [a] -> [a]
+   * 
+   * @return SplFixedArray $list
    */
   public function getList(): \SplFixedArray
   {
@@ -299,9 +275,8 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
   }
 
   /**
-   * jsonSerialize method.
-   *
-   * @return array $list
+   * @see JsonSerializable
+   * {@inheritDoc}
    */
   public function jsonSerialize()
   {
@@ -309,9 +284,12 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
   }
 
   /**
-   * getSize method.
-   *
-   * @return int $size
+   * getSize
+   * returns list size
+   * 
+   * getSize :: Collection => c [a] -> Int
+   * 
+   * @return int
    */
   public function getSize(): int
   {
@@ -319,9 +297,9 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
   }
 
   /**
-   * toArray method.
-   *
-   * @return array $list
+   * toArray
+   * @see ArrayIterator
+   * {@inheritDoc}
    */
   public function toArray(): array
   {
@@ -329,11 +307,8 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
   }
 
   /**
-   * getIterator method.
-   *
    * @see ArrayIterator
-   *
-   * @return object ArrayIterator
+   * {@inheritDoc}
    */
   public function getIterator(): \ArrayIterator
   {
@@ -352,5 +327,32 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
     }
 
     return new static($list);
+  }
+
+  /**
+   * filterOperation function
+   *
+   * filterOperation :: (a -> Bool) -> Bool -> ImmutableList
+   *
+   * @access private
+   * @internal template for filtration operations
+   * @param callable $func
+   * @param bool $pos
+   */
+  private function filterOperation(callable $func, bool $pos = true): ImmutableList
+  {
+    $list   = $this->getList();
+    $count  = $list->count();
+    $new    = new \SplFixedArray($list->count());
+    $init   = 0;
+
+    for ($idx = 0; $idx < $count; $idx++) {
+      if ($pos ? $func($list[$idx]) : !$func($list[$idx])) {
+        $new[$init++] = $list[$idx];
+      }
+    }
+    $new->setSize($init);
+
+    return new static($new);
   }
 }

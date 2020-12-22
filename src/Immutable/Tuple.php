@@ -5,6 +5,7 @@ declare(strict_types=1);
 /**
  * Immutable Tuple class
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -14,26 +15,26 @@ namespace Chemem\Bingo\Functional\Immutable;
 class Tuple implements \Countable, ImmutableDataStructure
 {
   use CommonTrait;
-
+ 
   /**
-       * fst method
-       *
-       * fst :: (a, b) -> a
-       * @see https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Tuple.html
-       * @return mixed
-       */
-    
-
+   * fst
+   * extracts the first component of a pair
+   * 
+   * fst :: Tuple => Pair a b -> a
+   * 
+   * @return mixed
+   */
   public function fst()
   {
     return $this->fetchFromPair(0);
   }
 
   /**
-   * snd method
+   * snd
+   * extracts the second component of a pair
    *
-   * snd :: (a, b) -> b
-   * @see https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Tuple.html
+   * snd :: Tuple => Pair a b -> b
+   * 
    * @return mixed
    */
   public function snd()
@@ -42,10 +43,11 @@ class Tuple implements \Countable, ImmutableDataStructure
   }
 
   /**
-   * swap method
+   * swap
+   * swaps the components of a pair
+   * 
+   * swap :: Tuple => Pair a b -> Pair b a
    *
-   * swap :: (a, b) -> (b, a)
-   * @see https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Tuple.html
    * @return Tuple
    */
   public function swap(): Tuple
@@ -58,7 +60,10 @@ class Tuple implements \Countable, ImmutableDataStructure
   }
 
   /**
-   * get method
+   * get
+   * returns item that matches specified index
+   * 
+   * get :: Tuple => t [a] -> Int -> a
    *
    * @param int $index
    * @return mixed
@@ -71,8 +76,7 @@ class Tuple implements \Countable, ImmutableDataStructure
   /**
    * fetchFromPair method
    *
-   * fetchFromPair :: Int -> a
-   *
+   * @internal
    * @param int $index
    * @return mixed
    */

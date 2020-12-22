@@ -3,6 +3,7 @@
 /**
  * Pattern matching functions.
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -13,16 +14,24 @@ use Chemem\Bingo\Functional\Algorithms as A;
 use Chemem\Bingo\Functional\Functors\Maybe;
 use FunctionalPHP\PatternMatching as p;
 
+const match = __NAMESPACE__ . '\\match';
+
 /**
- * match function.
+ * match
+ * selectively evaluates cons-evaluable data
  *
+ * match :: [([a] -> b)] -> [a] -> b
+ * 
  * @param array $options
- *
- * @return callable $matchCons
+ * @return callable
+ * @example
+ * 
+ * match([
+ *  '(x:_)' => fn ($x) => $x + 10,
+ *  '_' => fn () => 0,
+ * ])([2])
+ * //=> 12
  */
-
-const match = 'Chemem\\Bingo\\Functional\\PatternMatching\\match';
-
 function match(array $options): callable
 {
   $matchFn = function (array $options): array {
@@ -64,15 +73,16 @@ function match(array $options): callable
   };
 }
 
-/**
- * getNumConditions function.
- *
- * @param array $conditions
- *
- * @return array $matches
- */
-const getNumConditions = 'Chemem\\Bingo\\Functional\\PatternMatching\\getNumConditions';
+const getNumConditions = __NAMESPACE__ . '\\getNumConditions';
 
+/**
+ * getNumConditions
+ * computes the number of conditions relative to the cons count
+ *
+ * @internal
+ * @param array $conditions
+ * @return array
+ */
 function getNumConditions(array $conditions)
 {
   $checkOpt = function (string $opt): string {
@@ -99,18 +109,25 @@ function getNumConditions(array $conditions)
   return \array_merge(...$extr);
 }
 
+const patternMatch = __NAMESPACE__ . '\\patternMatch';
+
 /**
- * patternMatch function.
+ * patternMatch
+ * performs elaborate selective evaluation of different data types
  *
- * patternMatch :: [a, b] -> a -> (a())
- *
+ * patternMatch :: [(a -> b)] -> a -> b
+ * 
  * @param array $patterns
  * @param mixed $value
- *
- * @return mixed $result
+ * @return mixed
+ * @example
+ * 
+ * patternMatch([
+ *  '[_, "foo"]' => fn () => strtoupper('foo'),
+ *  '_' => fn () => 'undefined' 
+ * ], ['hello', 'foo'])
+ * //=> 'FOO'
  */
-const patternMatch = 'Chemem\\Bingo\\Functional\\PatternMatching\\patternMatch';
-
 function patternMatch(array $patterns, $value)
 {
   $matches = Maybe\Maybe::just($value)
@@ -139,35 +156,38 @@ function patternMatch(array $patterns, $value)
   );
 }
 
+
+const evalArrayPattern = __NAMESPACE__ . '\\evalArrayPattern';
+
 /**
- * evalArrayPattern function.
+ * evalArrayPattern
+ * selectively evaluates patterns that manifest in arrays
  *
  * evalArrayPattern :: [a, b] -> [a] -> (a())
  *
+ * @internal
  * @param array $patterns
  * @param array $value
- *
  * @return mixed $result
  */
-const evalArrayPattern = 'Chemem\\Bingo\\Functional\\PatternMatching\\evalArrayPattern';
-
 function evalArrayPattern(array $patterns, array $comp)
 {
   return p\match($patterns, $comp);
 }
 
+const evalStringPattern = __NAMESPACE__ . '\\evalStringPattern';
+
 /**
- * evalStringPattern function.
+ * evalStringPattern
+ * selectively evaluates patterns that manifest in strings
  *
  * evalStringPattern :: [a, b] -> a -> (a())
  *
- * @param array  $patterns
+ * @internal
+ * @param array $patterns
  * @param string $value
- *
- * @return mixed $result
+ * @return mixed
  */
-const evalStringPattern = 'Chemem\\Bingo\\Functional\\PatternMatching\\evalStringPattern';
-
 function evalStringPattern(array $patterns, string $value)
 {
   $evalPattern = A\compose(
@@ -217,18 +237,19 @@ function evalStringPattern(array $patterns, string $value)
   return \call_user_func($evalPattern);
 }
 
+const evalObjectPattern = __NAMESPACE__ . '\\evalObjectPattern';
+
 /**
- * evalObjectPattern function.
+ * evalObjectPattern
+ * selectively evaluates patterns that manifest in objects
  *
  * evalObjectPattern :: [a, b] -> b -> (b())
  *
- * @param array  $patterns
+ * @internal
+ * @param array $patterns
  * @param object $value
- *
- * @return mixed $result
+ * @return mixed
  */
-const evalObjectPattern = 'Chemem\\Bingo\\Functional\\PatternMatching\\evalObjectPattern';
-
 function evalObjectPattern(array $patterns, $value)
 {
   $valObj = \get_class($value);
@@ -255,19 +276,25 @@ function evalObjectPattern(array $patterns, $value)
   return $eval($patterns);
 }
 
+const letIn = __NAMESPACE__ . '\\letIn';
+
 /**
- *
  * letIn function
+ * destructures list elements via pattern matching - akin to the mechanism in Elm and Haskell
  *
  * letIn :: String -> [a, b] -> (Array -> ((a, b) -> c)) -> c
  *
  * @param array $params
  * @param array $list
  * @return callable
+ * @example
+ * 
+ * letIn('[a, b, _]', range(1, 3))(
+ *  'b',
+ *  fn ($x) => $x ** 2,
+ * )
+ * //=> 4
  */
-
-const letIn = 'Chemem\\Bingo\\Functional\\PatternMatching\\letIn';
-
 function letIn(string $pattern, array $items): callable
 {
   // extract the tokens from the list

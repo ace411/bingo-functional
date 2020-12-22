@@ -11,7 +11,7 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const memoize = 'Chemem\\Bingo\\Functional\\Algorithms\\memoize';
+const memoize = __NAMESPACE__ . '\\memoize';
 
 function memoize(callable $function): callable
 {

@@ -1,19 +1,31 @@
 <?php
 
 /**
- * constant function.
+ * constantFunction
  *
- * constantFunction :: a -> a
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const constantFunction = 'Chemem\\Bingo\\Functional\\Algorithms\\constantFunction';
+const constantFunction = __NAMESPACE__ . '\\constantFunction';
 
-function constantFunction(...$args)
+/**
+ * constantFunction
+ * returns the first argument it receives
+ *
+ * constantFunction :: a -> () a
+ * 
+ * @param mixed ...$args
+ * @return callable
+ * @example
+ * 
+ * constantFunction('foo', new stdClass(2.2), 3)()
+ * //=> 'foo'
+ */
+function constantFunction(...$args): callable
 {
   return function () use ($args) {
     return $args[0];

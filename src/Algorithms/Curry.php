@@ -3,47 +3,53 @@
 /**
  * Curry function.
  *
- * curry :: ((a, b), c) -> a -> b -> c
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-use Chemem\Bingo\Functional\Algorithms as A;
+use function Chemem\Bingo\Functional\Algorithms\Internal\_curry;
 
-const curry = 'Chemem\\Bingo\\Functional\\Algorithms\\curry';
-
-function curry(callable $fn, $required = true): callable
-{
-  $func = new \ReflectionFunction($fn);
-
-  return A\curryN(
-        $required === true ?
-            $func->getNumberOfRequiredParameters() :
-            $func->getNumberOfParameters(),
-        $fn
-    );
-}
+const curry = __NAMESPACE__ . '\\curry';
 
 /**
- * curryRight function.
+ * curry
+ * converts an uncurried function to a curried one
  *
- * curryRight :: ((a, b), c) -> c -> b -> a
- *
- * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * curry :: ((a, b) -> c) -> Bool -> a -> b -> c
+ * 
+ * @param callable $func
+ * @param boolean $required
+ * @return callable
+ * @example
+ * 
+ * curry(fn ($x, $y) => $x / $y)(4)(2)
+ * //=> 2
  */
-const curryRight = 'Chemem\\Bingo\\Functional\\Algorithms\\curryRight';
-
-function curryRight(callable $func, $required = true): callable
+function curry(callable $func, bool $required = true): callable
 {
-  $toCurry = new \ReflectionFunction($func);
+  return _curry($func, curryN, $required);
+}
 
-  $paramCount = $required ?
-        $toCurry->getNumberOfRequiredParameters() :
-        $toCurry->getNumberOfParameters();
+const curryRight = __NAMESPACE__ . '\\curryRight';
 
-  return curryRightN($paramCount, $func);
+/**
+ * curryRight
+ * curries a function from right to left
+ * 
+ * curryRight :: ((a, b) -> c) -> Bool -> b -> a -> c
+ *
+ * @param callable $func
+ * @param boolean $required
+ * @return callable
+ * @example
+ * 
+ * curryRight(fn ($x, $y) => $x / $y)(2)(4)
+ * //=> 2
+ */
+function curryRight(callable $func, bool $required = true): callable
+{
+  return _curry($func, curryRightN, $required);
 }

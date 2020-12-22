@@ -3,8 +3,9 @@
 /**
  * Just type functor.
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
@@ -13,7 +14,7 @@ use \Chemem\Bingo\Functional\Functors\Monads as M;
 
 class Just extends Maybe
 {
-  const of = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\Just::of';
+  const of = __CLASS__ . '::of';
 
   private $value;
 
@@ -108,7 +109,7 @@ class Just extends Maybe
    */
   public function filter(callable $fn): Maybe
   {
-    return $fn($this->getJust()) ? new static($this->getJust()) : new Nothing();
+    return $fn($this->getJust()) ? $this : new Nothing();
   }
 
   /**
@@ -116,6 +117,6 @@ class Just extends Maybe
    */
   public function orElse(Maybe $maybe): Maybe
   {
-    return !isset($this->value) ? $maybe : new static($this->value);
+    return $this;
   }
 }

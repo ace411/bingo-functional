@@ -3,6 +3,7 @@
 /**
  * Applicative helper functions.
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -19,15 +20,14 @@ use Chemem\Bingo\Functional\Algorithms as f;
  * pure :: a -> f a
  *
  * @param mixed $value
- *
- * @return object Applicative
+ * @return Applicative
  */
 
 const pure = 'Chemem\\Bingo\\Functional\\Functors\\Applicatives\\Applicative\\pure';
 
 function pure($value): App
 {
-  return App::pure($value);
+  return (__NAMESPACE__ . '::pure')($value);
 }
 
 /**
@@ -36,10 +36,9 @@ function pure($value): App
  *
  * liftA2 :: (a -> b -> c) -> f a -> f b -> f c
  *
- * @param callable           $function
- * @param object Applicative $values
- *
- * @return object Applicative
+ * @param callable $function
+ * @param Applicative $values
+ * @return Applicative
  */
 const liftA2 = 'Chemem\\Bingo\\Functional\\Functors\\Applicatives\\Applicative\\liftA2';
 

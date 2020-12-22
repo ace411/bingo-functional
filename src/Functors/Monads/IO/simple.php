@@ -4,33 +4,33 @@
  * IO monad STDIN/STDOUT helper functions.
  *
  * @see http://hackage.haskell.org/package/base-4.11.1.0/docs/Prelude.html#g:26
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Monads\IO;
 
-use Chemem\Bingo\Functional\Functors\Monads\IO as IOMonad;
-use \Chemem\Bingo\Functional\Algorithms as A;
-use function \Chemem\Bingo\Functional\PatternMatching\patternMatch as match;
+use Chemem\Bingo\Functional\Functors\Monads\Monadic;
+use \Chemem\Bingo\Functional\Algorithms as f;
+
+const IO = __NAMESPACE__ . '\\IO';
 
 /**
- * IO function
- * initialize a value of type IO.
+ * IO
+ * initializes a value of type IO
  *
  * IO :: a -> IO ()
  *
  * @param mixed $value
- *
- * @return object IO
+ * @return IO
  */
-
-const IO = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\IO';
-
-function IO($value): IOMonad
+function IO($value): Monadic
 {
-  return IOMonad::of($value);
+  return (__NAMESPACE__ . '::of')($value);
 }
+
+const getChar = __NAMESPACE__ . '\\getChar';
 
 /**
  * getChar function
@@ -38,15 +38,13 @@ function IO($value): IOMonad
  *
  * getChar :: IO Char
  *
- * @return object IO
+ * @return IO
  */
-const getChar = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\getChar';
-
-function getChar(string $str = null): IOMonad
+function getChar(): Monadic
 {
   $count = 0;
 
-  return _readline($str, function ($_) use ($count) {
+  return _readline(null, function ($_) use ($count) {
     $count += 1;
 
     return $count === 1;
@@ -59,20 +57,21 @@ const _readline = __NAMESPACE__ . '\\_readline';
  * _readline function
  * powered by ext-readline, the function reads string or character data from standard input device
  *
- * readline :: String -> (String -> Bool) -> IO
+ * _readline :: String -> (String -> Bool) -> IO
  *
+ * @internal
  * @param string $str
  * @param callable $handler
  * @return IO
  */
-function _readline(string $str = null, callable $handler = null): IOMonad
+function _readline(string $str = null, callable $handler = null): Monadic
 {
   if (!\is_null($handler)) {
     return IO(function () use ($str, $handler) {
       \readline_callback_handler_install(!\is_string($str) ? '' : $str, $handler);
       \readline_callback_read_char();
 
-      return A\concat('', PHP_EOL, \readline_info('line_buffer'));
+      return f\concat('', PHP_EOL, \readline_info('line_buffer'));
     });
   }
 
@@ -81,19 +80,19 @@ function _readline(string $str = null, callable $handler = null): IOMonad
   });
 }
 
+const putChar = __NAMESPACE__ . '\\putChar';
+
 /**
  * putChar function
  * Write a character to the standard output device.
  *
  * putChar :: Char -> IO ()
  *
- * @return object IO
+ * @return IO
  */
-const putChar = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putChar';
-
-function putChar(string $char): IOMonad
+function putChar(string $char): Monadic
 {
-  return printToStdout(\mb_strlen($char, 'utf-8') === 1 ? $char : \substr($char, 0, 1));
+  return printToStdout($char);
 }
 
 const printToStdout = __NAMESPACE__ . '\\printToStdout';
@@ -104,40 +103,33 @@ const printToStdout = __NAMESPACE__ . '\\printToStdout';
  *
  * printToStdout :: String -> IO
  *
+ * @internal
  * @param string $input
  * @return IO
  */
-function printToStdout(string $input): IOMonad
+function printToStdout(string $input): Monadic
 {
-  $print = match([
-    '"cli"' => function () use ($input) {
-      return \shell_exec(A\concat('', 'echo', ' ', '"', $input, '"'));
-    },
-    '_'     => function () use ($input) {
-      return $input;
-    },
-  ], \php_sapi_name());
-
-  return IO(function () use ($print): int {
-    return \printf('%s', $print); // wrap side-effect inside IO instance
+  return IO(function () use ($input) {
+    echo $input;
   });
 }
 
+const putStr = __NAMESPACE__ . '\\putStr';
+
 /**
- * putStr function
- * Write a string to the standard output device.
+ * putStr
+ * writes a string to the standard output device.
  *
  * putStr :: String -> IO ()
  *
- * @return object IO
+ * @return IO
  */
-const putStr = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\putStr';
-
-function putStr(string $str): IOMonad
+function putStr(string $str): Monadic
 {
   return printToStdout($str);
 }
 
+const putStrLn = __NAMESPACE__ . '\\putStrLn';
 
 /**
  * putStrLn function
@@ -146,29 +138,29 @@ function putStr(string $str): IOMonad
  * putStrLn :: String -> IO ()
  *
  * @param string $str
- * @return object IO
+ * @return IO
  */
-function putStrLn(string $str): IOMonad
+function putStrLn(string $str): Monadic
 {
-  return printToStdout(A\concat('', $str, PHP_EOL));
+  return printToStdout(f\concat('', $str, PHP_EOL));
 }
 
-const putStrLn = __NAMESPACE__ . '\\putStrLn';
+const getLine = __NAMESPACE__ . '\\getLine';
 
 /**
- * getLine function
+ * getLine
  * Read a line from the standard input device.
  *
  * getLine :: IO String
  *
- * @return object IO
+ * @return IO
  */
-const getLine = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\getLine';
-
-function getLine(string $str = null): IOMonad
+function getLine(): Monadic
 {
-  return _readline($str);
+  return _readline(null);
 }
+
+const interact = __NAMESPACE__ . '\\interact';
 
 /**
  * interact function
@@ -177,47 +169,42 @@ function getLine(string $str = null): IOMonad
  * interact :: (String -> String) -> IO ()
  *
  * @param callable $function
- * @param object IO
+ * @param IO
  */
-const interact = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\interact';
-
-function interact(callable $function): IOMonad
+function interact(callable $function): Monadic
 {
   return getLine()->map($function);
 }
 
+const _print = __NAMESPACE__ . '\\_print';
+
 /**
- * _print function
+ * _print
  * Outputs a value of any printable type to the standard output device.
  *
  * _print :: Show a => a -> IO ()
  *
- * @param object IO $interaction
- *
- * @return object IO
+ * @param IO $printable
+ * @return IO
  */
-const _print = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\_print';
-
-function _print(IOMonad $interaction): IOMonad
+function _print(Monadic $printable): Monadic
 {
-  return $interaction
+  return $printable
     ->map(function (string $result) {
-      return \printf('%s', A\concat(PHP_EOL, $result, A\identity('')));
+      return \printf('%s', f\concat(PHP_EOL, $result, f\identity('')));
     });
 }
 
+const IOException = __NAMESPACE__ . '\\IOException';
+
 /**
- *
- * IOException function
- * throws an IO exception
+ * IOException
+ * safely throws an IO exception
  *
  * @param string $message
- * @return object IO
+ * @return IO
  */
-
-const IOException = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\IOException';
-
-function IOException(string $message): IOMonad
+function IOException(string $message): Monadic
 {
   return IO(function () use ($message) {
     return function () use ($message) {
@@ -226,21 +213,21 @@ function IOException(string $message): IOMonad
   });
 }
 
+const catchIO = __NAMESPACE__ . '\\catchIO';
+
 /**
- *
- * catchIO function
+ * catchIO
  * catches an IO Exception in an IO monad environment
  *
- * @param IO $exception
- * @return object IO
+ * catchIO :: IO a -> (IOException -> IO a) -> IO a
+ * 
+ * @param IO $catch
+ * @return IO
  */
-
-const catchIO = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\catchIO';
-
-function catchIO(IOMonad $operation): IOMonad
+function catchIO(Monadic $catch): Monadic
 {
-  return $operation->bind(function ($operation) {
-    $exception = A\compose(A\toException, IO);
+  return $catch->bind(function ($operation) {
+    $exception = f\compose(f\toException, IO);
 
     return \is_callable($operation) ?
       $exception($operation) :

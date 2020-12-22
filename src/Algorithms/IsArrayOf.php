@@ -3,16 +3,28 @@
 /**
  * isArrayOf function.
  *
- * isArrayOf :: [a] -> String b
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const isArrayOf = 'Chemem\\Bingo\\Functional\\Algorithms\\isArrayOf';
+const isArrayOf = __NAMESPACE__ . '\\isArrayOf';
 
+/**
+ * isArrayOf
+ * returns the predominant array type (mixed for composite lists)
+ *
+ * isArrayOf :: [a] -> String
+ * 
+ * @param array $list
+ * @return string
+ * @example
+ * 
+ * isArrayOf()
+ * //=>
+ */
 function isArrayOf(array $list): string
 {
   $types = \array_unique(map('gettype', $list));

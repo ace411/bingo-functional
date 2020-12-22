@@ -3,8 +3,9 @@
 /**
  * Maybe type abstract functor.
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
@@ -14,20 +15,22 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 abstract class Maybe implements M\Monadic
 {
-  const just = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\Maybe::just';
+  const just      = __CLASS__ . '::just';
 
-  const nothing = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\Maybe::nothing';
+  const nothing   = __CLASS__ . '::nothing';
 
-  const fromValue = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\Maybe::fromValue';
+  const fromValue = __CLASS__ . '::fromValue';
 
-  const lift = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\Maybe::lift';
+  const lift      = __CLASS__ . '::lift';
     
   /**
-   * just method.
+   * just
+   * puts value in Just context
    *
+   * just :: a -> m a
+   * 
    * @param mixed $value
-   *
-   * @return object Just
+   * @return Just
    */
   public static function just($value): Just
   {
@@ -35,9 +38,12 @@ abstract class Maybe implements M\Monadic
   }
 
   /**
-   * nothing method.
+   * nothing
+   * creates a Nothing object
    *
-   * @return object Nothing
+   * nothing :: m a
+   * 
+   * @return Nothing
    */
   public static function nothing(): Nothing
   {
@@ -45,12 +51,14 @@ abstract class Maybe implements M\Monadic
   }
 
   /**
-   * fromValue method.
+   * fromValue
+   * creates Just or Nothing from value pair
    *
+   * fromValue :: a -> b -> m a
+   * 
    * @param mixed $just
    * @param mixed $nothing
-   *
-   * @return object Maybe
+   * @return Maybe
    */
   public static function fromValue($just, $nothing = null): self
   {
@@ -58,10 +66,12 @@ abstract class Maybe implements M\Monadic
   }
 
   /**
-   * lift method.
+   * lift
+   * converts a function to a Maybe-type action
+   * 
+   * lift :: (a -> b) -> c -> (m a -> m b) -> m a -> m b
    *
    * @param callable $fn
-   *
    * @return callable
    */
   public static function lift(callable $fn): callable
@@ -84,120 +94,121 @@ abstract class Maybe implements M\Monadic
   }
 
   /**
-   * of method.
+   * of
+   * puts value in Maybe monad
    *
+   * of :: a -> m a
+   * 
+   * @abstract
    * @param mixed $value
-   *
-   * @return object Maybe
+   * @return Maybe
    */
   abstract public static function of($value): self;
 
   /**
-   * getJust method.
-   *
+   * getJust
+   * unwraps Just value
+   * 
+   * getJust :: Maybe => m a -> a
+   * 
    * @abstract
+   * @return mixed
    */
   abstract public function getJust();
 
   /**
-   * getNothing method.
+   * getNothing()
+   * unwraps Nothing value - a unit type
+   * 
+   * getNothing :: Maybe => m a -> Null
    *
    * @abstract
+   * @return null
    */
   abstract public function getNothing();
 
   /**
-   * isJust method.
+   * isJust
+   * checks if Maybe value is of type Just
    *
+   * isJust :: Maybe => m a -> Bool
+   * 
    * @abstract
-   *
-   * @return bool
+   * @return boolean
    */
   abstract public function isJust(): bool;
 
   /**
-   * isNothing method.
+   * isNothing
+   * checks if Maybe value is of type Nothing
    *
+   * isNothing :: Maybe => m a -> Bool
+   * 
    * @abstract
-   *
-   * @return bool
+   * @return boolean
    */
   abstract public function isNothing(): bool;
 
   /**
-   * flatMap method.
+   * flatMap
+   * behaves like map but returns an unwrapped value
+   * 
+   * flatMap :: Maybe => m a -> (a -> b) -> b
    *
    * @abstract
-   *
-   * @param callable $fn
-   *
-   * @return mixed $value
+   * @param callable $function
+   * @return mixed
    */
   abstract public function flatMap(callable $fn);
 
   /**
-   * ap method.
-   *
-   * @abstract
-   *
-   * @param Maybe $app
-   *
-   * @return object Maybe
+   * {@inheritDoc}
    */
   abstract public function ap(M\Monadic $app): M\Monadic;
 
   /**
-   * getOrElse method.
-   *
+   * getOrElse
+   * extract final Just value if present and supplied argument otherwise 
+   * 
+   * getOrElse :: Maybe => m a -> b -> a
+   * 
    * @abstract
-   *
    * @param mixed $default
-   *
-   * @return mixed $value
+   * @return mixed
    */
   abstract public function getOrElse($default);
 
   /**
-   * map method.
-   *
-   * @abstract
-   *
-   * @param callable $fn
-   *
-   * @return object Maybe
+   * {@inheritDoc}
    */
   abstract public function map(callable $function): M\Monadic;
 
   /**
-   * bind method.
-   *
-   * @abstract
-   *
-   * @param callable $function
-   *
-   * @return object Maybe
+   * {@inheritDoc}
    */
   abstract public function bind(callable $function): M\Monadic;
 
   /**
-   * filter method.
-   *
+   * filter
+   * retains value that satisfies boolean predicate; Nothing otherwise
+   * 
+   * filter :: Maybe => m a -> (a -> Bool) -> m a
+   * 
    * @abstract
-   *
-   * @param callable $fn
-   *
-   * @return object Maybe
+   * @param callable $filter
+   * @return Maybe
    */
-  abstract public function filter(callable $fn): self;
+  abstract public function filter(callable $filter): self;
 
   /**
-   * orElse method.
-   *
+   * orElse
+   * chainable version of fromMaybe
+   * 
+   * orElse :: Maybe => m a -> m a
+   * 
    * @abstract
-   *
-   * @param Maybe $value
-   *
-   * @return object Maybe
+   * @param self $value
+   * @return self
    */
   abstract public function orElse(self $value): self;
 }

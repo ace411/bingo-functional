@@ -1,10 +1,11 @@
 <?php
 
 /**
- * List monad.
+ * List monad
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
@@ -16,9 +17,7 @@ class ListMonad implements Monadic
   const of = __CLASS__ . '::of';
 
   /**
-   * list operation
-   *
-   * @var callable $listop
+   * @property callable $listop ListMonad operation
    */
   private $listop;
 
@@ -28,8 +27,11 @@ class ListMonad implements Monadic
   }
 
   /**
-   * of method
+   * of
+   * puts value in ListMonad context
    *
+   * of :: a -> ListMonad a
+   * 
    * @param mixed $val
    * @return Monadic
    */
@@ -41,7 +43,7 @@ class ListMonad implements Monadic
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function ap(Monadic $list): Monadic
   {
@@ -49,7 +51,7 @@ class ListMonad implements Monadic
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function map(callable $function): Monadic
   {
@@ -59,13 +61,20 @@ class ListMonad implements Monadic
   }
 
   /**
-   * @inheritdoc
+   * {@inheritdoc}
    */
   public function bind(callable $function): Monadic
   {
     return self::merge($function, $this->extract());
   }
 
+  /**
+   * unwraps the List monad
+   * 
+   * extract :: ListMonad m a => [a]
+   *
+   * @return array
+   */
   public function extract()
   {
     return ($this->listop)();
@@ -74,14 +83,14 @@ class ListMonad implements Monadic
   private static function merge(callable $function, $list)
   {
     $merge = f\compose(
-            // transform every list entry in the list
-            f\partial(f\fold, function ($acc, $val) use ($function) {
-              $acc[] = $function($val)->extract();
+      // transform every list entry in the list
+      f\partial(f\fold, function ($acc, $val) use ($function) {
+        $acc[] = $function($val)->extract();
 
-              return $acc;
-            }, $list),
-            f\flatten
-        );
+        return $acc;
+      }, $list),
+      f\flatten
+    );
 
     return new static(function () use ($merge) {
       return $merge([]);

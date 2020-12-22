@@ -3,8 +3,7 @@
 /**
  * startsWith function
  *
- * startsWith :: String -> String -> bool
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -13,9 +12,27 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const startsWith = __NAMESPACE__ . '\\startsWith';
 
+/**
+ * startsWith
+ * checks if string starts with specified string fragment
+ *
+ * startsWith :: String -> String -> Bool
+ * 
+ * @param string $haystack
+ * @param string $needle
+ * @return boolean
+ * @example
+ * 
+ * startsWith('bingo-functional', 'function')
+ * //=> false
+ */
 function startsWith(string $haystack, string $needle): bool
 {
-  $strLen = \mb_strlen($needle, 'utf-8');
+  $strlen = \mb_strlen($needle, 'utf-8');
 
-  return \substr($haystack, 0, $strLen) === $needle;
+  if ($strlen === 0) {
+    return false;
+  }
+
+  return \substr($haystack, 0, $strlen) === $needle;
 }

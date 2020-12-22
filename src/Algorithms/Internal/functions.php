@@ -3,6 +3,7 @@
 /**
  * Internal helper functions
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -33,6 +34,7 @@ const _count = __NAMESPACE__ . '\\count';
  * @param array $list
  * @param int $number
  * @param bool $left
+ * @return array
  */
 function _drop(
   array $list,
@@ -57,12 +59,15 @@ const _drop = __NAMESPACE__ . '\\_drop';
 
 /**
  * _fold
+ * template for fold operation
  *
  * _fold :: (a -> b -> c -> a) -> [b] -> a -> a
  *
+ * @internal
  * @param callable $func
  * @param mixed $list
  * @param mixed $acc
+ * @return mixed
  */
 function _fold(callable $func, $list, $acc)
 {
@@ -79,17 +84,23 @@ const _fold = __NAMESPACE__ . '\\_fold';
 
 /**
  * _partial
+ * template for partial* functions
  *
  * _partial :: (a -> b -> c) -> [a, b] -> Bool -> (a) b
  *
+ * @internal
  * @param callable $func
  * @param array $args
  * @param bool $left
+ * @return calllable
  */
-function _partial(callable $func, array $args, bool $left = true)
-{
+function _partial(
+  callable $func,
+  array $args,
+  bool $left = true
+): callable {
   $argCount = (new \ReflectionFunction($func))
-        ->getNumberOfRequiredParameters();
+    ->getNumberOfRequiredParameters();
 
   $acc      = function (...$inner) use (&$acc, $func, $argCount, $left) {
     return function (...$innermost) use (
@@ -100,8 +111,8 @@ function _partial(callable $func, array $args, bool $left = true)
       $argCount
     ) {
       $final = $left ?
-        \array_merge($inner, $innermost) :
-        \array_merge(\array_reverse($innermost), \array_reverse($inner));
+        a\extend($inner, $innermost) :
+        a\extend(\array_reverse($innermost), \array_reverse($inner));
 
       if ($argCount <= \count($final)) {
         return $func(...$final);
@@ -118,15 +129,21 @@ const _partial = __NAMESPACE__ . '\\_partial';
 
 /**
  * _curryN
+ * template for curryN* functions
  *
  * _curryN :: Int -> (a, (b)) -> Bool -> (b)
  *
+ * @internal
  * @param int $argCount
  * @param callable $function
  * @param bool $left
+ * @return callable
  */
-function _curryN(int $argCount, callable $function, bool $left = true)
-{
+function _curryN(
+  int $argCount,
+  callable $function,
+  bool $left = true
+): callable {
   $acc = function ($args) use ($argCount, $function, $left, &$acc) {
     return function (...$inner) use (
       $argCount,
@@ -149,3 +166,31 @@ function _curryN(int $argCount, callable $function, bool $left = true)
 }
 
 const _curryN = __NAMESPACE__ . '\\_curryN';
+
+/**
+ * _curry
+ * template for curry* functions
+ * 
+ * _curry :: ((a, b) -> c) -> (Int -> ((a, b) -> c) -> a -> b -> c) -> Bool -> a -> b -> c
+ *
+ * @internal
+ * @param callable $func
+ * @param callable $curry
+ * @param boolean $required
+ * @return callable
+ */
+function _curry(
+  callable $func,
+  callable $curry,
+  $required = true
+): callable {
+  $toCurry = new \ReflectionFunction($func);
+
+  $paramCount = $required ?
+    $toCurry->getNumberOfRequiredParameters() :
+    $toCurry->getNumberOfParameters();
+
+  return $curry($paramCount, $func);
+}
+
+const _curry = __NAMESPACE__ . '\\_curry';

@@ -3,8 +3,7 @@
 /**
  * reject function.
  *
- * reject :: (a -> Bool) -> [a] -> [a]
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -13,8 +12,22 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
 
-const reject = 'Chemem\\Bingo\\Functional\\Algorithms\\reject';
+const reject = __NAMESPACE__ . '\\reject';
 
+/**
+ * reject
+ * selects list values that do not conform to a boolean predicate
+ * 
+ * reject :: (a -> Bool) -> [a] -> [a]
+ *
+ * @param callable $func
+ * @param array|object $list
+ * @return array|object
+ * @example
+ * 
+ * reject(fn ($x) => $x % 2 === 0, range(4, 8))
+ * //=> [5, 7]
+ */
 function reject(callable $func, $list)
 {
   return _fold(function ($acc, $val, $idx) use ($func) {

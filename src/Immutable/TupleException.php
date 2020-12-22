@@ -5,6 +5,7 @@ declare(strict_types=1);
 /**
  * TupleException class
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */

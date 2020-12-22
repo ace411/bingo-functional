@@ -2,183 +2,192 @@
 
 declare(strict_types=1);
 
+/**
+ * Immutable List interface
+ * 
+ * @package bingo-functional
+ * @author Lochemem Bruno Michael
+ * @license Apache-2.0
+ */
+
 namespace Chemem\Bingo\Functional\Immutable;
 
 interface ImmutableList extends ImmutableDataStructure
 {
   /**
-   * map method.
+   * map
+   * transforms every entry in an immutable list in a single iteration
    *
-   * @method map
-   * @see https://ace411.github.io/bingo-functional/#/collection?id=map-function
+   * map :: ImmutableList => l [a] -> (a -> b) -> l [b]
+   * 
    * @param callable $func
-   *
    * @return ImmutableList
    */
   public function map(callable $func): ImmutableList;
 
   /**
-   * filter method.
+   * filter
+   * selects list entries that conform to a boolean predicate
    *
-   * @method filter
-   * @see https://ace411.github.io/bingo-functional/#/collection?id=filter-function
+   * filter :: ImmutableList => l [a] -> (a -> Bool) -> l [a]
+   * 
    * @param callable $func
-   *
    * @return ImmutableList
    */
   public function filter(callable $func): ImmutableList;
 
   /**
-   * fold method.
+   * fold
+   * transforms list into a single value
    *
-   * @method fold
-   * @see https://ace411.github.io/bingo-functional/#/collection?id=foldreduce-function
+   * fold :: ImmutableList => l [a] -> (a -> b -> c) -> a -> a
+   * 
    * @param callable $func
-   * @param mixed    $acc
-   *
+   * @param mixed $acc
    * @return mixed $acc
    */
   public function fold(callable $func, $acc);
 
   /**
-   * flatMap method.
+   * flatMap
+   * performs map operation and returns an array
    *
-   * @method flatMap
-   *
+   * flatMap :: ImmutableList => l [a] -> (a -> b) -> [b]
+   * 
    * @param callable $func
-   *
    * @return array
    */
   public function flatMap(callable $func): array;
 
   /**
-   * slice method.
+   * slice
+   * removes elements from the front of a list structure
    *
-   * @method slice
-   *
-   * @param int $count
-   *
+   * slice :: ImmutableList => l [a] -> Int -> l [a]
+   * 
+   * @param integer $count
    * @return ImmutableList
    */
   public function slice(int $count): ImmutableList;
 
   /**
-   * merge method.
+   * merge
+   * concatenates two immutable list structures
    *
-   * @method merge
-   *
+   * merge :: ImmutableList => l [a] -> l [b] -> l [a, b]
+   * 
    * @param ImmutableList $list
-   *
    * @return ImmutableList
    */
   public function merge(ImmutableList $list): ImmutableList;
 
   /**
-   * mergeN method.
+   * mergeN
+   * concatenates multiple immutable lists
    *
-   * @method merge
-   *
-   * @param ImmutableList... $list
-   *
+   * mergeN :: ImmutableList => l [a] -> l [b] -> l [a, b]
+   * 
+   * @param ImmutableList ...$lists
    * @return ImmutableList
    */
   public function mergeN(ImmutableList ...$lists): ImmutableList;
     
   /**
-   * reverse method.
+   * reverse
+   * reverses the order of an immutable list
    *
-   * @method reverse
-   *
+   * reverse :: ImmutableList => l [a] -> l [a]
+   * 
    * @return ImmutableList
    */
   public function reverse(): ImmutableList;
 
   /**
-   * fill method.
+   * fill
+   * replaces values that correspond to indexes in specified range
    *
-   * @method fill
-   *
-   * @param mixed $value
-   * @param int   $start
-   * @param int   $end
-   *
+   * fill :: ImmutableList => l [a] -> b -> Int -> Int -> l [b]
+   * 
+   * @param [type] $value
+   * @param integer $start
+   * @param integer $end
    * @return ImmutableList
    */
   public function fill($value, int $start, int $end): ImmutableList;
 
   /**
-   * fetch method
+   * fetch
+   * returns the value that corresponds to specified key
    *
-   * @method fetch
-   *
-   * @param mixed key
-   *
+   * fetch :: ImmutableList => l [a] -> b -> a
+   * 
+   * @param mixed $key
    * @return ImmutableList
    */
   public function fetch($key): ImmutableList;
 
   /**
-   * unique method
-   *
-   * @method unique
-   * @see https://ace411.github.io/bingo-functional/#/collection?id=unique-function
+   * unique
+   * purges list of duplicate values
+   * 
+   * unique :: ImmutableList => l [a] -> l [a]
    *
    * @return ImmutableList
    */
   public function unique(): ImmutableList;
 
   /**
-   * intersects method
-   *
-   * @method head
+   * intersects
+   * checks if two immutable lists intersect
+   * 
+   * intersects :: ImmutableList => l [a] -> l [b] -> Bool
    *
    * @param ImmutableList $list
-   *
-   * @return bool
+   * @return boolean
    */
   public function intersects(ImmutableList $list): bool;
 
   /**
-   * implode function
+   * implode
+   * joins list elements with string
+   * 
+   * implode :: ImmutableList => l [a] -> String -> String
    *
-   * @method implode
-   *
-   * @param string $delimiter
-   *
+   * @param string $glue
    * @return string
    */
   public function implode(string $glue): string;
 
   /**
-   * reject method.
+   * reject
+   * selects list values that do not conform to boolean predicate
+   * 
+   * reject :: ImmutableList => l [a] -> (a -> Bool) -> l [a]
    *
-   * @method reject
-   * @see https://ace411.github.io/bingo-functional/#/collection?id=reject-function
    * @param callable $func
-   *
    * @return ImmutableList
    */
   public function reject(callable $func): ImmutableList;
 
   /**
-   * any method
+   * any
+   * checks if at least one element in list conforms to boolean predicate
    *
-   * @method any
-   * @see
+   * any :: ImmutableList => l [a] -> (a -> Bool) -> Bool
+   * 
    * @param callable $func
-   *
-   * @return ImmutableList
+   * @return boolean
    */
   public function any(callable $func): bool;
 
   /**
-   * every method
+   * every
+   * checks if each element in list conforms to boolean predicate
    *
-   * @method every
-   * @see
+   * every :: ImmutableList => l [a] -> (a -> Bool) -> Bool
+   * 
    * @param callable $func
-   *
-   * @return ImmutableList
+   * @return boolean
    */
   public function every(callable $func): bool;
 }

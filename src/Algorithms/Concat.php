@@ -3,17 +3,30 @@
 /**
  * Concat function.
  *
- * concat :: String a, [b] -> (a, [b]) -> String c
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const concat = 'Chemem\\Bingo\\Functional\\Algorithms\\concat';
+const concat = __NAMESPACE__ . '\\concat';
 
-function concat(string $wildcard = '', string ...$strings): string
+/**
+ * concat
+ * concatenates multiple string-coercible elements
+ * 
+ * concat :: String -> [String] -> String
+ *
+ * @param string $glue
+ * @param string ...$strings
+ * @return string
+ * @example
+ * 
+ * concat('-', 'foo', 'bar', 1)
+ * //=> 'foo-bar-1'
+ */
+function concat(string $glue = '', string ...$strings): string
 {
-  return \implode($wildcard, $strings);
+  return \implode($glue, $strings);
 }

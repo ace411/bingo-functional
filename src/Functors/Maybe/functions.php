@@ -5,18 +5,21 @@
  *
  * @see hackage.haskell.org/package/base-4.11.1.0/docs/Data-Maybe.html
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
-use Chemem\Bingo\Functional\Functors\Maybe\Maybe as Mtype;
+use Chemem\Bingo\Functional\Functors\Monads\Monadic;
 
 use function Chemem\Bingo\Functional\Algorithms\compose;
 use function Chemem\Bingo\Functional\Algorithms\fold;
 use function Chemem\Bingo\Functional\Algorithms\head;
 use function Chemem\Bingo\Functional\Algorithms\partialLeft;
+
+const maybe = __NAMESPACE__ . '\\maybe';
 
 /**
  * maybe function
@@ -24,19 +27,19 @@ use function Chemem\Bingo\Functional\Algorithms\partialLeft;
  *
  * maybe :: b -> (a -> b) -> Maybe a -> b
  *
- * @param mixed        $default
- * @param callable     $function
- * @param object Maybe $maybe
- *
+ * @param mixed $default
+ * @param callable $function
+ * @param Maybe $maybe
  * @return mixed
  */
-
-const maybe = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\maybe';
-
-function maybe($default, callable $function, Mtype $maybe)
+function maybe($default, callable $function, Monadic $maybe)
 {
-  return $maybe instanceof Nothing ? $default : $maybe->flatMap($function);
+  return $maybe instanceof Nothing ?
+    $default :
+    $maybe->flatMap($function);
 }
+
+const isJust = __NAMESPACE__ . '\\isJust';
 
 /**
  * isJust function
@@ -44,16 +47,15 @@ function maybe($default, callable $function, Mtype $maybe)
  *
  * isJust :: Maybe a -> Bool
  *
- * @param object Maybe
- *
+ * @param Maybe $maybe
  * @return bool
  */
-const isJust = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\isJust';
-
-function isJust(Mtype $maybe)
+function isJust(Monadic $maybe)
 {
   return $maybe->isJust();
 }
+
+const isNothing = __NAMESPACE__ . '\\isNothing';
 
 /**
  * isNothing function
@@ -61,16 +63,15 @@ function isJust(Mtype $maybe)
  *
  * isNothing :: Maybe a -> Bool
  *
- * @param object Maybe
- *
+ * @param Maybe $maybe
  * @return bool
  */
-const isNothing = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\isNothing';
-
-function isNothing(Mtype $maybe)
+function isNothing(Monadic $maybe)
 {
   return $maybe->isNothing();
 }
+
+const fromJust = __NAMESPACE__ . '\\fromJust';
 
 /**
  * fromJust function
@@ -78,13 +79,10 @@ function isNothing(Mtype $maybe)
  *
  * fromJust :: Maybe a -> a
  *
- * @param object Maybe $maybe
- *
+ * @param Maybe $maybe
  * @return mixed
  */
-const fromJust = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\fromJust';
-
-function fromJust(Mtype $maybe)
+function fromJust(Monadic $maybe)
 {
   if ($maybe instanceof Nothing) {
     throw new \Exception('Maybe.fromJust: Nothing');
@@ -93,23 +91,26 @@ function fromJust(Mtype $maybe)
   return $maybe->getJust();
 }
 
+const fromMaybe = __NAMESPACE__ . '\\fromMaybe';
+
 /**
  * fromMaybe function
  * returns default value if maybe is Nothing; returns Just value otherwise.
  *
  * fromMaybe :: a -> Maybe a -> a
  *
- * @param mixed        $default
- * @param object Maybe $maybe
- *
+ * @param mixed $default
+ * @param Maybe $maybe
  * @return mixed
  */
-const fromMaybe = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\fromMaybe';
-
-function fromMaybe($default, Mtype $maybe)
+function fromMaybe($default, Monadic $maybe)
 {
-  return $maybe instanceof Nothing ? $default : $maybe->getJust();
+  return $maybe instanceof Nothing ?
+    $default :
+    $maybe->getJust();
 }
+
+const listToMaybe = __NAMESPACE__ . '\\listToMaybe';
 
 /**
  * listToMaybe function
@@ -118,15 +119,17 @@ function fromMaybe($default, Mtype $maybe)
  * listToMaybe :: [a] -> Maybe a
  *
  * @param array $list
- *
- * @return object Maybe
+ * @return Maybe
  */
-const listToMaybe = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\listToMaybe';
-
-function listToMaybe(array $list): Mtype
+function listToMaybe(array $list): Monadic
 {
-  return empty($list) ? Mtype::nothing() : Mtype::fromValue(head($list));
+  return empty($list) ?
+    (__NAMESPACE__ . '\\Nothing::of')(null) :
+    (__NAMESPACE__ . '\\Just::of')(head($list));
 }
+
+
+const maybeToList = __NAMESPACE__ . '\\maybeToList';
 
 /**
  * maybeToList function
@@ -134,16 +137,15 @@ function listToMaybe(array $list): Mtype
  *
  * maybeToList :: Maybe a -> [a]
  *
- * @param object Maybe $maybe
- *
+ * @param Maybe $maybe
  * @return array
  */
-const maybeToList = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\maybeToList';
-
-function maybeToList(Mtype $maybe): array
+function maybeToList(Monadic $maybe): array
 {
   return $maybe instanceof Nothing ? [] : [$maybe->getJust()];
 }
+
+const catMaybes = __NAMESPACE__ . '\\catMaybes';
 
 /**
  * catMaybes function
@@ -152,14 +154,11 @@ function maybeToList(Mtype $maybe): array
  * catMaybes :: [Maybe a] -> [a]
  *
  * @param array $maybes
- *
  * @return array
  */
-const catMaybes = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\catMaybes';
-
 function catMaybes(array $maybes): array
 {
-  return fold(function ($list, Mtype $maybe) {
+  return fold(function ($list, Monadic $maybe) {
     if ($maybe instanceof Just) {
       $list[] = $maybe->getJust();
     }
@@ -168,6 +167,8 @@ function catMaybes(array $maybes): array
   }, $maybes, []);
 }
 
+const mapMaybe = __NAMESPACE__ . '\\mapMaybe';
+
 /**
  * mapMaybe function
  * The mapMaybe function is a version of map which can throw out elements.
@@ -175,12 +176,9 @@ function catMaybes(array $maybes): array
  * mapMaybe :: (a -> Maybe b) -> [a] -> [b]
  *
  * @param callable $function
- * @param array    $values
- *
+ * @param array $values
  * @return array
  */
-const mapMaybe = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\mapMaybe';
-
 function mapMaybe(callable $function, array $values): array
 {
   $map = compose(partialLeft('array_map', $function), catMaybes);
