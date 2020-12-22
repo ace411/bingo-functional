@@ -3,8 +3,9 @@
 /**
  * Left type functor.
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Either;
@@ -13,7 +14,7 @@ use \Chemem\Bingo\Functional\Functors\Monads as M;
 
 class Left extends Either
 {
-  const of = 'Chemem\\Bingo\\Functional\\Functors\\Either\\Left::of';
+  const of = __CLASS__ . '::of';
 
   private $value;
 

@@ -31,22 +31,8 @@ class TrampolineTest extends \PHPUnit\Framework\TestCase
    */
   public function testtrampolineOptimizesRecursiveFunction($func, $arg, $res)
   {
-    $rec  = f\trampoline($func);
-    $perf = function ($func, ...$args) {
-      $fst = \microtime(true);
-
-      $func(...$args);
-
-      return \microtime(true) - $fst;
-    };
-
-    $bench = f\fold(function ($log, $att) use ($rec, $perf, $arg) {
-      $log[$att] = $perf($rec, $arg);
-
-      return $log;
-    }, \range(0, 4), []);
-
-    $this->assertTrue(f\last($bench) <= f\head($bench));
+    $rec = f\trampoline($func);
+    
     $this->assertEquals($res, $rec($arg));
   }
 }

@@ -3,28 +3,32 @@
 /**
  * Either type functor.
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Either;
 
-use \Chemem\Bingo\Functional\Functors\Monads as M;
+use Chemem\Bingo\Functional\Functors\Monads as M;
 use Chemem\Bingo\Functional\Algorithms as f;
 
 abstract class Either implements M\Monadic
 {
-  const left = 'Chemem\\Bingo\\Functional\\Functors\\Either\\Either::left';
+  const left  = __CLASS__ . '::left';
 
-  const right = 'Chemem\\Bingo\\Functional\\Functors\\Either\\Either::right';
+  const right = __CLASS__ . '::right';
 
-  const lift = 'Chemem\\Bingo\\Functional\\Functors\\Either\\Either::lift';
+  const lift  = __CLASS__ . '::lift';
+  
   /**
-   * left method.
+   * left
+   * puts a value in Left context
    *
+   * left :: a -> e a
+   * 
    * @param mixed $value
-   *
-   * @return object Left
+   * @return Left
    */
   public static function left($value): Left
   {
@@ -32,11 +36,13 @@ abstract class Either implements M\Monadic
   }
 
   /**
-   * right method.
+   * right
+   * puts a value in Right context
    *
+   * right :: a -> e a
+   * 
    * @param mixed $value
-   *
-   * @return object Right
+   * @return Right
    */
   public static function right($value): Right
   {
@@ -44,11 +50,13 @@ abstract class Either implements M\Monadic
   }
 
   /**
-   * lift method.
+   * lift
+   * converts a function to an Either-type action
+   * 
+   * lift :: (a -> b) -> c -> (e a -> e b) -> e a -> e b
    *
    * @param callable $function
-   * @param Left     $left
-   *
+   * @param Left $left
    * @return callable
    */
   public static function lift(callable $function, Left $left): callable
@@ -73,110 +81,110 @@ abstract class Either implements M\Monadic
   }
 
   /**
-   * getLeft method.
+   * getLeft
+   * unwraps Left value
+   * 
+   * getLeft :: Either => e a -> a
    *
    * @abstract
+   * @return mixed
    */
   abstract public function getLeft();
 
   /**
-   * getRight method.
+   * getRight
+   * unwraps Right value
+   * 
+   * getRight :: Either => e a -> a
    *
    * @abstract
+   * @return mixed
    */
   abstract public function getRight();
 
   /**
-   * isLeft method.
+   * isLeft
+   * checks if the Either value is of type Left
+   * 
+   * isLeft :: Either => e a -> Bool
    *
    * @abstract
-   *
-   * @return bool
+   * @return boolean
    */
   abstract public function isLeft(): bool;
 
   /**
-   * isRight method.
+   * isRight
+   * checks if the Either value is of type Right
+   * 
+   * isRight :: Either => e a -> Bool
    *
    * @abstract
-   *
-   * @return bool
+   * @return boolean
    */
   abstract public function isRight(): bool;
 
   /**
-   * of method.
+   * of
+   * puts value in Either monad
    *
+   * of :: a -> e a
+   * 
+   * @abstract
    * @param mixed $value
-   *
-   * @return object Either
+   * @return self
    */
   abstract public static function of($value): self;
 
   /**
-   * flatMap method.
+   * flatMap
+   * behaves like map but returns an unwrapped value
+   * 
+   * flatMap :: Either => e a -> (a -> b) -> b
    *
    * @abstract
-   * @abstract
-   *
    * @param callable $function
+   * @return mixed
    */
   abstract public function flatMap(callable $function);
 
   /**
-   * map method.
-   *
-   * @see FunctionalPHP\FantasyLand\Functor
-   * @abstract
-   *
-   * @param callable $function
-   *
-   * @return object Functor
+   * {@inheritDoc}
    */
   abstract public function map(callable $function): M\Monadic;
 
   /**
-   * bind method.
-   *
-   * @see FunctionalPHP\FantasyLand\Chain
-   * @abstract
-   *
-   * @param callable $function
-   *
-   * @return object Either
+   * {@inheritDoc}
    */
   abstract public function bind(callable $function): M\Monadic;
 
   /**
-   * ap method.
-   *
-   * @see FunctionalPHP\FantasyLand\Apply
-   * @abstract
-   *
-   * @param Either $app
-   *
-   * @return object Either
+   * {@inheritDoc}
    */
   abstract public function ap(M\Monadic $app): M\Monadic;
 
   /**
-   * filter method.
+   * filter
+   * retains value that satisfies boolean predicate; Left-wrapped error value otherwise
    *
+   * filter :: Either => e a -> (a -> Bool) -> b -> e a
+   * 
    * @abstract
-   *
-   * @param callable $function
-   * @param mixed    $error
-   *
-   * @return object Either
+   * @param callable $filter
+   * @param mixed $error
+   * @return Either
    */
-  abstract public function filter(callable $function, $error): self;
+  abstract public function filter(callable $filter, $error): self;
 
   /**
-   * orElse method.
+   * orElse
+   * chainable version of right()
+   * 
+   * orElse :: Either e a => e b -> e a
    *
+   * @abstract
    * @param Either $either
-   *
-   * @return object Either
+   * @return Either
    */
   abstract public function orElse(self $either): self;
 }

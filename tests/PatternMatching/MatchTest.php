@@ -221,12 +221,12 @@ class MatchTest extends \PHPUnit\Framework\TestCase
    * @dataProvider letInProvider
    */
   public function testletInPerformsDestructuringByPatternMatching(
-        $list,
-        $pattern,
-        $arg,
-        $func,
-        $res
-    ) {
+    $list,
+    $pattern,
+    $arg,
+    $func,
+    $res
+  ) {
     $let = p\letIn($pattern, $list);
 
     $this->assertEquals($res, $let($arg, $func));

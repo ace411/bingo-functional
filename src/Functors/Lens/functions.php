@@ -8,6 +8,7 @@
  * @see https://medium.com/javascript-scene/lenses-b85976cb0534
  * @see https://hackage.haskell.org/package/data-lens-light-0.1.2.2/docs/Data-Lens-Light.html#v:lens
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */

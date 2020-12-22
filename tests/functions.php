@@ -3,8 +3,9 @@
 /**
  * test functions for assertions
  *
- * @license Apache-2.0
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Tests;
@@ -77,6 +78,9 @@ function assertEquals(object $fst, object $snd, $env = null): bool
     },
     '["Applicative", "Applicative"]' => function () use ($fst, $snd) {
       return $fst->getValue() == $snd->getValue();
+    },
+    '["Collection", "Collection"]' => function () use ($fst, $snd) {
+      return $fst->toArray() == $snd->toArray();
     },
     '_'                           => function () {
       return false;
@@ -162,19 +166,19 @@ const lensFunctorLaws = __NAMESPACE__ . '\\lensFunctorLaws';
  * @return array
  */
 function functorLaws(
-    object $functor,
-    callable $fnx,
-    callable $fny,
-    $aux = null
+  object $functor,
+  callable $fnx,
+  callable $fny,
+  $aux = null
 ): array {
   return [
     // F(id) = id
     'identity'    => assertEquals($functor, $functor->map(f\identity), $aux),
     // F(g o f) = F(g) o F(f)
     'composition' => assertEquals(
-        $functor->map(f\compose($fnx, $fny)),
-        $functor->map($fnx)->map($fny),
-        $aux
+      $functor->map(f\compose($fnx, $fny)),
+      $functor->map($fnx)->map($fny),
+      $aux
     ),
   ];
 }

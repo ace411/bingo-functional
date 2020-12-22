@@ -3,108 +3,106 @@
 /**
  * ListMonad helper functions.
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Monads\ListMonad;
 
-use Chemem\Bingo\Functional\Functors\Monads\ListMonad as LMonad;
+use Chemem\Bingo\Functional\Functors\Monads\Monadic;
+use Chemem\Bingo\Functional\Algorithms as f;
 
-use function Chemem\Bingo\Functional\Algorithms\fold;
-use function Chemem\Bingo\Functional\Algorithms\extend;
+const fromValue = __NAMESPACE__ . '\\fromValue';
 
 /**
- * fromValue function
- * Create a list from a value.
+ * fromValue
+ * puts an arbitrary value in a List monad
  *
  * fromValue :: a -> ListMonad [a]
  *
  * @param mixed $value
- *
- * @return object ListMonad
+ * @return ListMonad
  */
-
-const fromValue = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\fromValue';
-
-function fromValue($value): LMonad
+function fromValue($value): Monadic
 {
-  return LMonad::of($value);
+  return (__NAMESPACE__ . '::of')($value);
 }
 
+const concat = __NAMESPACE__ . '\\concat';
+
 /**
- * concat function
- * Create a large list by merging multiple lists.
+ * concat
+ * creates a large list by merging multiple lists
  *
  * concat :: ListMonad [a] -> ListMonad [b] -> ListMonad [a, b]
  *
- * @param object ListMonad $list
- *
- * @return object ListMonad
+ * @param ListMonad $list
+ * @return ListMonad
  */
-const concat = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\concat';
-
-function concat(LMonad ...$list): LMonad
+function concat(Monadic ...$list): Monadic
 {
-  $res = fold(function (array $return, LMonad $list) {
+  $res = f\fold(function (array $return, Monadic $list) {
     $return[] = $list->extract();
 
     return $return;
   }, $list, []);
 
-  return fromValue(extend(...$res));
+  return fromValue(f\extend(...$res));
 }
 
+const prepend = __NAMESPACE__ . '\\prepend';
+
 /**
- * prepend function
- * Insert the items of one list into the beginning of another.
+ * prepend
+ * inserts the items of one list into the beginning of another
  *
  * prepend :: ListMonad [a] -> ListMonad [b] -> ListMonad [a, b]
  *
- * @param object ListMonad $value
- * @param object ListMonad $list
- *
- * @return object ListMonad
+ * @param ListMonad $value
+ * @param ListMonad $list
+ * @return ListMonad
  */
-const prepend = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\prepend';
-
-function prepend(LMonad $value, LMonad $list): LMonad
+function prepend(Monadic $value, Monadic $list): Monadic
 {
   return concat($value, $list);
 }
 
+const append = __NAMESPACE__ . '\\append';
+
 /**
- * append function
- * Add the items of one list to the end of another.
+ * append
+ * adds the items of one list to the end of another
  *
  * append :: ListMonad [a] -> ListMonad [b] -> ListMonad [b, a]
  *
- * @param object ListMonad $value
- * @param object ListMonad $list
+ * @param ListMonad $value
+ * @param ListMonad $list
  *
- * @return object ListMonad
+ * @return ListMonad
  */
-const append = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\append';
-
-function append(LMonad $value, LMonad $list): LMonad
+function append(Monadic $value, Monadic $list): Monadic
 {
   return concat($list, $value);
 }
 
+const head = __NAMESPACE__ . '\\head';
+
 /**
- * head function
- * Return the first element in a list.
+ * head
+ * returns the first element in a list
  *
  * head :: ListMonad [a, b] -> a
  *
- * @param object ListMonad $list
+ * @param ListMonad $list
  * @return mixed
  */
-const head = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\head';
-
-function head(LMonad $list)
+function head(Monadic $list)
 {
   return $list->extract();
 }
+
+const tail = __NAMESPACE__ . '\\tail';
 
 /**
  * tail
@@ -112,12 +110,10 @@ function head(LMonad $list)
  *
  * tail :: [a] -> [a]
  *
- * @param object $list
+ * @param ListMonad $list
  * @return object
  */
-const tail = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\ListMonad\\tail';
-
-function tail(LMonad $list)
+function tail(Monadic $list)
 {
   // replace monoid with class containing unit type
   return new class() {

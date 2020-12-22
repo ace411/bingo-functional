@@ -3,8 +3,9 @@
 /**
  * Right type functor.
  *
- * @license Apache 2.0
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Either;
@@ -13,7 +14,7 @@ use \Chemem\Bingo\Functional\Functors\Monads as M;
 
 class Right extends Either
 {
-  const of = 'Chemem\\Bingo\\Functional\\Functors\\Either\\Right::of';
+  const of = __CLASS__ . '::of';
 
   private $value;
 
@@ -108,6 +109,6 @@ class Right extends Either
    */
   public function orElse(Either $either): Either
   {
-    return !isset($this->value) ? $either : new static($this->value);
+    return $this;
   }
 }

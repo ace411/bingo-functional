@@ -8,10 +8,38 @@ use \Eris\Generator;
 
 use Chemem\Bingo\Functional\Algorithms as f;
 use Chemem\Bingo\Functional\Immutable\Collection;
+use function Chemem\Bingo\Functional\Tests\functorLaws;
 
 class CollectionTest extends \PHPUnit\Framework\TestCase
 {
   use \Eris\TestTrait;
+
+  /**
+   * @test
+   */
+  public function CollectionObeysFunctorLaws()
+  {
+    $this
+      ->forAll(
+        Generator\tuple(
+          Generator\int(),
+          Generator\int(),
+          Generator\float()
+        )
+      )
+      ->then(function ($list) {
+        $immlist  = Collection::from($list);
+        $fnx      = f\partial('pow', 2);
+        $fny      = function ($val) {
+          return $val + 10;
+        };
+
+        $this->assertEquals([
+          'identity'    => true,
+          'composition' => true,
+        ], functorLaws($immlist, $fnx, $fny));
+      });
+  }
 
   /**
    * @test

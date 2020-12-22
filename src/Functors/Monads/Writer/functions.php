@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Writer monad helper functions.
+ * Writer monad helpers.
  *
  * @see http://hackage.haskell.org/package/mtl-2.2.2/docs/Control-Monad-Writer-Lazy.html#g:2
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -12,99 +12,94 @@
 namespace Chemem\Bingo\Functional\Functors\Monads\Writer;
 
 use Chemem\Bingo\Functional\Algorithms as A;
-use Chemem\Bingo\Functional\Functors\Monads\Writer as WriterMonad;
+use Chemem\Bingo\Functional\Functors\Monads\Monadic;
+
+const writer = __NAMESPACE__ . '\\writer';
 
 /**
- * writer function
+ * writer
  * Create a new instance of the writer monad.
  *
  * writer :: a -> w -> Writer (a, w)
  *
  * @param mixed $result
  * @param mixed $output
- *
- * @return object Writer
+ * @return Writer
  */
-
-const writer = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Writer\\writer';
-
-function writer($result, $output = null): WriterMonad
+function writer($result, $output = null): Monadic
 {
-  return WriterMonad::of($result, $output);
+  return (__NAMESPACE__ . '::of')($result, $output);
 }
 
+const runWriter = __NAMESPACE__ . '\\runWriter';
+
 /**
- * runWriter function
+ * runWriter
  * Unwrap a writer computation as a (result, output) pair.
  *
  * runWriter :: Writer a w -> (a, w)
  *
- * @param object Writer $writer
- *
+ * @param Writer $writer
  * @return array
  */
-const runWriter = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Writer\\runWriter';
-
-function runWriter(WriterMonad $writer): array
+function runWriter(Monadic $writer): array
 {
   return $writer->run();
 }
 
+const tell = __NAMESPACE__ . '\\tell';
+
 /**
- * tell function
- * A function that produces a Writer monad's output
+ * tell
+ * A that produces a Writer monad's output
  *
  * tell :: w -> m ()
  *
  * @param mixed $msg
- *
- * @return object Writer
+ * @return Writer
  */
-
-const tell = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Writer\\tell';
-
-function tell($msg): WriterMonad
+function tell($msg): Monadic
 {
-  return new WriterMonad(function () use ($msg) {
+  $writer = __NAMESPACE__;
+  
+  return new $writer(function () use ($msg) {
     return [null, [$msg]];
   });
 }
 
+const execWriter = __NAMESPACE__ . '\\execWriter';
+
 /**
- * execWriter function
- * Extract the output from a writer computation.
+ * execWriter
+ * extracts the output from a writer computation.
  *
  * execWriter :: Writer a w -> w
  *
- * @param object Writer $writer
- *
+ * @param Writer $writer
  * @return array $output
  */
-const execWriter = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Writer\\execWriter';
-
-function execWriter(WriterMonad $writer)
+function execWriter(Monadic $writer)
 {
-  list(, $output) = $writer->run();
+  [, $output] = $writer->run();
 
   return $output;
 }
 
+const mapWriter = __NAMESPACE__ . '\\mapWriter';
+
 /**
- * mapWriter function
- * Map both the return value and output of a computation using the given function.
+ * mapWriter
+ * maps both the return value and output of a computation using the given
  *
  * mapWriter :: ((a, w) -> (b, w')) -> Writer w a -> Writer w' b
  *
  * @param callable $function
- * @param object Writer
- *
- * @return object Writer
+ * @param Writer
+ * @return Writer
  */
-const mapWriter = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Writer\\mapWriter';
-
-function mapWriter(callable $function, WriterMonad $writer): WriterMonad
+function mapWriter(callable $function, Monadic $writer): Monadic
 {
-  list($result, $output) = $function(runWriter($writer));
+  [$result, $output] = $function(runWriter($writer));
 
   return writer($result, $output);
 }

@@ -3,8 +3,9 @@
 /**
  * Nothing type.
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
@@ -13,7 +14,7 @@ use \Chemem\Bingo\Functional\Functors\Monads as M;
 
 class Nothing extends Maybe
 {
-  const of = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\Nothing::of';
+  const of = __CLASS__ . '::of';
 
   private $nothing;
 

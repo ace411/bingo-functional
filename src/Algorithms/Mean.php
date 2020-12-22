@@ -11,7 +11,7 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const mean = 'Chemem\\Bingo\\Functional\\Algorithms\\mean';
+const mean = __NAMESPACE__ . '\\mean';
 
 function mean($list)
 {

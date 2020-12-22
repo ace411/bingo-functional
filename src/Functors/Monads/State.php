@@ -3,18 +3,19 @@
 /**
  * State monad.
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
 class State implements Monadic
 {
-  const of = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State::of';
+  const of = __CLASS__ . '::of';
 
   /**
-   * @var callable The state computation to store
+   * @property callable $comp The state computation to store
    */
   private $comp;
 
@@ -29,25 +30,23 @@ class State implements Monadic
   }
 
   /**
-   * of method.
+   * of
+   * puts an initial state in State monad
+   * 
+   * of :: s -> State s a
    *
-   * @param callable $value The initial state
-   *
-   * @return object State
+   * @param callable $value
+   * @return State
    */
-  public static function of($value): self
+  public static function of($initial): self
   {
-    return new static(function ($state) use ($value) {
-      return [$value, $state];
+    return new static(function ($final) use ($initial) {
+      return [$initial, $final];
     });
   }
 
   /**
-   * ap method.
-   *
-   * @param object State $monad
-   *
-   * @return object State
+   * {@inheritDoc}
    */
   public function ap(Monadic $monad): Monadic
   {
@@ -57,27 +56,19 @@ class State implements Monadic
   }
 
   /**
-   * bind method.
-   *
-   * @param callable $function
-   *
-   * @return object State
+   * {@inheritDoc}
    */
   public function bind(callable $function): Monadic
   {
     return new self(function ($state) use ($function) {
-      list($initial, $final) = $this->run($state);
+      [$initial, $final] = $this->run($state);
 
       return $function($initial)->run($final);
     });
   }
 
   /**
-   * map method.
-   *
-   * @param callable $function
-   *
-   * @return object State
+   * {@inheritDoc}
    */
   public function map(callable $function): Monadic
   {
@@ -87,12 +78,15 @@ class State implements Monadic
   }
 
   /**
-   * run method.
+   * run
+   * unwraps State monad
    *
+   * run :: State s a => s -> (a, s)
+   * 
    * @return array
    */
   public function run($state)
   {
-    return \call_user_func($this->comp, $state);
+    return ($this->comp)($state);
   }
 }

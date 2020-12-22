@@ -4,100 +4,78 @@
  * Reader monad helper functions.
  *
  * @see http://hackage.haskell.org/package/mtl-2.2.2/docs/Control-Monad-Reader.html#g:1
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Monads\Reader;
 
-use Chemem\Bingo\Functional\Functors\Monads\Reader as ReaderMonad;
+use Chemem\Bingo\Functional\Functors\Monads\Monadic;
+
+const reader = __NAMESPACE__ . '\\reader';
 
 /**
- * reader function
- * The selector function to apply to the environment.
+ * reader
+ * places a selector function in the Reader monad
  *
  * reader :: (r -> a) -> m a
  *
  * @param mixed $value
- *
- * @return object Reader
+ * @return Reader
  */
-
-const reader = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\reader';
-
-function reader($value): ReaderMonad
+function reader($value): Monadic
 {
-  return ReaderMonad::of($value);
+  return (__NAMESPACE__ . '::of')($value);
 }
 
+const runReader = __NAMESPACE__ . '\\runReader';
+
 /**
- * runReader function
- * Runs a Reader and extracts the final value from it.
+ * runReader
+ * runs a Reader and extracts the final value from it
  *
  * runReader :: Reader r a -> r -> a
  *
- * @param object Reader $reader
- * @param mixed         $value
- *
+ * @param Reader $reader
+ * @param mixed $value
  * @return mixed
  */
-const runReader = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\runReader';
-
-function runReader(ReaderMonad $reader, $value)
+function runReader(Monadic $reader, $value)
 {
   return $reader->run($value);
 }
 
+const mapReader = __NAMESPACE__ . '\\mapReader';
+
 /**
  * mapReader function
- * Transform the value returned by a Reader.
+ * transforms the value returned by a Reader
  *
  * mapReader :: (a -> b) -> Reader r a -> a -> Reader r b
  *
  * @param callable $function
- * @param object Reader
- *
- * @return object Reader
+ * @param Reader
+ * @return Reader
  */
-const mapReader = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\mapReader';
-
-function mapReader(callable $function, ReaderMonad $reader): ReaderMonad
+function mapReader(callable $function, Monadic $reader): Monadic
 {
   return $reader->map($function);
 }
 
+const withReader = __NAMESPACE__ . '\\withReader';
+
 /**
  * withReader function
- * Execute a computation in a modified environment.
+ * executes a computation in a modified environment
  *
  * withReader :: (r -> r') -> Reader r a -> Reader r' a
  *
- * @param callable      $function
- * @param object Reader $reader
- *
- * @return object Reader
+ * @param callable $function
+ * @param Reader $reader
+ * @return Reader
  */
-const withReader = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\withReader';
-
-function withReader(callable $function, ReaderMonad $reader): ReaderMonad
+function withReader(callable $function, Monadic $reader): Monadic
 {
   return $reader->bind($function);
-}
-
-/**
- * ask function
- * Retrieves the monad environment.
- *
- * ask :: m r
- *
- * @return object Reader
- */
-const ask = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Reader\\ask';
-
-function ask(): ReaderMonad
-{
-  return ReaderMonad::of(function ($value) {
-    return $value;
-  });
 }

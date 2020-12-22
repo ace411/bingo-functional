@@ -5,6 +5,7 @@ declare(strict_types=1);
 /**
  * Immutable Common trait
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -93,11 +94,7 @@ trait CommonTrait
   }
 
   /**
-   * offsetGet function
-   *
-   * @method offsetGet
-   *
-   * @param int $offset
+   * {@inheritDoc}
    */
   public function offsetGet(int $offset)
   {
@@ -118,11 +115,12 @@ trait CommonTrait
   }
 
   /**
-   * checkContains function
+   * checkContains
    *
    * checkContains :: [a] -> Bool
    *
    * @param array $list
+   * @return bool
    */
   private static function checkContains(array $list): bool
   {

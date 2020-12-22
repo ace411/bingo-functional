@@ -1,19 +1,31 @@
 <?php
 
 /**
- * Flip function.
+ * flip function
  *
- * flip :: (a -> b -> c) -> b -> a -> c
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const flip = 'Chemem\\Bingo\\Functional\\Algorithms\\flip';
+const flip = __NAMESPACE__ . '\\flip';
 
-function flip(callable $function)
+/**
+ * flip
+ * reverses the order of function arguments
+ *
+ * flip :: (a -> b -> c) -> b -> a -> c
+ * 
+ * @param callable $function
+ * @return callable
+ * @example
+ * 
+ * flip(fn ($x, $y) => $x / $y)(2, 4)
+ * //=> 2
+ */
+function flip(callable $function): callable
 {
   return function (...$args) use ($function) {
     return $function(...\array_reverse($args));

@@ -20,7 +20,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\names()
+        Generator\names()
       )
       ->then(function ($env) {
         $reader = Reader\reader(function ($name) {
@@ -44,7 +44,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\int()
+        Generator\int()
       )
       ->then(function ($env) {
         $reader = Reader\reader($env);
@@ -56,20 +56,20 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
         };
 
         $this->assertEquals(
-              [
+          [
             'left-identity'   => true,
             'right-identity'  => true,
             'associativity'   => true,
           ],
-              t\monadLaws(
-              $reader,
-              $fnx,
-              $fny,
-              Reader::of,
-              $env,
-              $env
+          t\monadLaws(
+            $reader,
+            $fnx,
+            $fny,
+            Reader::of,
+            $env,
+            $env
           )
-          );
+        );
       });
   }
 
@@ -88,7 +88,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
    */
   public function testaskRetrievesMonadEnvironment($res)
   {
-    $env = Reader\ask();
+    $env = Reader\reader($res)->ask();
 
     $this->assertInstanceOf(Reader::class, $env);
     $this->assertEquals($res, $env->run($res));
