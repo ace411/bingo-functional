@@ -122,6 +122,7 @@
             "src/Algorithms/FilterDeep.php",
             "src/Algorithms/Reject.php",
             "src/Algorithms/Fold.php",
+            "src/Algorithms/Has.php",
             "src/Algorithms/Unique.php",
             "src/Algorithms/Compact.php",
             "src/Algorithms/Flatten.php",
