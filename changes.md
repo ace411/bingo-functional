@@ -492,6 +492,10 @@
 
 - Modified functions
 
+- Modified pattern matching primitives
+
+  - Added internal functions namespaced under `Chemem\Bingo\Functional\PatternMatching\Internal`
+
 - Removed functions
 
 - Added lenses
@@ -527,6 +531,10 @@
 - Reader\ask()
 
 ### Modified functions
+
+- patternMatch()
+
+- match()
 
 - compact()
 
