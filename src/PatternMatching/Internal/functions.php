@@ -41,7 +41,9 @@ function consPatternCount(string $pattern): array
     // explode the pattern by colon (:)
     f\partial('explode', ':'),
     // take out non-underscore patterns
-    f\partial(f\filter, fn ($pttn) => $pttn !== '_'),
+    f\partial(f\filter, function ($pttn) {
+      return $pttn !== '_';
+    }),
     // count
     'count'
   );
