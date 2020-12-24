@@ -33,7 +33,9 @@ function consPatternCount(string $pattern): array
 {
   $count = f\compose(
     // check if underscore is present in pattern; propagate _ if absent
-    fn ($pttn) => \preg_match('/([_])+/', $pttn) ? $pttn : '_',
+    function ($pttn) {
+      return \preg_match('/([_])+/', $pttn) ? $pttn : '_';
+    },
     // remove brackets from pattern
     f\partial('preg_replace', '/([(\)])+/', ''),
     // explode the pattern by colon (:)

@@ -43,9 +43,54 @@ class MatchTest extends \PHPUnit\Framework\TestCase
     $this->assertEquals($rthd, $eval($thd));
   }
 
-  public function evalArrayProvider()
+  public function patternMatchProvider()
   {
     return [
+      [
+        [
+          '["hello", name]' => function ($name) {
+            return f\concat(' ', 'Hello', $name);
+          },
+          IO::class => function () {
+            return 'i/o';
+          },
+          '_' => function () {
+            return 'undefined';
+          },
+        ],
+        [IO::of(3), ['hello', 'World'], 'pennies'],
+        ['i/o', 'Hello World', 'undefined'],
+      ],
+      [
+        [
+          '"1"' => function () {
+            return 1;
+          },
+          '"foo"' => function () {
+            return 'fooz';
+          },
+          '_' => function () {
+            return 'undefined';
+          },
+        ],
+        ['1', 'foo', 'undef'],
+        [1, 'fooz', 'undefined'],
+      ],
+      [
+        [
+          \stdClass::class => function () {
+            return 'std';
+          },
+          IO::class => function () {
+            return 'i/o';
+          },
+          '_' => function () {
+            return 'undefined';
+          },
+        ],
+        [IO\IO(3), (object) [3, 'foo'], 'xyz'],
+        ['i/o', 'std', 'undefined'],
+      ],
       [
         [
           '[_, "bar"]' => function () {
@@ -70,111 +115,6 @@ class MatchTest extends \PHPUnit\Framework\TestCase
           ['xyz'],
         ],
         ['Hello World', 12, 'undefined'],
-      ],
-    ];
-  }
-
-  /**
-   * @dataProvider evalArrayProvider
-   */
-  public function testevalArrayPatternPerformsConstraintSensitiveMatch($patterns, $entries, $res)
-  {
-    $eval                 = f\partial(p\evalArrayPattern, $patterns);
-    [$fst, $snd, $thd]    = $entries;
-    [$rfst, $rsnd, $rthd] = $res;
-
-    $this->assertEquals($rfst, $eval($fst));
-    $this->assertEquals($rsnd, $eval($snd));
-    $this->assertEquals($rthd, $eval($thd));
-  }
-
-  public function evalStringProvider()
-  {
-    return [
-      [
-        [
-          '"1"' => function () {
-            return 1;
-          },
-          '"foo"' => function () {
-            return 'fooz';
-          },
-          '_' => function () {
-            return 'undefined';
-          },
-        ],
-        ['1', 'foo', 'undef'],
-        [1, 'fooz', 'undefined'],
-      ],
-    ];
-  }
-
-  /**
-   * @dataProvider evalStringProvider
-   */
-  public function testevalStringPatternPerformsStringConstraintSensitiveMatch($patterns, $entries, $res)
-  {
-    $eval                 = f\partial(p\evalStringPattern, $patterns);
-    [$fst, $snd, $thd]    = $entries;
-    [$rfst, $rsnd, $rthd] = $res;
-
-    $this->assertEquals($rfst, $eval($fst));
-    $this->assertEquals($rsnd, $eval($snd));
-    $this->assertEquals($rthd, $eval($thd));
-  }
-
-  public function evalObjectProvider()
-  {
-    return [
-      [
-        [
-          \stdClass::class => function () {
-            return 'std';
-          },
-          IO::class => function () {
-            return 'i/o';
-          },
-          '_' => function () {
-            return 'undefined';
-          },
-        ],
-        [IO\IO(3), (object) [3, 'foo'], 'xyz'],
-        ['i/o', 'std', 'undefined'],
-      ],
-    ];
-  }
-
-  /**
-   * @dataProvider evalObjectProvider
-   */
-  public function testevalObjectPatternPerformsObjectConstraintSensitiveMatch($patterns, $entries, $res)
-  {
-    $eval                 = f\partial(p\evalObjectPattern, $patterns);
-    [$fst, $snd, $thd]    = $entries;
-    [$rfst, $rsnd, $rthd] = $res;
-
-    $this->assertEquals($rfst, $eval($fst));
-    $this->assertEquals($rsnd, $eval($snd));
-    $this->assertEquals($rthd, $eval($thd));
-  }
-
-  public function patternMatchProvider()
-  {
-    return [
-      [
-        [
-          '["hello", name]' => function ($name) {
-            return f\concat(' ', 'Hello', $name);
-          },
-          IO::class => function () {
-            return 'i/o';
-          },
-          '_' => function () {
-            return 'undefined';
-          },
-        ],
-        [IO::of(3), ['hello', 'World'], 'pennies'],
-        ['i/o', 'Hello World', 'undefined'],
       ],
     ];
   }
