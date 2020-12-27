@@ -18,7 +18,7 @@ class CountOfTest extends \PHPUnit\Framework\TestCase
           'bar' => 'fooz',
         ],
         ['fooz', '2'],
-        [2, 1],
+        [2, 0],
       ],
       [
         [
@@ -49,7 +49,7 @@ class CountOfTest extends \PHPUnit\Framework\TestCase
   /**
    * @dataProvider contextProvider
    */
-  public function testcountOfKeyComputesFrequencyOfSpecifiedListKey()
+  public function testcountOfKeyComputesFrequencyOfSpecifiedListKey($list, $search, $res)
   {
     [, $key] = $search;
     [, $ret] = $res;

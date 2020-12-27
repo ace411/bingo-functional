@@ -10,6 +10,8 @@
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
+use function Chemem\Bingo\Functional\Algorithms\Internal\_fold as fold;
+
 const groupBy = __NAMESPACE__ . '\\groupBy';
 
 /**
@@ -40,13 +42,13 @@ const groupBy = __NAMESPACE__ . '\\groupBy';
  */
 function groupBy(array $list, $key): array
 {
-  $groupFn = function (array $acc = []) use ($list, $key) {
-    foreach ($list as $index => $value) {
-      $acc[$value[$key]][] = isset($list[$index][$key]) ? $value : [];
-    }
+  return fold(
+    function ($acc, $val, $idx) use ($list, $key) {
+      $acc[$val[$key]][] = isset($list[$idx][$key]) ? $val : [];
 
-    return $acc;
-  };
-
-  return isArrayOf($list) == 'array' ? $groupFn() : $list;
+      return $acc;
+    },
+    $list,
+    []
+  );
 }
