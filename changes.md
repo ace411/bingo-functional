@@ -502,6 +502,10 @@
 
 - Modified List and Writer monads
 
+- Added `Functor`, `Monad`, and `Applicable` interfaces
+
+- Modified `intersects()` function on immutable Collection
+
 - Revamped project test suite
 
   - Split Algorithm tests into individual files
@@ -563,3 +567,17 @@
 - tail()
 
 - zip()
+
+### New functions
+
+- Lens\lensPath()
+
+- Lens\lensKey()
+
+- Lens\over()
+
+- Lens\view()
+
+- Lens\set()
+
+- Lens\lens()
