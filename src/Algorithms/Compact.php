@@ -27,9 +27,9 @@ const compact = __NAMESPACE__ . '\\compact';
  */
 function compact($list)
 {
-  return filter(function ($value) {
-    return $value !== false && 
-      !\is_null($value) && 
+  return (filter)(function ($value) {
+    return $value !== false &&
+      !\is_null($value) &&
       $value !== 0 &&
       $value !== NAN;
   }, $list);
