@@ -10,9 +10,12 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
+use Chemem\Bingo\Functional\Functors\Functor;
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+
 use function Chemem\Bingo\Functional\Algorithms\constantFunction;
 
-class IO implements Monadic
+class IO implements Monad, Functor, Applicable
 {
   const of = __CLASS__ . '::of';
 
@@ -41,7 +44,7 @@ class IO implements Monadic
    * @param callable $unsafe
    * @return IO
    */
-  public static function of($unsafe): self
+  public static function of($unsafe): Monad
   {
     return new static(\is_callable($unsafe) ? $unsafe : constantFunction($unsafe));
   }
@@ -49,7 +52,7 @@ class IO implements Monadic
   /**
    * {@inheritDoc}
    */
-  public function ap(Monadic $app): Monadic
+  public function ap(Applicable $app): Applicable
   {
     return $app->map($this->exec());
   }
@@ -57,7 +60,7 @@ class IO implements Monadic
   /**
    * {@inheritDoc}
    */
-  public function map(callable $function): Monadic
+  public function map(callable $function): Functor
   {
     return $this->bind(function ($unsafe) use ($function) {
       return self::of($function($unsafe));
@@ -67,7 +70,7 @@ class IO implements Monadic
   /**
    * {@inheritDoc}
    */
-  public function bind(callable $function): Monadic
+  public function bind(callable $function): Monad
   {
     return $function($this->exec());
   }

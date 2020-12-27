@@ -10,9 +10,12 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
+use Chemem\Bingo\Functional\Functors\Functor;
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+
 use function Chemem\Bingo\Functional\Algorithms\extend;
 
-class Writer implements Monadic
+class Writer implements Monad, Functor, Applicable
 {
   const of = __CLASS__ . '::of';
 
@@ -37,7 +40,7 @@ class Writer implements Monadic
    * @param mixed $output
    * @return Writer
    */
-  public static function of($result, $output = null): self
+  public static function of($result, $output = null): Monad
   {
     return new static(function () use ($result, $output) {
       return [$result, \is_null($output) ? [] : [$output]];
@@ -47,7 +50,7 @@ class Writer implements Monadic
   /**
    * {@inheritDoc}
    */
-  public function ap(Monadic $app): Monadic
+  public function ap(Applicable $app): Applicable
   {
     return $this->bind(function ($function) use ($app) {
       return $app->map($function);
@@ -57,7 +60,7 @@ class Writer implements Monadic
   /**
    * {@inheritDoc}
    */
-  public function map(callable $function): Monadic
+  public function map(callable $function): Functor
   {
     return new static(function () use ($function) {
       [$result, $output] = $this->run();
@@ -69,7 +72,7 @@ class Writer implements Monadic
   /**
    * {@inheritDoc}
    */
-  public function bind(callable $function): Monadic
+  public function bind(callable $function): Monad
   {
     return new static(function () use ($function) {
       [$result, $output]  = $this->run();

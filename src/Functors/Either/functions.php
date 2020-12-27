@@ -11,7 +11,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Either;
 
-use Chemem\Bingo\Functional\Functors\Monads\Monadic;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
 use function Chemem\Bingo\Functional\Algorithms\fold;
 use function Chemem\Bingo\Functional\Algorithms\identity as id;
@@ -32,7 +32,7 @@ const either = 'Chemem\\Bingo\\Functional\\Functors\\Either\\either';
 function either(
   callable $left,
   callable $right,
-  Monadic $either
+  Monad $either
 ) {
   return $either instanceof Left ?
     $left($either->getLeft()) :
@@ -51,7 +51,7 @@ function either(
 function _extract(array $eithers, string $class)
 {
   return fold(
-    function (array $acc, Monadic $either) use ($class) {
+    function (array $acc, Monad $either) use ($class) {
       if ($either instanceof $class) {
         $acc[] = $either->isRight() ? $either->getRight() : $either->getLeft();
       }
@@ -74,7 +74,7 @@ const isLeft = 'Chemem\\Bingo\\Functional\\Functors\\Either\\isLeft';
  * @param Either $either
  * @return boolean
  */
-function isLeft(Monadic $either): bool
+function isLeft(Monad $either): bool
 {
   return $either->isLeft();
 }
@@ -90,7 +90,7 @@ const isRight = 'Chemem\\Bingo\\Functional\\Functors\\Either\\isRight';
  * @param Either $either
  * @return bool
  */
-function isRight(Monadic $either): bool
+function isRight(Monad $either): bool
 {
   return $either->isRight();
 }
@@ -139,7 +139,7 @@ const fromRight = 'Chemem\\Bingo\\Functional\\Functors\\Either\\fromRight';
  * @param Either $either
  * @return mixed
  */
-function fromRight($default, Monadic $either)
+function fromRight($default, Monad $either)
 {
   return $either->isRight() ? $either->getRight() : $default;
 }
@@ -156,7 +156,7 @@ const fromLeft = 'Chemem\\Bingo\\Functional\\Functors\\Either\\fromLeft';
  * @param Either $either
  * @return mixed
  */
-function fromLeft($default, Monadic $either)
+function fromLeft($default, Monad $either)
 {
   return $either->isLeft() ? $either->getLeft() : $default;
 }
@@ -175,7 +175,7 @@ const partitionEithers = 'Chemem\\Bingo\\Functional\\Functors\\Either\\partition
 function partitionEithers(array $eithers): array
 {
   return fold(
-    function (array $acc, Monadic $either) {
+    function (array $acc, Monad $either) {
       if ($either->isRight()) {
         $acc['right'][] = $either->getRight();
       } else {

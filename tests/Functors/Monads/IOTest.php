@@ -20,9 +20,9 @@ class IOTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\map(
-            IO\readFile,
-            Generator\constant(__DIR__ . '/../../io.test.txt')
+        Generator\map(
+          IO\readFile,
+          Generator\constant(__DIR__ . '/../../io.test.txt')
         )
       )
       ->then(function ($impure) {
@@ -57,19 +57,19 @@ class IOTest extends \PHPUnit\Framework\TestCase
         };
         
         $this->assertEquals(
-              [
+          [
             'left-identity'   => true,
             'right-identity'  => true,
             'associativity'   => true,
           ],
-              t\monadLaws(
-              $impure,
-              $fnx,
-              $fny,
-              IO::of,
-              $val
+          t\monadLaws(
+            $impure,
+            $fnx,
+            $fny,
+            IO::of,
+            $val
           )
-          );
+        );
       });
   }
 

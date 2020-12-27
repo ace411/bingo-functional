@@ -11,7 +11,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads\IO;
 
-use Chemem\Bingo\Functional\Functors\Monads\Monadic;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
 use function Chemem\Bingo\Functional\Algorithms\identity;
 
@@ -26,7 +26,7 @@ const readFile = __NAMESPACE__ . '\\readFile';
  * @param string $filePath
  * @return IO
  */
-function readFile(string $filePath): Monadic
+function readFile(string $filePath): Monad
 {
   return IO($filePath)
     ->map(function (string $file) {
@@ -48,7 +48,7 @@ const writeFile = __NAMESPACE__ . '\\writeFile';
  * @param string $content
  * @return IO
  */
-function writeFile(string $filePath, string $content): Monadic
+function writeFile(string $filePath, string $content): Monad
 {
   return IO($filePath)
     ->map(function (string $file) use ($content) {
@@ -68,7 +68,7 @@ const appendFile = __NAMESPACE__ . '\\appendFile';
  * @param string $content
  * @return IO
  */
-function appendFile(string $filePath, string $content): Monadic
+function appendFile(string $filePath, string $content): Monad
 {
   return IO($filePath)
     ->map(function (string $file) use ($content) {

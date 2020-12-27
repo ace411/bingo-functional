@@ -10,7 +10,10 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-class Reader implements Monadic
+use Chemem\Bingo\Functional\Functors\Functor;
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+
+class Reader implements Monad, Functor, Applicable
 {
   const of = __CLASS__ . '::of';
 
@@ -37,9 +40,9 @@ class Reader implements Monadic
    * 
    * @static of
    * @param mixed $action
-   * @return object Reader
+   * @return Reader
    */
-  public static function of($action): self
+  public static function of($action): Monad
   {
     return \is_callable($action) ?
       new static($action) :
@@ -51,7 +54,7 @@ class Reader implements Monadic
   /**
    * {@inheritDoc}
    */
-  public function ap(Monadic $app): Monadic
+  public function ap(Applicable $app): Applicable
   {
     return $this->bind(function ($func) use ($app) {
       return $app->map($func);
@@ -61,7 +64,7 @@ class Reader implements Monadic
   /**
    * {@inheritDoc}
    */
-  public function map(callable $function): Monadic
+  public function map(callable $function): Functor
   {
     return $this->bind(function ($env) use ($function) {
       return self::of($function($env));
@@ -71,7 +74,7 @@ class Reader implements Monadic
   /**
    * {@inheritDoc}
    */
-  public function bind(callable $function): Monadic
+  public function bind(callable $function): Monad
   {
     return new self(function ($env) use ($function) {
       return $function($this->run($env))->run($env);

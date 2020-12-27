@@ -10,7 +10,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads\ListMonad;
 
-use Chemem\Bingo\Functional\Functors\Monads\Monadic;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
 use Chemem\Bingo\Functional\Algorithms as f;
 
 const fromValue = __NAMESPACE__ . '\\fromValue';
@@ -24,7 +24,7 @@ const fromValue = __NAMESPACE__ . '\\fromValue';
  * @param mixed $value
  * @return ListMonad
  */
-function fromValue($value): Monadic
+function fromValue($value): Monad
 {
   return (__NAMESPACE__ . '::of')($value);
 }
@@ -40,9 +40,9 @@ const concat = __NAMESPACE__ . '\\concat';
  * @param ListMonad $list
  * @return ListMonad
  */
-function concat(Monadic ...$list): Monadic
+function concat(Monad ...$list): Monad
 {
-  $res = f\fold(function (array $return, Monadic $list) {
+  $res = f\fold(function (array $return, Monad $list) {
     $return[] = $list->extract();
 
     return $return;
@@ -63,7 +63,7 @@ const prepend = __NAMESPACE__ . '\\prepend';
  * @param ListMonad $list
  * @return ListMonad
  */
-function prepend(Monadic $value, Monadic $list): Monadic
+function prepend(Monad $value, Monad $list): Monad
 {
   return concat($value, $list);
 }
@@ -81,7 +81,7 @@ const append = __NAMESPACE__ . '\\append';
  *
  * @return ListMonad
  */
-function append(Monadic $value, Monadic $list): Monadic
+function append(Monad $value, Monad $list): Monad
 {
   return concat($list, $value);
 }
@@ -97,7 +97,7 @@ const head = __NAMESPACE__ . '\\head';
  * @param ListMonad $list
  * @return mixed
  */
-function head(Monadic $list)
+function head(Monad $list)
 {
   return $list->extract();
 }
@@ -113,7 +113,7 @@ const tail = __NAMESPACE__ . '\\tail';
  * @param ListMonad $list
  * @return object
  */
-function tail(Monadic $list)
+function tail(Monad $list)
 {
   // replace monoid with class containing unit type
   return new class() {

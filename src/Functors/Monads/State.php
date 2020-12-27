@@ -10,7 +10,10 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-class State implements Monadic
+use Chemem\Bingo\Functional\Functors\Functor;
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+
+class State implements Monad, Functor, Applicable
 {
   const of = __CLASS__ . '::of';
 
@@ -38,7 +41,7 @@ class State implements Monadic
    * @param callable $value
    * @return State
    */
-  public static function of($initial): self
+  public static function of($initial): Monad
   {
     return new static(function ($final) use ($initial) {
       return [$initial, $final];
@@ -48,7 +51,7 @@ class State implements Monadic
   /**
    * {@inheritDoc}
    */
-  public function ap(Monadic $monad): Monadic
+  public function ap(Applicable $monad): Applicable
   {
     return $this->bind(function ($function) use ($monad) {
       return $monad->map($function);
@@ -58,7 +61,7 @@ class State implements Monadic
   /**
    * {@inheritDoc}
    */
-  public function bind(callable $function): Monadic
+  public function bind(callable $function): Monad
   {
     return new self(function ($state) use ($function) {
       [$initial, $final] = $this->run($state);
@@ -70,7 +73,7 @@ class State implements Monadic
   /**
    * {@inheritDoc}
    */
-  public function map(callable $function): Monadic
+  public function map(callable $function): Functor
   {
     return $this->bind(function ($state) use ($function) {
       return self::of($function($state));

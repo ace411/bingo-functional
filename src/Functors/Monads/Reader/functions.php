@@ -11,7 +11,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads\Reader;
 
-use Chemem\Bingo\Functional\Functors\Monads\Monadic;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
 const reader = __NAMESPACE__ . '\\reader';
 
@@ -24,7 +24,7 @@ const reader = __NAMESPACE__ . '\\reader';
  * @param mixed $value
  * @return Reader
  */
-function reader($value): Monadic
+function reader($value): Monad
 {
   return (__NAMESPACE__ . '::of')($value);
 }
@@ -41,7 +41,7 @@ const runReader = __NAMESPACE__ . '\\runReader';
  * @param mixed $value
  * @return mixed
  */
-function runReader(Monadic $reader, $value)
+function runReader(Monad $reader, $value)
 {
   return $reader->run($value);
 }
@@ -58,7 +58,7 @@ const mapReader = __NAMESPACE__ . '\\mapReader';
  * @param Reader
  * @return Reader
  */
-function mapReader(callable $function, Monadic $reader): Monadic
+function mapReader(callable $function, Monad $reader): Monad
 {
   return $reader->map($function);
 }
@@ -75,7 +75,7 @@ const withReader = __NAMESPACE__ . '\\withReader';
  * @param Reader $reader
  * @return Reader
  */
-function withReader(callable $function, Monadic $reader): Monadic
+function withReader(callable $function, Monad $reader): Monad
 {
   return $reader->bind($function);
 }

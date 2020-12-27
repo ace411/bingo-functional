@@ -15,6 +15,8 @@
 
 namespace Chemem\Bingo\Functional\Functors\Lens;
 
+use Chemem\Bingo\Functional\Functors\Functor;
+
 use Chemem\Bingo\Functional\Algorithms as f;
 
 const _const = __NAMESPACE__ . '\\_const';
@@ -30,7 +32,7 @@ const _const = __NAMESPACE__ . '\\_const';
  */
 function _const($entity)
 {
-  return new class($entity) {
+  return new class($entity) implements Functor {
     public $val;
 
     public function __construct($val)
@@ -38,7 +40,7 @@ function _const($entity)
       $this->val = $val;
     }
 
-    public function map()
+    public function map(callable $func): Functor
     {
       return $this;
     }
@@ -58,7 +60,7 @@ const _identity = __NAMESPACE__ . '\\_identity';
  */
 function _identity($entity)
 {
-  return new class($entity) {
+  return new class($entity) implements Functor {
     public $val;
 
     public function __construct($val)
@@ -66,9 +68,9 @@ function _identity($entity)
       $this->val = $val;
     }
 
-    public function map(callable $operation)
+    public function map(callable $function): Functor
     {
-      return new static($operation($this->val));
+      return new static($function($this->val));
     }
   };
 }

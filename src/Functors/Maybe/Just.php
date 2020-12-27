@@ -10,7 +10,9 @@
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
-use \Chemem\Bingo\Functional\Functors\Monads as M;
+use Chemem\Bingo\Functional\Functors\Functor;
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
 class Just extends Maybe
 {
@@ -26,7 +28,7 @@ class Just extends Maybe
   /**
    * {@inheritdoc}
    */
-  public static function of($value): Maybe
+  public static function of($value): Monad
   {
     return new static($value);
   }
@@ -81,7 +83,7 @@ class Just extends Maybe
   /**
    * {@inheritdoc}
    */
-  public function ap(M\Monadic $just): M\Monadic
+  public function ap(Applicable $just): Applicable
   {
     return $this->bind(function ($action) use ($just) {
       return $just->map($action);
@@ -91,7 +93,7 @@ class Just extends Maybe
   /**
    * {@inheritdoc}
    */
-  public function map(callable $fn): M\Monadic
+  public function map(callable $fn): Functor
   {
     return new static($fn($this->getJust()));
   }
@@ -99,7 +101,7 @@ class Just extends Maybe
   /**
    * {@inheritdoc}
    */
-  public function bind(callable $function): M\Monadic
+  public function bind(callable $function): Monad
   {
     return $function($this->getJust());
   }
@@ -107,7 +109,7 @@ class Just extends Maybe
   /**
    * {@inheritdoc}
    */
-  public function filter(callable $fn): Maybe
+  public function filter(callable $fn): Monad
   {
     return $fn($this->getJust()) ? $this : new Nothing();
   }
