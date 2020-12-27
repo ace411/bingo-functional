@@ -103,10 +103,10 @@ const assertEquals = __NAMESPACE__ . '\\assertEquals';
  * @return array
  */
 function lensLaws(
-    callable $get,
-    callable $set,
-    $store,
-    $val = null
+  callable $get,
+  callable $set,
+  $store,
+  $val = null
 ): array {
   $lens = l\lens($get, $set);
 
@@ -136,11 +136,11 @@ const lensLaws = __NAMESPACE__ . '\\lensLaws';
  * @return array
  */
 function lensFunctorLaws(
-    callable $get,
-    callable $set,
-    $store,
-    callable $fnx,
-    callable $fny
+  callable $get,
+  callable $set,
+  $store,
+  callable $fnx,
+  callable $fny
 ): array {
   $lens = l\lens($get, $set);
 
@@ -191,7 +191,7 @@ const functorLaws = __NAMESPACE__ . '\\functorLaws';
  *
  * monadLaws :: m a -> (a -> m b) -> (a -> m c) -> a -> d -> Array
  *
- * @param Monadic $monad
+ * @param Monad $monad
  * @param callable $fnx
  * @param callable $fny
  * @param callable $return
@@ -200,12 +200,12 @@ const functorLaws = __NAMESPACE__ . '\\functorLaws';
  * @return array
  */
 function monadLaws(
-    object $monad,
-    callable $fnx,
-    callable $fny,
-    callable $return,
-    $val,
-    $aux = null
+  object $monad,
+  callable $fnx,
+  callable $fny,
+  callable $return,
+  $val,
+  $aux = null
 ): array {
   return [
     // x >>= f = f o x
@@ -214,11 +214,11 @@ function monadLaws(
     'right-identity'  => assertEquals(m\bind($return, $monad), $monad, $aux),
     // (m >>= f) >>= g = m >>= (x -> f o x >>= g)
     'associativity'   => assertEquals(
-        $monad->bind($fnx)->bind($fny),
-        $monad->bind(function ($res) use ($fnx, $fny) {
-          return $fnx($res)->bind($fny);
-        }),
-        $aux
+      $monad->bind($fnx)->bind($fny),
+      $monad->bind(function ($res) use ($fnx, $fny) {
+        return $fnx($res)->bind($fny);
+      }),
+      $aux
     ),
   ];
 }
@@ -249,8 +249,8 @@ function applicativeLaws(object $app, callable $func, $val): array
     'identity' => $app->pure(f\identity)->ap($purex)->getValue() == $val,
     // u <*> pure v = pure ($ v) <*> u
     'interchange' => assertEquals(
-        $app->ap($purex),
-        $app
+      $app->ap($purex),
+      $app
         ->pure(function ($func) use ($val) {
           return $func($val);
         })
@@ -258,22 +258,22 @@ function applicativeLaws(object $app, callable $func, $val): array
     ),
     // pure f <*> pure x = pure (f x)
     'homomorphism' => assertEquals(
-        $app->pure($func)->ap($purex),
-        $app->pure($func($val))
+      $app->pure($func)->ap($purex),
+      $app->pure($func($val))
     ),
     // pure (.) <*> u <*> v <*> w = u <*> (v <*> w)
     'composition' => assertEquals(
-        $app
+      $app
         ->pure(f\compose)
         ->ap($app)
         ->ap($puref)
         ->ap($purex),
-        $app->ap($puref->ap($purex))
+      $app->ap($puref->ap($purex))
     ),
     // map f x = pure f <*> x
     'map' => assertEquals(
-        $puref->ap($purex),
-        $purex->map($func)
+      $puref->ap($purex),
+      $purex->map($func)
     ),
   ];
 }

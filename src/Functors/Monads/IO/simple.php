@@ -11,7 +11,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads\IO;
 
-use Chemem\Bingo\Functional\Functors\Monads\Monadic;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
 use \Chemem\Bingo\Functional\Algorithms as f;
 
 const IO = __NAMESPACE__ . '\\IO';
@@ -25,7 +25,7 @@ const IO = __NAMESPACE__ . '\\IO';
  * @param mixed $value
  * @return IO
  */
-function IO($value): Monadic
+function IO($value): Monad
 {
   return (__NAMESPACE__ . '::of')($value);
 }
@@ -40,7 +40,7 @@ const getChar = __NAMESPACE__ . '\\getChar';
  *
  * @return IO
  */
-function getChar(): Monadic
+function getChar(): Monad
 {
   $count = 0;
 
@@ -64,7 +64,7 @@ const _readline = __NAMESPACE__ . '\\_readline';
  * @param callable $handler
  * @return IO
  */
-function _readline(string $str = null, callable $handler = null): Monadic
+function _readline(string $str = null, callable $handler = null): Monad
 {
   if (!\is_null($handler)) {
     return IO(function () use ($str, $handler) {
@@ -90,7 +90,7 @@ const putChar = __NAMESPACE__ . '\\putChar';
  *
  * @return IO
  */
-function putChar(string $char): Monadic
+function putChar(string $char): Monad
 {
   return printToStdout($char);
 }
@@ -107,7 +107,7 @@ const printToStdout = __NAMESPACE__ . '\\printToStdout';
  * @param string $input
  * @return IO
  */
-function printToStdout(string $input): Monadic
+function printToStdout(string $input): Monad
 {
   return IO(function () use ($input) {
     echo $input;
@@ -124,7 +124,7 @@ const putStr = __NAMESPACE__ . '\\putStr';
  *
  * @return IO
  */
-function putStr(string $str): Monadic
+function putStr(string $str): Monad
 {
   return printToStdout($str);
 }
@@ -140,7 +140,7 @@ const putStrLn = __NAMESPACE__ . '\\putStrLn';
  * @param string $str
  * @return IO
  */
-function putStrLn(string $str): Monadic
+function putStrLn(string $str): Monad
 {
   return printToStdout(f\concat('', $str, PHP_EOL));
 }
@@ -155,7 +155,7 @@ const getLine = __NAMESPACE__ . '\\getLine';
  *
  * @return IO
  */
-function getLine(): Monadic
+function getLine(): Monad
 {
   return _readline(null);
 }
@@ -171,7 +171,7 @@ const interact = __NAMESPACE__ . '\\interact';
  * @param callable $function
  * @param IO
  */
-function interact(callable $function): Monadic
+function interact(callable $function): Monad
 {
   return getLine()->map($function);
 }
@@ -187,7 +187,7 @@ const _print = __NAMESPACE__ . '\\_print';
  * @param IO $printable
  * @return IO
  */
-function _print(Monadic $printable): Monadic
+function _print(Monad $printable): Monad
 {
   return $printable
     ->map(function (string $result) {
@@ -204,7 +204,7 @@ const IOException = __NAMESPACE__ . '\\IOException';
  * @param string $message
  * @return IO
  */
-function IOException(string $message): Monadic
+function IOException(string $message): Monad
 {
   return IO(function () use ($message) {
     return function () use ($message) {
@@ -224,7 +224,7 @@ const catchIO = __NAMESPACE__ . '\\catchIO';
  * @param IO $catch
  * @return IO
  */
-function catchIO(Monadic $catch): Monadic
+function catchIO(Monad $catch): Monad
 {
   return $catch->bind(function ($operation) {
     $exception = f\compose(f\toException, IO);

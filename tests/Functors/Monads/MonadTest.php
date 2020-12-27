@@ -36,11 +36,11 @@ class MonadTest extends \PHPUnit\Framework\TestCase
   public function testbindSequentiallyComposesTwoMonadActions($func, $arg, $res)
   {
     $impure = m\bind(
-            f\partialRight($func, m\IO::class),
-            m\IO\IO($arg)
-        );
+      f\partialRight($func, m\IO::class),
+      m\IO\IO($arg)
+    );
 
-    $this->assertTrue($impure instanceof m\Monadic);
+    $this->assertTrue($impure instanceof m\Monad);
     $this->assertEquals($res, $impure->exec());
   }
 
@@ -68,13 +68,13 @@ class MonadTest extends \PHPUnit\Framework\TestCase
   /**
    * @dataProvider mcomposeProvider
    */
-  public function testmcomposeComposesMonadicFunctionsFromRightToLeft($funcs, $arg, $res)
+  public function testmcomposeComposesMonadFunctionsFromRightToLeft($funcs, $arg, $res)
   {
     $ops = m\mcompose(
-            ...f\map(function ($closure) {
-              return f\partialRight($closure, Just::class);
-            }, $funcs)
-        );
+      ...f\map(function ($closure) {
+        return f\partialRight($closure, Just::class);
+      }, $funcs)
+    );
 
     $this->assertInstanceOf(\Closure::class, $ops);
     $this->assertEquals($res, $ops(Maybe::just($arg))->getJust());
@@ -105,11 +105,11 @@ class MonadTest extends \PHPUnit\Framework\TestCase
   /**
    * @dataProvider foldMProvider
    */
-  public function testfoldMTransformsListIntoSingleMonadicValue($func, $list, $acc, $res)
+  public function testfoldMTransformsListIntoSingleMonadValue($func, $list, $acc, $res)
   {
     $reader = m\foldM(f\partialRight($func, m\Reader::class), $list, $acc);
 
-    $this->assertTrue($reader instanceof m\Monadic);
+    $this->assertTrue($reader instanceof m\Monad);
     $this->assertEquals($res, $reader->run(null));
   }
 
@@ -136,11 +136,11 @@ class MonadTest extends \PHPUnit\Framework\TestCase
   /**
    * @dataProvider mapMProvider
    */
-  public function testmapMTransformsEveryListItemInMonadicContext($func, $list, $res)
+  public function testmapMTransformsEveryListItemInMonadContext($func, $list, $res)
   {
     $map = m\mapM(f\partialRight($func, Right::class), $list);
 
-    $this->assertTrue($map instanceof m\Monadic);
+    $this->assertTrue($map instanceof m\Monad);
     $this->assertEquals($res, $map->getRight());
   }
 
@@ -167,11 +167,11 @@ class MonadTest extends \PHPUnit\Framework\TestCase
   /**
    * @dataProvider filterMProvider
    */
-  public function testfilterMBehavesLikefilterInMonadicContext($func, $list, $res)
+  public function testfilterMBehavesLikefilterInMonadContext($func, $list, $res)
   {
     $filter = m\filterM(f\partialRight($func, m\State::class), $list);
 
-    $this->assertTrue($filter instanceof m\Monadic);
+    $this->assertTrue($filter instanceof m\Monad);
     $this->assertEquals($res, f\head($filter->run(null)));
   }
 }

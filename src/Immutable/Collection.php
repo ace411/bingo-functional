@@ -13,7 +13,11 @@ namespace Chemem\Bingo\Functional\Immutable;
 use \Chemem\Bingo\Functional\Algorithms as A;
 use \Chemem\Bingo\Functional\Common\Traits\TransientMutator as Transient;
 
-class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, ImmutableList
+class Collection implements
+  \JsonSerializable,
+  \IteratorAggregate,
+  \Countable,
+  ImmutableList
 {
   use CommonTrait;
   use Transient;
@@ -184,21 +188,33 @@ class Collection implements \JsonSerializable, \IteratorAggregate, \Countable, I
    */
   public function intersects(ImmutableList $list): bool
   {
-    $intersect  = [];
+    $intersect  = false;
     $main       = $this->getSize();
     $oth        = $list->getSize();
 
     if ($main > $oth) {
       for ($idx = 0; $idx < $oth; $idx++) {
-        $intersect[] = \in_array($list->getList()[$idx], $this->toArray());
+        if (\in_array($list->getList()[$idx], $this->toArray())) {
+          $intersect = true;
+        }
+
+        if ($intersect === true) {
+          break;
+        }
       }
     } elseif ($oth > $main) {
       for ($idx = 0; $idx < $main; $idx++) {
-        $intersect[] = \in_array($this->getList()[$idx], $list->toArray());
+        if (\in_array($this->getList()[$idx], $list->toArray())) {
+          $intersect = true;
+        }
+
+        if ($intersect === true) {
+          break;
+        }
       }
     }
 
-    return \in_array(true, $intersect);
+    return $intersect;
   }
 
   /**

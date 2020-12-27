@@ -12,7 +12,7 @@
 namespace Chemem\Bingo\Functional\Functors\Monads\Writer;
 
 use Chemem\Bingo\Functional\Algorithms as A;
-use Chemem\Bingo\Functional\Functors\Monads\Monadic;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
 const writer = __NAMESPACE__ . '\\writer';
 
@@ -26,7 +26,7 @@ const writer = __NAMESPACE__ . '\\writer';
  * @param mixed $output
  * @return Writer
  */
-function writer($result, $output = null): Monadic
+function writer($result, $output = null): Monad
 {
   return (__NAMESPACE__ . '::of')($result, $output);
 }
@@ -42,7 +42,7 @@ const runWriter = __NAMESPACE__ . '\\runWriter';
  * @param Writer $writer
  * @return array
  */
-function runWriter(Monadic $writer): array
+function runWriter(Monad $writer): array
 {
   return $writer->run();
 }
@@ -58,7 +58,7 @@ const tell = __NAMESPACE__ . '\\tell';
  * @param mixed $msg
  * @return Writer
  */
-function tell($msg): Monadic
+function tell($msg): Monad
 {
   $writer = __NAMESPACE__;
   
@@ -78,7 +78,7 @@ const execWriter = __NAMESPACE__ . '\\execWriter';
  * @param Writer $writer
  * @return array $output
  */
-function execWriter(Monadic $writer)
+function execWriter(Monad $writer)
 {
   [, $output] = $writer->run();
 
@@ -97,7 +97,7 @@ const mapWriter = __NAMESPACE__ . '\\mapWriter';
  * @param Writer
  * @return Writer
  */
-function mapWriter(callable $function, Monadic $writer): Monadic
+function mapWriter(callable $function, Monad $writer): Monad
 {
   [$result, $output] = $function(runWriter($writer));
 

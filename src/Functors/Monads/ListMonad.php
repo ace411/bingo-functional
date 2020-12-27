@@ -10,9 +10,12 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
+use Chemem\Bingo\Functional\Functors\Functor;
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+
 use Chemem\Bingo\Functional\Algorithms as f;
 
-class ListMonad implements Monadic
+class ListMonad implements Monad, Functor, Applicable
 {
   const of = __CLASS__ . '::of';
 
@@ -33,9 +36,9 @@ class ListMonad implements Monadic
    * of :: a -> ListMonad a
    * 
    * @param mixed $val
-   * @return Monadic
+   * @return Monad
    */
-  public static function of($val): Monadic
+  public static function of($val): Monad
   {
     return new static(function () use ($val) {
       return \is_array($val) ? $val : [$val];
@@ -45,7 +48,7 @@ class ListMonad implements Monadic
   /**
    * {@inheritdoc}
    */
-  public function ap(Monadic $list): Monadic
+  public function ap(Applicable $list): Applicable
   {
     return $list->map(...$this->extract());
   }
@@ -53,7 +56,7 @@ class ListMonad implements Monadic
   /**
    * {@inheritdoc}
    */
-  public function map(callable $function): Monadic
+  public function map(callable $function): Functor
   {
     return new static(function () use ($function) {
       return f\mapDeep($function, $this->extract());
@@ -63,7 +66,7 @@ class ListMonad implements Monadic
   /**
    * {@inheritdoc}
    */
-  public function bind(callable $function): Monadic
+  public function bind(callable $function): Monad
   {
     return self::merge($function, $this->extract());
   }
@@ -80,6 +83,17 @@ class ListMonad implements Monadic
     return ($this->listop)();
   }
 
+  /**
+   * merge
+   * internally merges lists
+   * 
+   * merge :: (a -> b) -> [b] -> m [a, b] 
+   *
+   * @access private
+   * @param callable $function
+   * @param array $list
+   * @return Monad
+   */
   private static function merge(callable $function, $list)
   {
     $merge = f\compose(

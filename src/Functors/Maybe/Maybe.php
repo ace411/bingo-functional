@@ -10,10 +10,12 @@
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
-use \Chemem\Bingo\Functional\Functors\Monads as M;
+use Chemem\Bingo\Functional\Functors\Functor;
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
 use Chemem\Bingo\Functional\Algorithms as f;
 
-abstract class Maybe implements M\Monadic
+abstract class Maybe implements Monad, Functor, Applicable
 {
   const just      = __CLASS__ . '::just';
 
@@ -32,7 +34,7 @@ abstract class Maybe implements M\Monadic
    * @param mixed $value
    * @return Just
    */
-  public static function just($value): Just
+  public static function just($value): Monad
   {
     return new Just($value);
   }
@@ -45,7 +47,7 @@ abstract class Maybe implements M\Monadic
    * 
    * @return Nothing
    */
-  public static function nothing(): Nothing
+  public static function nothing(): Monad
   {
     return new Nothing();
   }
@@ -60,7 +62,7 @@ abstract class Maybe implements M\Monadic
    * @param mixed $nothing
    * @return Maybe
    */
-  public static function fromValue($just, $nothing = null): self
+  public static function fromValue($just, $nothing = null): Monad
   {
     return $just !== $nothing ? self::just($just) : self::nothing();
   }
@@ -103,7 +105,7 @@ abstract class Maybe implements M\Monadic
    * @param mixed $value
    * @return Maybe
    */
-  abstract public static function of($value): self;
+  abstract public static function of($value): Monad;
 
   /**
    * getJust
@@ -164,7 +166,7 @@ abstract class Maybe implements M\Monadic
   /**
    * {@inheritDoc}
    */
-  abstract public function ap(M\Monadic $app): M\Monadic;
+  abstract public function ap(Applicable $app): Applicable;
 
   /**
    * getOrElse
@@ -181,12 +183,12 @@ abstract class Maybe implements M\Monadic
   /**
    * {@inheritDoc}
    */
-  abstract public function map(callable $function): M\Monadic;
+  abstract public function map(callable $function): Functor;
 
   /**
    * {@inheritDoc}
    */
-  abstract public function bind(callable $function): M\Monadic;
+  abstract public function bind(callable $function): Monad;
 
   /**
    * filter
@@ -198,7 +200,7 @@ abstract class Maybe implements M\Monadic
    * @param callable $filter
    * @return Maybe
    */
-  abstract public function filter(callable $filter): self;
+  abstract public function filter(callable $filter): Monad;
 
   /**
    * orElse
@@ -207,8 +209,8 @@ abstract class Maybe implements M\Monadic
    * orElse :: Maybe => m a -> m a
    * 
    * @abstract
-   * @param self $value
-   * @return self
+   * @param Maybe $value
+   * @return Maybe
    */
-  abstract public function orElse(self $value): self;
+  abstract public function orElse(Maybe $value): Maybe;
 }

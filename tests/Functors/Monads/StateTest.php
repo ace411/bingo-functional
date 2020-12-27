@@ -20,7 +20,7 @@ class StateTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\int()
+        Generator\int()
       )
       ->then(function ($val) {
         $functor  = State::of($val);
@@ -45,8 +45,8 @@ class StateTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\int(),
-          Generator\names()
+        Generator\int(),
+        Generator\names()
       )
       ->then(function ($val, $state) {
         $monad  = State::of($val);
@@ -58,20 +58,20 @@ class StateTest extends \PHPUnit\Framework\TestCase
         };
 
         $this->assertEquals(
-              [
+          [
             'left-identity'   => true,
             'right-identity'  => true,
             'associativity'   => true,
           ],
-              t\monadLaws(
-              $monad,
-              $fnx,
-              $fny,
-              State::of,
-              $val,
-              $state
+          t\monadLaws(
+            $monad,
+            $fnx,
+            $fny,
+            State::of,
+            $val,
+            $state
           )
-          );
+        );
       });
   }
 

@@ -11,7 +11,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads\State;
 
-use Chemem\Bingo\Functional\Functors\Monads\Monadic;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
 const state = __NAMESPACE__ . '\\state';
 
@@ -24,7 +24,7 @@ const state = __NAMESPACE__ . '\\state';
  * @param callable $action
  * @return State
  */
-function state(callable $action): Monadic
+function state(callable $action): Monad
 {
   return (__NAMESPACE__ . '::of')(
     function ($state) use ($action) {
@@ -44,7 +44,7 @@ const put = __NAMESPACE__ . '\\put';
  * @param mixed $value
  * @return State
  */
-function put($value): Monadic
+function put($value): Monad
 {
   return state(function ($state) use ($value) {
     return $value;
@@ -61,7 +61,7 @@ const get = __NAMESPACE__ . '\\get';
  *
  * @return State
  */
-function get(): Monadic
+function get(): Monad
 {
   return state(function ($state) {
     return [$state, $state];
@@ -80,7 +80,7 @@ const gets = __NAMESPACE__ . '\\gets';
  *
  * @return State
  */
-function gets(callable $projection): Monadic
+function gets(callable $projection): Monad
 {
   return state(function ($state) use ($projection) {
     return [$projection($state), $state];
@@ -98,7 +98,7 @@ const modify = __NAMESPACE__ . '\\modify';
  * @param callable $function
  * @return State
  */
-function modify(callable $function): Monadic
+function modify(callable $function): Monad
 {
   return (__NAMESPACE__ . '::of')(
     function ($state) use ($function) {
@@ -120,7 +120,7 @@ const runState = __NAMESPACE__ . '\\runState';
  *
  * @return array
  */
-function runState(Monadic $monad, $state): array
+function runState(Monad $monad, $state): array
 {
   return $monad->run($state);
 }
@@ -137,7 +137,7 @@ const evalState = __NAMESPACE__ . '\\evalState';
  * @param mixed $state
  * @return mixed
  */
-function evalState(Monadic $monad, $state)
+function evalState(Monad $monad, $state)
 {
   [$final] = $monad->run($state);
 
@@ -156,7 +156,7 @@ const execState = __NAMESPACE__ . '\\execState';
  * @param mixed $state
  * @return mixed $final
  */
-function execState(Monadic $monad, $state)
+function execState(Monad $monad, $state)
 {
   [, $final] = $monad->run($state);
 

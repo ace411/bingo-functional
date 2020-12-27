@@ -20,9 +20,9 @@ class WriterTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\map(function ($int) {
-            return [$int, f\concat(' ', 'put', $int)];
-          }, Generator\int())
+        Generator\map(function ($int) {
+          return [$int, f\concat(' ', 'put', $int)];
+        }, Generator\int())
       )
       ->then(function ($input) {
         $writer = Writer::of(...$input);
@@ -60,19 +60,19 @@ class WriterTest extends \PHPUnit\Framework\TestCase
         };
 
         $this->assertEquals(
-              [
+          [
             'left-identity'   => true,
             'right-identity'  => true,
             'associativity'   => true,
           ],
-              t\monadLaws(
-              $writer,
-              $fnx,
-              $fny,
-              Writer::of,
-              $input
+          t\monadLaws(
+            $writer,
+            $fnx,
+            $fny,
+            Writer::of,
+            $input
           )
-          );
+        );
       });
   }
 

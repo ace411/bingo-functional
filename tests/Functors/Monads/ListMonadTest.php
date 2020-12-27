@@ -19,10 +19,10 @@ class ListMonadTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\choose(1, 5),
-            Generator\choose(6, 10),
-            Generator\choose(11, 15)
+        Generator\tuple(
+          Generator\choose(1, 5),
+          Generator\choose(6, 10),
+          Generator\choose(11, 15)
         )
       )
       ->then(function ($list) {
@@ -62,19 +62,19 @@ class ListMonadTest extends \PHPUnit\Framework\TestCase
         };
 
         $this->assertEquals(
-              [
+          [
             'left-identity'   => true,
             'right-identity'  => true,
             'associativity'   => true,
           ],
-              t\monadLaws(
-              $list,
-              $fnx,
-              $fny,
-              Listt::of,
-              $val
+          t\monadLaws(
+            $list,
+            $fnx,
+            $fny,
+            Listt::of,
+            $val
           )
-          );
+        );
       });
   }
 

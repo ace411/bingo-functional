@@ -10,7 +10,9 @@
 
 namespace Chemem\Bingo\Functional\Functors\Applicatives;
 
-class Applicative
+use Chemem\Bingo\Functional\Functors\Functor;
+
+class Applicative implements Functor, Applicable
 {
   const pure  = __CLASS__ . '::pure';
 
@@ -67,10 +69,10 @@ class Applicative
    *
    * ap :: Applicative f => f (a -> b) -> f a -> f b
    * 
-   * @param Monadic
-   * @return Monadic
+   * @param Applicable
+   * @return Applicable
    */
-  public function ap(self $app): self
+  public function ap(Applicable $app): Applicable
   {
     return self::pure($this->getValue()($app->getValue()));
   }
@@ -82,9 +84,9 @@ class Applicative
    * map :: Applicative f => f a -> (a -> b) -> f b
    * 
    * @param callable $function The morphism used to transform the state value
-   * @return Monadic
+   * @return Functor
    */
-  public function map(callable $function): self
+  public function map(callable $function): Functor
   {
     return self::pure($function)->ap($this);
   }

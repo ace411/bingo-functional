@@ -10,10 +10,12 @@
 
 namespace Chemem\Bingo\Functional\Functors\Either;
 
-use Chemem\Bingo\Functional\Functors\Monads as M;
+use Chemem\Bingo\Functional\Functors\Functor;
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
 use Chemem\Bingo\Functional\Algorithms as f;
 
-abstract class Either implements M\Monadic
+abstract class Either implements Monad, Functor, Applicable
 {
   const left  = __CLASS__ . '::left';
 
@@ -30,7 +32,7 @@ abstract class Either implements M\Monadic
    * @param mixed $value
    * @return Left
    */
-  public static function left($value): Left
+  public static function left($value): Monad
   {
     return new Left($value);
   }
@@ -44,7 +46,7 @@ abstract class Either implements M\Monadic
    * @param mixed $value
    * @return Right
    */
-  public static function right($value): Right
+  public static function right($value): Monad
   {
     return new Right($value);
   }
@@ -59,7 +61,7 @@ abstract class Either implements M\Monadic
    * @param Left $left
    * @return callable
    */
-  public static function lift(callable $function, Left $left): callable
+  public static function lift(callable $function, Monad $left): callable
   {
     return function () use ($function, $left) {
       if (
@@ -132,9 +134,9 @@ abstract class Either implements M\Monadic
    * 
    * @abstract
    * @param mixed $value
-   * @return self
+   * @return Either
    */
-  abstract public static function of($value): self;
+  abstract public static function of($value): Monad;
 
   /**
    * flatMap
@@ -151,17 +153,17 @@ abstract class Either implements M\Monadic
   /**
    * {@inheritDoc}
    */
-  abstract public function map(callable $function): M\Monadic;
+  abstract public function map(callable $function): Functor;
 
   /**
    * {@inheritDoc}
    */
-  abstract public function bind(callable $function): M\Monadic;
+  abstract public function bind(callable $function): Monad;
 
   /**
    * {@inheritDoc}
    */
-  abstract public function ap(M\Monadic $app): M\Monadic;
+  abstract public function ap(Applicable $app): Applicable;
 
   /**
    * filter
@@ -174,11 +176,11 @@ abstract class Either implements M\Monadic
    * @param mixed $error
    * @return Either
    */
-  abstract public function filter(callable $filter, $error): self;
+  abstract public function filter(callable $filter, $error): Monad;
 
   /**
    * orElse
-   * chainable version of right()
+   * chainable version of left()/right()
    * 
    * orElse :: Either e a => e b -> e a
    *
@@ -186,5 +188,5 @@ abstract class Either implements M\Monadic
    * @param Either $either
    * @return Either
    */
-  abstract public function orElse(self $either): self;
+  abstract public function orElse(Either $either): Either;
 }

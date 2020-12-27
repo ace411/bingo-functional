@@ -28,7 +28,7 @@ const intersects = __NAMESPACE__ . '\\intersects';
  */
 function intersects($first, $second): bool
 {
-  if (\is_object($first) && \is_object($snd)) {
+  if (\is_object($first) && \is_object($second)) {
     $first  = \get_object_vars($first);
     $second = \get_object_vars($second);
   }

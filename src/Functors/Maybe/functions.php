@@ -12,7 +12,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
-use Chemem\Bingo\Functional\Functors\Monads\Monadic;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
 use function Chemem\Bingo\Functional\Algorithms\compose;
 use function Chemem\Bingo\Functional\Algorithms\fold;
@@ -32,7 +32,7 @@ const maybe = __NAMESPACE__ . '\\maybe';
  * @param Maybe $maybe
  * @return mixed
  */
-function maybe($default, callable $function, Monadic $maybe)
+function maybe($default, callable $function, Monad $maybe)
 {
   return $maybe instanceof Nothing ?
     $default :
@@ -50,7 +50,7 @@ const isJust = __NAMESPACE__ . '\\isJust';
  * @param Maybe $maybe
  * @return bool
  */
-function isJust(Monadic $maybe)
+function isJust(Monad $maybe)
 {
   return $maybe->isJust();
 }
@@ -66,7 +66,7 @@ const isNothing = __NAMESPACE__ . '\\isNothing';
  * @param Maybe $maybe
  * @return bool
  */
-function isNothing(Monadic $maybe)
+function isNothing(Monad $maybe)
 {
   return $maybe->isNothing();
 }
@@ -82,7 +82,7 @@ const fromJust = __NAMESPACE__ . '\\fromJust';
  * @param Maybe $maybe
  * @return mixed
  */
-function fromJust(Monadic $maybe)
+function fromJust(Monad $maybe)
 {
   if ($maybe instanceof Nothing) {
     throw new \Exception('Maybe.fromJust: Nothing');
@@ -103,7 +103,7 @@ const fromMaybe = __NAMESPACE__ . '\\fromMaybe';
  * @param Maybe $maybe
  * @return mixed
  */
-function fromMaybe($default, Monadic $maybe)
+function fromMaybe($default, Monad $maybe)
 {
   return $maybe instanceof Nothing ?
     $default :
@@ -121,7 +121,7 @@ const listToMaybe = __NAMESPACE__ . '\\listToMaybe';
  * @param array $list
  * @return Maybe
  */
-function listToMaybe(array $list): Monadic
+function listToMaybe(array $list): Monad
 {
   return empty($list) ?
     (__NAMESPACE__ . '\\Nothing::of')(null) :
@@ -140,7 +140,7 @@ const maybeToList = __NAMESPACE__ . '\\maybeToList';
  * @param Maybe $maybe
  * @return array
  */
-function maybeToList(Monadic $maybe): array
+function maybeToList(Monad $maybe): array
 {
   return $maybe instanceof Nothing ? [] : [$maybe->getJust()];
 }
@@ -158,7 +158,7 @@ const catMaybes = __NAMESPACE__ . '\\catMaybes';
  */
 function catMaybes(array $maybes): array
 {
-  return fold(function ($list, Monadic $maybe) {
+  return fold(function ($list, Monad $maybe) {
     if ($maybe instanceof Just) {
       $list[] = $maybe->getJust();
     }

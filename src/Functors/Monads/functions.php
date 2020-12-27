@@ -45,7 +45,7 @@ const bind = __NAMESPACE__ . '\\bind';
  * @param object Monad $value
  * @return object Monad
  */
-function bind(callable $function, Monadic $value = null): Monadic
+function bind(callable $function, Monad $value = null): Monad
 {
   return f\curry(function ($function, $value) {
     return $value->bind($function);
@@ -64,7 +64,7 @@ const foldM = __NAMESPACE__ . '\\foldM';
  * @param array $list
  * @param mixed $acc
  */
-function foldM(callable $function, array $list, $acc): Monadic
+function foldM(callable $function, array $list, $acc): Monad
 {
   $monad = $function($acc, f\head($list));
 
@@ -93,9 +93,9 @@ const filterM = __NAMESPACE__ . '\\filterM';
  *
  * @param callable $function
  * @param array $list
- * @return Monadic
+ * @return Monad
  */
-function filterM(callable $function, array $list): Monadic
+function filterM(callable $function, array $list): Monad
 {
   $monad = $function(f\head($list));
 
@@ -130,9 +130,9 @@ const mapM = __NAMESPACE__ . '\\mapM';
  *
  * @param callable $function
  * @param array $list
- * @return Monadic
+ * @return Monad
  */
-function mapM(callable $function, array $list): Monadic
+function mapM(callable $function, array $list): Monad
 {
   $monad  = $function(f\head($list));
 
