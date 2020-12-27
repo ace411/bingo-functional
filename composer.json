@@ -10,7 +10,6 @@
     "helpers",
     "tuples",
     "zip",
-    "i/o",
     "input-output",
     "unzip",
     "compose",
