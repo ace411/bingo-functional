@@ -27,7 +27,7 @@ const isArrayOf = __NAMESPACE__ . '\\isArrayOf';
  */
 function isArrayOf(array $list): string
 {
-  $types = \array_unique(map('gettype', $list));
+  $types = \array_unique((map)('gettype', $list));
 
   return \count($types) > 1 ? 'mixed' : head($types);
 }
