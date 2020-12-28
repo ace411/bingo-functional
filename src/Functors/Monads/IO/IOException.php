@@ -1,9 +1,9 @@
 <?php
 
 /**
- *
  * IO Exception class
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */

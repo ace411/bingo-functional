@@ -4,17 +4,19 @@
  * Either type helper functions.
  *
  * @see http://hackage.haskell.org/package/base-4.11.1.0/docs/Data-Either.html
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Either;
 
-use Chemem\Bingo\Functional\Functors\Either\Either as Etype;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
 use function Chemem\Bingo\Functional\Algorithms\fold;
 use function Chemem\Bingo\Functional\Algorithms\identity as id;
+
+const either = 'Chemem\\Bingo\\Functional\\Functors\\Either\\either';
 
 /**
  * either function
@@ -25,48 +27,59 @@ use function Chemem\Bingo\Functional\Algorithms\identity as id;
  * @param callable $left
  * @param callable $right
  * @param object Either
- *
  * @return mixed
  */
-
-const either = 'Chemem\\Bingo\\Functional\\Functors\\Either\\either';
-
-function either(callable $left, callable $right, Etype $either)
-{
-    return $either instanceof Left ?
-        $left($either->getLeft()) :
-        $right($either->getRight());
-}
-
-function _extract(array $eithers, string $class)
-{
-    return fold(
-        function (array $acc, Etype $either) use ($class) {
-            if ($either instanceof $class) {
-                $acc[] = $either->isRight() ? $either->getRight() : $either->getLeft();
-            }
-
-            return $acc;
-        },
-        $eithers,
-        id([])
-    );
+function either(
+  callable $left,
+  callable $right,
+  Monad $either
+) {
+  return $either instanceof Left ?
+    $left($either->getLeft()) :
+    $right($either->getRight());
 }
 
 /**
- * isLeft function
+ * _extract
+ * extracts one of either Right or Left types
+ *
+ * @internal
+ * @param array $eithers
+ * @param string $class
+ * @return array
+ */
+function _extract(array $eithers, string $class)
+{
+  return fold(
+    function (array $acc, Monad $either) use ($class) {
+      if ($either instanceof $class) {
+        $acc[] = $either->isRight() ? $either->getRight() : $either->getLeft();
+      }
+
+      return $acc;
+    },
+    $eithers,
+    id([])
+  );
+}
+
+const isLeft = 'Chemem\\Bingo\\Functional\\Functors\\Either\\isLeft';
+
+/**
+ * isLeft
  * Return True if the given value is a Left-value, False otherwise.
  *
  * isLeft :: Either a b -> Bool
- *
- * @return bool
+ * 
+ * @param Either $either
+ * @return boolean
  */
-const isLeft = 'Chemem\\Bingo\\Functional\\Functors\\Either\\isLeft';
-
-function isLeft(Etype $either): bool
+function isLeft(Monad $either): bool
 {
-    return $either->isLeft();
+  return $either->isLeft();
 }
+
+const isRight = 'Chemem\\Bingo\\Functional\\Functors\\Either\\isRight';
 
 /**
  * isRight function
@@ -74,14 +87,15 @@ function isLeft(Etype $either): bool
  *
  * isRight :: Either a b -> Bool
  *
+ * @param Either $either
  * @return bool
  */
-const isRight = 'Chemem\\Bingo\\Functional\\Functors\\Either\\isRight';
-
-function isRight(Etype $either): bool
+function isRight(Monad $either): bool
 {
-    return $either->isRight();
+  return $either->isRight();
 }
+
+const lefts = 'Chemem\\Bingo\\Functional\\Functors\\Either\\lefts';
 
 /**
  * lefts function
@@ -90,15 +104,14 @@ function isRight(Etype $either): bool
  * lefts :: [Either a b] -> [a]
  *
  * @param array $eithers
- *
  * @return array
  */
-const lefts = 'Chemem\\Bingo\\Functional\\Functors\\Either\\lefts';
-
 function lefts(array $eithers): array
 {
-    return _extract($eithers, Left::class);
+  return _extract($eithers, Left::class);
 }
+
+const rights = 'Chemem\\Bingo\\Functional\\Functors\\Either\\rights';
 
 /**
  * rights function
@@ -107,15 +120,14 @@ function lefts(array $eithers): array
  * rights :: [Either a b] -> [b]
  *
  * @param array $eithers
- *
  * @return array
  */
-const rights = 'Chemem\\Bingo\\Functional\\Functors\\Either\\rights';
-
 function rights(array $eithers): array
 {
-    return _extract($eithers, Right::class);
+  return _extract($eithers, Right::class);
 }
+
+const fromRight = 'Chemem\\Bingo\\Functional\\Functors\\Either\\fromRight';
 
 /**
  * fromRight function
@@ -123,17 +135,16 @@ function rights(array $eithers): array
  *
  * fromRight :: b -> Either a b -> b
  *
- * @param mixed         $default
- * @param object Either $either
- *
+ * @param mixed $default
+ * @param Either $either
  * @return mixed
  */
-const fromRight = 'Chemem\\Bingo\\Functional\\Functors\\Either\\fromRight';
-
-function fromRight($default, Etype $either)
+function fromRight($default, Monad $either)
 {
-    return $either->isRight() ? $either->getRight() : $default;
+  return $either->isRight() ? $either->getRight() : $default;
 }
+
+const fromLeft = 'Chemem\\Bingo\\Functional\\Functors\\Either\\fromLeft';
 
 /**
  * fromLeft function
@@ -141,17 +152,16 @@ function fromRight($default, Etype $either)
  *
  * fromLeft :: a -> Either a b -> a
  *
- * @param mixed         $default
- * @param object Either $either
- *
+ * @param mixed $default
+ * @param Either $either
  * @return mixed
  */
-const fromLeft = 'Chemem\\Bingo\\Functional\\Functors\\Either\\fromLeft';
-
-function fromLeft($default, $either)
+function fromLeft($default, Monad $either)
 {
-    return $either->isLeft() ? $either->getLeft() : $default;
+  return $either->isLeft() ? $either->getLeft() : $default;
 }
+
+const partitionEithers = 'Chemem\\Bingo\\Functional\\Functors\\Either\\partitionEithers';
 
 /**
  * partitionEithers function
@@ -160,24 +170,21 @@ function fromLeft($default, $either)
  * partitionEithers :: [Either a b] -> ([a], [b])
  *
  * @param array $eithers
- *
  * @return array
  */
-const partitionEithers = 'Chemem\\Bingo\\Functional\\Functors\\Either\\partitionEithers';
-
 function partitionEithers(array $eithers): array
 {
-    return fold(
-        function (array $acc, Etype $either) {
-            if ($either->isRight()) {
-                $acc['right'][] = $either->getRight();
-            } else {
-                $acc['left'][] = $either->getLeft();
-            }
+  return fold(
+    function (array $acc, Monad $either) {
+      if ($either->isRight()) {
+        $acc['right'][] = $either->getRight();
+      } else {
+        $acc['left'][] = $either->getLeft();
+      }
 
-            return $acc;
-        },
-        $eithers,
-        id([])
-    );
+      return $acc;
+    },
+    $eithers,
+    id([])
+  );
 }

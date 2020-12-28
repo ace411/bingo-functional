@@ -3,96 +3,93 @@
 /**
  * State monad.
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-class State implements Monadic
+use Chemem\Bingo\Functional\Functors\Functor;
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+
+class State implements Monad, Functor, Applicable
 {
-    const of = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State::of';
+  const of = __CLASS__ . '::of';
 
-    /**
-     * @var callable The state computation to store
-     */
-    private $comp;
+  /**
+   * @property callable $comp The state computation to store
+   */
+  private $comp;
 
-    /**
-     * State monad constructor.
-     *
-     * @param callable $comp
-     */
-    public function __construct(callable $comp)
-    {
-        $this->comp = $comp;
-    }
+  /**
+   * State monad constructor.
+   *
+   * @param callable $comp
+   */
+  public function __construct(callable $comp)
+  {
+    $this->comp = $comp;
+  }
 
-    /**
-     * of method.
-     *
-     * @param callable $value The initial state
-     *
-     * @return object State
-     */
-    public static function of($value): self
-    {
-        return new static(function ($state) use ($value) {
-            return [$value, $state];
-        });
-    }
+  /**
+   * of
+   * puts an initial state in State monad
+   * 
+   * of :: s -> State s a
+   *
+   * @param callable $value
+   * @return State
+   */
+  public static function of($initial): Monad
+  {
+    return new static(function ($final) use ($initial) {
+      return [$initial, $final];
+    });
+  }
 
-    /**
-     * ap method.
-     *
-     * @param object State $monad
-     *
-     * @return object State
-     */
-    public function ap(Monadic $monad): Monadic
-    {
-        return $this->bind(function ($function) use ($monad) {
-            return $monad->map($function);
-        });
-    }
+  /**
+   * {@inheritDoc}
+   */
+  public function ap(Applicable $monad): Applicable
+  {
+    return $this->bind(function ($function) use ($monad) {
+      return $monad->map($function);
+    });
+  }
 
-    /**
-     * bind method.
-     *
-     * @param callable $function
-     *
-     * @return object State
-     */
-    public function bind(callable $function): Monadic
-    {
-        return new self(function ($state) use ($function) {
-            list($initial, $final) = $this->run($state);
+  /**
+   * {@inheritDoc}
+   */
+  public function bind(callable $function): Monad
+  {
+    return new self(function ($state) use ($function) {
+      [$initial, $final] = $this->run($state);
 
-            return $function($initial)->run($final);
-        });
-    }
+      return $function($initial)->run($final);
+    });
+  }
 
-    /**
-     * map method.
-     *
-     * @param callable $function
-     *
-     * @return object State
-     */
-    public function map(callable $function): Monadic
-    {
-        return $this->bind(function ($state) use ($function) {
-            return self::of($function($state));
-        });
-    }
+  /**
+   * {@inheritDoc}
+   */
+  public function map(callable $function): Functor
+  {
+    return $this->bind(function ($state) use ($function) {
+      return self::of($function($state));
+    });
+  }
 
-    /**
-     * run method.
-     *
-     * @return array
-     */
-    public function run($state)
-    {
-        return \call_user_func($this->comp, $state);
-    }
+  /**
+   * run
+   * unwraps State monad
+   *
+   * run :: State s a => s -> (a, s)
+   * 
+   * @return array
+   */
+  public function run($state)
+  {
+    return ($this->comp)($state);
+  }
 }

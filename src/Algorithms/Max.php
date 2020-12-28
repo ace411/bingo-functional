@@ -3,19 +3,31 @@
 /**
  * max function.
  *
- * max :: [a, b] -> b
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const max = 'Chemem\\Bingo\\Functional\\Algorithms\\max';
+const max = __NAMESPACE__ . '\\max';
 
-function max(array $list): float
+/**
+ * max
+ * computes the largest number in a collection
+ * 
+ * max :: [a] -> Int
+ * 
+ * @param array|object $list
+ * @return int|float
+ * @example
+ * 
+ * max((object) [12, 4, 6, 99, 3])
+ * //=> 99
+ */
+function max($list)
 {
-    return fold(function (float $acc, float $val) {
-        return $val > $acc ? $val : $acc;
-    }, $list, 0.0);
+  return fold(function ($acc, $val) {
+    return $val > $acc ? $val : $acc;
+  }, $list, 0);
 }

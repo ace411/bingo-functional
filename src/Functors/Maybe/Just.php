@@ -3,119 +3,122 @@
 /**
  * Just type functor.
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
-use \Chemem\Bingo\Functional\Functors\Monads as M;
+use Chemem\Bingo\Functional\Functors\Functor;
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
 class Just extends Maybe
 {
-    const of = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\Just::of';
+  const of = __CLASS__ . '::of';
 
-    private $value;
+  private $value;
 
-    public function __construct($value)
-    {
-        $this->value = $value;
-    }
+  public function __construct($value)
+  {
+    $this->value = $value;
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public static function of($value): Maybe
-    {
-        return new static($value);
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public static function of($value): Monad
+  {
+    return new static($value);
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isJust(): bool
-    {
-        return true;
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function isJust(): bool
+  {
+    return true;
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function isNothing(): bool
-    {
-        return false;
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function isNothing(): bool
+  {
+    return false;
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getJust()
-    {
-        return $this->value;
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function getJust()
+  {
+    return $this->value;
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getNothing()
-    {
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function getNothing()
+  {
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function flatMap(callable $fn)
-    {
-        return $fn($this->getJust());
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function flatMap(callable $fn)
+  {
+    return $fn($this->getJust());
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function getOrElse($default)
-    {
-        return $this->value;
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function getOrElse($default)
+  {
+    return $this->value;
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function ap(M\Monadic $just): M\Monadic
-    {
-        return $this->bind(function ($action) use ($just) {
-            return $just->map($action);
-        });
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function ap(Applicable $just): Applicable
+  {
+    return $this->bind(function ($action) use ($just) {
+      return $just->map($action);
+    });
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function map(callable $fn): M\Monadic
-    {
-        return new static($fn($this->getJust()));
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function map(callable $fn): Functor
+  {
+    return new static($fn($this->getJust()));
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function bind(callable $function): M\Monadic
-    {
-        return $function($this->getJust());
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function bind(callable $function): Monad
+  {
+    return $function($this->getJust());
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function filter(callable $fn): Maybe
-    {
-        return $fn($this->getJust()) ? new static($this->getJust()) : new Nothing();
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function filter(callable $fn): Monad
+  {
+    return $fn($this->getJust()) ? $this : new Nothing();
+  }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function orElse(Maybe $maybe): Maybe
-    {
-        return !isset($this->value) ? $maybe : new static($this->value);
-    }
+  /**
+   * {@inheritdoc}
+   */
+  public function orElse(Maybe $maybe): Maybe
+  {
+    return $this;
+  }
 }

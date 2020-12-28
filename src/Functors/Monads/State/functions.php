@@ -4,161 +4,161 @@
  * State monad helper functions.
  *
  * @see http://hackage.haskell.org/package/mtl-2.2.2/docs/Control-Monad-State-Lazy.html
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Monads\State;
 
-use Chemem\Bingo\Functional\Functors\Monads\State as StateMonad;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
+
+const state = __NAMESPACE__ . '\\state';
 
 /**
- * state function
- * Embed a simple state action into the monad.
+ * state
+ * embeds a simple state action into the monad
  *
  * state :: (s -> (a, s)) -> m a
  *
  * @param callable $action
- *
- * @return object State
+ * @return State
  */
-
-const state = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\state';
-
-function state(callable $action): StateMonad
+function state(callable $action): Monad
 {
-    return StateMonad::of(function ($state) use ($action) {
-        return $action($state);
-    });
+  return (__NAMESPACE__ . '::of')(
+    function ($state) use ($action) {
+      return $action($state);
+    }
+  );
 }
 
+const put = __NAMESPACE__ . '\\put';
+
 /**
- * put function
- * Replace the state inside the monad.
+ * put
+ * replaces the state inside the monad.
  *
  * put :: s -> m ()
  *
  * @param mixed $value
- *
- * @return object State
+ * @return State
  */
-const put = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\put';
-
-function put($value): StateMonad
+function put($value): Monad
 {
-    return state(function ($state) use ($value) {
-        return $value;
-    });
+  return state(function ($state) use ($value) {
+    return $value;
+  });
 }
 
+const get = __NAMESPACE__ . '\\get';
+
 /**
- * get function
- * Return the state from the internals of the monad.
+ * get
+ * returns the state from the internals of the State monad
  *
  * get :: m s
  *
- * @return object State
+ * @return State
  */
-const get = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\get';
-
-function get(): StateMonad
+function get(): Monad
 {
-    return state(function ($state) {
-        return [$state, $state];
-    });
+  return state(function ($state) {
+    return [$state, $state];
+  });
 }
 
+const gets = __NAMESPACE__ . '\\gets';
+
 /**
- * gets function
- * Gets specific component of the state, using a projection function supplied.
+ * gets
+ * gets specific component of the state, using a projection function supplied.
  *
  * gets :: MonadState s m => (s -> a) -> m a
  *
  * @param callable $projection
  *
- * @return object State
+ * @return State
  */
-function gets(callable $projection): StateMonad
+function gets(callable $projection): Monad
 {
-    return state(function ($state) use ($projection) {
-        return [$projection($state), $state];
-    });
+  return state(function ($state) use ($projection) {
+    return [$projection($state), $state];
+  });
 }
 
+const modify = __NAMESPACE__ . '\\modify';
+
 /**
- * modify function
+ * modify
  * Maps an old state to a new state inside a state monad.
  *
  * modify :: MonadState s m => (s -> s) -> m ()
  *
  * @param callable $function
- *
- * @return object State
+ * @return State
  */
-const modify = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\modify';
-
-function modify(callable $function): StateMonad
+function modify(callable $function): Monad
 {
-    return StateMonad::of(function ($state) use ($function) {
-        return [null, $function($state)];
-    });
+  return (__NAMESPACE__ . '::of')(
+    function ($state) use ($function) {
+      return [null, $function($state)];
+    }
+  );
 }
 
+const runState = __NAMESPACE__ . '\\runState';
+
 /**
- * runState function
- * Unwrap a state monad computation as a function.
+ * runState
+ * unwraps a state monad computation as a function
  *
  * runState :: State s a -> s -> (a, s)
  *
- * @param object State $monad
- * @param mixed        $state
+ * @param State $monad
+ * @param mixed $state
  *
  * @return array
  */
-const runState = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\runState';
-
-function runState(StateMonad $monad, $state): array
+function runState(Monad $monad, $state): array
 {
-    return $monad->run($state);
+  return $monad->run($state);
 }
 
+const evalState = __NAMESPACE__ . '\\evalState';
+
 /**
- * evalState function
- * Evaluate a state computation with the given initial state and return the final value.
+ * evalState
+ * evaluates a state computation with the given initial state and return the final value
  *
  * evalState :: State s a -> s -> a
  *
- * @param object State $monad
- * @param mixed        $state
- *
- * @return mixed $final
+ * @param State $monad
+ * @param mixed $state
+ * @return mixed
  */
-const evalState = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\evalState';
-
-function evalState(StateMonad $monad, $state)
+function evalState(Monad $monad, $state)
 {
-    list($final) = $monad->run($state);
+  [$final] = $monad->run($state);
 
-    return $final;
+  return $final;
 }
 
+const execState = __NAMESPACE__ . '\\execState';
+
 /**
- * execState function
- * Evaluate a state computation with the given initial state and return the final state.
+ * execState
+ * evaluates a state computation with the given initial state and return the final state.
  *
  * execState :: State s a -> s -> s
  *
- * @param object State $monad
- * @param mixed        $state
- *
+ * @param State $monad
+ * @param mixed $state
  * @return mixed $final
  */
-const execState = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\State\\execState';
-
-function execState(StateMonad $monad, $state)
+function execState(Monad $monad, $state)
 {
-    list(, $final) = $monad->run($state);
+  [, $final] = $monad->run($state);
 
-    return $final;
+  return $final;
 }

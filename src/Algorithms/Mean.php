@@ -3,21 +3,35 @@
 /**
  * mean function.
  *
- * mean :: [a, b] -> Float c
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const mean = 'Chemem\\Bingo\\Functional\\Algorithms\\mean';
+const mean = __NAMESPACE__ . '\\mean';
 
-function mean(array $list): float
+/**
+ * mean
+ * computes the average of items in a list
+ *
+ * mean :: [a] -> Float
+ * 
+ * @param array|object $list
+ * @return int|float
+ * @example
+ * 
+ * mean([9, 13, 12, 21])
+ * //=> 13.75
+ */
+function mean($list)
 {
-    $divisor = fold(function ($acc, $val) {
-        return $val + $acc;
-    }, $list, 0);
+  [$dividend, $divisor] = fold(function ($acc, $val) {
+    [$div, $count] = $acc;
 
-    return $divisor / \count($list);
+    return [$div + $val, $count + 1];
+  }, $list, [0, 0]);
+
+  return $dividend / $divisor;
 }

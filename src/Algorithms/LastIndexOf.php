@@ -3,8 +3,7 @@
 /**
  * lastIndexOf function
  *
- * lastIndexOf :: Hashtable k v -> v -> k
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
@@ -13,9 +12,26 @@ namespace Chemem\Bingo\Functional\Algorithms;
 
 const lastIndexOf = __NAMESPACE__ . '\\lastIndexOf';
 
-function lastIndexOf($list, $value)
+/**
+ * lastIndexOf
+ * computes the last index that corresponds to a specified list entry
+ * 
+ * lastIndexOf :: [a] -> a -> b -> a
+ *
+ * @param array|object $list
+ * @param mixed $value
+ * @param mixed $def
+ * @return string|integer
+ * @example
+ * 
+ * lastIndexOf([['foo' => 2, 'bar' => 'bar'], range(2, 6)], 2)
+ * //=> 0
+ */
+function lastIndexOf($list, $value, $def = null)
 {
-    $func = compose(partial(indexesOf, $list), last);
+  $last = last(indexesOf($list, $value));
 
-    return $func($value);
+  return \is_bool($last) ?
+    ($last !== false ? $last : $def) :
+    $last;
 }

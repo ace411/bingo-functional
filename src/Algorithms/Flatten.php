@@ -1,27 +1,41 @@
 <?php
 
 /**
- * Flatten function.
+ * flatten function
  *
- * flatten :: [a, [b]] -> [a, b]
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const flatten = 'Chemem\\Bingo\\Functional\\Algorithms\\flatten';
+const flatten = __NAMESPACE__ . '\\flatten';
 
-function flatten(array $list, array $acc = []): array
+/**
+ * flatten
+ * reduces list dimensionality to one
+ *
+ * flatten :: [[a]] -> [a]
+ * 
+ * @param array $list
+ * @return array
+ * @example
+ * 
+ * flatten(['foo', range(1, 3)])
+ * //=> ['foo', 1, 2, 3]
+ */
+function flatten(array $list): array
 {
-    $flattened = fold(
-        function ($acc, $value) {
-            return \is_array($value) ? \array_merge($acc, flatten($value)) : \array_merge($acc, [$value]);
-        },
-        $list,
-        $acc
-    );
+  $flattened = fold(
+    function ($acc, $value) {
+      return \is_array($value) ?
+        extend($acc, flatten($value)) :
+        extend($acc, [$value]);
+    },
+    $list,
+    []
+  );
 
-    return $flattened;
+  return $flattened;
 }

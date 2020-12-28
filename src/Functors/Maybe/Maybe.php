@@ -3,207 +3,214 @@
 /**
  * Maybe type abstract functor.
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
-use \Chemem\Bingo\Functional\Functors\Monads as M;
+use Chemem\Bingo\Functional\Functors\Functor;
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
+use Chemem\Bingo\Functional\Algorithms as f;
 
-abstract class Maybe implements M\Monadic
+abstract class Maybe implements Monad, Functor, Applicable
 {
-    const just = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\Maybe::just';
+  const just      = __CLASS__ . '::just';
 
-    const nothing = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\Maybe::nothing';
+  const nothing   = __CLASS__ . '::nothing';
 
-    const fromValue = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\Maybe::fromValue';
+  const fromValue = __CLASS__ . '::fromValue';
 
-    const lift = 'Chemem\\Bingo\\Functional\\Functors\\Maybe\\Maybe::lift';
+  const lift      = __CLASS__ . '::lift';
     
-    /**
-     * just method.
-     *
-     * @param mixed $value
-     *
-     * @return object Just
-     */
-    public static function just($value): Just
-    {
-        return new Just($value);
-    }
+  /**
+   * just
+   * puts value in Just context
+   *
+   * just :: a -> m a
+   * 
+   * @param mixed $value
+   * @return Just
+   */
+  public static function just($value): Monad
+  {
+    return new Just($value);
+  }
 
-    /**
-     * nothing method.
-     *
-     * @return object Nothing
-     */
-    public static function nothing(): Nothing
-    {
-        return new Nothing();
-    }
+  /**
+   * nothing
+   * creates a Nothing object
+   *
+   * nothing :: m a
+   * 
+   * @return Nothing
+   */
+  public static function nothing(): Monad
+  {
+    return new Nothing();
+  }
 
-    /**
-     * fromValue method.
-     *
-     * @param mixed $just
-     * @param mixed $nothing
-     *
-     * @return object Maybe
-     */
-    public static function fromValue($just, $nothing = null): self
-    {
-        return $just !== $nothing ? self::just($just) : self::nothing();
-    }
+  /**
+   * fromValue
+   * creates Just or Nothing from value pair
+   *
+   * fromValue :: a -> b -> m a
+   * 
+   * @param mixed $just
+   * @param mixed $nothing
+   * @return Maybe
+   */
+  public static function fromValue($just, $nothing = null): Monad
+  {
+    return $just !== $nothing ? self::just($just) : self::nothing();
+  }
 
-    /**
-     * lift method.
-     *
-     * @param callable $fn
-     *
-     * @return callable
-     */
-    public static function lift(callable $fn): callable
-    {
-        return function () use ($fn) {
-            if (
-                \array_reduce(
-                    \func_get_args($fn),
-                    function ($status, Maybe $val) {
-                        return $val->isNothing() ? false : $status;
-                    },
-                    true
-                )
-            ) {
-                $args = \array_map(
-                    function (Maybe $maybe) {
-                        return $maybe->getOrElse(null);
-                    },
-                    \func_get_args($fn)
-                );
+  /**
+   * lift
+   * converts a function to a Maybe-type action
+   * 
+   * lift :: (a -> b) -> c -> (m a -> m b) -> m a -> m b
+   *
+   * @param callable $fn
+   * @return callable
+   */
+  public static function lift(callable $fn): callable
+  {
+    return function () use ($fn) {
+      if (
+        f\fold(function ($status, Maybe $val) {
+          return $val->isNothing() ? false : $status;
+        }, \func_get_args($fn), true)
+      ) {
+        $args = f\map(function (Maybe $maybe) {
+          return $maybe->getOrElse(null);
+        }, \func_get_args($fn));
 
-                return self::just(\call_user_func($fn, ...$args));
-            }
+        return self::just(\call_user_func($fn, ...$args));
+      }
 
-            return self::nothing();
-        };
-    }
+      return self::nothing();
+    };
+  }
 
-    /**
-     * of method.
-     *
-     * @param mixed $value
-     *
-     * @return object Maybe
-     */
-    abstract public static function of($value): self;
+  /**
+   * of
+   * puts value in Maybe monad
+   *
+   * of :: a -> m a
+   * 
+   * @abstract
+   * @param mixed $value
+   * @return Maybe
+   */
+  abstract public static function of($value): Monad;
 
-    /**
-     * getJust method.
-     *
-     * @abstract
-     */
-    abstract public function getJust();
+  /**
+   * getJust
+   * unwraps Just value
+   * 
+   * getJust :: Maybe => m a -> a
+   * 
+   * @abstract
+   * @return mixed
+   */
+  abstract public function getJust();
 
-    /**
-     * getNothing method.
-     *
-     * @abstract
-     */
-    abstract public function getNothing();
+  /**
+   * getNothing()
+   * unwraps Nothing value - a unit type
+   * 
+   * getNothing :: Maybe => m a -> Null
+   *
+   * @abstract
+   * @return null
+   */
+  abstract public function getNothing();
 
-    /**
-     * isJust method.
-     *
-     * @abstract
-     *
-     * @return bool
-     */
-    abstract public function isJust(): bool;
+  /**
+   * isJust
+   * checks if Maybe value is of type Just
+   *
+   * isJust :: Maybe => m a -> Bool
+   * 
+   * @abstract
+   * @return boolean
+   */
+  abstract public function isJust(): bool;
 
-    /**
-     * isNothing method.
-     *
-     * @abstract
-     *
-     * @return bool
-     */
-    abstract public function isNothing(): bool;
+  /**
+   * isNothing
+   * checks if Maybe value is of type Nothing
+   *
+   * isNothing :: Maybe => m a -> Bool
+   * 
+   * @abstract
+   * @return boolean
+   */
+  abstract public function isNothing(): bool;
 
-    /**
-     * flatMap method.
-     *
-     * @abstract
-     *
-     * @param callable $fn
-     *
-     * @return mixed $value
-     */
-    abstract public function flatMap(callable $fn);
+  /**
+   * flatMap
+   * behaves like map but returns an unwrapped value
+   * 
+   * flatMap :: Maybe => m a -> (a -> b) -> b
+   *
+   * @abstract
+   * @param callable $function
+   * @return mixed
+   */
+  abstract public function flatMap(callable $fn);
 
-    /**
-     * ap method.
-     *
-     * @abstract
-     *
-     * @param Maybe $app
-     *
-     * @return object Maybe
-     */
-    abstract public function ap(M\Monadic $app): M\Monadic;
+  /**
+   * {@inheritDoc}
+   */
+  abstract public function ap(Applicable $app): Applicable;
 
-    /**
-     * getOrElse method.
-     *
-     * @abstract
-     *
-     * @param mixed $default
-     *
-     * @return mixed $value
-     */
-    abstract public function getOrElse($default);
+  /**
+   * getOrElse
+   * extract final Just value if present and supplied argument otherwise 
+   * 
+   * getOrElse :: Maybe => m a -> b -> a
+   * 
+   * @abstract
+   * @param mixed $default
+   * @return mixed
+   */
+  abstract public function getOrElse($default);
 
-    /**
-     * map method.
-     *
-     * @abstract
-     *
-     * @param callable $fn
-     *
-     * @return object Maybe
-     */
-    abstract public function map(callable $function): M\Monadic;
+  /**
+   * {@inheritDoc}
+   */
+  abstract public function map(callable $function): Functor;
 
-    /**
-     * bind method.
-     *
-     * @abstract
-     *
-     * @param callable $function
-     *
-     * @return object Maybe
-     */
-    abstract public function bind(callable $function): M\Monadic;
+  /**
+   * {@inheritDoc}
+   */
+  abstract public function bind(callable $function): Monad;
 
-    /**
-     * filter method.
-     *
-     * @abstract
-     *
-     * @param callable $fn
-     *
-     * @return object Maybe
-     */
-    abstract public function filter(callable $fn): self;
+  /**
+   * filter
+   * retains value that satisfies boolean predicate; Nothing otherwise
+   * 
+   * filter :: Maybe => m a -> (a -> Bool) -> m a
+   * 
+   * @abstract
+   * @param callable $filter
+   * @return Maybe
+   */
+  abstract public function filter(callable $filter): Monad;
 
-    /**
-     * orElse method.
-     *
-     * @abstract
-     *
-     * @param Maybe $value
-     *
-     * @return object Maybe
-     */
-    abstract public function orElse(self $value): self;
+  /**
+   * orElse
+   * chainable version of fromMaybe
+   * 
+   * orElse :: Maybe => m a -> m a
+   * 
+   * @abstract
+   * @param Maybe $value
+   * @return Maybe
+   */
+  abstract public function orElse(Maybe $value): Maybe;
 }

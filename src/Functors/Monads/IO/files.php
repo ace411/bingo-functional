@@ -4,99 +4,76 @@
  * IO monad file-interaction helper functions.
  *
  * @see http://hackage.haskell.org/package/base-4.11.1.0/docs/Prelude.html#g:29
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Monads\IO;
 
-use Chemem\Bingo\Functional\Functors\Monads\IO as IOMonad;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
-use function Chemem\Bingo\Functional\Algorithms\constantFunction;
 use function Chemem\Bingo\Functional\Algorithms\identity;
-use function Chemem\Bingo\Functional\Algorithms\toException;
+
+const readFile = __NAMESPACE__ . '\\readFile';
 
 /**
  * readFile function
- * Reads a file and returns the contents of the file as a string.
+ * reads a file and returns the contents of the file as a string.
  *
  * readFile :: String -> IO String
  *
  * @param string $filePath
- *
- * @return object IO
+ * @return IO
  */
-
-const readFile = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\readFile';
-
-function readFile(string $filePath): IOMonad
+function readFile(string $filePath): Monad
 {
-    return IO($filePath)
-        ->map(function (string $file) {
-            return \is_file($file) ? @\file_get_contents($file) : identity('');
-        });
+  return IO($filePath)
+    ->map(function (string $file) {
+      return \is_file($file) ?
+        @\file_get_contents($file) :
+        identity('');
+    });
 }
 
+const writeFile = __NAMESPACE__ . '\\writeFile';
+
 /**
- * writeFile function
- * Writes a string to a file.
+ * writeFile
+ * writes a string to a file.
  *
  * writeFile :: String -> String -> IO ()
  *
  * @param string $filePath
  * @param string $content
- *
- * @return object IO
+ * @return IO
  */
-const writeFile = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\writeFile';
-
-function writeFile(string $filePath, string $content): IOMonad
+function writeFile(string $filePath, string $content): Monad
 {
-    return IO($filePath)
-        ->map(function (string $file) use ($content) {
-            return \is_file($file) ? @\file_put_contents($file, $content) : identity(false);
-        });
+  return IO($filePath)
+    ->map(function (string $file) use ($content) {
+      return \is_file($file) ? @\file_put_contents($file, $content) : identity(false);
+    });
 }
 
+const appendFile = __NAMESPACE__ . '\\appendFile';
+
 /**
- * appendFile function
- * Appends a string to a file.
+ * appendFile
+ * appends a string to a file
  *
  * appendFile :: String -> String -> IO ()
  *
  * @param string $filePath
  * @param string $content
- *
- * @return object IO
+ * @return IO
  */
-const appendFile = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\appendFile';
-
-function appendFile(string $filePath, string $content): IOMonad
+function appendFile(string $filePath, string $content): Monad
 {
-    return IO($filePath)
-        ->map(function (string $file) use ($content) {
-            return \is_file($file) ? @\file_put_contents($file, $content, \FILE_APPEND) : identity(false);
-        });
-}
-
-/**
- * readIO function
- * Similar to the read function - signals a parse failure to the IO monad.
- *
- * readIO :: Read a => String -> IO a
- *
- * @see http://hackage.haskell.org/package/base-4.11.1.0/docs/Prelude.html#g:24
- *
- * @param object IO $getStr
- *
- * @return object IO
- */
-const readIO = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\IO\\readIO';
-
-function readIO(IOMonad $getStr): IOMonad
-{
-    return $getStr
-        ->map(function (string $input) {
-            return toException(constantFunction($input))();
-        });
+  return IO($filePath)
+    ->map(function (string $file) use ($content) {
+      return \is_file($file) ?
+        @\file_put_contents($file, $content, \FILE_APPEND) :
+        identity(false);
+    });
 }

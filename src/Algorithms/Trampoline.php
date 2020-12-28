@@ -3,34 +3,48 @@
 /**
  * trampoline function.
  *
- * trampoline :: (a) -> (b) -> a(b) -> c
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const trampoline = 'Chemem\\Bingo\\Functional\\Algorithms\\trampoline';
+const trampoline = __NAMESPACE__ . '\\trampoline';
 
-function trampoline(callable $func)
+/**
+ * trampoline
+ * function that optimizes tail-recursion by managing recursing state
+ *
+ * trampoline :: (a -> (a -> b)) -> a -> b
+ * 
+ * @param callable $func
+ * @return callable
+ * @example
+ * 
+ * $fact = trampoline(function ($x) use (&$fact) {
+ *  return $x < 2 ? 1 : $x * $fact($x - 1);
+ * })(15);
+ * //=> 1307674368000
+ */
+function trampoline(callable $func): callable
 {
-    $finalArgs = [];
-    $recursing = false;
+  $finalArgs = [];
+  $recursing = false;
 
-    return function (...$args) use ($func, $finalArgs, $recursing) {
-        $finalArgs[] = $args;
+  return function (...$args) use ($func, $finalArgs, $recursing) {
+    $finalArgs[] = $args;
 
-        if (!$recursing) {
-            $recursing = true;
+    if (!$recursing) {
+      $recursing = true;
 
-            while (!empty($finalArgs)) {
-                $result = $func(...\array_shift($finalArgs));
-            }
+      while (!empty($finalArgs)) {
+        $result = $func(...\array_shift($finalArgs));
+      }
 
-            $recursing = false;
-        }
+      $recursing = false;
+    }
 
-        return $result;
-    };
+    return $result;
+  };
 }

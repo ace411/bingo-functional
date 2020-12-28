@@ -3,115 +3,95 @@
 /**
  * Writer monad.
  *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
+use Chemem\Bingo\Functional\Functors\Functor;
+use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+
 use function Chemem\Bingo\Functional\Algorithms\extend;
 
-class Writer implements Monadic
+class Writer implements Monad, Functor, Applicable
 {
-    const of = 'Chemem\\Bingo\\Functional\\Functors\\Monads\\Writer::of';
+  const of = __CLASS__ . '::of';
 
-    /**
-     * @var callable action
-     */
-    private $action;
+  /**
+   * @property callable $action Writer monad action
+   */
+  private $action;
 
-    public function __construct(callable $action)
-    {
-        $this->action = $action;
-    }
+  public function __construct(callable $action)
+  {
+    $this->action = $action;
+  }
 
-    /**
-     * of method.
-     *
-     * @static of
-     *
-     * @param mixed $result
-     * @param mixed $output
-     *
-     * @return object Writer
-     */
-    public static function of($result, $output): self
-    {
-        return new static(function () use ($result, $output) {
-            return [$result, [$output]];
-        });
-    }
+  /**
+   * of
+   * puts result and output in Writer monad
+   * 
+   * of :: a -> w -> Writer (a, w)
+   *
+   * @static of
+   * @param mixed $result
+   * @param mixed $output
+   * @return Writer
+   */
+  public static function of($result, $output = null): Monad
+  {
+    return new static(function () use ($result, $output) {
+      return [$result, \is_null($output) ? [] : [$output]];
+    });
+  }
 
-    /**
-     * ap method.
-     *
-     * @param Writer $app
-     * @param mixed  $output
-     *
-     * @return object Writer
-     */
-    public function ap(Monadic $app): Monadic
-    {
-        return $this->bind(function ($function) use ($app) {
-            return $app->map($function);
-        });
-    }
+  /**
+   * {@inheritDoc}
+   */
+  public function ap(Applicable $app): Applicable
+  {
+    return $this->bind(function ($function) use ($app) {
+      return $app->map($function);
+    });
+  }
 
-    /**
-     * map method.
-     *
-     * @param callable $function The morphism used to transform the state value
-     * @param mixed    $output
-     *
-     * @return object Writer
-     */
-    public function map(callable $function): Monadic
-    {
-        return new static(function () use ($function) {
-            list($result, $output) = $this->run();
+  /**
+   * {@inheritDoc}
+   */
+  public function map(callable $function): Functor
+  {
+    return new static(function () use ($function) {
+      [$result, $output] = $this->run();
 
-            return [$function($result), $output];
-        });
-    }
+      return [$function($result), $output];
+    });
+  }
 
-    /**
-     * bind method.
-     *
-     * @param callable $function
-     * @param mixed    $output
-     *
-     * @return object Writer
-     */
-    public function bind(callable $function): Monadic
-    {
-        return new static(function () use ($function) {
-            list($result, $output)  = $this->run();
-            list($res, $out)        = $function($result)->run();
+  /**
+   * {@inheritDoc}
+   */
+  public function bind(callable $function): Monad
+  {
+    return new static(function () use ($function) {
+      [$result, $output]  = $this->run();
+      [$res, $out]        = $function($result)->run();
 
-            return [$res, extend($output, $out)];
-        });
-    }
+      return [$res, extend($output, $out)];
+    });
+  }
 
-    /**
-     * flatMap method.
-     *
-     * @param callable $function
-     * @param mixed    $output
-     *
-     * @return mixed $result
-     */
-    public function flatMap(callable $function): array
-    {
-        return $this->map($function)->run();
-    }
-
-    /**
-     * run method.
-     *
-     * @return array [$result, $output]
-     */
-    public function run(): array
-    {
-        return \call_user_func($this->action);
-    }
+  /**
+   * run
+   * unwraps Writer monad revealing result and output data
+   * 
+   * run :: Writer a w => (a, w)
+   *
+   * @return array
+   */
+  public function run(): array
+  {
+    return ($this->action)();
+  }
 }

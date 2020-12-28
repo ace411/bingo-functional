@@ -1,19 +1,31 @@
 <?php
 
 /**
- * Head function.
- *
- * head :: [a, b] -> a
- *
+ * head function
+ * 
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
-const head = 'Chemem\\Bingo\\Functional\\Algorithms\\head';
+const head = __NAMESPACE__ . '\\head';
 
-function head($list)
+/**
+ * head
+ * Outputs the first element in a list
+ * 
+ * head :: [a] -> a
+ * 
+ * @param object|array $list
+ * @return mixed
+ * @example
+ * 
+ * head(range(4, 7))
+ * //=> 4
+ */
+function head($list, $def = null)
 {
-    return \reset($list);
+  return \reset($list);
 }

@@ -1,36 +1,55 @@
 <?php
 
 /**
- * CurryN function.
+ * CurryN* functions
  *
- * curryN :: (a, (b)) -> (b)
- *
+ * @package bingo-functional
  * @author Lochemem Bruno Michael
- * @license Apache 2.0
+ * @license Apache-2.0
  */
 
 namespace Chemem\Bingo\Functional\Algorithms;
 
 use function Chemem\Bingo\Functional\Algorithms\Internal\_curryN;
 
-const curryN = 'Chemem\\Bingo\\Functional\\Algorithms\\curryN';
-
-function curryN(int $paramCount, callable $function)
-{
-    return _curryN($paramCount, $function);
-}
+const curryN = __NAMESPACE__ . '\\curryN';
 
 /**
- * CurryN function.
+ * curryN
+ * converts an uncurried function to a curried one
  *
- * curryRightN :: (a, (b)) -> (b)
- *
- * @author Lochemem Bruno Michael
- * @license Apache-2.0
+ * curryN :: Int -> ((a, b) -> c) -> a -> b -> c
+ * 
+ * @param integer $paramCount
+ * @param callable $function
+ * @return callable
+ * @example
+ * 
+ * curryN(fn ($x, $y) => $x + $y)(2)(3)
+ * //=> 5
  */
-const curryRightN = 'Chemem\\Bingo\\Functional\\Algorithms\\curryRightN';
-
-function curryRightN(int $paramCount, callable $function)
+function curryN(int $paramCount, callable $function): callable
 {
-    return _curryN($paramCount, $function, false);
+  return _curryN($paramCount, $function);
+}
+
+const curryRightN = __NAMESPACE__ . '\\curryRightN';
+
+/**
+ * curryRightN
+ * converts an uncurried function to a curried one
+ *
+ * curryN :: Int -> ((a, b) -> c) -> b -> a -> c
+ * 
+ * @param integer $paramCount
+ * @param callable $function
+ * @return callable
+ * @example
+ * 
+ * curryN(fn ($x, $y) => $x + $y)(2)(3)
+ * //=> 5
+ */
+function curryRightN(int $paramCount, callable $function): callable
+{
+  return _curryN($paramCount, $function, false);
 }
