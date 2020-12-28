@@ -1,12 +1,14 @@
 <p align="center">
-    <img src="https://github.com/ace411/bingo-functional/blob/master/img/bingo-functional-logo.png">
+  <img src="https://ucarecdn.com/192a170d-a688-4cd4-98be-f1e0b356b94d/bingofunctionallogo.png">
 </p>
 
-# Bingo Functional
+<h1 align="center">bingo-functional</h1>
+
+<span style="display:block;text-align:center;" align="center">
 
 [![Join the chat at https://gitter.im/bingo-functional/Lobby](https://badges.gitter.im/bingo-functional/Lobby.svg)](https://gitter.im/bingo-functional/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 [![Codacy Badge](https://api.codacy.com/project/badge/Grade/7c30c744fd0142d58dd210fd961ea842)](https://www.codacy.com/app/ace411/bingo-functional?utm_source=github.com&utm_medium=referral&utm_content=ace411/bingo-functional&utm_campaign=badger)
-[![Build Status](https://travis-ci.org/ace411/bingo-functional.svg?branch=master)](https://travis-ci.org/ace411/bingo-functional)
+![bingo-functional CI](https://github.com/ace411/bingo-functional/workflows/bingo-functional%20CI/badge.svg)
 [![codecov](https://codecov.io/gh/ace411/bingo-functional/branch/master/graph/badge.svg)](https://codecov.io/gh/ace411/bingo-functional)
 [![Latest Stable Version](https://poser.pugx.org/chemem/bingo-functional/v/stable)](https://packagist.org/packages/chemem/bingo-functional)
 [![License](https://poser.pugx.org/chemem/bingo-functional/license)](https://packagist.org/packages/chemem/bingo-functional)
@@ -14,6 +16,8 @@
 [![Monthly Downloads](https://poser.pugx.org/chemem/bingo-functional/d/monthly)](https://packagist.org/packages/chemem/bingo-functional)
 [![composer.lock](https://poser.pugx.org/chemem/bingo-functional/composerlock)](https://packagist.org/packages/chemem/bingo-functional)
 [![Twitter](https://img.shields.io/twitter/url/https/github.com/ace411/bingo-functional.svg?style=social)](https://twitter.com/intent/tweet?text=Wow:&url=https%3A%2F%2Fgithub.com%2Face411%2Fbingo-functional)
+
+</span>
 
 A simple functional programming library for PHP.
 
