@@ -216,7 +216,7 @@ const matchObject = __NAMESPACE__ . '\\matchObject';
  * ], new stdClass(12))
  * //=> 'exact'
  */
-function matchObject(array $patterns, object $input)
+function matchObject(array $patterns, $input)
 {
   return execTypeMatch(
     $patterns,

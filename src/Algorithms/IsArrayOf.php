@@ -22,8 +22,8 @@ const isArrayOf = __NAMESPACE__ . '\\isArrayOf';
  * @return string
  * @example
  * 
- * isArrayOf()
- * //=>
+ * isArrayOf(['foo', 'bar', 'baz'])
+ * //=> 'string'
  */
 function isArrayOf(array $list): string
 {
