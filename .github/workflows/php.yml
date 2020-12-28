@@ -1,4 +1,4 @@
-name: PHP Composer
+name: bingo-functional CI
 on: [push, pull_request]
 jobs:
   build:
