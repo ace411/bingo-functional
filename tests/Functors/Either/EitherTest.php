@@ -20,9 +20,9 @@ class EitherTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\int(),
-          Generator\constant(0),
-          Generator\bool()
+        Generator\int(),
+        Generator\constant(0),
+        Generator\bool()
       )
       ->then(function ($val, $const, $right) {
         $either = $right ?
@@ -50,9 +50,9 @@ class EitherTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\names(),
-          Generator\constant('left'),
-          Generator\bool()
+        Generator\names(),
+        Generator\constant('left'),
+        Generator\bool()
       )
       ->then(function ($res, $const, bool $right) {
         $either  = $right ?
@@ -75,20 +75,20 @@ class EitherTest extends \PHPUnit\Framework\TestCase
         };
 
         $this->assertEquals(
-              [
+          [
             'left-identity'   => true,
             'right-identity'  => true,
             'associativity'   => true,
           ],
-              t\monadLaws(
-              $either,
-              $fnx,
-              $fny,
+          t\monadLaws(
+            $either,
+            $fnx,
+            $fny,
             // test both Right and Left sub-types individually
             $right ? Either\Right::of : Either\Left::of,
-              $right ? $res : $const
+            $right ? $res : $const
           )
-          );
+        );
       });
   }
 

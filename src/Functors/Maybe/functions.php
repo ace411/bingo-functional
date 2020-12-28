@@ -3,7 +3,7 @@
 /**
  * Maybe type helper functions.
  *
- * @see hackage.haskell.org/package/base-4.11.1.0/docs/Data-Maybe.html
+ * @see https://hackage.haskell.org/package/base-4.11.1.0/docs/Data-Maybe.html
  *
  * @package bingo-functional
  * @author Lochemem Bruno Michael
@@ -13,11 +13,7 @@
 namespace Chemem\Bingo\Functional\Functors\Maybe;
 
 use Chemem\Bingo\Functional\Functors\Monads\Monad;
-
-use function Chemem\Bingo\Functional\Algorithms\compose;
-use function Chemem\Bingo\Functional\Algorithms\fold;
-use function Chemem\Bingo\Functional\Algorithms\head;
-use function Chemem\Bingo\Functional\Algorithms\partialLeft;
+use Chemem\Bingo\Functional\Algorithms as f;
 
 const maybe = __NAMESPACE__ . '\\maybe';
 
@@ -125,7 +121,7 @@ function listToMaybe(array $list): Monad
 {
   return empty($list) ?
     (__NAMESPACE__ . '\\Nothing::of')(null) :
-    (__NAMESPACE__ . '\\Just::of')(head($list));
+    (__NAMESPACE__ . '\\Just::of')(f\head($list));
 }
 
 
@@ -158,7 +154,7 @@ const catMaybes = __NAMESPACE__ . '\\catMaybes';
  */
 function catMaybes(array $maybes): array
 {
-  return fold(function ($list, Monad $maybe) {
+  return f\fold(function ($list, Monad $maybe) {
     if ($maybe instanceof Just) {
       $list[] = $maybe->getJust();
     }
@@ -181,7 +177,7 @@ const mapMaybe = __NAMESPACE__ . '\\mapMaybe';
  */
 function mapMaybe(callable $function, array $values): array
 {
-  $map = compose(partialLeft('array_map', $function), catMaybes);
+  $map = f\compose(f\partial(f\map, $function), catMaybes);
 
   return $map($values);
 }

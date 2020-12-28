@@ -12,11 +12,9 @@
 namespace Chemem\Bingo\Functional\Functors\Either;
 
 use Chemem\Bingo\Functional\Functors\Monads\Monad;
+use Chemem\Bingo\Functional\Algorithms as f;
 
-use function Chemem\Bingo\Functional\Algorithms\fold;
-use function Chemem\Bingo\Functional\Algorithms\identity as id;
-
-const either = 'Chemem\\Bingo\\Functional\\Functors\\Either\\either';
+const either = __NAMESPACE__ . '\\either';
 
 /**
  * either function
@@ -50,7 +48,7 @@ function either(
  */
 function _extract(array $eithers, string $class)
 {
-  return fold(
+  return f\fold(
     function (array $acc, Monad $either) use ($class) {
       if ($either instanceof $class) {
         $acc[] = $either->isRight() ? $either->getRight() : $either->getLeft();
@@ -59,11 +57,11 @@ function _extract(array $eithers, string $class)
       return $acc;
     },
     $eithers,
-    id([])
+    []
   );
 }
 
-const isLeft = 'Chemem\\Bingo\\Functional\\Functors\\Either\\isLeft';
+const isLeft = __NAMESPACE__ . '\\isLeft';
 
 /**
  * isLeft
@@ -79,7 +77,7 @@ function isLeft(Monad $either): bool
   return $either->isLeft();
 }
 
-const isRight = 'Chemem\\Bingo\\Functional\\Functors\\Either\\isRight';
+const isRight = __NAMESPACE__ . '\\isRight';
 
 /**
  * isRight function
@@ -95,7 +93,7 @@ function isRight(Monad $either): bool
   return $either->isRight();
 }
 
-const lefts = 'Chemem\\Bingo\\Functional\\Functors\\Either\\lefts';
+const lefts = __NAMESPACE__ . '\\lefts';
 
 /**
  * lefts function
@@ -111,7 +109,7 @@ function lefts(array $eithers): array
   return _extract($eithers, Left::class);
 }
 
-const rights = 'Chemem\\Bingo\\Functional\\Functors\\Either\\rights';
+const rights = __NAMESPACE__ . '\\rights';
 
 /**
  * rights function
@@ -127,7 +125,7 @@ function rights(array $eithers): array
   return _extract($eithers, Right::class);
 }
 
-const fromRight = 'Chemem\\Bingo\\Functional\\Functors\\Either\\fromRight';
+const fromRight = __NAMESPACE__ . '\\fromRight';
 
 /**
  * fromRight function
@@ -144,7 +142,7 @@ function fromRight($default, Monad $either)
   return $either->isRight() ? $either->getRight() : $default;
 }
 
-const fromLeft = 'Chemem\\Bingo\\Functional\\Functors\\Either\\fromLeft';
+const fromLeft = __NAMESPACE__ . '\\fromLeft';
 
 /**
  * fromLeft function
@@ -161,7 +159,7 @@ function fromLeft($default, Monad $either)
   return $either->isLeft() ? $either->getLeft() : $default;
 }
 
-const partitionEithers = 'Chemem\\Bingo\\Functional\\Functors\\Either\\partitionEithers';
+const partitionEithers = __NAMESPACE__ . '\\partitionEithers';
 
 /**
  * partitionEithers function
@@ -174,7 +172,7 @@ const partitionEithers = 'Chemem\\Bingo\\Functional\\Functors\\Either\\partition
  */
 function partitionEithers(array $eithers): array
 {
-  return fold(
+  return f\fold(
     function (array $acc, Monad $either) {
       if ($either->isRight()) {
         $acc['right'][] = $either->getRight();
@@ -185,6 +183,6 @@ function partitionEithers(array $eithers): array
       return $acc;
     },
     $eithers,
-    id([])
+    []
   );
 }
