@@ -18,8 +18,8 @@ class TransientTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\constant(0.0),
-          Generator\float()
+        Generator\constant(0.0),
+        Generator\float()
       )
       ->then(function (float $base, float $val) {
         $fst = new Money($base);

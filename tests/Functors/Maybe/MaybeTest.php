@@ -20,8 +20,8 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\int(),
-          Generator\bool()
+        Generator\int(),
+        Generator\bool()
       )
       ->then(function ($val, bool $just) {
         $maybe = Maybe\Maybe::fromValue($val, $just ? null : $val);
@@ -47,8 +47,8 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\names(),
-          Generator\bool()
+        Generator\names(),
+        Generator\bool()
       )
       ->then(function ($res, bool $just) {
         $maybe  = Maybe\Maybe::fromValue($res, $just ? null : $res);
@@ -65,20 +65,20 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
         };
 
         $this->assertEquals(
-              [
+          [
             'left-identity'   => true,
             'right-identity'  => true,
             'associativity'   => true,
           ],
-              t\monadLaws(
-              $maybe,
-              $fnx,
-              $fny,
+          t\monadLaws(
+            $maybe,
+            $fnx,
+            $fny,
             // test both Just and Nothing sub-types individually
             $just ? Maybe\Just::of : Maybe\Nothing::of,
-              $just ? $res : ''
+            $just ? $res : ''
           )
-          );
+        );
       });
   }
 
@@ -133,8 +133,8 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
     });
 
     $this->assertTrue(
-            $maybe($val) == $val || $maybe($val) == 'Maybe.fromJust: Nothing'
-        );
+      $maybe($val) == $val || $maybe($val) == 'Maybe.fromJust: Nothing'
+    );
   }
 
   public function fromMaybeProvider()

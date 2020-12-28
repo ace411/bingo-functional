@@ -20,7 +20,7 @@ class ApplicativeTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\choose(1, 80)
+        Generator\choose(1, 80)
       )
       ->then(function ($input) {
         $app = Ap\pure(f\identity);
@@ -44,7 +44,7 @@ class ApplicativeTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\string()
+        Generator\string()
       )
       ->then(function ($input) {
         $app = Ap::of($input);

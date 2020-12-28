@@ -37,7 +37,8 @@ const bind = __NAMESPACE__ . '\\bind';
 
 /**
  * bind
- * sequentially composes two actions, passing any value produced by the first as an argument to the second
+ * sequentially composes two actions, passing any value produced by the first 
+ * as an argument to the second
  *
  * bind :: Monad m => m a -> (a -> m b) -> m b
  *
@@ -75,9 +76,12 @@ function foldM(callable $function, array $list, $acc): Monad
     $tail = f\tail($collection);
     $head = f\head($collection);
 
-    return $function($acc, $head)->bind(function ($result) use ($tail, $fold) {
-      return $fold($result, $tail);
-    });
+    return bind(
+      function ($result) use ($tail, $fold) {
+        return $fold($result, $tail);
+      },
+      $function($acc, $head)
+    );
   };
 
   return $fold($acc, $list);
@@ -106,15 +110,21 @@ function filterM(callable $function, array $list): Monad
     $tail = f\tail($collection);
     $head = f\head($collection);
 
-    return $function($head)->bind(function ($result) use ($tail, $monad, $head, $filter) {
-      return $filter($tail)->bind(function ($ret) use ($result, $head, $monad) {
-        if ($result) {
-          \array_unshift($ret, $head);
-        }
+    return bind(
+      function ($result) use ($tail, $monad, $head, $filter) {
+        return bind(
+          function ($ret) use ($result, $head, $monad) {
+            if ($result) {
+              \array_unshift($ret, $head);
+            }
 
-        return $monad::of($ret);
-      });
-    });
+            return $monad::of($ret);
+          },
+          $filter($tail)
+        );
+      },
+      $function($head)
+    );
   };
 
   return $filter($list);
@@ -144,13 +154,19 @@ function mapM(callable $function, array $list): Monad
     $tail = f\tail($collection);
     $head = f\head($collection);
 
-    return $function($head)->bind(function ($result) use ($tail, $monad, $head, $map) {
-      return $map($tail)->bind(function ($ret) use ($result, $head, $monad) {
-        \array_unshift($ret, $result);
+    return bind(
+      function ($result) use ($map, $tail, $head, $monad) {
+        return bind(
+          function ($ret) use ($head, $result, $monad) {
+            \array_unshift($ret, $result);
 
-        return $monad::of($ret);
-      });
-    });
+            return $monad::of($ret);
+          },
+          $map($tail)
+        );
+      },
+      $function($head)
+    );
   };
 
   return $map($list);
