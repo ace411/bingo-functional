@@ -171,3 +171,26 @@ function mapM(callable $function, array $list): Monad
 
   return $map($list);
 }
+
+const liftM = __NAMESPACE__ . '\\liftM';
+
+/**
+ * liftM
+ * promotes a function to a monad
+ * 
+ * liftM :: Monad m => (a -> r) -> m a -> m r
+ *
+ * @param callable $function
+ * @param Monad ...$args
+ * @return Monad
+ */
+function liftM(callable $function, Monad ...$args): Monad
+{
+  return f\fold(
+    function ($monad, $arg) {
+      return $monad->ap($arg);
+    },
+    $args,
+    f\head($args)::of(f\curry($function))
+  );
+}

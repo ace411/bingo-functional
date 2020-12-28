@@ -212,7 +212,7 @@
 - reject()
 - mean()
 
-## Modified the following functions
+### Modified the following functions
 
 - patternMatch()
 
@@ -506,6 +506,10 @@
 
 - Modified `intersects()` function on immutable Collection
 
+- Added `liftM()` monad helper function
+
+- Added `K` function (K-combinator)
+
 - Revamped project test suite
 
   - Split Algorithm tests into individual files
@@ -570,6 +574,8 @@
 
 ### New functions
 
+- K()
+
 - Lens\lensPath()
 
 - Lens\lensKey()
@@ -581,3 +587,7 @@
 - Lens\set()
 
 - Lens\lens()
+
+## New monadic function(s)
+
+- liftM()
