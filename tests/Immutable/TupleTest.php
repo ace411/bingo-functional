@@ -20,10 +20,10 @@ class TupleTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\constant('lib'),
-            Generator\int(),
-            Generator\names()
+        Generator\tuple(
+          Generator\constant('lib'),
+          Generator\int(),
+          Generator\names()
         )
       )
       ->then(function ($list) {
@@ -41,9 +41,9 @@ class TupleTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\constant('foo'),
-            Generator\int()
+        Generator\tuple(
+          Generator\constant('foo'),
+          Generator\int()
         )
       )
       ->then(function ($list) {
@@ -60,9 +60,9 @@ class TupleTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\int(),
-            Generator\constant('foo')
+        Generator\tuple(
+          Generator\int(),
+          Generator\constant('foo')
         )
       )
       ->then(function ($list) {
@@ -79,10 +79,10 @@ class TupleTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\int(),
-            Generator\string(),
-            Generator\float()
+        Generator\tuple(
+          Generator\int(),
+          Generator\string(),
+          Generator\float()
         )
       )
       ->then(function ($list) {
@@ -100,10 +100,10 @@ class TupleTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\int(),
-            Generator\constant('foo'),
-            Generator\float()
+        Generator\tuple(
+          Generator\int(),
+          Generator\constant('foo'),
+          Generator\float()
         )
       )
       ->then(function ($list) {
@@ -124,10 +124,10 @@ class TupleTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\int(),
-            Generator\string(),
-            Generator\constant(9)
+        Generator\tuple(
+          Generator\int(),
+          Generator\string(),
+          Generator\constant(9)
         )
       )
       ->then(function ($list) {
@@ -147,10 +147,10 @@ class TupleTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\int(),
-            Generator\constant('foo'),
-            Generator\constant('bar')
+        Generator\tuple(
+          Generator\int(),
+          Generator\constant('foo'),
+          Generator\constant('bar')
         )
       )
       ->then(function ($list) {
