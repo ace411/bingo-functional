@@ -135,6 +135,8 @@
       "src/Algorithms/ZipWith.php",
       "src/Algorithms/DropRight.php",
       "src/Algorithms/Partition.php",
+      "src/Algorithms/Transduce.php",
+      "src/Algorithms/Transducer/functions.php",
       "src/Algorithms/IsArrayOf.php",
       "src/Algorithms/ToException.php",
       "src/Algorithms/PartialRight.php",
