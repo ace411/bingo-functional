@@ -29,5 +29,5 @@ function transduce(callable $transducer, callable $iterator, array $list, $acc)
   // create reducer function to be passed to fold operation
   $reducer = $transducer($iterator);
 
-  return _fold($reducer, $list, []);
+  return _fold($reducer, $list, $acc);
 }
