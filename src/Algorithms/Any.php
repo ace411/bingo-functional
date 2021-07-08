@@ -32,6 +32,7 @@ function any($list, callable $func): bool
   foreach ($list as $idx => $val) {
     if ($func($val)) {
       $result = true;
+
       break;
     }
   }

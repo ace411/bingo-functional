@@ -249,6 +249,7 @@ class Collection implements
     for ($idx = 0; $idx < $size; $idx += 1) {
       if ($func($list[$idx])) {
         $result = true;
+
         break;
       }
     }

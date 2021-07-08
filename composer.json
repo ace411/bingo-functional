@@ -179,8 +179,8 @@
   },
   "minimum-stability": "stable",
   "scripts": {
-    "cs:fix": "php-cs-fixer fix --config=.php_cs --diff --verbose --allow-risky=yes",
-    "cs:fix-dry": "php-cs-fixer fix --config=.php_cs --diff --verbose --dry-run --allow-risky=yes",
+    "cs:fix": "php-cs-fixer fix --config=.php-cs-fixer.php --diff --verbose --allow-risky=yes",
+    "cs:fix-dry": "php-cs-fixer fix --config=.php-cs-fixer.php --diff --verbose --dry-run --allow-risky=yes",
     "test": "phpunit -c phpunit.xml.dist"
   }
 }

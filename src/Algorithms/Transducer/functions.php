@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * transducer functions
+ * 
+ * @package bingo-functional
+ * @author Lochemem Bruno Michael
+ * @license Apache-2.0
+ */
+
 namespace Chemem\Bingo\Functional\Algorithms\Transducer;
 
 const map = __NAMESPACE__ . '\\map';
