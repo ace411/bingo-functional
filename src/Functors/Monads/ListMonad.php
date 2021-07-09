@@ -17,7 +17,7 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 class ListMonad implements Monad, Functor, Applicable
 {
-  const of = __CLASS__ . '::of';
+  public const of = __CLASS__ . '::of';
 
   /**
    * @property callable $listop ListMonad operation
@@ -34,7 +34,7 @@ class ListMonad implements Monad, Functor, Applicable
    * puts value in ListMonad context
    *
    * of :: a -> ListMonad a
-   * 
+   *
    * @param mixed $val
    * @return Monad
    */
@@ -73,7 +73,7 @@ class ListMonad implements Monad, Functor, Applicable
 
   /**
    * unwraps the List monad
-   * 
+   *
    * extract :: ListMonad m a => [a]
    *
    * @return array
@@ -86,8 +86,8 @@ class ListMonad implements Monad, Functor, Applicable
   /**
    * merge
    * internally merges lists
-   * 
-   * merge :: (a -> b) -> [b] -> m [a, b] 
+   *
+   * merge :: (a -> b) -> [b] -> m [a, b]
    *
    * @access private
    * @param callable $function

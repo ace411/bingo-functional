@@ -15,14 +15,14 @@ const concat = __NAMESPACE__ . '\\concat';
 /**
  * concat
  * concatenates multiple string-coercible elements
- * 
+ *
  * concat :: String -> [String] -> String
  *
  * @param string $glue
  * @param string ...$strings
  * @return string
  * @example
- * 
+ *
  * concat('-', 'foo', 'bar', 1)
  * //=> 'foo-bar-1'
  */

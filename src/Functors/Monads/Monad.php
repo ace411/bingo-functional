@@ -17,7 +17,7 @@ interface Monad
    * sequentially composes two functions in a manner akin to >>=
    *
    * bind :: Monad m => m a -> (a -> m b) -> m b
-   * 
+   *
    * @param callable $function
    * @return Monad
    */

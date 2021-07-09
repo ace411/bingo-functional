@@ -15,14 +15,14 @@ const renameKeys = __NAMESPACE__ . '\\renameKeys';
 /**
  * renameKeys
  * renames list keys
- * 
+ *
  * renameKeys :: [a] -> [[b]] -> [a]
  *
  * @param array|object $list
  * @param array ...$pairs
  * @return array|object
  * @example
- * 
+ *
  * renameKeys(['x' => 3, 'y' => 'foo'], ['x', 0], ['y', 1])
  * //=> [3, 'foo']
  */

@@ -17,11 +17,11 @@ const flip = __NAMESPACE__ . '\\flip';
  * reverses the order of function arguments
  *
  * flip :: (a -> b -> c) -> b -> a -> c
- * 
+ *
  * @param callable $function
  * @return callable
  * @example
- * 
+ *
  * flip(fn ($x, $y) => $x / $y)(2, 4)
  * //=> 2
  */

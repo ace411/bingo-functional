@@ -15,7 +15,7 @@ const firstIndexOf = __NAMESPACE__ . '\\firstIndexOf';
 /**
  * firstIndexOf
  * computes the first index that corresponds to a specified list entry
- * 
+ *
  * firstIndexOf :: [a] -> a -> b -> a
  *
  * @param array|object $list
@@ -23,7 +23,7 @@ const firstIndexOf = __NAMESPACE__ . '\\firstIndexOf';
  * @param mixed $def
  * @return string|integer
  * @example
- * 
+ *
  * firstIndexOf([['foo' => 2, 'bar' => 'bar'], ...range(2, 6)], 'bar')
  * //=> 'bar'
  */

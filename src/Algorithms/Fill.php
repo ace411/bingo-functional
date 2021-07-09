@@ -15,7 +15,7 @@ const fill = __NAMESPACE__ . '\\fill';
 /**
  * fill
  * replaces values in a specified index range with an arbitrary value
- * 
+ *
  * fill :: [a] -> b -> Int -> Int -> [b]
  *
  * @param array|object $list
@@ -24,7 +24,7 @@ const fill = __NAMESPACE__ . '\\fill';
  * @param integer $end
  * @return array|object
  * @example
- * 
+ *
  * fill((object) range(4, 9), 'foo', 1, 3)
  * //=> object(stdClass) {4, 'foo', 'foo', 'foo', 8, 9}
  */

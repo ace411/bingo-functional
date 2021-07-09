@@ -61,7 +61,7 @@ const tell = __NAMESPACE__ . '\\tell';
 function tell($msg): Monad
 {
   $writer = __NAMESPACE__;
-  
+
   return new $writer(function () use ($msg) {
     return [null, [$msg]];
   });

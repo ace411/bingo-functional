@@ -19,12 +19,12 @@ const dropRight = __NAMESPACE__ . '\\dropRight';
  * removes elements from the back of a list
  *
  * dropRight :: [a, b] -> Int -> [b]
- * 
+ *
  * @param array $list
  * @param integer $number
  * @return array
  * @example
- * 
+ *
  * dropRight(['foo' => 'foo', 'bar' => 'bar'], 1)
  * //=> ['foo' => 'foo']
  */

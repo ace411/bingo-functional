@@ -19,12 +19,12 @@ const omit = __NAMESPACE__ . '\\omit';
  * purges a list of values associated with specified indexes
  *
  * omit :: [a] -> b -> [a]
- * 
+ *
  * @param array|object $list
  * @param string|int ...$keys
  * @return array|object
  * @example
- * 
+ *
  * omit(['x' => 'x', 'y' => 'y', 'z' => 'z'], 'x', 'z')
  * //=> ['y' => 'y']
  */

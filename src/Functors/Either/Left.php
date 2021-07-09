@@ -16,7 +16,7 @@ use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
 class Left extends Either
 {
-  const of = __CLASS__ . '::of';
+  public const of = __CLASS__ . '::of';
 
   private $value;
 

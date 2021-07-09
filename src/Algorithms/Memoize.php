@@ -15,13 +15,13 @@ const memoize = __NAMESPACE__ . '\\memoize';
 /**
  * memoize
  * caches function calls
- * 
- * memoize :: (a -> b) -> a -> b 
+ *
+ * memoize :: (a -> b) -> a -> b
  *
  * @param callable $function
  * @return callable
  * @example
- * 
+ *
  * $fact = memoize(function ($x) use (&$fact) {
  *  return $x < 2 ? 1 : $x * $fact($x - 1);
  * })(5);
@@ -34,7 +34,7 @@ function memoize(callable $function): callable
     $key          = \md5(\serialize($args));
     // store result in variable to preempt re-computation
     $result       = $function(...$args);
-    
+
     // store the result in the apcu cache if the extension is present
     if (\extension_loaded('apcu')) {
       \apcu_add($key, $result);

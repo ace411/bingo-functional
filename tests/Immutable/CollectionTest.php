@@ -4,7 +4,7 @@ namespace Chemem\Bingo\Functional\Tests\Immutable;
 
 \error_reporting(0);
 
-use \Eris\Generator;
+use Eris\Generator;
 
 use Chemem\Bingo\Functional\Algorithms as f;
 use Chemem\Bingo\Functional\Immutable\Collection;
@@ -102,7 +102,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(f\filter('is_string', $list), $lst->toArray());
       });
   }
-  
+
   /**
    * @test
    */
@@ -387,11 +387,11 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
+        Generator\tuple(
             Generator\constant('foo'),
             Generator\constant('bar'),
             Generator\constant('baz')
-        )
+          )
       )
       ->then(function ($list) {
         $str = Collection::from($list)->implode(':');
