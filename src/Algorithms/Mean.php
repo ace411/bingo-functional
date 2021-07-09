@@ -17,11 +17,11 @@ const mean = __NAMESPACE__ . '\\mean';
  * computes the average of items in a list
  *
  * mean :: [a] -> Float
- * 
+ *
  * @param array|object $list
  * @return int|float
  * @example
- * 
+ *
  * mean([9, 13, 12, 21])
  * //=> 13.75
  */

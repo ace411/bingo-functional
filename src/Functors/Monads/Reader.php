@@ -15,7 +15,7 @@ use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
 
 class Reader implements Monad, Functor, Applicable
 {
-  const of = __CLASS__ . '::of';
+  public const of = __CLASS__ . '::of';
 
   /**
    * @property callable $action Reader environment function
@@ -37,7 +37,7 @@ class Reader implements Monad, Functor, Applicable
    * puts reader action in Reader environment
    *
    * of :: (r -> a) -> Reader r a
-   * 
+   *
    * @static of
    * @param mixed $action
    * @return Reader
@@ -84,7 +84,7 @@ class Reader implements Monad, Functor, Applicable
   /**
    * ask
    * returns monad environment
-   * 
+   *
    * ask :: Reader m a => m a
    *
    * @return mixed $action
@@ -97,9 +97,9 @@ class Reader implements Monad, Functor, Applicable
   /**
    * run
    * runs Reader and extracts final value from it
-   * 
-   * run :: Reader r => r a -> r -> a 
-   * 
+   *
+   * run :: Reader r => r a -> r -> a
+   *
    * @param mixed $env
    * @return mixed $action
    */

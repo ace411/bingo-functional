@@ -37,7 +37,7 @@ class MatchTest extends \PHPUnit\Framework\TestCase
     $eval                 = p\match($patterns);
     [$fst, $snd, $thd]    = $entries;
     [$rfst, $rsnd, $rthd] = $res;
-    
+
     $this->assertEquals($rfst, $eval($fst));
     $this->assertEquals($rsnd, $eval($snd));
     $this->assertEquals($rthd, $eval($thd));

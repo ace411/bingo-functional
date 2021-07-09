@@ -19,12 +19,12 @@ const groupBy = __NAMESPACE__ . '\\groupBy';
  * sorts a multi-dimensional list by a specified key
  *
  * groupBy :: [a] -> b -> [a]
- * 
+ *
  * @param array $list
  * @param string|integer $key
  * @return array
  * @example
- * 
+ *
  * groupBy([
  *  ['pos' => 'sg', 'name' => 'jordan'],
  *  ['pos' => 'pg', 'name' => 'curry'],

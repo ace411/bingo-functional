@@ -37,7 +37,7 @@ const bind = __NAMESPACE__ . '\\bind';
 
 /**
  * bind
- * sequentially composes two actions, passing any value produced by the first 
+ * sequentially composes two actions, passing any value produced by the first
  * as an argument to the second
  *
  * bind :: Monad m => m a -> (a -> m b) -> m b
@@ -177,7 +177,7 @@ const liftM = __NAMESPACE__ . '\\liftM';
 /**
  * liftM
  * promotes a function to a monad
- * 
+ *
  * liftM :: Monad m => (a -> r) -> m a -> m r
  *
  * @param callable $function

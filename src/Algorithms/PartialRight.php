@@ -17,14 +17,14 @@ const partialRight = __NAMESPACE__ . '\\partialRight';
 /**
  * partialRight
  * decomposes a function into multiple sub-functions of varying arity
- * 
+ *
  * partial :: (a, b) -> (b) a
- * 
+ *
  * @param callable $func
  * @param mixed ...$args
  * @return callable
  * @example
- * 
+ *
  * partialRight(fn ($a, $b, $c) => ($a + $b) / $c, 2)(5, 3)
  * //=> 4
  */

@@ -14,9 +14,9 @@ use Chemem\Bingo\Functional\Functors\Functor;
 
 class Applicative implements Functor, Applicable
 {
-  const pure  = __CLASS__ . '::pure';
+  public const pure  = __CLASS__ . '::pure';
 
-  const of    = __CLASS__ . '::of';
+  public const of    = __CLASS__ . '::of';
 
   /**
    * @var mixed $value Value in Applicative context
@@ -36,7 +36,7 @@ class Applicative implements Functor, Applicable
   /**
    * pure
    * lifts a value
-   * 
+   *
    * pure :: Applicative f => a -> f a
    *
    * @static
@@ -51,9 +51,9 @@ class Applicative implements Functor, Applicable
   /**
    * of
    * puts a value in an Applicative
-   * 
+   *
    * ap :: a -> f a
-   * 
+   *
    * @static
    * @param mixed $value
    * @return Applicative
@@ -68,7 +68,7 @@ class Applicative implements Functor, Applicable
    * replaces liftM and enables function application in Applicative environment
    *
    * ap :: Applicative f => f (a -> b) -> f a -> f b
-   * 
+   *
    * @param Applicable
    * @return Applicable
    */
@@ -82,7 +82,7 @@ class Applicative implements Functor, Applicable
    * transforms Applicative state via function application and approximates do syntax
    *
    * map :: Applicative f => f a -> (a -> b) -> f b
-   * 
+   *
    * @param callable $function The morphism used to transform the state value
    * @return Functor
    */
@@ -94,7 +94,7 @@ class Applicative implements Functor, Applicable
   /**
    * getValue
    * unwraps Applicative revealing its contents
-   * 
+   *
    * getValue :: Applicative => f a -> a
    *
    * @return mixed $value

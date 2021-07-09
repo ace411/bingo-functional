@@ -2,7 +2,7 @@
 
 /**
  * transduce function
- * 
+ *
  * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
@@ -15,7 +15,7 @@ use function Chemem\Bingo\Functional\Algorithms\Internal\_fold;
 /**
  * transduce
  * transforms a list by pipelining list transformation functions
- * 
+ *
  * transduce :: (c -> c) -> ((a, b) -> a) -> a -> [b] -> a
  *
  * @param callable $transducer

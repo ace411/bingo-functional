@@ -17,7 +17,7 @@ interface Functor
    * transforms Functor state via function application & approximates do syntax
    *
    * map :: Functor f => f a -> (a -> b) -> f b
-   * 
+   *
    * @param callable $func
    * @return Functor
    */

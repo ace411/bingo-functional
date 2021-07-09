@@ -17,12 +17,12 @@ const endsWith = __NAMESPACE__ . '\\endsWith';
  * checks if string ends with a specified string fragment
  *
  * endsWith :: String -> String -> Bool
- * 
+ *
  * @param string $haystack
  * @param string $needle
  * @return boolean
  * @example
- * 
+ *
  * endsWith('bingo-functional', 'nal')
  * //=> true
  */

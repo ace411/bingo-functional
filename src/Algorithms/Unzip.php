@@ -20,11 +20,11 @@ const unzip = __NAMESPACE__ . '\\unzip';
  * splits zipped array into an array containing its pre-zip constituents
  *
  * unzip :: [(a, b)] -> ([a], [b])
- * 
+ *
  * @param array $zipped
  * @return array
  * @example
- * 
+ *
  * unzip([[1, 'foo'], [2, 'bar']])
  * //=> [[1, 2], ['foo', 'bar']]
  */

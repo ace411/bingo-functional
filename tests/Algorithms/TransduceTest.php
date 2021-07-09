@@ -2,10 +2,8 @@
 
 namespace Chemem\Bingo\Functional\Tests\Algorithms;
 
-use Chemem\Bingo\Functional\{
-  Algorithms as f,
-  Algorithms\Transducer as t,
-};
+use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional\Algorithms\Transducer as t;
 
 class TransduceTest extends \PHPUnit\Framework\TestCase
 {

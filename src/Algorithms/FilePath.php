@@ -15,14 +15,14 @@ const filePath = __NAMESPACE__ . '\\filePath';
 /**
  * filePath
  * outputs the absolute path to a file or directory
- * 
+ *
  * filePath :: Int -> String -> String
  *
  * @param integer $level
  * @param string ...$components
  * @return string
  * @example
- * 
+ *
  * filePath(0, 'path', 'to', 'file')
  * //=> '/basedir/path/to/file'
  */

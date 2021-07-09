@@ -4,7 +4,7 @@ namespace Chemem\Bingo\Functional\Tests\Functors\Monads;
 
 \error_reporting(0);
 
-use \Eris\Generator;
+use Eris\Generator;
 use Chemem\Bingo\Functional\Algorithms as f;
 use Chemem\Bingo\Functional\Functors\Monads\IO;
 use Chemem\Bingo\Functional\Tests as t;
@@ -43,7 +43,7 @@ class IOTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\int()
+        Generator\int()
       )
       ->then(function ($val) {
         $impure = IO\IO(function () use ($val) {
@@ -55,7 +55,7 @@ class IOTest extends \PHPUnit\Framework\TestCase
         $fny = function ($val) {
           return IO\IO($val + 10);
         };
-        
+
         $this->assertEquals(
           [
             'left-identity'   => true,

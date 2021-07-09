@@ -17,14 +17,14 @@ const mapDeep = __NAMESPACE__ . '\\mapDeep';
 /**
  * mapDeep
  * transforms every entry in a list in a single iteration
- * 
+ *
  * mapDeep :: (a -> b) -> [a] -> [b]
  *
  * @param callable $func
  * @param array $list
  * @return array
  * @example
- * 
+ *
  * mapDeep('strtoupper', ['foo', ['bar', 'baz']])
  * //=> ['FOO', ['BAR', 'BAZ']]
  */

@@ -19,7 +19,7 @@ class UniqueTest extends \PHPUnit\Framework\TestCase
       ],
     ];
   }
-  
+
   /**
    * @dataProvider contextProvider
    */

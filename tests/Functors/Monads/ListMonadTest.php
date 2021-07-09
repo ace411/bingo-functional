@@ -4,7 +4,7 @@ namespace Chemem\Bingo\Functional\Tests\Functors\Monads;
 
 \error_reporting(0);
 
-use \Eris\Generator;
+use Eris\Generator;
 use Chemem\Bingo\Functional\Functors\Monads\ListMonad as Listt;
 use Chemem\Bingo\Functional\Tests as t;
 
@@ -48,7 +48,7 @@ class ListMonadTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\int()
+        Generator\int()
       )
       ->then(function ($val) {
         $list = Listt\fromValue($val);
@@ -96,7 +96,7 @@ class ListMonadTest extends \PHPUnit\Framework\TestCase
     $this->assertInstanceOf(Listt::class, $concat);
     $this->assertEquals($res, $concat->extract());
   }
-  
+
   public function prependProvider()
   {
     return [

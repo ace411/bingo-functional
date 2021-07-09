@@ -4,7 +4,7 @@ namespace Chemem\Bingo\Functional\Tests\Functors\Maybe;
 
 \error_reporting(0);
 
-use \Eris\Generator;
+use Eris\Generator;
 use Chemem\Bingo\Functional\Tests as t;
 use Chemem\Bingo\Functional\Functors\Maybe;
 use Chemem\Bingo\Functional\Algorithms as f;
@@ -163,7 +163,7 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
       [[], false],
     ];
   }
-  
+
   /**
    * @dataProvider listToMaybeProvider
    */
@@ -244,7 +244,7 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
 
     $this->assertEquals($res, $ret);
   }
-  
+
   public function liftProvider()
   {
     return [

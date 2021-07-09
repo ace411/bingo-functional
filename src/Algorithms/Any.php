@@ -15,14 +15,14 @@ const any = __NAMESPACE__ . '\\any';
 /**
  * any
  * checks if any list entry conforms to a boolean predicate
- * 
+ *
  * any :: [a] -> (a -> Bool) -> Bool
- * 
+ *
  * @param array|object $list
  * @param callable $func
  * @return boolean
  * @example
- * 
+ *
  * any((object) range(1, 5), fn ($x) => $x % 2 != 0)
  * //=> true
  */

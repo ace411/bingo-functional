@@ -17,11 +17,11 @@ const compact = __NAMESPACE__ . '\\compact';
  * jettisons falsy values (false, 0, NAN, and null) from a list
  *
  * compact :: [a] -> [a]
- * 
+ *
  * @param array|object $list
  * @return array|object
  * @example
- * 
+ *
  * compact([0, 1, 3, 'foo', NAN, 'baz', false, null])
  * //=> [1, 3, 'foo', 'baz']
  */
