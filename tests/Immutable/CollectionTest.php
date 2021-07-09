@@ -388,10 +388,10 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
     $this
       ->forAll(
         Generator\tuple(
-            Generator\constant('foo'),
-            Generator\constant('bar'),
-            Generator\constant('baz')
-          )
+          Generator\constant('foo'),
+          Generator\constant('bar'),
+          Generator\constant('baz')
+        )
       )
       ->then(function ($list) {
         $str = Collection::from($list)->implode(':');
