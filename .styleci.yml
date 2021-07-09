@@ -1,0 +1,20 @@
+risky: true
+version: 7
+tab-width: 2
+use-tabs: true
+enabled:
+  - linebreak_after_opening_tag
+  - trailing_comma_in_multiline
+  - blank_line_before_statement
+  - date_time_immutable
+  - no_trailing_whitespace
+  - no_unused_imports
+  - align_double_arrow
+  - align_equals
+disabled:
+  - no_trailing_comma_in_list_call
+finder:
+  exclude:
+    - 'node_modules'
+    - 'vendor'
+  name: '*.php'
