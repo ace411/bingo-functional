@@ -4,7 +4,6 @@ tab-width: 2
 use-tabs: true
 enabled:
   - linebreak_after_opening_tag
-  - blank_line_before_statement
   - trailing_comma_in_multiline_array
   - date_time_immutable
   - no_trailing_whitespace
