@@ -17,13 +17,13 @@ const isArrayOf = __NAMESPACE__ . '\\isArrayOf';
  * returns the predominant array type (mixed for composite lists)
  *
  * isArrayOf :: [a] -> String
- * 
+ *
  * @param array $list
  * @return string
  * @example
- * 
- * isArrayOf()
- * //=>
+ *
+ * isArrayOf(['foo', 'bar', 'baz'])
+ * //=> 'string'
  */
 function isArrayOf(array $list): string
 {

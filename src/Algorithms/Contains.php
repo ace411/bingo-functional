@@ -17,12 +17,12 @@ const contains = __NAMESPACE__ . '\\contains';
  * Checks if a string exists in another string
  *
  * contains :: String -> String -> Bool
- * 
+ *
  * @param string $haystack
  * @param string $needle
  * @return boolean
  * @example
- * 
+ *
  * contains('bingo-functional', 'func')
  * //=> true
  */

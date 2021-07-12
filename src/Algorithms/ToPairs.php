@@ -19,11 +19,11 @@ const toPairs = __NAMESPACE__ . '\\toPairs';
  * converts an associative array to one containing discrete pairs
  *
  * toPairs :: [a] -> [[a]]
- * 
+ *
  * @param array $list
  * @return array
  * @example
- * 
+ *
  * toPairs(['foo' => 'foo', 'bar' => '23'])
  * //=> [['foo', 'foo'], ['bar', '23']]
  */

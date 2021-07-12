@@ -18,15 +18,15 @@ const assoc = __NAMESPACE__ . '\\assoc';
 /**
  * assoc
  * creates a shallow clone of a list with an overwritten value at a specified index
- * 
+ *
  * assoc :: a -> b -> [b] -> [b]
- * 
+ *
  * @param string|integer $key
  * @param mixed $val
  * @param array|object $list
  * @return array|object
  * @example
- * 
+ *
  * assoc('x', 32, ['y' => 'foo', 'x' => 'bar'])
  * //=> ['y' => 'foo', 'x' => 32]
  */

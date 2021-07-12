@@ -4,7 +4,7 @@ namespace Chemem\Bingo\Functional\Tests\Transient;
 
 \error_reporting(0);
 
-use \Eris\Generator;
+use Eris\Generator;
 use Chemem\Bingo\Functional\Common\Traits\TransientMutator as Transient;
 
 class TransientTest extends \PHPUnit\Framework\TestCase

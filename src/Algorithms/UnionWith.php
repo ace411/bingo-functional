@@ -18,12 +18,12 @@ const unionWith = __NAMESPACE__ . '\\unionWith';
  * combines multiple arrays on fulfillment of an arbitrary condition
  *
  * unionWith :: ([a] -> [b] -> Bool) -> [a] -> [b] -> [c]
- * 
+ *
  * @param callable $function
  * @param array ...$values
  * @return array
  * @example
- * 
+ *
  * unionWith(
  *  fn ($x, $y) => isArrayOf($x) === isArrayOf($y),
  *  range(1, 3),

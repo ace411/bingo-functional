@@ -19,7 +19,7 @@ const extend = __NAMESPACE__ . '\\extend';
  * @param array ...$lists
  * @return array
  * @example
- * 
+ *
  * extend(['foo', 'bar'], ['baz'], ['fooz'])
  * //=> ['foo', 'bar', 'baz', 'fooz']
  */
@@ -29,7 +29,7 @@ function extend(array ...$lists): array
 
   for ($idx = 0; $idx < \count($lists); ++$idx) {
     $list = $lists[$idx];
-    
+
     foreach ($list as $key => $val) {
       if (\is_string($key)) {
         $ret[$key] = $val;

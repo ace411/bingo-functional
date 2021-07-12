@@ -16,13 +16,13 @@ const pluckPath = __NAMESPACE__ . '\\pluckPath';
  * pluckPath
  * returns the item that corresponds to the index at the end of a traversable path
  *
- * pluckPath :: [a] -> [b] -> c -> b 
- * 
+ * pluckPath :: [a] -> [b] -> c -> b
+ *
  * @param array $path
  * @param array|object $list
  * @param mixed $default
  * @return mixed
- * 
+ *
  * pluckPath(['x', 'foo'], ['x' => ['foo' => 3]])
  * //=> 3
  */

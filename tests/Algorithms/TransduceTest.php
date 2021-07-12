@@ -2,10 +2,8 @@
 
 namespace Chemem\Bingo\Functional\Tests\Algorithms;
 
-use Chemem\Bingo\Functional\{
-  Algorithms as f,
-  Algorithms\Transducer as t,
-};
+use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional\Algorithms\Transducer as t;
 
 class TransduceTest extends \PHPUnit\Framework\TestCase
 {
@@ -51,6 +49,22 @@ class TransduceTest extends \PHPUnit\Framework\TestCase
         ['foo', 'bar', 'baz', 'foo-bar'],
         [],
         ['F-O-O', 'B-A-R', 'B-A-Z'],
+      ],
+      [
+        f\composeRight(
+          t\map(function (int $x) {
+            return $x ** 2;
+          }),
+          t\reject(function (int $x) {
+            return $x > 20;
+          })
+        ),
+        function ($acc, $val) {
+          return $acc + $val;
+        },
+        [3, 7, 1, 9],
+        0,
+        10,
       ],
     ];
   }

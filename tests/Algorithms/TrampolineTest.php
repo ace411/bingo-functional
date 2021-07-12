@@ -32,7 +32,7 @@ class TrampolineTest extends \PHPUnit\Framework\TestCase
   public function testtrampolineOptimizesRecursiveFunction($func, $arg, $res)
   {
     $rec = f\trampoline($func);
-    
+
     $this->assertEquals($res, $rec($arg));
   }
 }

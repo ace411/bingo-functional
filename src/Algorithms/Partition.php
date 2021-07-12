@@ -17,12 +17,12 @@ const partition = __NAMESPACE__ . '\\partition';
  * converts array into multidimensional version containing an arbitrary number of sub-arrays
  *
  * partition :: Int -> [a] -> [[a]]
- * 
+ *
  * @param integer $number
  * @param array $list
  * @return array
  * @example
- * 
+ *
  * partition(2, range(1, 4))
  * //=> [[1, 2], [3, 4]]
  */

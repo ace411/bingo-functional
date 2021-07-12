@@ -17,11 +17,11 @@ const constantFunction = __NAMESPACE__ . '\\constantFunction';
  * returns the first argument it receives
  *
  * constantFunction :: a -> () a
- * 
+ *
  * @param mixed ...$args
  * @return callable
  * @example
- * 
+ *
  * constantFunction('foo', new stdClass(2.2), 3)()
  * //=> 'foo'
  */
@@ -37,12 +37,12 @@ const K = __NAMESPACE__ . '\\K';
 /**
  * K-combinator
  * manufactures a constant function
- * 
+ *
  * K :: a -> b -> () a
- * 
+ *
  * @param mixed ...$args
  * @return callable
- * 
+ *
  * K(12, 'foo')()
  * //=> 12
  */

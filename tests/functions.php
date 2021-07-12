@@ -52,7 +52,7 @@ const getClassShortName = __NAMESPACE__ . '\\getClassShortName';
  * @param mixed $env
  * @return boolean
  */
-function assertEquals(object $fst, object $snd, $env = null): bool
+function assertEquals($fst, $snd, $env = null): bool
 {
   return p\patternMatch([
     '["Maybe", "Maybe"]'          => function () use ($fst, $snd) {
@@ -166,7 +166,7 @@ const lensFunctorLaws = __NAMESPACE__ . '\\lensFunctorLaws';
  * @return array
  */
 function functorLaws(
-  object $functor,
+  $functor,
   callable $fnx,
   callable $fny,
   $aux = null
@@ -200,7 +200,7 @@ const functorLaws = __NAMESPACE__ . '\\functorLaws';
  * @return array
  */
 function monadLaws(
-  object $monad,
+  $monad,
   callable $fnx,
   callable $fny,
   callable $return,
@@ -236,7 +236,7 @@ const monadLaws = __NAMESPACE__ . '\\monadLaws';
  * @param mixed $val
  * @return array
  */
-function applicativeLaws(object $app, callable $func, $val): array
+function applicativeLaws($app, callable $func, $val): array
 {
   // place value in applicative
   $purex = $app->pure($val);

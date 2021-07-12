@@ -23,7 +23,7 @@ class MaxTest extends \PHPUnit\Framework\TestCase
 
     $this->assertEquals($res, $max);
     $this->assertTrue(
-            \is_int($max) || \is_double($max) || \is_float($max)
-        );
+      \is_int($max) || \is_double($max) || \is_float($max)
+    );
   }
 }

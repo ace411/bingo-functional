@@ -15,7 +15,7 @@ use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
 
 class State implements Monad, Functor, Applicable
 {
-  const of = __CLASS__ . '::of';
+  public const of = __CLASS__ . '::of';
 
   /**
    * @property callable $comp The state computation to store
@@ -35,7 +35,7 @@ class State implements Monad, Functor, Applicable
   /**
    * of
    * puts an initial state in State monad
-   * 
+   *
    * of :: s -> State s a
    *
    * @param callable $value
@@ -85,7 +85,7 @@ class State implements Monad, Functor, Applicable
    * unwraps State monad
    *
    * run :: State s a => s -> (a, s)
-   * 
+   *
    * @return array
    */
   public function run($state)

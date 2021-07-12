@@ -17,7 +17,7 @@ use function Chemem\Bingo\Functional\Algorithms\extend;
 
 class Writer implements Monad, Functor, Applicable
 {
-  const of = __CLASS__ . '::of';
+  public const of = __CLASS__ . '::of';
 
   /**
    * @property callable $action Writer monad action
@@ -32,7 +32,7 @@ class Writer implements Monad, Functor, Applicable
   /**
    * of
    * puts result and output in Writer monad
-   * 
+   *
    * of :: a -> w -> Writer (a, w)
    *
    * @static of
@@ -85,7 +85,7 @@ class Writer implements Monad, Functor, Applicable
   /**
    * run
    * unwraps Writer monad revealing result and output data
-   * 
+   *
    * run :: Writer a w => (a, w)
    *
    * @return array

@@ -14,15 +14,15 @@ const toException = __NAMESPACE__ . '\\toException';
 
 /**
  * toException
- * enables anomalous situation handling via function application 
+ * enables anomalous situation handling via function application
  *
  * toException :: (a -> b) -> (Throwable -> c) -> b
- * 
+ *
  * @param callable $func
  * @param callable $handler
  * @return callable
  * @example
- * 
+ *
  * toException(function ($x, $y) {
  *  if ($y == 0) {
  *    throw new Exception('division by zero error');

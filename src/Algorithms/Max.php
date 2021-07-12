@@ -15,13 +15,13 @@ const max = __NAMESPACE__ . '\\max';
 /**
  * max
  * computes the largest number in a collection
- * 
+ *
  * max :: [a] -> Int
- * 
+ *
  * @param array|object $list
  * @return int|float
  * @example
- * 
+ *
  * max((object) [12, 4, 6, 99, 3])
  * //=> 99
  */

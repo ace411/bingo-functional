@@ -4,7 +4,7 @@ namespace Chemem\Bingo\Functional\Tests\Functors\Monads;
 
 \error_reporting(0);
 
-use \Eris\Generator;
+use Eris\Generator;
 use Chemem\Bingo\Functional\Algorithms as f;
 use Chemem\Bingo\Functional\Functors\Monads\Reader;
 use Chemem\Bingo\Functional\Tests as t;
@@ -29,7 +29,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
 
         $fnx = f\partial(f\concat, ' ', 'foo:');
         $fny = f\partial(f\concat, ' ', 'bar:');
-        
+
         $this->assertEquals([
           'identity'    => true,
           'composition' => true,
@@ -93,7 +93,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
     $this->assertInstanceOf(Reader::class, $env);
     $this->assertEquals($res, $env->run($res));
   }
-  
+
   public function withReaderProvider()
   {
     return [

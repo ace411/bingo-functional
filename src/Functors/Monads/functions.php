@@ -38,7 +38,7 @@ const bind = __NAMESPACE__ . '\\bind';
 
 /**
  * bind
- * sequentially composes two actions, passing any value produced by the first 
+ * sequentially composes two actions, passing any value produced by the first
  * as an argument to the second
  *
  * bind :: Monad m => m a -> (a -> m b) -> m b
@@ -178,7 +178,7 @@ const liftM = __NAMESPACE__ . '\\liftM';
 /**
  * liftM
  * promotes a function to a monad
- * 
+ *
  * liftM :: Monad m => (a -> r) -> m a -> m r
  *
  * @param callable $function
@@ -201,9 +201,9 @@ const let = __NAMESPACE__ . '\\let';
 /**
  * let
  * places object entry in Do Notation parser context
- * 
+ *
  * let :: String -> m a -> (m a -> p [m a])
- * 
+ *
  * @param string $var
  * @param object $entry
  * @return callable
@@ -225,7 +225,7 @@ const in = __NAMESPACE__ . '\\in';
 /**
  * in
  * unwraps computation in do-notation parser context
- * 
+ *
  * in :: Array -> (a -> m b) -> m b
  *
  * @param string $args
@@ -245,7 +245,7 @@ const doN = __NAMESPACE__ . '\\doN';
 /**
  * doN
  * creates pipeline for performing monad actions
- * 
+ *
  * doN :: (a -> m b) -> m b
  *
  * @param callable ...$args
@@ -258,6 +258,6 @@ function doN(callable ...$args)
       return $arg($parser);
     },
     $args,
-    new Parser
+    new Parser()
   );
 }

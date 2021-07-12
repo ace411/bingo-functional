@@ -2,7 +2,7 @@
 
 /**
  * addKeys function
- * 
+ *
  * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
@@ -17,14 +17,14 @@ const addKeys = __NAMESPACE__ . '\\addKeys';
 /**
  * addKeys
  * extracts specified keys from a list
- * 
+ *
  * addKeys :: [a] -> b -> [a]
- * 
+ *
  * @param array|object $list
  * @param string|int ...$keys
  * @return array|object
  * @example
- * 
+ *
  * addKeys(['foo' => 2, 'bar' => 'bar'], 'foo')
  * //=> ['foo' => 2]
  */

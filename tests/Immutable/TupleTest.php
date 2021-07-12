@@ -4,7 +4,7 @@ namespace Chemem\Bingo\Functional\Tests\Immutable;
 
 \error_reporting(0);
 
-use \Eris\Generator;
+use Eris\Generator;
 use Chemem\Bingo\Functional\Algorithms as f;
 use Chemem\Bingo\Functional\Immutable\Tuple;
 use Chemem\Bingo\Functional\Immutable as imm;

@@ -2,7 +2,7 @@
 
 /**
  * Do Notation execution parser
- * 
+ *
  * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
@@ -23,7 +23,7 @@ class Parser
 
   /**
    * Parser constructor
-   * 
+   *
    * @param array $table
    */
   public function __construct(array $table = [])
@@ -35,8 +35,8 @@ class Parser
    * assign
    * adds an object (monad or Context instance) to the parser's symbol table
    *
-   * assign :: Parser p => p [m a] -> String -> m a -> p [m a] 
-   * 
+   * assign :: Parser p => p [m a] -> String -> m a -> p [m a]
+   *
    * @param string $var
    * @param object $object
    * @return Parser
@@ -51,7 +51,7 @@ class Parser
   /**
    * extract
    * applies selected table monad objects to lifted monadic action
-   * 
+   *
    * extract :: Parser p => p [m a] -> Array -> (a -> b) -> m b
    *
    * @param array $args

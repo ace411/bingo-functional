@@ -17,18 +17,18 @@ use Chemem\Bingo\Functional\Algorithms as f;
 
 abstract class Either implements Monad, Functor, Applicable
 {
-  const left  = __CLASS__ . '::left';
+  public const left  = __CLASS__ . '::left';
 
-  const right = __CLASS__ . '::right';
+  public const right = __CLASS__ . '::right';
 
-  const lift  = __CLASS__ . '::lift';
-  
+  public const lift  = __CLASS__ . '::lift';
+
   /**
    * left
    * puts a value in Left context
    *
    * left :: a -> e a
-   * 
+   *
    * @param mixed $value
    * @return Left
    */
@@ -42,7 +42,7 @@ abstract class Either implements Monad, Functor, Applicable
    * puts a value in Right context
    *
    * right :: a -> e a
-   * 
+   *
    * @param mixed $value
    * @return Right
    */
@@ -54,7 +54,7 @@ abstract class Either implements Monad, Functor, Applicable
   /**
    * lift
    * converts a function to an Either-type action
-   * 
+   *
    * lift :: (a -> b) -> c -> (e a -> e b) -> e a -> e b
    *
    * @param callable $function
@@ -85,7 +85,7 @@ abstract class Either implements Monad, Functor, Applicable
   /**
    * getLeft
    * unwraps Left value
-   * 
+   *
    * getLeft :: Either => e a -> a
    *
    * @abstract
@@ -96,7 +96,7 @@ abstract class Either implements Monad, Functor, Applicable
   /**
    * getRight
    * unwraps Right value
-   * 
+   *
    * getRight :: Either => e a -> a
    *
    * @abstract
@@ -107,7 +107,7 @@ abstract class Either implements Monad, Functor, Applicable
   /**
    * isLeft
    * checks if the Either value is of type Left
-   * 
+   *
    * isLeft :: Either => e a -> Bool
    *
    * @abstract
@@ -118,7 +118,7 @@ abstract class Either implements Monad, Functor, Applicable
   /**
    * isRight
    * checks if the Either value is of type Right
-   * 
+   *
    * isRight :: Either => e a -> Bool
    *
    * @abstract
@@ -131,7 +131,7 @@ abstract class Either implements Monad, Functor, Applicable
    * puts value in Either monad
    *
    * of :: a -> e a
-   * 
+   *
    * @abstract
    * @param mixed $value
    * @return Either
@@ -141,7 +141,7 @@ abstract class Either implements Monad, Functor, Applicable
   /**
    * flatMap
    * behaves like map but returns an unwrapped value
-   * 
+   *
    * flatMap :: Either => e a -> (a -> b) -> b
    *
    * @abstract
@@ -170,7 +170,7 @@ abstract class Either implements Monad, Functor, Applicable
    * retains value that satisfies boolean predicate; Left-wrapped error value otherwise
    *
    * filter :: Either => e a -> (a -> Bool) -> b -> e a
-   * 
+   *
    * @abstract
    * @param callable $filter
    * @param mixed $error
@@ -181,7 +181,7 @@ abstract class Either implements Monad, Functor, Applicable
   /**
    * orElse
    * chainable version of left()/right()
-   * 
+   *
    * orElse :: Either e a => e b -> e a
    *
    * @abstract

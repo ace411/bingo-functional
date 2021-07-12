@@ -68,7 +68,7 @@ const isLeft = __NAMESPACE__ . '\\isLeft';
  * Return True if the given value is a Left-value, False otherwise.
  *
  * isLeft :: Either a b -> Bool
- * 
+ *
  * @param Either $either
  * @return boolean
  */

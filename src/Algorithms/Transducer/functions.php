@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * transducer functions
+ *
+ * @package bingo-functional
+ * @author Lochemem Bruno Michael
+ * @license Apache-2.0
+ */
+
 namespace Chemem\Bingo\Functional\Algorithms\Transducer;
 
 const map = __NAMESPACE__ . '\\map';
@@ -9,7 +17,7 @@ const map = __NAMESPACE__ . '\\map';
  * transforms every single list entry in a single iteration; passes result to transducer
  *
  * map :: (a -> b) -> (a -> b -> c)
- * 
+ *
  * @param callable $transform
  * @return callable
  */
@@ -29,7 +37,7 @@ const filter = __NAMESPACE__ . '\\filter';
 /**
  * filter
  * selects values that conform to a boolean predicate; passes result to transducer
- * 
+ *
  * filter :: (a -> Bool) -> (a -> b -> c)
  *
  * @param callable $predicate
@@ -55,7 +63,7 @@ const reject = __NAMESPACE__ . '\\reject';
  * selects values that don't conform to a boolean predicate; passes result to transducer
  *
  * reject :: (a -> Bool) -> (a -> b -> c)
- * 
+ *
  * @param callable $predicate
  * @return callable
  */

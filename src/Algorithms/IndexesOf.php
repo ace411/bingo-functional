@@ -19,11 +19,11 @@ const indexesOf = __NAMESPACE__ . '\\indexesOf';
  * returns all indexes that correspond to a specified list entry
  *
  * indexesOf :: [b] -> b -> [a]
- * 
+ *
  * @param array|object $list
  * @param mixed $value
  * @return array
- * 
+ *
  * indexesOf(['x' => 'foo', ['foo']], 'foo')
  * //=> ['x', 0]
  */

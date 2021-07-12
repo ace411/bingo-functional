@@ -170,7 +170,7 @@ const _curryN = __NAMESPACE__ . '\\_curryN';
 /**
  * _curry
  * template for curry* functions
- * 
+ *
  * _curry :: ((a, b) -> c) -> (Int -> ((a, b) -> c) -> a -> b -> c) -> Bool -> a -> b -> c
  *
  * @internal
