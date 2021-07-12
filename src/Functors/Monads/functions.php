@@ -11,6 +11,7 @@
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
 use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional\Functors\Monads\DoN\Parser;
 
 const mcompose = __NAMESPACE__ . '\\mcompose';
 
@@ -192,5 +193,71 @@ function liftM(callable $function, Monad ...$args): Monad
     },
     $args,
     f\head($args)::of(f\curry($function))
+  );
+}
+
+const let = __NAMESPACE__ . '\\let';
+
+/**
+ * let
+ * places object entry in Do Notation parser context
+ * 
+ * let :: String -> m a -> (m a -> p [m a])
+ * 
+ * @param string $var
+ * @param object $entry
+ * @return callable
+ */
+function let(string $var, $entry): callable
+{
+  return function (Parser $parser) use ($var, $entry) {
+    return $parser->assign(
+      $var,
+      // pass parser instance onto the next function (useful for storing 'in' calls)
+      // return the operand - a monad object - otherwise
+      \is_callable($entry) ? $entry($parser) : $entry,
+    );
+  };
+}
+
+const in = __NAMESPACE__ . '\\in';
+
+/**
+ * in
+ * unwraps computation in do-notation parser context
+ * 
+ * in :: Array -> (a -> m b) -> m b
+ *
+ * @param string $args
+ * @param callable $action
+ * @return callable
+ */
+function in(array $args, callable $action): callable
+{
+  return function (Parser $parser) use ($args, $action) {
+    // pass parser instance onto the next extraction
+    return $parser->extract($args, $action);
+  };
+}
+
+const doN = __NAMESPACE__ . '\\doN';
+
+/**
+ * doN
+ * creates pipeline for performing monad actions
+ * 
+ * doN :: (a -> m b) -> m b
+ *
+ * @param callable ...$args
+ * @return Monad
+ */
+function doN(callable ...$args)
+{
+  return f\fold(
+    function (Parser $parser, $arg) {
+      return $arg($parser);
+    },
+    $args,
+    new Parser
   );
 }
