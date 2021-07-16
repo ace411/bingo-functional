@@ -19,14 +19,14 @@ const curryN = __NAMESPACE__ . '\\curryN';
  * converts an uncurried function to a curried one
  *
  * curryN :: Int -> ((a, b) -> c) -> a -> b -> c
- * 
+ *
  * @param integer $paramCount
  * @param callable $function
  * @return callable
  * @example
- * 
+ *
  * curryN(fn ($x, $y) => $x + $y)(2)(3)
- * //=> 5
+ * => 5
  */
 function curryN(int $paramCount, callable $function): callable
 {
@@ -40,14 +40,14 @@ const curryRightN = __NAMESPACE__ . '\\curryRightN';
  * converts an uncurried function to a curried one
  *
  * curryN :: Int -> ((a, b) -> c) -> b -> a -> c
- * 
+ *
  * @param integer $paramCount
  * @param callable $function
  * @return callable
  * @example
- * 
+ *
  * curryN(fn ($x, $y) => $x + $y)(2)(3)
- * //=> 5
+ * => 5
  */
 function curryRightN(int $paramCount, callable $function): callable
 {

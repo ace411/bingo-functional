@@ -22,6 +22,7 @@ class DropLeftTest extends \PHPUnit\Framework\TestCase
     $dropped = f\dropLeft($list, $count);
 
     $this->assertEquals($res, $dropped);
-    $this->assertIsArray($dropped);
+    // $this->assertIsArray($dropped);
+    $this->assertTrue(\is_array($dropped));
   }
 }

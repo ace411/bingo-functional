@@ -18,16 +18,16 @@ const countOfValue = __NAMESPACE__ . '\\countOfValue';
  * countOfValue
  * computes the frequency of a list value - the number of times it
  * appears in a list
- * 
+ *
  * countOfValue :: [a] -> a -> Int
  *
  * @param array|object $list
  * @param mixed $value
  * @return integer
  * @example
- * 
+ *
  * countOfValue(['foo' => range(1, 3), ...range(3, 5)], 3)
- * //=> 2
+ * => 2
  */
 function countOfValue($list, $value): int
 {
@@ -48,16 +48,16 @@ const countOfKey = __NAMESPACE__ . '\\countOfKey';
  * countOfKey
  * computes the frequency of a list index - the number of times it
  * appears in a list
- * 
+ *
  * countOfKey :: [a] -> b -> Int
  *
  * @param array|object $list
  * @param mixed $key
  * @return integer
  * @example
- * 
+ *
  * countOfKey(['foo' => range(1, 3), ...range(3, 4)], 'baz')
- * //=> 0
+ * => 0
  */
 function countOfKey($list, $key): int
 {
@@ -69,7 +69,7 @@ function countOfKey($list, $key): int
     $acc += \is_string($key) ?
       ((string) $idx == $key ? 1 : 0) :
       ($idx == $key ? 1 : 0);
-        
+
     return $acc;
   }, $list, 0);
 }

@@ -2,7 +2,7 @@
 
 /**
  * truncate function
- * 
+ *
  * @see https://lodash.com/docs/4.17.11#truncate
  * @package bingo-functional
  * @author Lochemem Bruno Michael
@@ -18,14 +18,14 @@ const truncate = __NAMESPACE__ . '\\truncate';
  * outputs an arbitrary number of characters in a string and appends an ellipsis to the resultant string
  *
  * truncate :: String -> Int -> String
- * 
+ *
  * @param string $string
  * @param integer $limit
  * @return string
  * @example
- * 
+ *
  * truncate('lorem ipsum', 5)
- * //=> 'lorem...'
+ * => 'lorem...'
  */
 function truncate(string $string, int $limit): string
 {

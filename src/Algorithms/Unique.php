@@ -19,13 +19,13 @@ const unique = __NAMESPACE__ . '\\unique';
  * purges a list of duplicate values
  *
  * unique :: [a] -> [a]
- * 
+ *
  * @param array $list
  * @return array
  * @example
- * 
+ *
  * unique(['foo', 3, 'foo', 'baz'])
- * //=> ['foo', 3, 'baz']
+ * => ['foo', 3, 'baz']
  */
 function unique(array $list): array
 {

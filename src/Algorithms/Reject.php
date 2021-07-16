@@ -17,16 +17,16 @@ const reject = __NAMESPACE__ . '\\reject';
 /**
  * reject
  * selects list values that do not conform to a boolean predicate
- * 
+ *
  * reject :: (a -> Bool) -> [a] -> [a]
  *
  * @param callable $func
  * @param array|object $list
  * @return array|object
  * @example
- * 
+ *
  * reject(fn ($x) => $x % 2 === 0, range(4, 8))
- * //=> [5, 7]
+ * => [5, 7]
  */
 function reject(callable $func, $list)
 {

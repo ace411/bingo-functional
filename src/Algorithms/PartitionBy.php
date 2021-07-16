@@ -17,14 +17,14 @@ const partitionBy = __NAMESPACE__ . '\\partitionBy';
  * converts array into multidimensional version with smaller arrays of defined partition size
  *
  * partitionBy :: Int -> [a] -> [[a]]
- * 
+ *
  * @param integer $partitionSize
  * @param array $list
  * @return array
  * @example
- * 
+ *
  * partitionBy(2, range(1, 6))
- * //=> [[1, 2], [3, 4], [5, 6]]
+ * => [[1, 2], [3, 4], [5, 6]]
  */
 function partitionBy(int $partitionSize, array $list): array
 {

@@ -19,14 +19,14 @@ const curry = __NAMESPACE__ . '\\curry';
  * converts an uncurried function to a curried one
  *
  * curry :: ((a, b) -> c) -> Bool -> a -> b -> c
- * 
+ *
  * @param callable $func
  * @param boolean $required
  * @return callable
  * @example
- * 
+ *
  * curry(fn ($x, $y) => $x / $y)(4)(2)
- * //=> 2
+ * => 2
  */
 function curry(callable $func, bool $required = true): callable
 {
@@ -38,16 +38,16 @@ const curryRight = __NAMESPACE__ . '\\curryRight';
 /**
  * curryRight
  * curries a function from right to left
- * 
+ *
  * curryRight :: ((a, b) -> c) -> Bool -> b -> a -> c
  *
  * @param callable $func
  * @param boolean $required
  * @return callable
  * @example
- * 
+ *
  * curryRight(fn ($x, $y) => $x / $y)(2)(4)
- * //=> 2
+ * => 2
  */
 function curryRight(callable $func, bool $required = true): callable
 {

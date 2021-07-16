@@ -14,25 +14,25 @@ use Chemem\Bingo\Functional\PatternMatching\Internal as i;
 use Chemem\Bingo\Functional\Algorithms as f;
 use FunctionalPHP\PatternMatching as p;
 
-const match = __NAMESPACE__ . '\\match';
+const cmatch = __NAMESPACE__ . '\\cmatch';
 
 /**
- * match
+ * cmatch
  * selectively evaluates cons-evaluable data
  *
- * match :: [([a] -> b)] -> [a] -> b
- * 
+ * cmatch :: [([a] -> b)] -> [a] -> b
+ *
  * @param array $patterns
  * @return callable
  * @example
- * 
- * match([
+ *
+ * cmatch([
  *  '(x:_)' => fn ($x) => $x + 10,
  *  '_' => fn () => 0,
  * ])([2])
- * //=> 12
+ * => 12
  */
-function match(array $patterns): callable
+function cmatch(array $patterns): callable
 {
   // extract cons pattern counts
   $cons = i\filterMatch($patterns);
@@ -53,17 +53,17 @@ const patternMatch = __NAMESPACE__ . '\\patternMatch';
  * performs elaborate selective evaluation of different data types
  *
  * patternMatch :: [(a -> b)] -> a -> b
- * 
+ *
  * @param array $patterns
  * @param mixed $value
  * @return mixed
  * @example
- * 
+ *
  * patternMatch([
  *  '[_, "foo"]' => fn () => strtoupper('foo'),
- *  '_' => fn () => 'undefined' 
+ *  '_' => fn () => 'undefined'
  * ], ['hello', 'foo'])
- * //=> 'FOO'
+ * => 'FOO'
  */
 function patternMatch(array $patterns, $value)
 {
@@ -75,10 +75,10 @@ function patternMatch(array $patterns, $value)
       return !empty($value);
     }
   );
-  
+
   return \is_array($value) ?
     // use FunctionalPHP\PatternMatching primitives for array matches
-    p\match($patterns, $value) :
+    p\pmatch($patterns, $value) :
     (
       // perform object match on detection of object input
       // perform string-based search otherwise
@@ -100,9 +100,9 @@ const letIn = __NAMESPACE__ . '\\letIn';
  * @param array $list
  * @return callable
  * @example
- * 
+ *
  * letIn('[a, b, _]', range(1, 3))('b', fn ($x) => $x ** 2)
- * //=> 4
+ * => 4
  */
 function letIn(string $pattern, array $items): callable
 {

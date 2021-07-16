@@ -15,15 +15,15 @@ const last = 'Chemem\\Bingo\Functional\\Algorithms\\last';
 /**
  * last
  * Outputs the last element in a list
- * 
+ *
  * last :: [a] -> a
- * 
+ *
  * @param object|array $list
  * @return mixed
  * @example
- * 
+ *
  * last(range(4, 7))
- * //=> 7
+ * => 7
  */
 function last($list)
 {

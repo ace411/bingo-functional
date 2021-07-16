@@ -15,7 +15,7 @@ const lastIndexOf = __NAMESPACE__ . '\\lastIndexOf';
 /**
  * lastIndexOf
  * computes the last index that corresponds to a specified list entry
- * 
+ *
  * lastIndexOf :: [a] -> a -> b -> a
  *
  * @param array|object $list
@@ -23,9 +23,9 @@ const lastIndexOf = __NAMESPACE__ . '\\lastIndexOf';
  * @param mixed $def
  * @return string|integer
  * @example
- * 
+ *
  * lastIndexOf([['foo' => 2, 'bar' => 'bar'], range(2, 6)], 2)
- * //=> 0
+ * => 0
  */
 function lastIndexOf($list, $value, $def = null)
 {

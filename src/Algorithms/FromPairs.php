@@ -17,13 +17,13 @@ const fromPairs = __NAMESPACE__ . '\\fromPairs';
  * forms an associative array from discrete array pairs
  *
  * fromPairs :: [[a]] -> [a]
- * 
+ *
  * @param array $list
  * @return array
  * @example
- * 
+ *
  * fromPairs([['foo', 2], ['bar', 'bar']]);
- * //=> ['foo' => 2, 'bar' => 'bar']
+ * => ['foo' => 2, 'bar' => 'bar']
  */
 function fromPairs(array $list): array
 {

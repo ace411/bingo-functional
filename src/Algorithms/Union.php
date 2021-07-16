@@ -18,13 +18,13 @@ const union = __NAMESPACE__ . '\\union';
  * combines multiple arrays into a single list of unique elements
  *
  * union :: [a] -> [b] -> [a, b]
- * 
+ *
  * @param array ...$values
  * @return array
  * @example
- * 
+ *
  * union(range(1, 3), range(2, 5))
- * //=> [1, 2, 3, 4, 5]
+ * => [1, 2, 3, 4, 5]
  */
 function union(array ...$values): array
 {

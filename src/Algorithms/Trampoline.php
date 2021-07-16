@@ -17,15 +17,15 @@ const trampoline = __NAMESPACE__ . '\\trampoline';
  * function that optimizes tail-recursion by managing recursing state
  *
  * trampoline :: (a -> (a -> b)) -> a -> b
- * 
+ *
  * @param callable $func
  * @return callable
  * @example
- * 
+ *
  * $fact = trampoline(function ($x) use (&$fact) {
  *  return $x < 2 ? 1 : $x * $fact($x - 1);
  * })(15);
- * //=> 1307674368000
+ * => 1307674368000
  */
 function trampoline(callable $func): callable
 {

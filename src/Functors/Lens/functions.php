@@ -16,7 +16,6 @@
 namespace Chemem\Bingo\Functional\Functors\Lens;
 
 use Chemem\Bingo\Functional\Functors\Functor;
-
 use Chemem\Bingo\Functional\Algorithms as f;
 
 const _const = __NAMESPACE__ . '\\_const';
@@ -112,6 +111,7 @@ const lensFromKey = __NAMESPACE__ . '\\lensFromKey';
  *
  * lensFromKey :: a -> (b -> f b) -> [b] -> f b
  *
+ * @internal
  * @param mixed $key
  * @param callable $getter
  * @param mixed $list

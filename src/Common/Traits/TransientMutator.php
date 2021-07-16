@@ -22,7 +22,7 @@ trait TransientMutator
   /**
    * isMutable
    * checks if object state is mutable
-   * 
+   *
    * isMutable :: Object => o a -> Bool
    *
    * @return bool
@@ -34,10 +34,10 @@ trait TransientMutator
 
   /**
    * triggerMutation
-   * performs mutation of internal object state 
-   * 
+   * performs mutation of internal object state
+   *
    * triggerMutation :: Object => o a -> (a -> b) -> o b
-   * 
+   *
    * @param callable $fn
    * @return object
    */

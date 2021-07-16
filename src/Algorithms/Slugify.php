@@ -15,15 +15,15 @@ const slugify = __NAMESPACE__ . '\\slugify';
 /**
  * slugify
  * converts a string to a slug
- * 
+ *
  * slugify :: String -> String
  *
  * @param string $string
  * @return string
  * @example
- * 
+ *
  * slugify('lorem ipsum')
- * //=> 'lorem-ipsum'
+ * => 'lorem-ipsum'
  */
 function slugify(string $string): string
 {

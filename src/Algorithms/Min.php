@@ -15,15 +15,15 @@ const min = __NAMESPACE__ . '\\min';
 /**
  * min
  * computes the lowest value in a collection
- * 
+ *
  * min :: [a] -> Int
- * 
+ *
  * @param array|object $list
  * @return int|float
  * @example
- * 
+ *
  * min((object) [12, 4, 6, 99, 3])
- * //=> 3
+ * => 3
  */
 function min($list)
 {

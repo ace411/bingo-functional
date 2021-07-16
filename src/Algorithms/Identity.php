@@ -18,9 +18,9 @@ const identity = __NAMESPACE__ . '\\identity';
  *
  * @param mixed $value
  * @return mixed
- * 
+ *
  * identity(3)
- * //=> 3
+ * => 3
  */
 function identity($value)
 {

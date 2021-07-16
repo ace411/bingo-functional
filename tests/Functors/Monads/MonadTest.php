@@ -174,4 +174,34 @@ class MonadTest extends \PHPUnit\Framework\TestCase
     $this->assertTrue($filter instanceof m\Monad);
     $this->assertEquals($res, f\head($filter->run(null)));
   }
+
+  public function liftMProvider()
+  {
+    return [
+      [
+        [
+          f\K(function ($val) {
+            return $val ** 2;
+          }),
+          m\Reader::of(2),
+        ],
+        4,
+      ],
+      [
+        ['strtoupper', m\Writer::of('foo')],
+        ['FOO', []],
+      ],
+    ];
+  }
+
+  /**
+   * @dataProvider liftMProvider
+   */
+  public function testliftMPromotesFunctionToMonad($args, $res)
+  {
+    $lift = m\liftM(...$args);
+
+    $this->assertTrue($lift instanceof m\Monad);
+    $this->assertEquals($res, $lift->run(null));
+  }
 }

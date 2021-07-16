@@ -19,14 +19,14 @@ const intersperse = __NAMESPACE__ . '\\intersperse';
  * creates a list with an arbitrary value interposed between elements
  *
  * intersperse :: b -> [a] -> [a, b]
- * 
+ *
  * @param mixed $element
  * @param array $list
  * @return array
  * @example
- * 
+ *
  * intersperse('foo', range(1, 3));
- * //=> [1, 'foo', 2, 'foo', 3]
+ * => [1, 'foo', 2, 'foo', 3]
  */
 function intersperse($element, array $list): array
 {

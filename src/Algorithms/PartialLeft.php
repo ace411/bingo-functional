@@ -28,16 +28,16 @@ const partial = __NAMESPACE__ . '\\partial';
 /**
  * partial
  * decomposes a function into multiple sub-functions of varying arity
- * 
+ *
  * partial :: (a, b) -> (a) b
- * 
+ *
  * @param callable $func
  * @param mixed ...$args
  * @return callable
  * @example
- * 
+ *
  * partial(fn ($a, $b, $c) => ($a + $b) / $c, 3)(5, 2)
- * //=> 4
+ * => 4
  */
 function partial(callable $func, ...$args)
 {

@@ -19,14 +19,14 @@ const pluck = __NAMESPACE__ . '\\pluck';
  * selects an item from a list by index
  *
  * pluck :: [a] -> b -> c -> b
- * 
+ *
  * @param array|object $values
  * @param mixed $search
  * @param mixed $default
  * @return mixed
- * 
+ *
  * pluck(['foo' => 'foo', 'bar' => 9], 'bar')
- * //=> 9
+ * => 9
  */
 function pluck($values, $search, $default = null)
 {

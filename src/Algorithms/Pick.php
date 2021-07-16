@@ -19,14 +19,14 @@ const pick = __NAMESPACE__ . '\\pick';
  * picks an item from a list
  *
  * pick :: [a] -> a -> b -> a
- * 
+ *
  * @param array|object $values
  * @param mixed $search
  * @param mixed $default
  * @return mixed
- * 
+ *
  * pick(['foo', 'bar', 'baz'], 2, '')
- * //=> ''
+ * => ''
  */
 function pick($values, $search, $default = null)
 {

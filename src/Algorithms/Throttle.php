@@ -17,14 +17,14 @@ const throttle = __NAMESPACE__ . '\\throttle';
  * delays function execution by a specified value
  *
  * throttle :: (a -> b) -> Int -> b
- * 
+ *
  * @param callable $function
  * @param integer $timeout
  * @return callable
  * @example
- * 
+ *
  * throttle(fn ($x) => $x ** 2, 5)(5)
- * //=> 25
+ * => 25
  */
 function throttle(callable $function, int $timeout): callable
 {

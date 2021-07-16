@@ -32,7 +32,7 @@ class MemoizeTest extends \PHPUnit\Framework\TestCase
   public function testmemoizeCachesFunction($func, $arg, $res)
   {
     $memoized = f\memoize($func);
-    
+
     $this->assertEquals($res, $memoized($arg));
   }
 }

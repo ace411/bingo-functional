@@ -1,0 +1,14 @@
+risky: true
+version: 7
+tab-width: 2
+use-tabs: true
+preset: 'psr12'
+enabled:
+  - linebreak_after_opening_tag
+  - align_double_arrow
+  - align_equals
+finder:
+  exclude:
+    - 'node_modules'
+    - 'vendor'
+  name: '*.php'

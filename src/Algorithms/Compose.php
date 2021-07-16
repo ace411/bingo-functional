@@ -15,18 +15,18 @@ const compose = __NAMESPACE__ . '\\compose';
 /**
  * compose
  * creates a single meta function from multiple single-arity functions
- * 
+ *
  * compose :: f (g a) -> compose f g a
  *
  * @param callable ...$functions
  * @return callable
  * @example
- * 
+ *
  * compose(
  *  fn ($x) => $x ** 2,
  *  fn ($x) => $x ** 3,
  * )(2);
- * //=> 64
+ * => 64
  */
 function compose(callable ...$functions): callable
 {
@@ -42,18 +42,18 @@ const composeRight = __NAMESPACE__ . '\\composeRight';
 /**
  * composeRight
  * creates a single meta function from multiple single-arity functions
- * 
+ *
  * composeRight :: g (f a) -> compose g f a
  *
  * @param callable ...$functions
  * @return callable
  * @example
- * 
+ *
  * composeRight(
  *  fn ($x) => $x ** 2,
  *  fn ($x) => $x ** 3,
  * )(2);
- * //=> 64
+ * => 64
  */
 function composeRight(callable ...$functions): callable
 {

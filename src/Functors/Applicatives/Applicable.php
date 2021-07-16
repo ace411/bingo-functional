@@ -17,7 +17,7 @@ interface Applicable
    * replaces liftM and enables function application in Applicative environment
    *
    * ap :: Applicative f => f (a -> b) -> f a -> f b
-   * 
+   *
    * @param Applicable
    * @return Applicable
    */

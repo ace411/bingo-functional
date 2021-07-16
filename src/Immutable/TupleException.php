@@ -14,5 +14,5 @@ namespace Chemem\Bingo\Functional\Immutable;
 
 class TupleException extends \Exception
 {
-  const PAIR_ERRMSG = 'Sorry, this method is only available for tuple pairs';
+  public const PAIR_ERRMSG = 'Sorry, this method is only available for tuple pairs';
 }

@@ -2,7 +2,7 @@
 
 /**
  * difference function
- * 
+ *
  * @see https://lodash.com/docs/4.17.11#difference
  * @package bingo-functional
  * @author Lochemem Bruno Michael
@@ -18,13 +18,13 @@ const difference = __NAMESPACE__ . '\\difference';
  * compares lists and returns elements absent from their intersection
  *
  * difference :: Eq a => [a] -> [a] -> [a]
- * 
+ *
  * @param array ...$array
  * @return array
  * @example
- * 
+ *
  * difference(['foo', 'bar'], ['foo', 'baz'], ['fooz', 'boo'])
- * //=> ['bar', 'baz', 'fooz', 'boo']
+ * => ['bar', 'baz', 'fooz', 'boo']
  */
 function difference(array ...$array): array
 {

@@ -16,19 +16,19 @@ const where = __NAMESPACE__ . '\\where';
  * where
  * searches a multi-dimensional array using a fragment of a sub-array defined in the
  * said composite
- * 
+ *
  * where :: [[a], [b]] -> [a] -> [[a]]
- * 
+ *
  * @param array $list
  * @param array $search
  * @return array
  * @example
- * 
+ *
  * where([
  *  ['pos' => 'pg', 'name' => 'magic'],
  *  ['pos' => 'sg', 'name' => 'jordan']
  * ], ['name' => 'jordan'])
- * //=> [['pos' => 'sg', 'name' => 'jordan']]
+ * => [['pos' => 'sg', 'name' => 'jordan']]
  */
 function where(array $list, array $search): array
 {

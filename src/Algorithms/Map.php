@@ -17,16 +17,16 @@ const map = __NAMESPACE__ . '\\map';
 /**
  * map
  * transforms every entry in a list in a single iteration
- * 
+ *
  * map :: (a -> b) -> [a] -> [b]
- * 
+ *
  * @param callable $func
  * @param array|object $list
  * @return array|object
  * @example
- * 
+ *
  * map(fn ($x) => $x ** 2, range(4, 8));
- * //=> [16, 25, 36, 49, 64]
+ * => [16, 25, 36, 49, 64]
  */
 function map(callable $func, $list)
 {

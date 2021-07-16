@@ -4,7 +4,7 @@ namespace Chemem\Bingo\Functional\Tests\Functors\Either;
 
 \error_reporting(0);
 
-use \Eris\Generator;
+use Eris\Generator;
 use Chemem\Bingo\Functional\Tests as t;
 use Chemem\Bingo\Functional\Functors\Either;
 use Chemem\Bingo\Functional\Algorithms as f;
@@ -20,9 +20,9 @@ class EitherTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\int(),
-          Generator\constant(0),
-          Generator\bool()
+        Generator\int(),
+        Generator\constant(0),
+        Generator\bool()
       )
       ->then(function ($val, $const, $right) {
         $either = $right ?
@@ -50,9 +50,9 @@ class EitherTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\names(),
-          Generator\constant('left'),
-          Generator\bool()
+        Generator\names(),
+        Generator\constant('left'),
+        Generator\bool()
       )
       ->then(function ($res, $const, bool $right) {
         $either  = $right ?
@@ -60,7 +60,7 @@ class EitherTest extends \PHPUnit\Framework\TestCase
           Either\Either::left($const);
         $fnx    = function ($str) use ($right, $const) {
           $expr = f\concat(': ', 'name', $str);
-          
+
           return $right ?
             Either\Either::right($expr) :
             Either\Either::left($const);
@@ -75,20 +75,20 @@ class EitherTest extends \PHPUnit\Framework\TestCase
         };
 
         $this->assertEquals(
-              [
+          [
             'left-identity'   => true,
             'right-identity'  => true,
             'associativity'   => true,
           ],
-              t\monadLaws(
-              $either,
-              $fnx,
-              $fny,
+          t\monadLaws(
+            $either,
+            $fnx,
+            $fny,
             // test both Right and Left sub-types individually
             $right ? Either\Right::of : Either\Left::of,
-              $right ? $res : $const
+            $right ? $res : $const
           )
-          );
+        );
       });
   }
 
@@ -113,7 +113,7 @@ class EitherTest extends \PHPUnit\Framework\TestCase
   {
     [$argr, $argl] = $args;
     [$rres, $lres] = $res;
-    
+
     $rval = Either\either($left, $right, Either\Right::of($argr));
     $lval = Either\either($left, $right, Either\Left::of($argl));
 

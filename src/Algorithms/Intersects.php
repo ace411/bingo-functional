@@ -17,14 +17,14 @@ const intersects = __NAMESPACE__ . '\\intersects';
  * checks if two lists have at least one item in common
  *
  * intersects :: [a] -> [b] -> Bool
- * 
+ *
  * @param array|object $first
  * @param array|object $second
  * @return boolean
  * @example
- * 
+ *
  * intersects(['foo', 'bar'], range(1, 5))
- * //=> false
+ * => false
  */
 function intersects($first, $second): bool
 {
@@ -41,7 +41,7 @@ function intersects($first, $second): bool
     foreach ($second as $val) {
       if (\in_array($val, $first)) {
         $intersect = true;
-        
+
         if ($intersect == true) {
           break;
         }

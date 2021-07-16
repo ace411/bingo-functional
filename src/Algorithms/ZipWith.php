@@ -18,14 +18,14 @@ const zipWith = __NAMESPACE__ . '\\zipWith';
  * combines - via function - multiple lists into key-matched list groupings
  *
  * zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
- * 
+ *
  * @param callable $function
  * @param array ...$values
  * @return array
  * @example
- * 
+ *
  * zipWith(fn ($x, $y) => $x ** $y, range(1, 3), range(0, 2))
- * //=> [1, 2, 9]
+ * => [1, 2, 9]
  */
 function zipWith(callable $function, array ...$values): array
 {

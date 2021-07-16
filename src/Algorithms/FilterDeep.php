@@ -19,20 +19,20 @@ const filterDeep = __NAMESPACE__ . '\\filterDeep';
  * selects list values that conform to a boolean predicate
  *
  * filterDeep :: (a -> Bool) -> [a] -> [a]
- * 
+ *
  * @param callable $function
  * @param array $values
  * @return array
  * @example
- * 
+ *
  * filterDeep(fn ($x) => strlen($x) === 3, [2, 'fa', 'foo'])
- * //=> ['foo']
+ * => ['foo']
  */
 function filterDeep(callable $function, array $values): array
 {
   return _fold(function ($acc, $val, $idx) use ($function) {
     $acc[$idx] = \is_array($val) ?
-			filterDeep($function, $val) :
+            filterDeep($function, $val) :
       head((filter)($function, [$val]));
 
     if ($acc[$idx] == null) {

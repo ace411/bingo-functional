@@ -12,7 +12,7 @@ declare(strict_types=1);
 
 namespace Chemem\Bingo\Functional\Immutable;
 
-use \Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional\Algorithms as f;
 
 trait CommonTrait
 {
@@ -21,7 +21,7 @@ trait CommonTrait
    * @access private
    */
   private $list;
-  
+
   /**
    * Immutable constructor
    *

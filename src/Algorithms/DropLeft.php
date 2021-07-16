@@ -19,14 +19,14 @@ const dropLeft = __NAMESPACE__ . '\\dropLeft';
  * removes elements from the front of a list
  *
  * dropLeft :: [a, b] -> Int -> [b]
- * 
+ *
  * @param array $list
  * @param integer $number
  * @return array
  * @example
- * 
+ *
  * dropLeft(['foo' => 'foo', 'bar' => 'bar'], 1)
- * //=> ['bar' => 'bar']
+ * => ['bar' => 'bar']
  */
 function dropLeft(array $list, int $number = 1): array
 {

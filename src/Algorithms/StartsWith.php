@@ -17,14 +17,14 @@ const startsWith = __NAMESPACE__ . '\\startsWith';
  * checks if string starts with specified string fragment
  *
  * startsWith :: String -> String -> Bool
- * 
+ *
  * @param string $haystack
  * @param string $needle
  * @return boolean
  * @example
- * 
+ *
  * startsWith('bingo-functional', 'function')
- * //=> false
+ * => false
  */
 function startsWith(string $haystack, string $needle): bool
 {
