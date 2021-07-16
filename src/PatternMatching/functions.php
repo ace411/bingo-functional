@@ -78,7 +78,7 @@ function patternMatch(array $patterns, $value)
 
   return \is_array($value) ?
     // use FunctionalPHP\PatternMatching primitives for array matches
-    p\match($patterns, $value) :
+    p\pmatch($patterns, $value) :
     (
       // perform object match on detection of object input
       // perform string-based search otherwise
