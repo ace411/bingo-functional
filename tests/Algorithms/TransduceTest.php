@@ -7,7 +7,7 @@ use Chemem\Bingo\Functional\Algorithms\Transducer as t;
 
 class TransduceTest extends \PHPUnit\Framework\TestCase
 {
-  public function transduceProvider()
+  public function contextProvider()
   {
     return [
       [
@@ -70,7 +70,7 @@ class TransduceTest extends \PHPUnit\Framework\TestCase
   }
 
   /**
-   * @dataProvider transduceProvider
+   * @dataProvider contextProvider
    */
   public function testtransduceEffectivelyPipelinesListOperations($transducer, $step, $list, $acc, $res)
   {
