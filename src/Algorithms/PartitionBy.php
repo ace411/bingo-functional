@@ -24,7 +24,7 @@ const partitionBy = __NAMESPACE__ . '\\partitionBy';
  * @example
  *
  * partitionBy(2, range(1, 6))
- * //=> [[1, 2], [3, 4], [5, 6]]
+ * => [[1, 2], [3, 4], [5, 6]]
  */
 function partitionBy(int $partitionSize, array $list): array
 {

@@ -23,7 +23,7 @@ const last = 'Chemem\\Bingo\Functional\\Algorithms\\last';
  * @example
  *
  * last(range(4, 7))
- * //=> 7
+ * => 7
  */
 function last($list)
 {

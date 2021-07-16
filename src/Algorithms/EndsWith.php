@@ -24,7 +24,7 @@ const endsWith = __NAMESPACE__ . '\\endsWith';
  * @example
  *
  * endsWith('bingo-functional', 'nal')
- * //=> true
+ * => true
  */
 function endsWith(string $haystack, string $needle): bool
 {

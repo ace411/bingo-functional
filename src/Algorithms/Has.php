@@ -24,7 +24,7 @@ const has = __NAMESPACE__ . '\\has';
  * @example
  *
  * has([range(1, 5), 'foo', 'bar'], 3)
- * //=> true
+ * => true
  */
 function has($haystack, $needle): bool
 {

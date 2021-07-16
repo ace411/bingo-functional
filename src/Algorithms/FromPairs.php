@@ -23,7 +23,7 @@ const fromPairs = __NAMESPACE__ . '\\fromPairs';
  * @example
  *
  * fromPairs([['foo', 2], ['bar', 'bar']]);
- * //=> ['foo' => 2, 'bar' => 'bar']
+ * => ['foo' => 2, 'bar' => 'bar']
  */
 function fromPairs(array $list): array
 {

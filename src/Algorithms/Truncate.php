@@ -25,7 +25,7 @@ const truncate = __NAMESPACE__ . '\\truncate';
  * @example
  *
  * truncate('lorem ipsum', 5)
- * //=> 'lorem...'
+ * => 'lorem...'
  */
 function truncate(string $string, int $limit): string
 {

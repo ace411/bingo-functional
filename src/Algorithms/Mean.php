@@ -23,7 +23,7 @@ const mean = __NAMESPACE__ . '\\mean';
  * @example
  *
  * mean([9, 13, 12, 21])
- * //=> 13.75
+ * => 13.75
  */
 function mean($list)
 {

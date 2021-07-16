@@ -24,7 +24,7 @@ const throttle = __NAMESPACE__ . '\\throttle';
  * @example
  *
  * throttle(fn ($x) => $x ** 2, 5)(5)
- * //=> 25
+ * => 25
  */
 function throttle(callable $function, int $timeout): callable
 {

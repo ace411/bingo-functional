@@ -24,7 +24,7 @@ const intersects = __NAMESPACE__ . '\\intersects';
  * @example
  *
  * intersects(['foo', 'bar'], range(1, 5))
- * //=> false
+ * => false
  */
 function intersects($first, $second): bool
 {

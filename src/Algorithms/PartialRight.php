@@ -26,7 +26,7 @@ const partialRight = __NAMESPACE__ . '\\partialRight';
  * @example
  *
  * partialRight(fn ($a, $b, $c) => ($a + $b) / $c, 2)(5, 3)
- * //=> 4
+ * => 4
  */
 function partialRight(callable $func, ...$args)
 {

@@ -24,7 +24,7 @@ const difference = __NAMESPACE__ . '\\difference';
  * @example
  *
  * difference(['foo', 'bar'], ['foo', 'baz'], ['fooz', 'boo'])
- * //=> ['bar', 'baz', 'fooz', 'boo']
+ * => ['bar', 'baz', 'fooz', 'boo']
  */
 function difference(array ...$array): array
 {

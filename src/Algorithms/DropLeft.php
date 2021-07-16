@@ -26,7 +26,7 @@ const dropLeft = __NAMESPACE__ . '\\dropLeft';
  * @example
  *
  * dropLeft(['foo' => 'foo', 'bar' => 'bar'], 1)
- * //=> ['bar' => 'bar']
+ * => ['bar' => 'bar']
  */
 function dropLeft(array $list, int $number = 1): array
 {

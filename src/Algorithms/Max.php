@@ -23,7 +23,7 @@ const max = __NAMESPACE__ . '\\max';
  * @example
  *
  * max((object) [12, 4, 6, 99, 3])
- * //=> 99
+ * => 99
  */
 function max($list)
 {

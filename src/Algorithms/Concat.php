@@ -24,7 +24,7 @@ const concat = __NAMESPACE__ . '\\concat';
  * @example
  *
  * concat('-', 'foo', 'bar', 1)
- * //=> 'foo-bar-1'
+ * => 'foo-bar-1'
  */
 function concat(string $glue = '', string ...$strings): string
 {

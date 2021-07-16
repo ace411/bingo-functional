@@ -26,7 +26,7 @@ const omit = __NAMESPACE__ . '\\omit';
  * @example
  *
  * omit(['x' => 'x', 'y' => 'y', 'z' => 'z'], 'x', 'z')
- * //=> ['y' => 'y']
+ * => ['y' => 'y']
  */
 function omit($list, ...$keys)
 {

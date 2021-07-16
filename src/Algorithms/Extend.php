@@ -21,7 +21,7 @@ const extend = __NAMESPACE__ . '\\extend';
  * @example
  *
  * extend(['foo', 'bar'], ['baz'], ['fooz'])
- * //=> ['foo', 'bar', 'baz', 'fooz']
+ * => ['foo', 'bar', 'baz', 'fooz']
  */
 function extend(array ...$lists): array
 {

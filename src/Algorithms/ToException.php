@@ -29,7 +29,7 @@ const toException = __NAMESPACE__ . '\\toException';
  *  }
  *  return $x / $y;
  * }, fn ($_) => INF)(3, 0)
- * //=> INF
+ * => INF
  */
 function toException(callable $func, callable $handler = null): callable
 {

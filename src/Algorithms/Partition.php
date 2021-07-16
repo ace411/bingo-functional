@@ -24,7 +24,7 @@ const partition = __NAMESPACE__ . '\\partition';
  * @example
  *
  * partition(2, range(1, 4))
- * //=> [[1, 2], [3, 4]]
+ * => [[1, 2], [3, 4]]
  */
 function partition(int $number, array $list): array
 {

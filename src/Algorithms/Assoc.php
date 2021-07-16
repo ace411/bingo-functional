@@ -28,7 +28,7 @@ const assoc = __NAMESPACE__ . '\\assoc';
  * @example
  *
  * assoc('x', 32, ['y' => 'foo', 'x' => 'bar'])
- * //=> ['y' => 'foo', 'x' => 32]
+ * => ['y' => 'foo', 'x' => 32]
  */
 function assoc($key, $val, $list)
 {

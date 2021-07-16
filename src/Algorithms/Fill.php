@@ -26,7 +26,7 @@ const fill = __NAMESPACE__ . '\\fill';
  * @example
  *
  * fill((object) range(4, 9), 'foo', 1, 3)
- * //=> object(stdClass) {4, 'foo', 'foo', 'foo', 8, 9}
+ * => object(stdClass) {4, 'foo', 'foo', 'foo', 8, 9}
  */
 function fill($list, $value, int $start, int $end)
 {

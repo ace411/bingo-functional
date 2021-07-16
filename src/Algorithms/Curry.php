@@ -26,7 +26,7 @@ const curry = __NAMESPACE__ . '\\curry';
  * @example
  *
  * curry(fn ($x, $y) => $x / $y)(4)(2)
- * //=> 2
+ * => 2
  */
 function curry(callable $func, bool $required = true): callable
 {
@@ -47,7 +47,7 @@ const curryRight = __NAMESPACE__ . '\\curryRight';
  * @example
  *
  * curryRight(fn ($x, $y) => $x / $y)(2)(4)
- * //=> 2
+ * => 2
  */
 function curryRight(callable $func, bool $required = true): callable
 {

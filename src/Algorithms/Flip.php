@@ -23,7 +23,7 @@ const flip = __NAMESPACE__ . '\\flip';
  * @example
  *
  * flip(fn ($x, $y) => $x / $y)(2, 4)
- * //=> 2
+ * => 2
  */
 function flip(callable $function): callable
 {

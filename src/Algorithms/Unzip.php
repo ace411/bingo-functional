@@ -26,7 +26,7 @@ const unzip = __NAMESPACE__ . '\\unzip';
  * @example
  *
  * unzip([[1, 'foo'], [2, 'bar']])
- * //=> [[1, 2], ['foo', 'bar']]
+ * => [[1, 2], ['foo', 'bar']]
  */
 function unzip(array $zipped): array
 {

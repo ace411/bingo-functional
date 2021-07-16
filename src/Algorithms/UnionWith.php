@@ -29,7 +29,7 @@ const unionWith = __NAMESPACE__ . '\\unionWith';
  *  range(1, 3),
  *  range(2, 5)
  * )
- * //=> [1, 2, 3, 4, 5]
+ * => [1, 2, 3, 4, 5]
  */
 function unionWith(callable $function, array ...$values): array
 {

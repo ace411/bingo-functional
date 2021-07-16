@@ -23,7 +23,7 @@ const head = __NAMESPACE__ . '\\head';
  * @example
  *
  * head(range(4, 7))
- * //=> 4
+ * => 4
  */
 function head($list, $def = null)
 {

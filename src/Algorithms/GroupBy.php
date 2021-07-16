@@ -30,7 +30,7 @@ const groupBy = __NAMESPACE__ . '\\groupBy';
  *  ['pos' => 'pg', 'name' => 'curry'],
  *  ['pos' => 'sg', 'name' => 'wade']
  * ], 'pos');
- * //=> [
+ * => [
  *  'sg' => [
  *    ['pos' => 'sg', 'name' => 'jordan'],
  *    ['pos' => 'sg', 'name' => 'wade']

@@ -24,7 +24,7 @@ const every = __NAMESPACE__ . '\\every';
  * @example
  *
  * every(range(1, 9), fn ($x) => $x % 2 !== 0);
- * //=> false
+ * => false
  */
 function every($list, callable $func): bool
 {

@@ -25,7 +25,7 @@ const zipWith = __NAMESPACE__ . '\\zipWith';
  * @example
  *
  * zipWith(fn ($x, $y) => $x ** $y, range(1, 3), range(0, 2))
- * //=> [1, 2, 9]
+ * => [1, 2, 9]
  */
 function zipWith(callable $function, array ...$values): array
 {

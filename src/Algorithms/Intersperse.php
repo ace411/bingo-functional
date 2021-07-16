@@ -26,7 +26,7 @@ const intersperse = __NAMESPACE__ . '\\intersperse';
  * @example
  *
  * intersperse('foo', range(1, 3));
- * //=> [1, 'foo', 2, 'foo', 3]
+ * => [1, 'foo', 2, 'foo', 3]
  */
 function intersperse($element, array $list): array
 {

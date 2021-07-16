@@ -24,7 +24,7 @@ const union = __NAMESPACE__ . '\\union';
  * @example
  *
  * union(range(1, 3), range(2, 5))
- * //=> [1, 2, 3, 4, 5]
+ * => [1, 2, 3, 4, 5]
  */
 function union(array ...$values): array
 {

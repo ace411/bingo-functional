@@ -26,7 +26,7 @@ const reject = __NAMESPACE__ . '\\reject';
  * @example
  *
  * reject(fn ($x) => $x % 2 === 0, range(4, 8))
- * //=> [5, 7]
+ * => [5, 7]
  */
 function reject(callable $func, $list)
 {

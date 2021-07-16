@@ -24,7 +24,7 @@ const startsWith = __NAMESPACE__ . '\\startsWith';
  * @example
  *
  * startsWith('bingo-functional', 'function')
- * //=> false
+ * => false
  */
 function startsWith(string $haystack, string $needle): bool
 {

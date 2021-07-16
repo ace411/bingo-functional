@@ -25,7 +25,7 @@ const firstIndexOf = __NAMESPACE__ . '\\firstIndexOf';
  * @example
  *
  * firstIndexOf([['foo' => 2, 'bar' => 'bar'], ...range(2, 6)], 'bar')
- * //=> 'bar'
+ * => 'bar'
  */
 function firstIndexOf($list, $value, $def = null)
 {

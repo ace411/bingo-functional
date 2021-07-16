@@ -25,7 +25,7 @@ const toPairs = __NAMESPACE__ . '\\toPairs';
  * @example
  *
  * toPairs(['foo' => 'foo', 'bar' => '23'])
- * //=> [['foo', 'foo'], ['bar', '23']]
+ * => [['foo', 'foo'], ['bar', '23']]
  */
 function toPairs($list): array
 {

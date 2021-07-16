@@ -25,7 +25,7 @@ const toWords = __NAMESPACE__ . '\\toWords';
  * @example
  *
  * toWords('lorem ipsum', '/[\s]+/')
- * //=> ['lorem', 'ipsum']
+ * => ['lorem', 'ipsum']
  */
 function toWords(string $string, string $regex = ''): array
 {

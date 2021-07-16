@@ -27,7 +27,7 @@ const countOfValue = __NAMESPACE__ . '\\countOfValue';
  * @example
  *
  * countOfValue(['foo' => range(1, 3), ...range(3, 5)], 3)
- * //=> 2
+ * => 2
  */
 function countOfValue($list, $value): int
 {
@@ -57,7 +57,7 @@ const countOfKey = __NAMESPACE__ . '\\countOfKey';
  * @example
  *
  * countOfKey(['foo' => range(1, 3), ...range(3, 4)], 'baz')
- * //=> 0
+ * => 0
  */
 function countOfKey($list, $key): int
 {

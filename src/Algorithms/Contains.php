@@ -24,7 +24,7 @@ const contains = __NAMESPACE__ . '\\contains';
  * @example
  *
  * contains('bingo-functional', 'func')
- * //=> true
+ * => true
  */
 function contains(string $haystack, string $needle): bool
 {

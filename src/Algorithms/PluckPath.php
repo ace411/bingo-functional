@@ -24,7 +24,7 @@ const pluckPath = __NAMESPACE__ . '\\pluckPath';
  * @return mixed
  *
  * pluckPath(['x', 'foo'], ['x' => ['foo' => 3]])
- * //=> 3
+ * => 3
  */
 function pluckPath(array $path, $list, $default = null)
 {

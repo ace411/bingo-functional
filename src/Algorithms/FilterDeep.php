@@ -26,7 +26,7 @@ const filterDeep = __NAMESPACE__ . '\\filterDeep';
  * @example
  *
  * filterDeep(fn ($x) => strlen($x) === 3, [2, 'fa', 'foo'])
- * //=> ['foo']
+ * => ['foo']
  */
 function filterDeep(callable $function, array $values): array
 {

@@ -26,7 +26,7 @@ const addKeys = __NAMESPACE__ . '\\addKeys';
  * @example
  *
  * addKeys(['foo' => 2, 'bar' => 'bar'], 'foo')
- * //=> ['foo' => 2]
+ * => ['foo' => 2]
  */
 function addKeys($list, ...$keys)
 {

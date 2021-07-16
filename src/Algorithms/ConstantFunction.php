@@ -23,7 +23,7 @@ const constantFunction = __NAMESPACE__ . '\\constantFunction';
  * @example
  *
  * constantFunction('foo', new stdClass(2.2), 3)()
- * //=> 'foo'
+ * => 'foo'
  */
 function constantFunction(...$args): callable
 {
@@ -44,7 +44,7 @@ const K = __NAMESPACE__ . '\\K';
  * @return callable
  *
  * K(12, 'foo')()
- * //=> 12
+ * => 12
  */
 function K(...$args): callable
 {

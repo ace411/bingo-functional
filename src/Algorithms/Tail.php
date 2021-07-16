@@ -23,7 +23,7 @@ const tail = __NAMESPACE__ . '\\tail';
  * @example
  *
  * tail(['foo', 'bar', 3, 9])
- * //=> ['bar', 3, 9]
+ * => ['bar', 3, 9]
  */
 function tail($list)
 {

@@ -24,7 +24,7 @@ const renameKeys = __NAMESPACE__ . '\\renameKeys';
  * @example
  *
  * renameKeys(['x' => 3, 'y' => 'foo'], ['x', 0], ['y', 1])
- * //=> [3, 'foo']
+ * => [3, 'foo']
  */
 function renameKeys($list, array ...$pairs)
 {

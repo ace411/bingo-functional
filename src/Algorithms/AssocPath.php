@@ -27,7 +27,7 @@ const assocPath = __NAMESPACE__ . '\\assocPath';
  * @example
  *
  * assocPath(['x', 1], 'foo', ['x' => range(1, 3)])
- * //=> ['x' => [1, 'foo', 3]]
+ * => ['x' => [1, 'foo', 3]]
  */
 function assocPath(array $keys, $val, $list)
 {

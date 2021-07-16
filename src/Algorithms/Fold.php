@@ -27,7 +27,7 @@ const fold = __NAMESPACE__ . '\\fold';
  * @example
  *
  * fold(fn ($x, $y) => $x > $y ? $x : $y, [3, 8, 2], 0)
- * //=> 8
+ * => 8
  */
 function fold(callable $func, $list, $acc)
 {
@@ -49,7 +49,7 @@ const foldRight = __NAMESPACE__ . '\\foldRight';
  * @example
  *
  * foldRight(fn ($x, $y) => $x . $y, ['foo', 'bar'], 0);
- * //=> 'barfoo'
+ * => 'barfoo'
  */
 function foldRight(callable $func, $list, $acc)
 {

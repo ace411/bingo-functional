@@ -23,7 +23,7 @@ const flatten = __NAMESPACE__ . '\\flatten';
  * @example
  *
  * flatten(['foo', range(1, 3)])
- * //=> ['foo', 1, 2, 3]
+ * => ['foo', 1, 2, 3]
  */
 function flatten(array $list): array
 {

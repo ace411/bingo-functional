@@ -26,7 +26,7 @@ const indexOf = __NAMESPACE__ . '\\indexOf';
  * @return mixed
  *
  * indexOf(['x' => 'foo', 'y' => 3], 3)
- * //=> 'y'
+ * => 'y'
  */
 function indexOf($list, $value, $default = null)
 {

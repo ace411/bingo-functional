@@ -26,7 +26,7 @@ const map = __NAMESPACE__ . '\\map';
  * @example
  *
  * map(fn ($x) => $x ** 2, range(4, 8));
- * //=> [16, 25, 36, 49, 64]
+ * => [16, 25, 36, 49, 64]
  */
 function map(callable $func, $list)
 {

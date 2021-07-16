@@ -26,7 +26,7 @@ const arrayKeysExist = __NAMESPACE__ . '\\arrayKeysExist';
  * @example
  *
  * arrayKeysExist(['foo' => 'foo', 1 => 'baz'], 1, 'baz')
- * //=> false
+ * => false
  */
 function arrayKeysExist(array $list, ...$keys): bool
 {
@@ -47,7 +47,7 @@ const keysExist = __NAMESPACE__ . '\\keysExist';
  * @example
  *
  * keysExist((object) ['foo' => 'foo', 1 => 'baz'], 1, 'baz')
- * //=> false
+ * => false
  */
 function keysExist($list, ...$keys): bool
 {

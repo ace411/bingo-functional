@@ -25,7 +25,7 @@ const trampoline = __NAMESPACE__ . '\\trampoline';
  * $fact = trampoline(function ($x) use (&$fact) {
  *  return $x < 2 ? 1 : $x * $fact($x - 1);
  * })(15);
- * //=> 1307674368000
+ * => 1307674368000
  */
 function trampoline(callable $func): callable
 {

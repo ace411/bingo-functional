@@ -25,7 +25,7 @@ const indexesOf = __NAMESPACE__ . '\\indexesOf';
  * @return array
  *
  * indexesOf(['x' => 'foo', ['foo']], 'foo')
- * //=> ['x', 0]
+ * => ['x', 0]
  */
 function indexesOf($list, $value): array
 {

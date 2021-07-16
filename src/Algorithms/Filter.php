@@ -26,7 +26,7 @@ const filter = __NAMESPACE__ . '\\filter';
  * @example
  *
  * filter(fn ($x) => $x % 2 === 0, range(4, 8))
- * //=> [4, 6, 8]
+ * => [4, 6, 8]
  */
 function filter(callable $func, $list)
 {

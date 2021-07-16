@@ -26,7 +26,7 @@ const pluck = __NAMESPACE__ . '\\pluck';
  * @return mixed
  *
  * pluck(['foo' => 'foo', 'bar' => 9], 'bar')
- * //=> 9
+ * => 9
  */
 function pluck($values, $search, $default = null)
 {

@@ -25,7 +25,7 @@ const memoize = __NAMESPACE__ . '\\memoize';
  * $fact = memoize(function ($x) use (&$fact) {
  *  return $x < 2 ? 1 : $x * $fact($x - 1);
  * })(5);
- * //=> 120
+ * => 120
  */
 function memoize(callable $function): callable
 {

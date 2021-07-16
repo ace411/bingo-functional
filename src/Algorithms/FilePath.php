@@ -24,7 +24,7 @@ const filePath = __NAMESPACE__ . '\\filePath';
  * @example
  *
  * filePath(0, 'path', 'to', 'file')
- * //=> '/basedir/path/to/file'
+ * => '/basedir/path/to/file'
  */
 function filePath(int $level, string ...$components): string
 {

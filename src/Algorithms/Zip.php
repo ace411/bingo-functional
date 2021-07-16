@@ -23,7 +23,7 @@ const zip = __NAMESPACE__ . '\\zip';
  * @example
  *
  * zip(range(1, 3), ['foo', 'bar', 'baz'])
- * //=> [[1, 'foo'], [2, 'bar'], [3, 'baz']]
+ * => [[1, 'foo'], [2, 'bar'], [3, 'baz']]
  */
 function zip(array ...$lists): array
 {

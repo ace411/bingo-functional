@@ -26,7 +26,7 @@ const mapDeep = __NAMESPACE__ . '\\mapDeep';
  * @example
  *
  * mapDeep('strtoupper', ['foo', ['bar', 'baz']])
- * //=> ['FOO', ['BAR', 'BAZ']]
+ * => ['FOO', ['BAR', 'BAZ']]
  */
 function mapDeep(callable $func, array $list): array
 {

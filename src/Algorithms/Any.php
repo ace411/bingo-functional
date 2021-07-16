@@ -24,7 +24,7 @@ const any = __NAMESPACE__ . '\\any';
  * @example
  *
  * any((object) range(1, 5), fn ($x) => $x % 2 != 0)
- * //=> true
+ * => true
  */
 function any($list, callable $func): bool
 {

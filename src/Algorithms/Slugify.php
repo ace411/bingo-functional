@@ -23,7 +23,7 @@ const slugify = __NAMESPACE__ . '\\slugify';
  * @example
  *
  * slugify('lorem ipsum')
- * //=> 'lorem-ipsum'
+ * => 'lorem-ipsum'
  */
 function slugify(string $string): string
 {

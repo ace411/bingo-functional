@@ -23,7 +23,7 @@ const min = __NAMESPACE__ . '\\min';
  * @example
  *
  * min((object) [12, 4, 6, 99, 3])
- * //=> 3
+ * => 3
  */
 function min($list)
 {

@@ -28,7 +28,7 @@ const where = __NAMESPACE__ . '\\where';
  *  ['pos' => 'pg', 'name' => 'magic'],
  *  ['pos' => 'sg', 'name' => 'jordan']
  * ], ['name' => 'jordan'])
- * //=> [['pos' => 'sg', 'name' => 'jordan']]
+ * => [['pos' => 'sg', 'name' => 'jordan']]
  */
 function where(array $list, array $search): array
 {

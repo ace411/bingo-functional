@@ -26,7 +26,7 @@ const pick = __NAMESPACE__ . '\\pick';
  * @return mixed
  *
  * pick(['foo', 'bar', 'baz'], 2, '')
- * //=> ''
+ * => ''
  */
 function pick($values, $search, $default = null)
 {

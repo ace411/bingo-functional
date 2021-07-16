@@ -25,7 +25,7 @@ const unique = __NAMESPACE__ . '\\unique';
  * @example
  *
  * unique(['foo', 3, 'foo', 'baz'])
- * //=> ['foo', 3, 'baz']
+ * => ['foo', 3, 'baz']
  */
 function unique(array $list): array
 {

@@ -23,7 +23,7 @@ const compact = __NAMESPACE__ . '\\compact';
  * @example
  *
  * compact([0, 1, 3, 'foo', NAN, 'baz', false, null])
- * //=> [1, 3, 'foo', 'baz']
+ * => [1, 3, 'foo', 'baz']
  */
 function compact($list)
 {

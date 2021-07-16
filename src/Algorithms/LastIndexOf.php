@@ -25,7 +25,7 @@ const lastIndexOf = __NAMESPACE__ . '\\lastIndexOf';
  * @example
  *
  * lastIndexOf([['foo' => 2, 'bar' => 'bar'], range(2, 6)], 2)
- * //=> 0
+ * => 0
  */
 function lastIndexOf($list, $value, $def = null)
 {

@@ -37,7 +37,7 @@ const partial = __NAMESPACE__ . '\\partial';
  * @example
  *
  * partial(fn ($a, $b, $c) => ($a + $b) / $c, 3)(5, 2)
- * //=> 4
+ * => 4
  */
 function partial(callable $func, ...$args)
 {

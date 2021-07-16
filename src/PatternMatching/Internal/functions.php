@@ -27,7 +27,7 @@ const consPatternCount = __NAMESPACE__ . '\\consPatternCount';
  * @example
  *
  * consPatternCount('(x:xs:_)')
- * //=> ['(x:xs:_)' => 2]
+ * => ['(x:xs:_)' => 2]
  */
 function consPatternCount(string $pattern): array
 {
@@ -65,7 +65,7 @@ const consEachCount = __NAMESPACE__ . '\\consEachCount';
  * @example
  *
  * consEachCount(['(x:xs:_)', '(x:_)'])
- * //=> ['(x:xs:_)' => 2, '(x:_)' => 1]
+ * => ['(x:xs:_)' => 2, '(x:_)' => 1]
  */
 function consEachCount(array $cons): array
 {
@@ -96,7 +96,7 @@ const filterMatch = __NAMESPACE__ . '\\filterMatch';
  * @example
  *
  * filterMatch()
- * //=>
+ * =>
  */
 function filterMatch(array $patterns): array
 {
@@ -130,7 +130,7 @@ const execConsMatch = __NAMESPACE__ . '\\execConsMatch';
  *  ['(x:_)' => 1, '_' => 0],
  *  [3]
  * )
- * //=> 13
+ * => 13
  */
 function execConsMatch(
   array $patterns,
@@ -170,7 +170,7 @@ const matchString = __NAMESPACE__ . '\\matchString';
  *  '"12"' => fn () => 'exact',
  *  '_' => fn () => 'undef'
  * ], 12)
- * //=> 'exact'
+ * => 'exact'
  */
 function matchString(array $patterns, $input)
 {
@@ -214,7 +214,7 @@ const matchObject = __NAMESPACE__ . '\\matchObject';
  *  stdClass::class => fn () => 'exact',
  *  '_' => fn () => 'undef'
  * ], new stdClass(12))
- * //=> 'exact'
+ * => 'exact'
  */
 function matchObject(array $patterns, $input)
 {
