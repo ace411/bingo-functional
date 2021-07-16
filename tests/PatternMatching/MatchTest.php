@@ -8,7 +8,7 @@ use Chemem\Bingo\Functional\PatternMatching as p;
 
 class MatchTest extends \PHPUnit\Framework\TestCase
 {
-  public function matchProvider()
+  public function cmatchProvider()
   {
     return [
       [
@@ -30,11 +30,11 @@ class MatchTest extends \PHPUnit\Framework\TestCase
   }
 
   /**
-   * @dataProvider matchProvider
+   * @dataProvider cmatchProvider
    */
-  public function testmatchComputesExactMatches($patterns, $entries, $res)
+  public function testcmatchComputesExactMatches($patterns, $entries, $res)
   {
-    $eval                 = p\match($patterns);
+    $eval                 = p\cmatch($patterns);
     [$fst, $snd, $thd]    = $entries;
     [$rfst, $rsnd, $rthd] = $res;
 
