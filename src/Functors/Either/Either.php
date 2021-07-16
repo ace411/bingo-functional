@@ -13,7 +13,6 @@ namespace Chemem\Bingo\Functional\Functors\Either;
 use Chemem\Bingo\Functional\Functors\Functor;
 use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
 use Chemem\Bingo\Functional\Functors\Monads\Monad;
-use Chemem\Bingo\Functional\Algorithms as f;
 
 abstract class Either implements Monad, Functor, Applicable
 {
@@ -49,37 +48,6 @@ abstract class Either implements Monad, Functor, Applicable
   public static function right($value): Monad
   {
     return new Right($value);
-  }
-
-  /**
-   * lift
-   * converts a function to an Either-type action
-   *
-   * lift :: (a -> b) -> c -> (e a -> e b) -> e a -> e b
-   *
-   * @param callable $function
-   * @param Left $left
-   * @return callable
-   */
-  public static function lift(callable $function, Monad $left): callable
-  {
-    return function () use ($function, $left) {
-      if (
-        f\fold(function (bool $status, Either $val) {
-          return $val->isLeft() ? false : $status;
-        }, \func_get_args($function), true)
-      ) {
-        $args = f\map(function (Either $either) {
-          return $either
-            ->orElse(Either::right(null))
-            ->getRight();
-        }, \func_get_args());
-
-        return self::right($function(...$args));
-      }
-
-      return $left;
-    };
   }
 
   /**

@@ -225,18 +225,4 @@ class EitherTest extends \PHPUnit\Framework\TestCase
       ],
     ];
   }
-
-  /**
-   * @dataProvider liftProvider
-   */
-  public function testEitherIsLiftable($func, $def, $args)
-  {
-    $lifted = Either\Either::lift($func, Either\Either::left($def));
-    $params = f\map(function ($arg) {
-      return Either\Either::right($arg);
-    }, $args);
-
-    $this->assertInstanceOf(\Closure::class, $lifted);
-    $this->assertInstanceOf(Either\Either::class, $lifted(...$params));
-  }
 }

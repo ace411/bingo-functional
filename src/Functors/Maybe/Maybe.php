@@ -68,34 +68,6 @@ abstract class Maybe implements Monad, Functor, Applicable
   }
 
   /**
-   * lift
-   * converts a function to a Maybe-type action
-   *
-   * lift :: (a -> b) -> c -> (m a -> m b) -> m a -> m b
-   *
-   * @param callable $fn
-   * @return callable
-   */
-  public static function lift(callable $fn): callable
-  {
-    return function () use ($fn) {
-      if (
-        f\fold(function ($status, Maybe $val) {
-          return $val->isNothing() ? false : $status;
-        }, \func_get_args($fn), true)
-      ) {
-        $args = f\map(function (Maybe $maybe) {
-          return $maybe->getOrElse(null);
-        }, \func_get_args($fn));
-
-        return self::just(\call_user_func($fn, ...$args));
-      }
-
-      return self::nothing();
-    };
-  }
-
-  /**
    * of
    * puts value in Maybe monad
    *

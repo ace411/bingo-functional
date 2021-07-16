@@ -263,18 +263,4 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
       ],
     ];
   }
-
-  /**
-   * @dataProvider liftProvider
-   */
-  public function testMaybeMonadIsLiftable($func, $args)
-  {
-    $lifted = Maybe\Maybe::lift($func);
-    $params = f\map(function ($arg) {
-      return Maybe\Maybe::fromValue($arg);
-    }, $args);
-
-    $this->assertInstanceOf(\Closure::class, $lifted);
-    $this->assertInstanceOf(Maybe\Maybe::class, $lifted(...$params));
-  }
 }
