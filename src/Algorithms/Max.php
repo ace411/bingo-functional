@@ -28,6 +28,9 @@ const max = __NAMESPACE__ . '\\max';
 function max($list)
 {
   return fold(function ($acc, $val) {
-    return $val > $acc ? $val : $acc;
+    // check if list value is one of either integer or float
+    $comp = \filter_var($val, FILTER_VALIDATE_FLOAT | FILTER_VALIDATE_INT);
+
+    return $comp ? ($val > $acc ? $val : $acc) : $acc;
   }, $list, 0);
 }

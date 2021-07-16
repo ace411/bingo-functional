@@ -27,7 +27,16 @@ const min = __NAMESPACE__ . '\\min';
  */
 function min($list)
 {
-  return fold(function ($acc, $val) {
-    return $val < $acc ? $val : $acc;
-  }, $list, \is_object($list) ? $list->{0} : $list[0]);
+  // check if input is a number
+  $numCheck = function ($number) {
+    return \filter_var($number, FILTER_VALIDATE_INT | FILTER_VALIDATE_FLOAT);
+  };
+  // extract first element in list
+  $fst = head($list);
+
+  return fold(function ($acc, $val) use ($numCheck) {
+    $comp = $numCheck($val);
+
+    return $comp ? ($val < $acc ? $val : $acc) : $acc;
+  }, $list, !$numCheck($fst) ? 0 : $fst);
 }

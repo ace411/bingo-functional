@@ -11,6 +11,8 @@ class MinTest extends \PHPUnit\Framework\TestCase
     return [
       [[1, 9, 12.2, 3], 1],
       [(object) [3, 1, 9], 1],
+      [(object) ['foo', 'bar', 'baz'], 0],
+      [['foo', -3, 'baz'], -3],
     ];
   }
 

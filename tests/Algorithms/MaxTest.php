@@ -11,6 +11,7 @@ class MaxTest extends \PHPUnit\Framework\TestCase
     return [
       [[1, 9, 12.2, 3], 12.2],
       [(object) ['foo', 'bar', 'baz'], 0],
+      [(object) ['foo', 'baz', 1], 1],
     ];
   }
 
