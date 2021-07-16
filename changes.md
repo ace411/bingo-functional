@@ -488,17 +488,21 @@
 
 - filterDeep()
 
-## v1.14.0
+## v2.0.0
 
 - Modified functions
 
 - Modified pattern matching primitives
 
-  - Added internal functions namespaced under `Chemem\Bingo\Functional\PatternMatching\Internal`
+- Added internal functions
+
+  - Pattern matching helpers
 
 - Removed functions
 
 - Added lenses
+
+- Added transducer functions
 
 - Modified List and Writer monads
 
@@ -538,6 +542,10 @@
 
 - Reader\ask()
 
+- Maybe::lift()
+
+- Either::lift()
+
 ### Modified functions
 
 - patternMatch()
@@ -576,6 +584,8 @@
 
 - K()
 
+- transduce()
+
 - Lens\lensPath()
 
 - Lens\lensKey()
@@ -587,6 +597,12 @@
 - Lens\set()
 
 - Lens\lens()
+
+- Transducer\map()
+
+- Transducer\filter()
+
+- Transducer\reject()
 
 ## New monadic function(s)
 
