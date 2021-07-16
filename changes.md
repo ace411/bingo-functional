@@ -510,6 +510,8 @@
 
 - Modified `intersects()` function on immutable Collection
 
+- Renamed `match` to `cmatch`
+
 - Added `liftM()` monad helper function
 
 - Added `K` function (K-combinator)
