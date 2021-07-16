@@ -59,7 +59,7 @@
   ],
   "require": {
     "php": "~7 || ~8",
-    "functional-php/pattern-matching": "~0"
+    "functional-php/pattern-matching": "~1"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "~2",
