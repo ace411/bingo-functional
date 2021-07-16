@@ -27,7 +27,8 @@ class FlattenTest extends \PHPunit\Framework\TestCase
   {
     $flat = f\flatten($list);
 
-    $this->assertIsArray($flat);
+    // $this->assertIsArray($flat);
+    $this->assertTrue(\is_array($flat));
     $this->assertEquals($res, $flat);
   }
 }

@@ -27,7 +27,8 @@ class TransientTest extends \PHPUnit\Framework\TestCase
 
         $sum = Money::sum($fst, $snd);
 
-        $this->assertIsFloat($sum->getWallet());
+        // $this->assertIsFloat($sum->getWallet());
+        $this->assertTrue(\is_float($sum->getWallet()));
         $this->assertInstanceOf(Money::class, $sum);
         $this->assertEquals([
           Transient::class => Transient::class,

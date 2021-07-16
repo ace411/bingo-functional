@@ -29,8 +29,10 @@ class TupleTest extends \PHPUnit\Framework\TestCase
       ->then(function ($list) {
         $lst = Tuple::from($list);
 
-        $this->assertIsBool($lst->contains('lib'));
-        $this->assertIsBool($lst->contains('bingo_functional'));
+        // $this->assertIsBool($lst->contains('lib'));
+        // $this->assertIsBool($lst->contains('bingo_functional'));
+        $this->assertTrue(\is_bool($lst->contains('lib')));
+        $this->assertTrue(\is_bool($lst->contains('bingo_functional')));
       });
   }
 

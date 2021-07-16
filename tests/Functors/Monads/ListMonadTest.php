@@ -170,7 +170,8 @@ class ListMonadTest extends \PHPUnit\Framework\TestCase
   {
     $tail = Listt\tail($list);
 
-    $this->assertIsObject($tail);
+    // $this->assertIsObject($tail);
+    $this->assertTrue(\is_object($tail));
     $this->assertEquals(null, $tail->value);
   }
 }

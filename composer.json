@@ -64,7 +64,7 @@
   "require-dev": {
     "friendsofphp/php-cs-fixer": "~2",
     "giorgiosironi/eris": "~0",
-    "phpunit/phpunit": "~8 || 9.3.*"
+    "phpunit/phpunit": "~6 || ~7 || ~8 || 9.3.*"
   },
   "suggest": {
     "ext-apcu": "In-memory key-value PHP userland store",

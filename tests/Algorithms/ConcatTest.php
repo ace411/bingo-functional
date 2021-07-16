@@ -22,6 +22,7 @@ class ConcatTest extends \PHPUnit\Framework\TestCase
     $str = f\concat($glue, ...$items);
 
     $this->assertEquals($res, $str);
-    $this->assertIsString($str);
+    // $this->assertIsString($str);
+    $this->assertTrue(\is_string($str));
   }
 }

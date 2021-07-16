@@ -77,7 +77,8 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
       ->then(function ($list) {
         $lst = Collection::from($list)->flatMap('strtoupper');
 
-        $this->assertIsArray($lst);
+        // $this->assertIsArray($lst);
+        $this->assertTrue(\is_array($lst));
         $this->assertEquals(f\map('strtoupper', $list), $lst);
         $this->assertEquals(\count($list), \count($lst));
       });
@@ -138,7 +139,8 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
       ->then(function ($list) {
         $any = Collection::from($list)->any('is_string');
 
-        $this->assertIsBool($any);
+        // $this->assertIsBool($any);
+        $this->assertTrue(\is_bool($any));
       });
   }
 
@@ -157,7 +159,8 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
       ->then(function ($list) {
         $every = Collection::from($list)->every('is_string');
 
-        $this->assertIsBool($every);
+        // $this->assertIsBool($every);
+        $this->assertTrue(\is_bool($every));
       });
   }
 
@@ -354,8 +357,10 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
       ->then(function ($list) {
         $lst = Collection::from($list);
 
-        $this->assertIsBool($lst->contains('lib'));
-        $this->assertIsBool($lst->contains('bingo_functional'));
+        // $this->assertIsBool($lst->contains('lib'));
+        $this->assertTrue(\is_bool($lst->contains('lib')));
+        // $this->assertIsBool($lst->contains('bingo_functional'));
+        $this->assertTrue(\is_bool($lst->contains('bingo_functional')));
       });
   }
 
@@ -396,7 +401,8 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
       ->then(function ($list) {
         $str = Collection::from($list)->implode(':');
 
-        $this->assertIsString($str);
+        // $this->assertIsString($str);
+        $this->assertTrue(\is_string($str));
         $this->assertEquals('foo:bar:baz', $str);
       });
   }
@@ -481,7 +487,8 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         $intersects = Collection::from($fst)
           ->intersects(Collection::from($snd));
 
-        $this->assertIsBool($intersects);
+        // $this->assertIsBool($intersects);
+        $this->assertTrue(\is_bool($intersects));
       });
   }
 }

@@ -187,7 +187,8 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
   {
     $list = Maybe\maybeToList(Maybe\Maybe::fromValue($val));
 
-    $this->assertIsArray($list);
+    // $this->assertIsArray($list);
+    $this->assertTrue(\is_array($list));
     $this->assertEquals($res, $list);
   }
 

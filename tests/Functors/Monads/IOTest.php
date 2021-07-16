@@ -89,7 +89,8 @@ class IOTest extends \PHPUnit\Framework\TestCase
     $impure = IO\readFile($path);
 
     $this->assertInstanceOf(IO::class, $impure);
-    $this->assertIsString($impure->exec());
+    // $this->assertIsString($impure->exec());
+    $this->assertTrue($impure->map('is_string')->exec());
   }
 
   public function writeFileProvider()
