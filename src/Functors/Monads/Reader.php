@@ -11,9 +11,9 @@
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
 use Chemem\Bingo\Functional\Functors\Functor;
-use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+use Chemem\Bingo\Functional\Functors\ApplicativeFunctor;
 
-class Reader implements Monad, Functor, Applicable
+class Reader implements Monad, Functor, ApplicativeFunctor
 {
   public const of = __CLASS__ . '::of';
 
@@ -54,7 +54,7 @@ class Reader implements Monad, Functor, Applicable
   /**
    * {@inheritDoc}
    */
-  public function ap(Applicable $app): Applicable
+  public function ap(ApplicativeFunctor $app): ApplicativeFunctor
   {
     return $this->bind(function ($func) use ($app) {
       return $app->map($func);

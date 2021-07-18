@@ -6,8 +6,10 @@ namespace Chemem\Bingo\Functional\Tests\Functors\Either;
 
 use Eris\Generator;
 use Chemem\Bingo\Functional\Tests as t;
-use Chemem\Bingo\Functional\Functors\Either;
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional\Functors\Monads\Either;
+use Chemem\Bingo\Functional\Functors\Monads\Right;
+use Chemem\Bingo\Functional\Functors\Monads\Left;
+use Chemem\Bingo\Functional as f;
 
 class EitherTest extends \PHPUnit\Framework\TestCase
 {
@@ -26,8 +28,8 @@ class EitherTest extends \PHPUnit\Framework\TestCase
       )
       ->then(function ($val, $const, $right) {
         $either = $right ?
-          Either\Either::right($val) :
-          Either\Either::left($const);
+          Either::right($val) :
+          Either::left($const);
 
         $fnx = function ($res) {
           return $res ** 2;
@@ -56,22 +58,22 @@ class EitherTest extends \PHPUnit\Framework\TestCase
       )
       ->then(function ($res, $const, bool $right) {
         $either  = $right ?
-          Either\Either::right($res) :
-          Either\Either::left($const);
+          Either::right($res) :
+          Either::left($const);
         $fnx    = function ($str) use ($right, $const) {
           $expr = f\concat(': ', 'name', $str);
 
           return $right ?
-            Either\Either::right($expr) :
-            Either\Either::left($const);
+            Either::right($expr) :
+            Either::left($const);
         };
 
         $fny    = function ($str) use ($right, $const) {
           $expr = f\toWords($str, '/([\s:])+/');
 
           return $right ?
-            Either\Either::right($expr) :
-            Either\Either::left($const);
+            Either::right($expr) :
+            Either::left($const);
         };
 
         $this->assertEquals(
@@ -85,7 +87,7 @@ class EitherTest extends \PHPUnit\Framework\TestCase
             $fnx,
             $fny,
             // test both Right and Left sub-types individually
-            $right ? Either\Right::of : Either\Left::of,
+            $right ? Right::of : Left::of,
             $right ? $res : $const
           )
         );
@@ -114,8 +116,8 @@ class EitherTest extends \PHPUnit\Framework\TestCase
     [$argr, $argl] = $args;
     [$rres, $lres] = $res;
 
-    $rval = Either\either($left, $right, Either\Right::of($argr));
-    $lval = Either\either($left, $right, Either\Left::of($argl));
+    $rval = Either\either($left, $right, Right::of($argr));
+    $lval = Either\either($left, $right, Left::of($argl));
 
     $this->assertEquals($lres, $lval);
     $this->assertEquals($rres, $rval);
@@ -125,11 +127,11 @@ class EitherTest extends \PHPUnit\Framework\TestCase
   {
     return [
       [
-        [Either\Right::of(3), Either\Left::of(0), Either\Left::of('foo')],
+        [Right::of(3), Left::of(0), Left::of('foo')],
         [0, 'foo'],
       ],
       [
-        [Either\Right::of('foo'), Either\Left::of('bar')],
+        [Right::of('foo'), Left::of('bar')],
         ['bar'],
       ],
     ];
@@ -148,8 +150,8 @@ class EitherTest extends \PHPUnit\Framework\TestCase
   public function fromLeftProvider()
   {
     return [
-      [Either\Left::of(2), null, 2],
-      [Either\Right::of('foo'), 'undefined', 'undefined'],
+      [Left::of(2), null, 2],
+      [Right::of('foo'), 'undefined', 'undefined'],
     ];
   }
 
@@ -166,8 +168,8 @@ class EitherTest extends \PHPUnit\Framework\TestCase
   public function fromRightProvider()
   {
     return [
-      [Either\Left::of(2), 0, 0],
-      [Either\Right::of('foo'), null, 'foo'],
+      [Left::of(2), 0, 0],
+      [Right::of('foo'), null, 'foo'],
     ];
   }
 
@@ -185,11 +187,11 @@ class EitherTest extends \PHPUnit\Framework\TestCase
   {
     return [
       [
-        [Either\Left::of(2), Either\Right::of('foo'), Either\Left::of(9)],
+        [Left::of(2), Right::of('foo'), Left::of(9)],
         ['left' => [2, 9], 'right' => ['foo']],
       ],
       [
-        [Either\Right::of(2), Either\Right::of('foo'), Either\Left::of(9)],
+        [Right::of(2), Right::of('foo'), Left::of(9)],
         ['left' => [9], 'right' => [2, 'foo']],
       ],
     ];
@@ -204,25 +206,5 @@ class EitherTest extends \PHPUnit\Framework\TestCase
 
     $this->assertEquals($res, $partitioned);
     $this->assertTrue(f\keysExist($partitioned, 'left', 'right'));
-  }
-
-  public function liftProvider()
-  {
-    return [
-      [
-        function ($fst, $snd) {
-          return $fst / $snd;
-        },
-        0,
-        [null, 3],
-      ],
-      [
-        function ($fst) {
-          return $fst ** 2;
-        },
-        1,
-        [null],
-      ],
-    ];
   }
 }

@@ -10,7 +10,7 @@
 
 namespace Chemem\Bingo\Functional\Immutable;
 
-use Chemem\Bingo\Functional\Algorithms as A;
+use Chemem\Bingo\Functional as A;
 use Chemem\Bingo\Functional\Common\Traits\TransientMutator as Transient;
 
 class Collection implements

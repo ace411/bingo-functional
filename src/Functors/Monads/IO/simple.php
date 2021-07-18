@@ -12,7 +12,7 @@
 namespace Chemem\Bingo\Functional\Functors\Monads\IO;
 
 use Chemem\Bingo\Functional\Functors\Monads\Monad;
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional as f;
 
 const IO = __NAMESPACE__ . '\\IO';
 

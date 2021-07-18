@@ -10,7 +10,7 @@
 
 namespace Chemem\Bingo\Functional\Tests;
 
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional as f;
 use Chemem\Bingo\Functional\Functors\Lens as l;
 use Chemem\Bingo\Functional\Functors\Monads as m;
 use Chemem\Bingo\Functional\PatternMatching as p;
@@ -55,34 +55,40 @@ const getClassShortName = __NAMESPACE__ . '\\getClassShortName';
 function assertEquals($fst, $snd, $env = null): bool
 {
   return p\patternMatch([
-    '["Maybe", "Maybe"]'          => function () use ($fst, $snd) {
+    '["Maybe", "Maybe"]'                      => function () use ($fst, $snd) {
       return $fst->getJust() == $snd->getJust();
     },
-    '["Either", "Either"]'        => function () use ($fst, $snd) {
+    '["Either", "Either"]'                    => function () use ($fst, $snd) {
       return $fst->isLeft() == $snd->isLeft() || $fst->isRight() == $fst->isRight();
     },
-    '["ListMonad", "ListMonad"]'  => function () use ($fst, $snd) {
+    '["ListMonad", "ListMonad"]'              => function () use ($fst, $snd) {
       return $fst->extract() == $snd->extract();
     },
-    '["IO", "IO"]'                => function () use ($fst, $snd) {
+    '["IO", "IO"]'                            => function () use ($fst, $snd) {
       return $fst->exec() == $snd->exec();
     },
-    '["Reader", "Reader"]'        => function () use ($fst, $snd, $env) {
+    '["Reader", "Reader"]'                    => function () use ($fst, $snd, $env) {
       return $fst->run($env) == $snd->run($env);
     },
-    '["State", "State"]'          => function () use ($fst, $snd, $env) {
+    '["State", "State"]'                      => function () use ($fst, $snd, $env) {
       return $fst->run($env) == $snd->run($env);
     },
-    '["Writer", "Writer"]'        => function () use ($fst, $snd) {
+    '["Writer", "Writer"]'                    => function () use ($fst, $snd) {
       return $fst->run() == $snd->run();
     },
-    '["Applicative", "Applicative"]' => function () use ($fst, $snd) {
+    '["Applicative", "Applicative"]'          => function () use ($fst, $snd) {
       return $fst->getValue() == $snd->getValue();
     },
-    '["Collection", "Collection"]' => function () use ($fst, $snd) {
+    '["Collection", "Collection"]'            => function () use ($fst, $snd) {
       return $fst->toArray() == $snd->toArray();
     },
-    '_'                           => function () {
+    '["ConstantFunctor", "ConstantFunctor"]'  => function () use ($fst, $snd) {
+      return $fst->getValue() == $snd->getValue();
+    },
+    '["IdentityFunctor", "IdentityFunctor"]'  => function () use ($fst, $snd) {
+      return $fst->getValue() == $snd->getValue();
+    },
+    '_'                                       => function () {
       return false;
     },
   ], f\map(getClassShortName, [$fst, $snd]));

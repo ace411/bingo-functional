@@ -5,8 +5,8 @@ namespace Chemem\Bingo\Functional\Tests\Functors\Monads;
 \error_reporting(0);
 
 use Eris\Generator;
-use Chemem\Bingo\Functional\Functors\Applicatives\Applicative as Ap;
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional\Functors\Applicative as Ap;
+use Chemem\Bingo\Functional as f;
 use Chemem\Bingo\Functional\Tests as t;
 
 class ApplicativeTest extends \PHPUnit\Framework\TestCase

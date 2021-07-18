@@ -2,7 +2,7 @@
 
 namespace Chemem\Bingo\Functional\Tests\Algorithms;
 
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional as f;
 
 class FillTest extends \PHPUnit\Framework\TestCase
 {

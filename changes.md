@@ -490,6 +490,10 @@
 
 ## v2.0.0
 
+- Renamed namespace `Chemem\Bingo\Functional\Algorithms` to `Chemem\Bingo\Functional`
+
+- Moved `Maybe` and `Either` monad artifacts into `Chemem\Bingo\Functional\Functors\Monads` namespace
+
 - Modified functions
 
 - Modified pattern matching primitives
@@ -506,7 +510,7 @@
 
 - Modified List and Writer monads
 
-- Added `Functor`, `Monad`, and `Applicable` interfaces
+- Added `Functor`, `ApplicativeFunctor`, and `Monad` interfaces
 
 - Modified `intersects()` function on immutable Collection
 

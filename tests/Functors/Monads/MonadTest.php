@@ -2,11 +2,11 @@
 
 namespace Chemem\Bingo\Functional\Tests\Functors\Monads;
 
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional as f;
 use Chemem\Bingo\Functional\Functors\Monads as m;
-use Chemem\Bingo\Functional\Functors\Maybe\Maybe;
-use Chemem\Bingo\Functional\Functors\Either\Right;
-use Chemem\Bingo\Functional\Functors\Maybe\Just;
+use Chemem\Bingo\Functional\Functors\Monads\Maybe;
+use Chemem\Bingo\Functional\Functors\Monads\Right;
+use Chemem\Bingo\Functional\Functors\Monads\Just;
 
 class MonadTest extends \PHPUnit\Framework\TestCase
 {

@@ -11,11 +11,11 @@
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
 use Chemem\Bingo\Functional\Functors\Functor;
-use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+use Chemem\Bingo\Functional\Functors\ApplicativeFunctor;
 
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional as f;
 
-class ListMonad implements Monad, Functor, Applicable
+class ListMonad implements Monad, Functor, ApplicativeFunctor
 {
   public const of = __CLASS__ . '::of';
 
@@ -48,7 +48,7 @@ class ListMonad implements Monad, Functor, Applicable
   /**
    * {@inheritdoc}
    */
-  public function ap(Applicable $list): Applicable
+  public function ap(ApplicativeFunctor $list): ApplicativeFunctor
   {
     return $list->map(...$this->extract());
   }

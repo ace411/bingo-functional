@@ -11,11 +11,11 @@
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
 use Chemem\Bingo\Functional\Functors\Functor;
-use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+use Chemem\Bingo\Functional\Functors\ApplicativeFunctor;
 
-use function Chemem\Bingo\Functional\Algorithms\constantFunction;
+use function Chemem\Bingo\Functional\constantFunction;
 
-class IO implements Monad, Functor, Applicable
+class IO implements Monad, Functor, ApplicativeFunctor
 {
   public const of = __CLASS__ . '::of';
 
@@ -52,7 +52,7 @@ class IO implements Monad, Functor, Applicable
   /**
    * {@inheritDoc}
    */
-  public function ap(Applicable $app): Applicable
+  public function ap(ApplicativeFunctor $app): ApplicativeFunctor
   {
     return $app->map($this->exec());
   }

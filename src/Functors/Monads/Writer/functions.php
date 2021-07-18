@@ -11,7 +11,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads\Writer;
 
-use Chemem\Bingo\Functional\Algorithms as A;
+use Chemem\Bingo\Functional as A;
 use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
 const writer = __NAMESPACE__ . '\\writer';

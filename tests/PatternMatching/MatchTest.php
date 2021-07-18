@@ -2,7 +2,7 @@
 
 namespace Chemem\Bingo\Functional\Tests\PatternMatching;
 
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional as f;
 use Chemem\Bingo\Functional\Functors\Monads\IO;
 use Chemem\Bingo\Functional\PatternMatching as p;
 

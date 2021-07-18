@@ -11,7 +11,7 @@
 namespace Chemem\Bingo\Functional\Functors\Monads\ListMonad;
 
 use Chemem\Bingo\Functional\Functors\Monads\Monad;
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional as f;
 
 const fromValue = __NAMESPACE__ . '\\fromValue';
 

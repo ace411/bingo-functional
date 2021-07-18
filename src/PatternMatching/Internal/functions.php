@@ -10,8 +10,9 @@
 
 namespace Chemem\Bingo\Functional\PatternMatching\Internal;
 
-use Chemem\Bingo\Functional\Algorithms as f;
-use Chemem\Bingo\Functional\Functors\Maybe;
+use Chemem\Bingo\Functional as f;
+use Chemem\Bingo\Functional\Functors\Monads\Maybe;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
 const consPatternCount = __NAMESPACE__ . '\\consPatternCount';
 
@@ -315,8 +316,8 @@ function filterMaybeN(
     $default,
     $success,
     // apply multiple filters to Maybe type
-    f\fold(function (Maybe\Maybe $maybe, callable $filter) {
+    f\fold(function (Monad $maybe, callable $filter) {
       return $maybe->filter($filter);
-    }, $filters, Maybe\Maybe::just($value))
+    }, $filters, Maybe::just($value))
   );
 }

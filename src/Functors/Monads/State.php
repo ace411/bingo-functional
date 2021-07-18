@@ -11,9 +11,9 @@
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
 use Chemem\Bingo\Functional\Functors\Functor;
-use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+use Chemem\Bingo\Functional\Functors\ApplicativeFunctor;
 
-class State implements Monad, Functor, Applicable
+class State implements Monad, Functor, ApplicativeFunctor
 {
   public const of = __CLASS__ . '::of';
 
@@ -51,7 +51,7 @@ class State implements Monad, Functor, Applicable
   /**
    * {@inheritDoc}
    */
-  public function ap(Applicable $monad): Applicable
+  public function ap(ApplicativeFunctor $monad): ApplicativeFunctor
   {
     return $this->bind(function ($function) use ($monad) {
       return $monad->map($function);

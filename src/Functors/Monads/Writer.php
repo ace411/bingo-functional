@@ -11,11 +11,11 @@
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
 use Chemem\Bingo\Functional\Functors\Functor;
-use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+use Chemem\Bingo\Functional\Functors\ApplicativeFunctor;
 
-use function Chemem\Bingo\Functional\Algorithms\extend;
+use function Chemem\Bingo\Functional\extend;
 
-class Writer implements Monad, Functor, Applicable
+class Writer implements Monad, Functor, ApplicativeFunctor
 {
   public const of = __CLASS__ . '::of';
 
@@ -50,7 +50,7 @@ class Writer implements Monad, Functor, Applicable
   /**
    * {@inheritDoc}
    */
-  public function ap(Applicable $app): Applicable
+  public function ap(ApplicativeFunctor $app): ApplicativeFunctor
   {
     return $this->bind(function ($function) use ($app) {
       return $app->map($function);

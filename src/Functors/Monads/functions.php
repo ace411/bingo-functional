@@ -10,7 +10,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional as f;
 
 const mcompose = __NAMESPACE__ . '\\mcompose';
 

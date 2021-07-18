@@ -11,7 +11,7 @@
 namespace Chemem\Bingo\Functional\PatternMatching;
 
 use Chemem\Bingo\Functional\PatternMatching\Internal as i;
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional as f;
 use FunctionalPHP\PatternMatching as p;
 
 const cmatch = __NAMESPACE__ . '\\cmatch';
