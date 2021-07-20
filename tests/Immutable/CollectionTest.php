@@ -4,9 +4,9 @@ namespace Chemem\Bingo\Functional\Tests\Immutable;
 
 \error_reporting(0);
 
-use \Eris\Generator;
+use Eris\Generator;
 
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional as f;
 use Chemem\Bingo\Functional\Immutable\Collection;
 use function Chemem\Bingo\Functional\Tests\functorLaws;
 
@@ -48,9 +48,9 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\names(),
-            Generator\string()
+        Generator\tuple(
+          Generator\names(),
+          Generator\string()
         )
       )
       ->then(function ($list) {
@@ -69,15 +69,16 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\names(),
-            Generator\string()
+        Generator\tuple(
+          Generator\names(),
+          Generator\string()
         )
       )
       ->then(function ($list) {
         $lst = Collection::from($list)->flatMap('strtoupper');
 
-        $this->assertIsArray($lst);
+        // $this->assertIsArray($lst);
+        $this->assertTrue(\is_array($lst));
         $this->assertEquals(f\map('strtoupper', $list), $lst);
         $this->assertEquals(\count($list), \count($lst));
       });
@@ -90,9 +91,9 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\names(),
-            Generator\string()
+        Generator\tuple(
+          Generator\names(),
+          Generator\string()
         )
       )
       ->then(function ($list) {
@@ -102,7 +103,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(f\filter('is_string', $list), $lst->toArray());
       });
   }
-  
+
   /**
    * @test
    */
@@ -110,9 +111,9 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\names(),
-            Generator\string()
+        Generator\tuple(
+          Generator\names(),
+          Generator\string()
         )
       )
       ->then(function ($list) {
@@ -130,15 +131,16 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\names(),
-            Generator\string()
+        Generator\tuple(
+          Generator\names(),
+          Generator\string()
         )
       )
       ->then(function ($list) {
         $any = Collection::from($list)->any('is_string');
 
-        $this->assertIsBool($any);
+        // $this->assertIsBool($any);
+        $this->assertTrue(\is_bool($any));
       });
   }
 
@@ -149,15 +151,16 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\names(),
-            Generator\string()
+        Generator\tuple(
+          Generator\names(),
+          Generator\string()
         )
       )
       ->then(function ($list) {
         $every = Collection::from($list)->every('is_string');
 
-        $this->assertIsBool($every);
+        // $this->assertIsBool($every);
+        $this->assertTrue(\is_bool($every));
       });
   }
 
@@ -168,12 +171,12 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\names(),
-            Generator\names(),
-            Generator\names()
+        Generator\tuple(
+          Generator\names(),
+          Generator\names(),
+          Generator\names()
         ),
-          Generator\constant('')
+        Generator\constant('')
       )
       ->then(function ($list, $acc) {
         $names = Collection::from($list)
@@ -194,13 +197,13 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\names(),
-            Generator\int()
+        Generator\tuple(
+          Generator\names(),
+          Generator\int()
         ),
-          Generator\tuple(
-            Generator\float(),
-            Generator\string()
+        Generator\tuple(
+          Generator\float(),
+          Generator\string()
         )
       )
       ->then(function ($fst, $snd) {
@@ -219,15 +222,15 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\names(),
-            Generator\int()
+        Generator\tuple(
+          Generator\names(),
+          Generator\int()
         ),
-          Generator\tuple(
-            Generator\float()
+        Generator\tuple(
+          Generator\float()
         ),
-          Generator\tuple(
-            Generator\string()
+        Generator\tuple(
+          Generator\string()
         )
       )
       ->then(function ($fst, $snd, $thd) {
@@ -247,10 +250,10 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\string(),
-            Generator\int(),
-            Generator\float()
+        Generator\tuple(
+          Generator\string(),
+          Generator\int(),
+          Generator\float()
         )
       )
       ->then(function ($list) {
@@ -269,10 +272,10 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\string(),
-            Generator\int(),
-            Generator\float()
+        Generator\tuple(
+          Generator\string(),
+          Generator\int(),
+          Generator\float()
         )
       )
       ->then(function ($list) {
@@ -290,12 +293,12 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\int(),
-            Generator\float(),
-            Generator\string()
+        Generator\tuple(
+          Generator\int(),
+          Generator\float(),
+          Generator\string()
         ),
-          Generator\constant('foo')
+        Generator\constant('foo')
       )
       ->then(function ($list, $const) {
         $lst = Collection::from($list)->fill($const, 1, 2);
@@ -303,9 +306,9 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(3, $lst->getSize());
         $this->assertInstanceOf(Collection::class, $lst);
         $this->assertEquals(
-              f\extend([f\head($list)], [$const], [$const]),
-              $lst->toArray()
-          );
+          f\extend([f\head($list)], [$const], [$const]),
+          $lst->toArray()
+        );
       });
   }
 
@@ -316,26 +319,25 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\associative([
+        Generator\tuple(
+          Generator\associative([
             'num'   => Generator\constant(35),
             'name'  => Generator\constant('Durant'),
           ]),
-            Generator\associative([
+          Generator\associative([
             'num'   => Generator\constant(6),
             'name'  => Generator\constant('LeBron'),
           ])
         ),
-          Generator\elements('num', 'name')
+        Generator\elements('num', 'name')
       )
       ->then(function ($list, $key) {
         $lst = Collection::from($list)->fetch($key);
 
         $this->assertInstanceOf(Collection::class, $lst);
         $this->assertTrue(
-              $lst->toArray() == [35, 6] ||
-          $lst->toArray() == ['Durant', 'LeBron']
-          );
+          $lst->toArray() == [35, 6] || $lst->toArray() == ['Durant', 'LeBron']
+        );
       });
   }
 
@@ -346,17 +348,19 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\constant('lib'),
-            Generator\int(),
-            Generator\names()
+        Generator\tuple(
+          Generator\constant('lib'),
+          Generator\int(),
+          Generator\names()
         )
       )
       ->then(function ($list) {
         $lst = Collection::from($list);
 
-        $this->assertIsBool($lst->contains('lib'));
-        $this->assertIsBool($lst->contains('bingo_functional'));
+        // $this->assertIsBool($lst->contains('lib'));
+        $this->assertTrue(\is_bool($lst->contains('lib')));
+        // $this->assertIsBool($lst->contains('bingo_functional'));
+        $this->assertTrue(\is_bool($lst->contains('bingo_functional')));
       });
   }
 
@@ -367,10 +371,10 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\constant('foo'),
-            Generator\constant('foo'),
-            Generator\float()
+        Generator\tuple(
+          Generator\constant('foo'),
+          Generator\constant('foo'),
+          Generator\float()
         )
       )
       ->then(function ($list) {
@@ -388,16 +392,17 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\constant('foo'),
-            Generator\constant('bar'),
-            Generator\constant('baz')
+        Generator\tuple(
+          Generator\constant('foo'),
+          Generator\constant('bar'),
+          Generator\constant('baz')
         )
       )
       ->then(function ($list) {
         $str = Collection::from($list)->implode(':');
 
-        $this->assertIsString($str);
+        // $this->assertIsString($str);
+        $this->assertTrue(\is_string($str));
         $this->assertEquals('foo:bar:baz', $str);
       });
   }
@@ -409,9 +414,9 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\constant('foo'),
-            Generator\int()
+        Generator\tuple(
+          Generator\constant('foo'),
+          Generator\int()
         )
       )
       ->then(function ($list) {
@@ -428,9 +433,9 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\int(),
-            Generator\constant('foo')
+        Generator\tuple(
+          Generator\int(),
+          Generator\constant('foo')
         )
       )
       ->then(function ($list) {
@@ -447,10 +452,10 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\int(),
-            Generator\string(),
-            Generator\float()
+        Generator\tuple(
+          Generator\int(),
+          Generator\string(),
+          Generator\float()
         )
       )
       ->then(function ($list) {
@@ -469,20 +474,21 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\tuple(
-            Generator\int(),
-            Generator\names()
+        Generator\tuple(
+          Generator\int(),
+          Generator\names()
         ),
-          Generator\tuple(
-            Generator\string(),
-            Generator\int()
+        Generator\tuple(
+          Generator\string(),
+          Generator\int()
         )
       )
       ->then(function ($fst, $snd) {
         $intersects = Collection::from($fst)
           ->intersects(Collection::from($snd));
 
-        $this->assertIsBool($intersects);
+        // $this->assertIsBool($intersects);
+        $this->assertTrue(\is_bool($intersects));
       });
   }
 }

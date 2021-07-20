@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Functors\Monads\IO;
 
 use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
-use function Chemem\Bingo\Functional\Algorithms\identity;
+use function Chemem\Bingo\Functional\identity;
 
 const readFile = __NAMESPACE__ . '\\readFile';
 

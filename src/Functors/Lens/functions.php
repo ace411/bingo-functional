@@ -16,64 +16,9 @@
 namespace Chemem\Bingo\Functional\Functors\Lens;
 
 use Chemem\Bingo\Functional\Functors\Functor;
-
-use Chemem\Bingo\Functional\Algorithms as f;
-
-const _const = __NAMESPACE__ . '\\_const';
-
-/**
- * _const
- * creates a constant functor (Const)
- *
- * _const :: a -> f a
- *
- * @param mixed $entity
- * @return object
- */
-function _const($entity)
-{
-  return new class($entity) implements Functor {
-    public $val;
-
-    public function __construct($val)
-    {
-      $this->val = $val;
-    }
-
-    public function map(callable $func): Functor
-    {
-      return $this;
-    }
-  };
-}
-
-const _identity = __NAMESPACE__ . '\\_identity';
-
-/**
- * _identity
- * creates an identity functor (Identity)
- *
- * _identity :: a -> f a
- *
- * @param mixed $entity
- * @return object
- */
-function _identity($entity)
-{
-  return new class($entity) implements Functor {
-    public $val;
-
-    public function __construct($val)
-    {
-      $this->val = $val;
-    }
-
-    public function map(callable $function): Functor
-    {
-      return new static($function($this->val));
-    }
-  };
-}
+use Chemem\Bingo\Functional as f;
+use Chemem\Bingo\Functional\Functors\ConstantFunctor;
+use Chemem\Bingo\Functional\Functors\IdentityFunctor;
 
 const lens = __NAMESPACE__ . '\\lens';
 
@@ -112,6 +57,7 @@ const lensFromKey = __NAMESPACE__ . '\\lensFromKey';
  *
  * lensFromKey :: a -> (b -> f b) -> [b] -> f b
  *
+ * @internal
  * @param mixed $key
  * @param callable $getter
  * @param mixed $list
@@ -159,9 +105,9 @@ const view = __NAMESPACE__ . '\\view';
  */
 function view(callable $lens, $store)
 {
-  $obj = $lens(_const)($store);
+  $obj = $lens(ConstantFunctor::of)($store);
 
-  return $obj->val;
+  return $obj->getValue();
 }
 
 const over = __NAMESPACE__ . '\\over';
@@ -181,10 +127,10 @@ function over(callable $lens, callable $operation, $store)
 {
   $obj = $lens(function ($res) use ($operation) {
     // transform value in lens context
-    return _identity($operation($res));
+    return IdentityFunctor::of($operation($res));
   })($store);
 
-  return $obj->val;
+  return $obj->getValue();
 }
 
 const set = __NAMESPACE__ . '\\set';

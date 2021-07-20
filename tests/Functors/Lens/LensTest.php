@@ -4,8 +4,8 @@ namespace Chemem\Bingo\Functional\Tests\Functors\Lens;
 
 \error_reporting(0);
 
-use \Eris\Generator;
-use Chemem\Bingo\Functional\Algorithms as f;
+use Eris\Generator;
+use Chemem\Bingo\Functional as f;
 use Chemem\Bingo\Functional\Functors\Lens as l;
 use Chemem\Bingo\Functional\Tests as t;
 

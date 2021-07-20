@@ -2,7 +2,7 @@
 
 /**
  * Internal pattern matching functions
- * 
+ *
  * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
@@ -10,8 +10,9 @@
 
 namespace Chemem\Bingo\Functional\PatternMatching\Internal;
 
-use Chemem\Bingo\Functional\Algorithms as f;
-use Chemem\Bingo\Functional\Functors\Maybe;
+use Chemem\Bingo\Functional as f;
+use Chemem\Bingo\Functional\Functors\Monads\Maybe;
+use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
 const consPatternCount = __NAMESPACE__ . '\\consPatternCount';
 
@@ -20,14 +21,14 @@ const consPatternCount = __NAMESPACE__ . '\\consPatternCount';
  * extracts number of items in cons pattern
  *
  * consPatternCount :: String -> [Int]
- * 
+ *
  * @internal
  * @param string $pattern
  * @return array
  * @example
- * 
+ *
  * consPatternCount('(x:xs:_)')
- * //=> ['(x:xs:_)' => 2]
+ * => ['(x:xs:_)' => 2]
  */
 function consPatternCount(string $pattern): array
 {
@@ -58,14 +59,14 @@ const consEachCount = __NAMESPACE__ . '\\consEachCount';
  * gets cons count for each pattern in list
  *
  * consEachCount :: [String] -> [Int]
- * 
+ *
  * @internal
  * @param array $cons
  * @return array
  * @example
- * 
+ *
  * consEachCount(['(x:xs:_)', '(x:_)'])
- * //=> ['(x:xs:_)' => 2, '(x:_)' => 1]
+ * => ['(x:xs:_)' => 2, '(x:_)' => 1]
  */
 function consEachCount(array $cons): array
 {
@@ -87,16 +88,16 @@ const filterMatch = __NAMESPACE__ . '\\filterMatch';
  * filterMatch
  * validates cons list and computes cons counts on success; returns
  * an empty array otherwise
- * 
+ *
  * filterMatch :: [String] -> [Int]
  *
  * @internal
  * @param array $patterns
  * @return array
  * @example
- * 
+ *
  * filterMatch()
- * //=>
+ * =>
  */
 function filterMatch(array $patterns): array
 {
@@ -112,7 +113,7 @@ const execConsMatch = __NAMESPACE__ . '\\execConsMatch';
 /**
  * execConsMatch
  * executes cons pattern match
- * 
+ *
  * execConsMatch :: [(a -> b)] -> [Int] -> [a] -> b
  *
  * @internal
@@ -121,7 +122,7 @@ const execConsMatch = __NAMESPACE__ . '\\execConsMatch';
  * @param array $values
  * @return mixed
  * @example
- * 
+ *
  * execConsMatch(
  *  [
  *    '(x:_)' => fn ($x) => $x + 10,
@@ -130,7 +131,7 @@ const execConsMatch = __NAMESPACE__ . '\\execConsMatch';
  *  ['(x:_)' => 1, '_' => 0],
  *  [3]
  * )
- * //=> 13
+ * => 13
  */
 function execConsMatch(
   array $patterns,
@@ -159,18 +160,18 @@ const matchString = __NAMESPACE__ . '\\matchString';
  * executes string, integer, and float pattern matches
  *
  * matchString :: [(a -> b)] -> a -> b
- * 
+ *
  * @internal
  * @param array $patterns
  * @param mixed $input
  * @return mixed
  * @example
- * 
+ *
  * matchString([
  *  '"12"' => fn () => 'exact',
  *  '_' => fn () => 'undef'
  * ], 12)
- * //=> 'exact' 
+ * => 'exact'
  */
 function matchString(array $patterns, $input)
 {
@@ -203,18 +204,18 @@ const matchObject = __NAMESPACE__ . '\\matchObject';
  * executes explicit object pattern matches
  *
  * matchObject :: [(a -> b)] -> a -> b
- * 
+ *
  * @internal
  * @param array $patterns
  * @param object $input
  * @return mixed
  * @example
- * 
+ *
  * matchObject([
  *  stdClass::class => fn () => 'exact',
  *  '_' => fn () => 'undef'
  * ], new stdClass(12))
- * //=> 'exact'
+ * => 'exact'
  */
 function matchObject(array $patterns, $input)
 {
@@ -232,7 +233,7 @@ const execTypeMatch = __NAMESPACE__ . '\\execTypeMatch';
 /**
  * execTypeMatch
  * uses arbitrary comparator in pattern matching operations
- * 
+ *
  * execTypeMatch :: [(a -> b)] -> a -> (a -> c -> Bool) -> b
  *
  * @internal
@@ -265,7 +266,7 @@ const baseFilter = __NAMESPACE__ . '\\baseFilter';
 /**
  * baseFilter
  * template for pattern structure checks
- * 
+ *
  * baseFilter :: [(a -> b)] -> ([(a -> b)] -> [c]) -> [c]
  *
  * @internal
@@ -295,7 +296,7 @@ const filterMaybeN = __NAMESPACE__ . '\\filterMaybeN';
 /**
  * filterMaybeN
  * performs Maybe monad case analysis with multiple filter predicates
- * 
+ *
  * filterMaybeN :: b -> a -> (a -> b) -> [(a -> Bool)] -> b
  *
  * @internal
@@ -315,8 +316,8 @@ function filterMaybeN(
     $default,
     $success,
     // apply multiple filters to Maybe type
-    f\fold(function (Maybe\Maybe $maybe, callable $filter) {
+    f\fold(function (Monad $maybe, callable $filter) {
       return $maybe->filter($filter);
-    }, $filters, Maybe\Maybe::just($value))
+    }, $filters, Maybe::just($value))
   );
 }

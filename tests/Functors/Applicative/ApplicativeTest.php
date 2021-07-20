@@ -4,9 +4,9 @@ namespace Chemem\Bingo\Functional\Tests\Functors\Monads;
 
 \error_reporting(0);
 
-use \Eris\Generator;
-use Chemem\Bingo\Functional\Functors\Applicatives\Applicative as Ap;
-use Chemem\Bingo\Functional\Algorithms as f;
+use Eris\Generator;
+use Chemem\Bingo\Functional\Functors\Applicative as Ap;
+use Chemem\Bingo\Functional as f;
 use Chemem\Bingo\Functional\Tests as t;
 
 class ApplicativeTest extends \PHPUnit\Framework\TestCase
@@ -20,7 +20,7 @@ class ApplicativeTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\choose(1, 80)
+        Generator\choose(1, 80)
       )
       ->then(function ($input) {
         $app = Ap\pure(f\identity);
@@ -44,7 +44,7 @@ class ApplicativeTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\string()
+        Generator\string()
       )
       ->then(function ($input) {
         $app = Ap::of($input);

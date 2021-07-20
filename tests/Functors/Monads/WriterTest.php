@@ -4,9 +4,9 @@ namespace Chemem\Bingo\Functional\Tests\Functors\Monads;
 
 \error_reporting(0);
 
-use \Eris\Generator;
+use Eris\Generator;
 use Chemem\Bingo\Functional\Functors\Monads\Writer;
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional as f;
 use Chemem\Bingo\Functional\Tests as t;
 
 class WriterTest extends \PHPUnit\Framework\TestCase
@@ -48,7 +48,7 @@ class WriterTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\int()
+        Generator\int()
       )
       ->then(function ($input) {
         $writer = Writer::of($input);

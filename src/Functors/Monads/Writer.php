@@ -11,13 +11,13 @@
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
 use Chemem\Bingo\Functional\Functors\Functor;
-use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+use Chemem\Bingo\Functional\Functors\ApplicativeFunctor;
 
-use function Chemem\Bingo\Functional\Algorithms\extend;
+use function Chemem\Bingo\Functional\extend;
 
-class Writer implements Monad, Functor, Applicable
+class Writer implements Monad, Functor, ApplicativeFunctor
 {
-  const of = __CLASS__ . '::of';
+  public const of = __CLASS__ . '::of';
 
   /**
    * @property callable $action Writer monad action
@@ -32,7 +32,7 @@ class Writer implements Monad, Functor, Applicable
   /**
    * of
    * puts result and output in Writer monad
-   * 
+   *
    * of :: a -> w -> Writer (a, w)
    *
    * @static of
@@ -50,7 +50,7 @@ class Writer implements Monad, Functor, Applicable
   /**
    * {@inheritDoc}
    */
-  public function ap(Applicable $app): Applicable
+  public function ap(ApplicativeFunctor $app): ApplicativeFunctor
   {
     return $this->bind(function ($function) use ($app) {
       return $app->map($function);
@@ -85,7 +85,7 @@ class Writer implements Monad, Functor, Applicable
   /**
    * run
    * unwraps Writer monad revealing result and output data
-   * 
+   *
    * run :: Writer a w => (a, w)
    *
    * @return array

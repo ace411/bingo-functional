@@ -10,8 +10,8 @@
 
 namespace Chemem\Bingo\Functional\Immutable;
 
-use \Chemem\Bingo\Functional\Algorithms as A;
-use \Chemem\Bingo\Functional\Common\Traits\TransientMutator as Transient;
+use Chemem\Bingo\Functional as A;
+use Chemem\Bingo\Functional\Common\Traits\TransientMutator as Transient;
 
 class Collection implements
   \JsonSerializable,
@@ -249,6 +249,7 @@ class Collection implements
     for ($idx = 0; $idx < $size; $idx += 1) {
       if ($func($list[$idx])) {
         $result = true;
+
         break;
       }
     }
@@ -282,7 +283,7 @@ class Collection implements
    * unwraps collection - revealing list inside of it
    *
    * getList :: Collection => c [a] -> [a]
-   * 
+   *
    * @return SplFixedArray $list
    */
   public function getList(): \SplFixedArray
@@ -302,9 +303,9 @@ class Collection implements
   /**
    * getSize
    * returns list size
-   * 
+   *
    * getSize :: Collection => c [a] -> Int
-   * 
+   *
    * @return int
    */
   public function getSize(): int

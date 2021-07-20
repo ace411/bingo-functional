@@ -4,10 +4,12 @@ namespace Chemem\Bingo\Functional\Tests\Functors\Maybe;
 
 \error_reporting(0);
 
-use \Eris\Generator;
+use Eris\Generator;
 use Chemem\Bingo\Functional\Tests as t;
-use Chemem\Bingo\Functional\Functors\Maybe;
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional\Functors\Monads\Maybe;
+use Chemem\Bingo\Functional\Functors\Monads\Just;
+use Chemem\Bingo\Functional\Functors\Monads\Nothing;
+use Chemem\Bingo\Functional as f;
 
 class MaybeTest extends \PHPUnit\Framework\TestCase
 {
@@ -20,11 +22,11 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\int(),
-          Generator\bool()
+        Generator\int(),
+        Generator\bool()
       )
       ->then(function ($val, bool $just) {
-        $maybe = Maybe\Maybe::fromValue($val, $just ? null : $val);
+        $maybe = Maybe::fromValue($val, $just ? null : $val);
 
         $fnx = function ($res) {
           return $res ** 2;
@@ -47,38 +49,38 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
   {
     $this
       ->forAll(
-          Generator\names(),
-          Generator\bool()
+        Generator\names(),
+        Generator\bool()
       )
       ->then(function ($res, bool $just) {
-        $maybe  = Maybe\Maybe::fromValue($res, $just ? null : $res);
+        $maybe  = Maybe::fromValue($res, $just ? null : $res);
         $fnx    = function ($str) use ($just) {
           $expr = f\concat(': ', 'name', $str); // memoize expression
 
-          return Maybe\Maybe::fromValue($expr, $just ? null : $expr);
+          return Maybe::fromValue($expr, $just ? null : $expr);
         };
 
         $fny    = function ($str) use ($just) {
           $expr = f\toWords($str, '/([\s:])+/');
 
-          return Maybe\Maybe::fromValue($expr, $just ? null : $expr);
+          return Maybe::fromValue($expr, $just ? null : $expr);
         };
 
         $this->assertEquals(
-              [
+          [
             'left-identity'   => true,
             'right-identity'  => true,
             'associativity'   => true,
           ],
-              t\monadLaws(
-              $maybe,
-              $fnx,
-              $fny,
+          t\monadLaws(
+            $maybe,
+            $fnx,
+            $fny,
             // test both Just and Nothing sub-types individually
-            $just ? Maybe\Just::of : Maybe\Nothing::of,
-              $just ? $res : ''
+            $just ? Just::of : Nothing::of,
+            $just ? $res : ''
           )
-          );
+        );
       });
   }
 
@@ -105,8 +107,8 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
     [$resj, $resn] = $res;
     $maybe         = f\partial(Maybe\maybe, $def, $func);
 
-    $just    = $maybe(Maybe\Maybe::fromValue($argj));
-    $nothing = $maybe(Maybe\Maybe::fromValue($argn));
+    $just    = $maybe(Maybe::fromValue($argj));
+    $nothing = $maybe(Maybe::fromValue($argn));
 
     $this->assertEquals($resj, $just);
     $this->assertEquals($resn, $nothing);
@@ -129,12 +131,12 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
   public function testfromJustExtractsAnElementOutOfJustMonadAndThrowsExceptionOtherwise($val)
   {
     $maybe = f\toException(function ($val) {
-      return Maybe\fromJust(Maybe\Maybe::fromValue($val));
+      return Maybe\fromJust(Maybe::fromValue($val));
     });
 
     $this->assertTrue(
-            $maybe($val) == $val || $maybe($val) == 'Maybe.fromJust: Nothing'
-        );
+      $maybe($val) == $val || $maybe($val) == 'Maybe.fromJust: Nothing'
+    );
   }
 
   public function fromMaybeProvider()
@@ -151,7 +153,7 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
    */
   public function testfromMaybeExtractsJustValueFromMonadAndDefaultValueOtherwise($val, $def)
   {
-    $maybe = Maybe\fromMaybe($def, Maybe\Maybe::fromValue($val));
+    $maybe = Maybe\fromMaybe($def, Maybe::fromValue($val));
 
     $this->assertTrue($maybe == $val || $maybe == $def);
   }
@@ -163,7 +165,7 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
       [[], false],
     ];
   }
-  
+
   /**
    * @dataProvider listToMaybeProvider
    */
@@ -171,7 +173,7 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
   {
     $maybe = Maybe\listToMaybe($list);
 
-    $this->assertInstanceOf(Maybe\Maybe::class, $maybe);
+    $this->assertInstanceOf(Maybe::class, $maybe);
     $this->assertEquals($res, Maybe\isJust($maybe));
   }
 
@@ -185,9 +187,10 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
    */
   public function testmaybeToListReturnsEmptyListOrSingletonList($val, $res)
   {
-    $list = Maybe\maybeToList(Maybe\Maybe::fromValue($val));
+    $list = Maybe\maybeToList(Maybe::fromValue($val));
 
-    $this->assertIsArray($list);
+    // $this->assertIsArray($list);
+    $this->assertTrue(\is_array($list));
     $this->assertEquals($res, $list);
   }
 
@@ -195,11 +198,11 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
   {
     return [
       [
-        [Maybe\Maybe::fromValue(2), Maybe\Just::of('foo'), Maybe\Nothing::of(2)],
+        [Maybe::fromValue(2), Just::of('foo'), Nothing::of(2)],
         [2, 'foo'],
       ],
       [
-        [Maybe\Just::of('foo'), Maybe\Nothing::of(null), Maybe\Just::of(\range(1, 3))],
+        [Just::of('foo'), Nothing::of(null), Just::of(\range(1, 3))],
         ['foo', \range(1, 3)],
       ],
     ];
@@ -220,14 +223,14 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
     return [
       [
         function ($val) {
-          return Maybe\Maybe::fromValue($val ** 2);
+          return Maybe::fromValue($val ** 2);
         },
         \range(1, 3),
         [1, 4, 9],
       ],
       [
         function ($val) {
-          return Maybe\Maybe::fromValue(\strtoupper($val));
+          return Maybe::fromValue(\strtoupper($val));
         },
         ['foo', null, 'bar'],
         ['FOO', "", 'BAR'],
@@ -243,37 +246,5 @@ class MaybeTest extends \PHPUnit\Framework\TestCase
     $ret = Maybe\mapMaybe($func, $list);
 
     $this->assertEquals($res, $ret);
-  }
-  
-  public function liftProvider()
-  {
-    return [
-      [
-        function ($fst, $snd) {
-          return $fst / $snd;
-        },
-        [null, 3],
-      ],
-      [
-        function ($fst) {
-          return $fst ** 2;
-        },
-        [null],
-      ],
-    ];
-  }
-
-  /**
-   * @dataProvider liftProvider
-   */
-  public function testMaybeMonadIsLiftable($func, $args)
-  {
-    $lifted = Maybe\Maybe::lift($func);
-    $params = f\map(function ($arg) {
-      return Maybe\Maybe::fromValue($arg);
-    }, $args);
-
-    $this->assertInstanceOf(\Closure::class, $lifted);
-    $this->assertInstanceOf(Maybe\Maybe::class, $lifted(...$params));
   }
 }

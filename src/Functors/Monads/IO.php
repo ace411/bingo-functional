@@ -11,16 +11,16 @@
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
 use Chemem\Bingo\Functional\Functors\Functor;
-use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+use Chemem\Bingo\Functional\Functors\ApplicativeFunctor;
 
-use function Chemem\Bingo\Functional\Algorithms\constantFunction;
+use function Chemem\Bingo\Functional\constantFunction;
 
-class IO implements Monad, Functor, Applicable
+class IO implements Monad, Functor, ApplicativeFunctor
 {
-  const of = __CLASS__ . '::of';
+  public const of = __CLASS__ . '::of';
 
   /**
-   * @property callable $unsafe The unsafe operation to execute in an IO environment 
+   * @property callable $unsafe The unsafe operation to execute in an IO environment
    */
   private $unsafe;
 
@@ -39,7 +39,7 @@ class IO implements Monad, Functor, Applicable
    * puts value in IO context
    *
    * of :: a -> m a
-   * 
+   *
    * @static of
    * @param callable $unsafe
    * @return IO
@@ -52,7 +52,7 @@ class IO implements Monad, Functor, Applicable
   /**
    * {@inheritDoc}
    */
-  public function ap(Applicable $app): Applicable
+  public function ap(ApplicativeFunctor $app): ApplicativeFunctor
   {
     return $app->map($this->exec());
   }

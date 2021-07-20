@@ -11,7 +11,7 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads\Writer;
 
-use Chemem\Bingo\Functional\Algorithms as A;
+use Chemem\Bingo\Functional as A;
 use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
 const writer = __NAMESPACE__ . '\\writer';
@@ -61,7 +61,7 @@ const tell = __NAMESPACE__ . '\\tell';
 function tell($msg): Monad
 {
   $writer = __NAMESPACE__;
-  
+
   return new $writer(function () use ($msg) {
     return [null, [$msg]];
   });

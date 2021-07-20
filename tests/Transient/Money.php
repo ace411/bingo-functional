@@ -2,7 +2,7 @@
 
 namespace Chemem\Bingo\Functional\Tests\Transient;
 
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional as f;
 use Chemem\Bingo\Functional\Common\Traits\TransientMutator as Transient;
 
 class Money

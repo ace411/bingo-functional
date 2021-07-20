@@ -2,11 +2,11 @@
 
 namespace Chemem\Bingo\Functional\Tests\Functors\Monads;
 
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional as f;
 use Chemem\Bingo\Functional\Functors\Monads as m;
-use Chemem\Bingo\Functional\Functors\Maybe\Maybe;
-use Chemem\Bingo\Functional\Functors\Either\Right;
-use Chemem\Bingo\Functional\Functors\Maybe\Just;
+use Chemem\Bingo\Functional\Functors\Monads\Maybe;
+use Chemem\Bingo\Functional\Functors\Monads\Right;
+use Chemem\Bingo\Functional\Functors\Monads\Just;
 
 class MonadTest extends \PHPUnit\Framework\TestCase
 {
@@ -173,5 +173,35 @@ class MonadTest extends \PHPUnit\Framework\TestCase
 
     $this->assertTrue($filter instanceof m\Monad);
     $this->assertEquals($res, f\head($filter->run(null)));
+  }
+
+  public function liftMProvider()
+  {
+    return [
+      [
+        [
+          f\K(function ($val) {
+            return $val ** 2;
+          }),
+          m\Reader::of(2),
+        ],
+        4,
+      ],
+      [
+        ['strtoupper', m\Writer::of('foo')],
+        ['FOO', []],
+      ],
+    ];
+  }
+
+  /**
+   * @dataProvider liftMProvider
+   */
+  public function testliftMPromotesFunctionToMonad($args, $res)
+  {
+    $lift = m\liftM(...$args);
+
+    $this->assertTrue($lift instanceof m\Monad);
+    $this->assertEquals($res, $lift->run(null));
   }
 }

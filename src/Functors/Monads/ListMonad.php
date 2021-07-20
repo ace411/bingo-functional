@@ -11,13 +11,13 @@
 namespace Chemem\Bingo\Functional\Functors\Monads;
 
 use Chemem\Bingo\Functional\Functors\Functor;
-use Chemem\Bingo\Functional\Functors\Applicatives\Applicable;
+use Chemem\Bingo\Functional\Functors\ApplicativeFunctor;
 
-use Chemem\Bingo\Functional\Algorithms as f;
+use Chemem\Bingo\Functional as f;
 
-class ListMonad implements Monad, Functor, Applicable
+class ListMonad implements Monad, Functor, ApplicativeFunctor
 {
-  const of = __CLASS__ . '::of';
+  public const of = __CLASS__ . '::of';
 
   /**
    * @property callable $listop ListMonad operation
@@ -34,7 +34,7 @@ class ListMonad implements Monad, Functor, Applicable
    * puts value in ListMonad context
    *
    * of :: a -> ListMonad a
-   * 
+   *
    * @param mixed $val
    * @return Monad
    */
@@ -48,7 +48,7 @@ class ListMonad implements Monad, Functor, Applicable
   /**
    * {@inheritdoc}
    */
-  public function ap(Applicable $list): Applicable
+  public function ap(ApplicativeFunctor $list): ApplicativeFunctor
   {
     return $list->map(...$this->extract());
   }
@@ -73,7 +73,7 @@ class ListMonad implements Monad, Functor, Applicable
 
   /**
    * unwraps the List monad
-   * 
+   *
    * extract :: ListMonad m a => [a]
    *
    * @return array
@@ -86,8 +86,8 @@ class ListMonad implements Monad, Functor, Applicable
   /**
    * merge
    * internally merges lists
-   * 
-   * merge :: (a -> b) -> [b] -> m [a, b] 
+   *
+   * merge :: (a -> b) -> [b] -> m [a, b]
    *
    * @access private
    * @param callable $function

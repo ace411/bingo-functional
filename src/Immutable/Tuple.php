@@ -15,13 +15,13 @@ namespace Chemem\Bingo\Functional\Immutable;
 class Tuple implements \Countable, ImmutableDataStructure
 {
   use CommonTrait;
- 
+
   /**
    * fst
    * extracts the first component of a pair
-   * 
+   *
    * fst :: Tuple => Pair a b -> a
-   * 
+   *
    * @return mixed
    */
   public function fst()
@@ -34,7 +34,7 @@ class Tuple implements \Countable, ImmutableDataStructure
    * extracts the second component of a pair
    *
    * snd :: Tuple => Pair a b -> b
-   * 
+   *
    * @return mixed
    */
   public function snd()
@@ -45,7 +45,7 @@ class Tuple implements \Countable, ImmutableDataStructure
   /**
    * swap
    * swaps the components of a pair
-   * 
+   *
    * swap :: Tuple => Pair a b -> Pair b a
    *
    * @return Tuple
@@ -62,7 +62,7 @@ class Tuple implements \Countable, ImmutableDataStructure
   /**
    * get
    * returns item that matches specified index
-   * 
+   *
    * get :: Tuple => t [a] -> Int -> a
    *
    * @param int $index
@@ -85,7 +85,7 @@ class Tuple implements \Countable, ImmutableDataStructure
     if ($this->count() !== 2) {
       throw new TupleException(TupleException::PAIR_ERRMSG);
     }
-            
+
     return $this->get($index);
   }
 }
