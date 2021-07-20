@@ -7,7 +7,7 @@
 <span style="display:block;text-align:center;" align="center">
 
 [![Join the chat at https://gitter.im/bingo-functional/Lobby](https://badges.gitter.im/bingo-functional/Lobby.svg)](https://gitter.im/bingo-functional/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![Codacy Badge](https://api.codacy.com/project/badge/Grade/7c30c744fd0142d58dd210fd961ea842)](https://www.codacy.com/app/ace411/bingo-functional?utm_source=github.com&utm_medium=referral&utm_content=ace411/bingo-functional&utm_campaign=badger)
+[![StyleCI](https://github.styleci.io/repos/102261728/shield?branch=master)](https://github.styleci.io/repos/102261728?branch=master)
 ![bingo-functional CI](https://github.com/ace411/bingo-functional/workflows/bingo-functional%20CI/badge.svg)
 [![codecov](https://codecov.io/gh/ace411/bingo-functional/branch/master/graph/badge.svg)](https://codecov.io/gh/ace411/bingo-functional)
 [![Latest Stable Version](https://poser.pugx.org/chemem/bingo-functional/v/stable)](https://packagist.org/packages/chemem/bingo-functional)
