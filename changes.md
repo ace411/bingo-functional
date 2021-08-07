@@ -1,5 +1,9 @@
 # bingo-functional changes
 
+## v2.0.1
+
+- Modified `cmatch` function internals to better handle wildcard patterns
+
 ## v2.0.0
 
 - Renamed namespace `Chemem\Bingo\Functional\Algorithms` to `Chemem\Bingo\Functional`
