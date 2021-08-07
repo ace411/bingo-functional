@@ -145,9 +145,12 @@ function execConsMatch(
     }),
     // extract first element from list
     'array_keys',
-    f\head,
-    // extract executable function from pattern list
-    f\partialRight(f\partial(f\pluck, $patterns), '_')
+    // extract key that matches pattern
+    function ($keys) {
+      return empty($keys) ? '_' : f\head($keys);
+    },
+    // extract executable function that matches apt pattern in pattern list
+    f\partial(f\pluck, $patterns),
   );
 
   return $exec($cons)(...$values);

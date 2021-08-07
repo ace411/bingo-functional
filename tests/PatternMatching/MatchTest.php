@@ -26,6 +26,18 @@ class MatchTest extends \PHPUnit\Framework\TestCase
         [[4, 2], [12], []],
         [2, 6, 0],
       ],
+      [
+        [
+          '(x:_)' => function ($val) {
+            return $val ** 2;
+          },
+          '_' => function () {
+            return 'noop';
+          },
+        ],
+        [[3], [3, 4], []],
+        [9, 'noop', 'noop'],
+      ],
     ];
   }
 
