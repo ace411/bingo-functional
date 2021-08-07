@@ -150,7 +150,7 @@ function execConsMatch(
       return empty($keys) ? '_' : f\head($keys);
     },
     // extract executable function that matches apt pattern in pattern list
-    f\partial(f\pluck, $patterns),
+    f\partial(f\pluck, $patterns)
   );
 
   return $exec($cons)(...$values);
