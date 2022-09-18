@@ -12,6 +12,28 @@ namespace Chemem\Bingo\Functional\Functors\Monads;
 
 use Chemem\Bingo\Functional as f;
 
+const kleisli = __NAMESPACE__ . '\\kleisli';
+
+/**
+ * kleisli
+ * performs kleisli composition on functor and monadic functions
+ *
+ * kleisli :: (a -> m b) -> (a -> b) -> m a -> mb
+ *
+ * @param string $method
+ * @return callable
+ */
+function kleisli(string $method)
+{
+  return function (callable ...$fx) use ($method) {
+    return function ($obj) use ($method, $fx) {
+      return f\fold(function ($x, $f) use ($method) {
+        return $x->{$method}($f);
+      }, $fx, $obj);
+    };
+  };
+}
+
 const mcompose = __NAMESPACE__ . '\\mcompose';
 
 /**

@@ -10,6 +10,48 @@ use Chemem\Bingo\Functional\Functors\Monads\Just;
 
 class MonadTest extends \PHPUnit\Framework\TestCase
 {
+  public function kleisliProvider()
+  {
+    return [
+      [
+        'bind',
+        [
+          function ($x) {
+            return Maybe::fromValue($x + 2);
+          },
+          function ($x) {
+            return Maybe::fromValue($x ** 2);
+          },
+          function ($x) {
+            return Maybe::fromValue($x - 2);
+          }
+        ],
+        Maybe::fromValue(2),
+        14,
+      ],
+      [
+        'map',
+        ['strtolower', 'ucfirst'],
+        Maybe::fromValue('fOO'),
+        'Foo',
+      ],
+    ];
+  }
+
+  /**
+   * @dataProvider kleisliProvider
+   */
+  public function testkleisliPerformsKleisliCompositionOnFunctorAndMonadicFunctions(
+    $method,
+    $fx,
+    $obj,
+    $result
+  ) {
+    $kleisli = m\kleisli($method)(...$fx);
+
+    $this->assertEquals($result, $kleisli($obj)->getJust());
+  }
+
   public function bindProvider()
   {
     return [
