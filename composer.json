@@ -155,6 +155,7 @@
       "src/Functional/PartitionBy.php",
       "src/Functional/Assoc.php",
       "src/Functional/AssocPath.php",
+      "src/Functional/Page.php",
       "src/Functors/Lens/functions.php",
       "src/Functors/Monads/functions.php",
       "src/Functors/Monads/IO/files.php",
