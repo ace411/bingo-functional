@@ -30,7 +30,7 @@ function every($list, callable $func): bool
 {
   [$filterCount, $valCount] = fold(function ($acc, $val) use ($func) {
     [$fst, $snd] = $acc;
-    $fst = $fst + 1;
+    $fst         = $fst + 1;
 
     $snd += $func($val) ? 1 : 0;
 

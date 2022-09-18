@@ -29,7 +29,7 @@ function tail($list)
 {
   [, $final] = fold(function ($acc, $val) {
     [$count, $lst] = $acc;
-    $count = $count + 1;
+    $count         = $count + 1;
 
     if ($count < 2) {
       if (\is_object($lst)) {
