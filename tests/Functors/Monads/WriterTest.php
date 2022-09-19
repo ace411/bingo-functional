@@ -26,7 +26,7 @@ class WriterTest extends \PHPUnit\Framework\TestCase
       )
       ->then(function ($input) {
         $writer = Writer::of(...$input);
-        $fnx = function ($res) {
+        $fnx    = function ($res) {
           return $res ** 2;
         };
 
