@@ -18,7 +18,7 @@ const kleisli = __NAMESPACE__ . '\\kleisli';
  * kleisli
  * performs kleisli composition on functor and monadic functions
  *
- * kleisli :: (a -> m b) -> (a -> b) -> m a -> mb
+ * kleisli :: (a -> m b) -> (b -> m c) -> a -> m c
  *
  * @param string $method
  * @return callable
