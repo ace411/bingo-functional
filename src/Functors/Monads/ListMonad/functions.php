@@ -116,7 +116,7 @@ const tail = __NAMESPACE__ . '\\tail';
 function tail(Monad $list)
 {
   // replace monoid with class containing unit type
-  return new class () {
+  return new class() {
     public $value = null;
   };
 }
