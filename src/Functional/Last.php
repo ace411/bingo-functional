@@ -10,7 +10,7 @@
 
 namespace Chemem\Bingo\Functional;
 
-const last = 'Chemem\\Bingo\Functional\\Algorithms\\last';
+const last = __NAMESPACE__ . '\\last';
 
 /**
  * last
