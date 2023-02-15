@@ -48,7 +48,7 @@ class ReaderTest extends \PHPUnit\Framework\TestCase
       )
       ->then(function ($env) {
         $reader = Reader\reader($env);
-        $fnx = function ($val) {
+        $fnx    = function ($val) {
           return Reader\reader($val ** 2);
         };
         $fny = function ($val) {
