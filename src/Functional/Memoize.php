@@ -22,29 +22,32 @@ const memoize = __NAMESPACE__ . '\\memoize';
  * @return callable
  * @example
  *
- * $fact = memoize(function ($x) use (&$fact) {
+ * $fact = function ($x) use (&$fact) {
  *  return $x < 2 ? 1 : $x * $fact($x - 1);
- * })(5);
+ * };
+ * memoize($fact)(5);
  * => 120
  */
-function memoize(callable $function): callable
+function memoize(callable $function, bool $apc = false): callable
 {
-  return function (...$args) use ($function) {
+  return function (...$args) use ($apc, $function) {
     static $cache = [];
-    $key          = \md5(\serialize($args));
-    // store result in variable to preempt re-computation
-    $result       = $function(...$args);
+    $key          = \md5(
+      \extension_loaded('igbinary') ?
+        \igbinary_serialize($args) :
+        \serialize($args)
+    );
 
-    // store the result in the apcu cache if the extension is present
-    if (\extension_loaded('apcu')) {
-      \apcu_add($key, $result);
+    if ($apc && \extension_loaded('apcu')) {
+      \apcu_add($key, $function(...$args));
+
+      return \apcu_exists($key) ? \apcu_fetch($key) : $function(...$args);
     }
 
-    $cache[$key] = $result;
+    if (!isset($cache[$key])) {
+      $cache[$key] = $function(...$args);
+    }
 
-    return !\extension_loaded('apcu') ?
-      // return cached result if it exists; pre-computed result otherwise
-      (isset($cache[$key]) ? $cache[$key] : $result) :
-      (\apcu_exists($key) ? \apcu_fetch($key) : $result);
+    return isset($cache[$key]) ? $cache[$key] : $function(...$args);
   };
 }
