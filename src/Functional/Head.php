@@ -27,5 +27,5 @@ const head = __NAMESPACE__ . '\\head';
  */
 function head($list, $def = null)
 {
-  return \reset($list);
+  return \reset($list) ?? $def;
 }
