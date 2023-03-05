@@ -46,7 +46,7 @@ function paths(
             !\is_null($modify) ?
               $modify($prefix, $key, $glue) :
               \sprintf('%s%s%s', $prefix, $key, $glue)
-          ),
+          )
         );
       } else {
         $acc[$prefix . $key] = $value;
@@ -55,6 +55,6 @@ function paths(
       return $acc;
     },
     $list,
-    [],
+    []
   );
 }
