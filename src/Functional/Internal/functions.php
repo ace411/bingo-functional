@@ -98,8 +98,7 @@ function _partial(
   callable $func,
   array $args,
   bool $left = true
-): callable
-{
+): callable {
   $argCount = (new \ReflectionFunction($func))
     ->getNumberOfRequiredParameters();
 
@@ -144,8 +143,7 @@ function _curryN(
   int $argCount,
   callable $function,
   bool $left = true
-): callable
-{
+): callable {
   $acc = function ($args) use ($argCount, $function, $left, &$acc) {
     return function (...$inner) use (
       $argCount,
@@ -185,8 +183,7 @@ function _curry(
   callable $func,
   callable $curry,
   $required = true
-): callable
-{
+): callable {
   $toCurry = new \ReflectionFunction($func);
 
   $paramCount = $required ?
