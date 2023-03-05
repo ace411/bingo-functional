@@ -204,6 +204,7 @@ const _curry = __NAMESPACE__ . '\\_curry';
  *
  * _refobj :: Object -> Bool -> Array
  *
+ * @internal
  * @param object $obj
  * @param boolean $recurse
  * @return array
@@ -265,9 +266,9 @@ function _refobj($obj, bool $recurse = false): array
         \ReflectionProperty::IS_PROTECTED
       );
 
-    $data['props']      = !empty($props) ?
-      _fold(
-        function (array $acc, \ReflectionProperty $prop) use ($obj, $recurse) {
+    $data['props']      =  _fold(
+      function (array $acc, $prop, $key) use ($obj, $recurse) {
+        if ($prop instanceof \ReflectionProperty) {
           $name = $prop->getName();
 
           if (PHP_VERSION_ID < 80100) {
@@ -282,13 +283,19 @@ function _refobj($obj, bool $recurse = false): array
           if (\is_object($value) && $recurse) {
             $acc[$name][] = _refobj($value);
           }
+        } else {
+          if (\is_object($prop) && !($prop instanceof \ReflectionProperty) && $recurse) {
+            $acc = \array_merge($acc, _refobj($prop));
+          } else {
+            $acc[$key] = $prop;
+          }
+        }
 
-          return $acc;
-        },
-        $props,
-        []
-      ) :
-      \get_object_vars($obj);
+        return $acc;
+      },
+      !empty($props) ? $props : \get_object_vars($obj),
+      []
+    );
     $data['constants']  = $ref->getConstants();
     $data['interfaces'] = $ref->getInterfaceNames();
     $data['traits']     = $ref->getTraitNames();
