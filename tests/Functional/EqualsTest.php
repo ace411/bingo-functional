@@ -7,9 +7,6 @@ use Chemem\Bingo\Functional\Functors\Monads as m;
 
 class EqualsTest extends \PHPUnit\Framework\TestCase
 {
-  private static $file;
-  private static $curl;
-
   public function contextProvider()
   {
     return [
@@ -143,22 +140,16 @@ class EqualsTest extends \PHPUnit\Framework\TestCase
     $this->assertEquals($result, $comp);
   }
 
-  public function setUp(): void
-  {
-    self::$file = \fopen(f\filePath(0, 'io.test.txt'), 'r');
-    self::$curl = \curl_init();
-  }
-
   public function testequalsCanPerformResourceComparisonsToAscertainEquivalence()
   {
-    $this->assertNotEquals(true, f\equals(self::$file, self::$curl));
-    $this->assertEquals(true, f\equals(self::$file, self::$file));
-    $this->assertEquals(true, f\equals(self::$curl, self::$curl));
-  }
+    $file = \fopen(f\filePath(0, 'io.test.txt'), 'r');
+    $curl = \curl_init();
 
-  public function tearDown(): void
-  {
-    \fclose(self::$file);
-    \curl_close(self::$curl);
+    $this->assertNotEquals(true, f\equals($file, $curl));
+    $this->assertEquals(true, f\equals($file, $file));
+    $this->assertEquals(true, f\equals($curl, $curl));
+
+    \fclose($file);
+    \curl_close($curl);
   }
 }
