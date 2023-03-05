@@ -98,7 +98,8 @@ function _partial(
   callable $func,
   array $args,
   bool $left = true
-): callable {
+): callable
+{
   $argCount = (new \ReflectionFunction($func))
     ->getNumberOfRequiredParameters();
 
@@ -143,7 +144,8 @@ function _curryN(
   int $argCount,
   callable $function,
   bool $left = true
-): callable {
+): callable
+{
   $acc = function ($args) use ($argCount, $function, $left, &$acc) {
     return function (...$inner) use (
       $argCount,
@@ -183,7 +185,8 @@ function _curry(
   callable $func,
   callable $curry,
   $required = true
-): callable {
+): callable
+{
   $toCurry = new \ReflectionFunction($func);
 
   $paramCount = $required ?
@@ -194,3 +197,116 @@ function _curry(
 }
 
 const _curry = __NAMESPACE__ . '\\_curry';
+
+/**
+ * _refobj
+ * condense Reflection object into an array structure
+ *
+ * _refobj :: Object -> Bool -> Array
+ *
+ * @param object $obj
+ * @param boolean $recurse
+ * @return array
+ */
+function _refobj($obj, bool $recurse = false): array
+{
+  $data = [];
+
+  if ($obj instanceof \Closure || \is_callable($obj)) {
+    $ref            = new \ReflectionFunction($obj);
+    $data['name']   = $ref->getName();
+    $data['params'] = _fold(
+      function (array $acc, \ReflectionParameter $param) {
+        if (!\is_null($param) && !\is_null($param->getType())) {
+          $acc[$param->getName()] = $param->getType()->getName();
+        }
+
+        return $acc;
+      },
+      $ref->getParameters(),
+      []
+    );
+
+    if (!\is_null($ref->getReturnType())) {
+      $data['return'] = $ref->getReturnType()->getName();
+    }
+
+    $data['file']   = $ref->getFileName();
+    $data['static'] = $ref->getStaticVariables();
+    $data['ext']    = $ref->getExtensionName();
+    $data['scope']  = \is_null($ref->getClosureScopeClass()) ?
+      null :
+      $ref
+        ->getClosureScopeClass()
+        ->getName();
+
+    if ($obj instanceof \Closure) {
+      $data['start']  = $ref->getStartLine();
+      $data['end']    = $ref->getEndLine();
+    }
+  } else {
+    $ref                = new \ReflectionClass($obj);
+    $data['name']       = $ref->getName();
+    $data['ext']        = $ref->getExtensionName();
+    $data['file']       = $ref->getFileName();
+
+    $props              = PHP_VERSION_ID < 80100 ?
+      $ref->getProperties(
+        \ReflectionProperty::IS_STATIC |
+        \ReflectionProperty::IS_PUBLIC |
+        \ReflectionProperty::IS_PRIVATE |
+        \ReflectionProperty::IS_PROTECTED
+      ) :
+      $ref->getProperties(
+        \ReflectionProperty::IS_STATIC |
+        \ReflectionProperty::IS_PUBLIC |
+        \ReflectionProperty::IS_PRIVATE |
+        \ReflectionProperty::IS_READONLY |
+        \ReflectionProperty::IS_PROTECTED
+      );
+
+    $data['props']      = !empty($props) ?
+      _fold(
+        function (array $acc, \ReflectionProperty $prop) use ($obj, $recurse) {
+          $name = $prop->getName();
+
+          if (PHP_VERSION_ID < 80100) {
+            $prop->setAccessible(true);
+          }
+
+          $value      = $prop->getValue($obj);
+          if (!$recurse) {
+            $acc[$name] = $value;
+          }
+
+          if (\is_object($value) && $recurse) {
+            $acc[$name][] = _refobj($value);
+          }
+
+          return $acc;
+        },
+        $props,
+        []
+      ) :
+      \get_object_vars($obj);
+    $data['constants']  = $ref->getConstants();
+    $data['interfaces'] = $ref->getInterfaceNames();
+    $data['traits']     = $ref->getTraitNames();
+    $data['methods']    = _fold(
+      function (array $acc, \ReflectionMethod $method) {
+        $acc[] = $method->getName();
+        return $acc;
+      },
+      $ref->getMethods(),
+      []
+    );
+
+    if (PHP_VERSION_ID >= 80000) {
+      $data['attributes'] = $ref->getAttributes();
+    }
+  }
+
+  return $data;
+}
+
+const _refobj = __NAMESPACE__ . '\\_refobj';
