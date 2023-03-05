@@ -58,7 +58,7 @@ class PathsTest extends \PHPUnit\Framework\TestCase
               '%s%s%s',
               $prefix,
               \is_int($key) ? \sprintf('[%d]', $key) : $key,
-              $glue,
+              $glue
             );
           },
           '.',

@@ -95,6 +95,13 @@ class EqualsTest extends \PHPUnit\Framework\TestCase
       ],
       [
         [
+          \fopen(f\filePath(0, 'io.test.txt'), 'r'),
+          \curl_init(),
+        ],
+        false
+      ],
+      [
+        [
           function ($x, $y) {
             static $val = 2;
             return $val + $x + $y;
@@ -118,6 +125,10 @@ class EqualsTest extends \PHPUnit\Framework\TestCase
         true,
       ],
       [
+        [\curl_init(), \curl_init()],
+        true,
+      ],
+      [
         // recursively traverse object props
         [
           m\Maybe::fromValue((object)\range(1, 3)),
@@ -138,18 +149,5 @@ class EqualsTest extends \PHPUnit\Framework\TestCase
 
     $this->assertIsBool($comp);
     $this->assertEquals($result, $comp);
-  }
-
-  public function testequalsCanPerformResourceComparisonsToAscertainEquivalence()
-  {
-    $file = \fopen(f\filePath(0, 'io.test.txt'), 'r');
-    $curl = \curl_init();
-
-    $this->assertNotEquals(true, f\equals($file, $curl));
-    $this->assertEquals(true, f\equals($file, $file));
-    $this->assertEquals(true, f\equals($curl, $curl));
-
-    \fclose($file);
-    \curl_close($curl);
   }
 }
