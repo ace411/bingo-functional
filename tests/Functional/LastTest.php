@@ -9,18 +9,19 @@ class LastTest extends \PHPunit\Framework\TestCase
   public function contextProvider()
   {
     return [
-      [\range(1, 20), 20],
-      [(object) ['foo', 'bar'], 'bar'],
+      [[\range(1, 20)], 20],
+      [[((object) ['foo', 'bar'])], 'bar'],
+      [[[], 'undefined'], 'undefined'],
     ];
   }
 
   /**
    * @dataProvider contextProvider
    */
-  public function testlastComputesTheFinalValueInAList($list, $res)
+  public function testlastComputesTheFinalValueInAList(array $args, $res)
   {
-    $head = f\last($list);
+    $last = f\last(...$args);
 
-    $this->assertEquals($res, $head);
+    $this->assertEquals($res, $last);
   }
 }

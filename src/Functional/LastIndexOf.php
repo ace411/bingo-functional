@@ -29,9 +29,5 @@ const lastIndexOf = __NAMESPACE__ . '\\lastIndexOf';
  */
 function lastIndexOf($list, $value, $def = null)
 {
-  $last = last(indexesOf($list, $value));
-
-  return \is_bool($last) ?
-    ($last !== false ? $last : $def) :
-    $last;
+  return last(indexesOf($list, $value), $def);
 }
