@@ -302,6 +302,7 @@ function _refobj($obj, bool $recurse = false): array
     $data['methods']    = _fold(
       function (array $acc, \ReflectionMethod $method) {
         $acc[] = $method->getName();
+
         return $acc;
       },
       $ref->getMethods(),
@@ -309,7 +310,15 @@ function _refobj($obj, bool $recurse = false): array
     );
 
     if (PHP_VERSION_ID >= 80000) {
-      $data['attributes'] = $ref->getAttributes();
+      $data['attributes'] = _fold(
+        function ($acc, $attr) {
+          $acc[] = $attr->getName();
+
+          return $acc;
+        },
+        $ref->getAttributes(),
+        []
+      );
     }
   }
 
