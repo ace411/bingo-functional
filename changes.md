@@ -1,5 +1,18 @@
 # bingo-functional changes
 
+## v2.2.0
+
+- Added `equals` and `path` helper functions
+- Added default parameters to `head` and `last` functions
+- Added `_refobj` internal function for object comparisons
+- Improved `memoize` function amenability to `igbinary` and `apcu` extensions
+
+## v2.1.0
+
+- Added `page` function
+- Fixed erroneous namespace in `last` function
+- Added `kleisli` composition function
+
 ## v2.0.1
 
 - Modified `cmatch` function internals to better handle wildcard patterns
