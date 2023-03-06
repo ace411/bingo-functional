@@ -25,7 +25,9 @@ const last = __NAMESPACE__ . '\\last';
  * last(range(4, 7))
  * => 7
  */
-function last($list)
+function last($list, $def = null)
 {
-  return \end($list);
+  $last = \end($list);
+
+  return $last ? $last : $def;
 }

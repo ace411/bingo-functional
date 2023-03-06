@@ -8,6 +8,7 @@ use Eris\Generator;
 
 use Chemem\Bingo\Functional as f;
 use Chemem\Bingo\Functional\Immutable\Collection;
+
 use function Chemem\Bingo\Functional\Tests\functorLaws;
 
 class CollectionTest extends \PHPUnit\Framework\TestCase

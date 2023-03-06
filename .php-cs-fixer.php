@@ -12,12 +12,17 @@ $finder = Finder::create()
 $config = new Config;
 
 return $config
-  ->setRules([
-    '@PSR12'                      => true,
-    'linebreak_after_opening_tag' => true,
-    'binary_operator_spaces'      => [
-      'operators' => ['=>' => 'align', '=' => 'align'],
-    ],
-  ])
+  ->setRules(
+    [
+      '@PSR12'                      => true,
+      'linebreak_after_opening_tag' => true,
+      'binary_operator_spaces'      => [
+        'operators'                 => [
+          '=>'                      => 'align', 
+          '='                       => 'align'
+        ]
+      ]
+    ]
+  )
   ->setFinder($finder)
   ->setIndent('  ');

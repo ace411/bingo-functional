@@ -62,7 +62,7 @@
     "functional-php/pattern-matching": "~1"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "~2",
+    "friendsofphp/php-cs-fixer": "~3",
     "giorgiosironi/eris": "~0",
     "phpunit/phpunit": "~7 || ~8 || 9.3.*"
   },
@@ -104,6 +104,8 @@
       "src/Functional/Trampoline.php",
       "src/Functional/IndexOf.php",
       "src/Functional/Unzip.php",
+      "src/Functional/Equals.php",
+      "src/Functional/Paths.php",
       "src/Functional/PartialLeft.php",
       "src/Functional/Intersperse.php",
       "src/Functional/Extend.php",
