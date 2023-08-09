@@ -1,11 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <phpunit
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   colors="true"
   columns="max"
   verbose="true"
+  cacheResult="false"
   bootstrap="vendor/autoload.php"
-  xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd"
 >
   <coverage>
     <include>
@@ -13,8 +12,20 @@
     </include>
   </coverage>
   <testsuites>
-    <testsuite name="Bingo Functional Testsuite">
-      <directory suffix="Test.php">tests</directory>
+    <testsuite name="Functional">
+      <directory suffix="Test.php">tests/Functional</directory>
+    </testsuite>
+    <testsuite name="Functors">
+      <directory suffix="Test.php">tests/Functors</directory>
+    </testsuite>
+    <testsuite name="Immutable">
+      <directory suffix="Test.php">tests/Immutable</directory>
+    </testsuite>
+    <testsuite name="Pattern Matching">
+      <directory suffix="Test.php">tests/PatternMatching</directory>
+    </testsuite>
+    <testsuite name="Transient">
+      <directory suffix="Test.php">tests/Transient</directory>
     </testsuite>
   </testsuites>
 </phpunit>
