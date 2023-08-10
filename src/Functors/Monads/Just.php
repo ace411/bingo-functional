@@ -84,9 +84,11 @@ class Just extends Maybe
    */
   public function ap(ApplicativeFunctor $just): ApplicativeFunctor
   {
-    return $this->bind(function ($action) use ($just) {
-      return $just->map($action);
-    });
+    return $this->bind(
+      function ($action) use ($just) {
+        return $just->map($action);
+      }
+    );
   }
 
   /**

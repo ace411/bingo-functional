@@ -42,9 +42,11 @@ class Writer implements Monad, Functor, ApplicativeFunctor
    */
   public static function of($result, $output = null): Monad
   {
-    return new static(function () use ($result, $output) {
-      return [$result, \is_null($output) ? [] : [$output]];
-    });
+    return new static(
+      function () use ($result, $output) {
+        return [$result, \is_null($output) ? [] : [$output]];
+      }
+    );
   }
 
   /**
@@ -52,9 +54,11 @@ class Writer implements Monad, Functor, ApplicativeFunctor
    */
   public function ap(ApplicativeFunctor $app): ApplicativeFunctor
   {
-    return $this->bind(function ($function) use ($app) {
-      return $app->map($function);
-    });
+    return $this->bind(
+      function ($function) use ($app) {
+        return $app->map($function);
+      }
+    );
   }
 
   /**
@@ -62,11 +66,13 @@ class Writer implements Monad, Functor, ApplicativeFunctor
    */
   public function map(callable $function): Functor
   {
-    return new static(function () use ($function) {
-      [$result, $output] = $this->run();
+    return new static(
+      function () use ($function) {
+        [$result, $output] = $this->run();
 
-      return [$function($result), $output];
-    });
+        return [$function($result), $output];
+      }
+    );
   }
 
   /**
@@ -74,12 +80,14 @@ class Writer implements Monad, Functor, ApplicativeFunctor
    */
   public function bind(callable $function): Monad
   {
-    return new static(function () use ($function) {
-      [$result, $output]  = $this->run();
-      [$res, $out]        = $function($result)->run();
+    return new static(
+      function () use ($function) {
+        [$result, $output]  = $this->run();
+        [$res, $out]        = $function($result)->run();
 
-      return [$res, extend($output, $out)];
-    });
+        return [$res, extend($output, $out)];
+      }
+    );
   }
 
   /**

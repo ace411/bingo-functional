@@ -13,7 +13,12 @@ namespace Chemem\Bingo\Functional\Functors\Monads;
 use Chemem\Bingo\Functional\Functors\Functor;
 use Chemem\Bingo\Functional\Functors\ApplicativeFunctor;
 
-use Chemem\Bingo\Functional as f;
+use function Chemem\Bingo\Functional\compose;
+use function Chemem\Bingo\Functional\mapDeep;
+use function Chemem\Bingo\Functional\partial;
+
+use const Chemem\Bingo\Functional\flatten;
+use const Chemem\Bingo\Functional\fold;
 
 class ListMonad implements Monad, Functor, ApplicativeFunctor
 {
@@ -40,9 +45,11 @@ class ListMonad implements Monad, Functor, ApplicativeFunctor
    */
   public static function of($val): Monad
   {
-    return new static(function () use ($val) {
-      return \is_array($val) ? $val : [$val];
-    });
+    return new static(
+      function () use ($val) {
+        return \is_array($val) ? $val : [$val];
+      }
+    );
   }
 
   /**
@@ -58,9 +65,11 @@ class ListMonad implements Monad, Functor, ApplicativeFunctor
    */
   public function map(callable $function): Functor
   {
-    return new static(function () use ($function) {
-      return f\mapDeep($function, $this->extract());
-    });
+    return new static(
+      function () use ($function) {
+        return mapDeep($function, $this->extract());
+      }
+    );
   }
 
   /**
@@ -96,18 +105,21 @@ class ListMonad implements Monad, Functor, ApplicativeFunctor
    */
   private static function merge(callable $function, $list)
   {
-    $merge = f\compose(
-      // transform every list entry in the list
-      f\partial(f\fold, function ($acc, $val) use ($function) {
-        $acc[] = $function($val)->extract();
+    return new static(
+      function () use ($function, $list) {
+        return compose(
+          partial(
+            fold,
+            function ($acc, $val) use ($function) {
+              $acc[] = $function($val)->extract();
 
-        return $acc;
-      }, $list),
-      f\flatten
+              return $acc;
+            },
+            $list
+          ),
+          flatten
+        )([]);
+      }
     );
-
-    return new static(function () use ($merge) {
-      return $merge([]);
-    });
   }
 }
