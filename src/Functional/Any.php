@@ -28,14 +28,15 @@ const any = __NAMESPACE__ . '\\any';
  */
 function any($list, callable $func): bool
 {
-  $result = false;
-  foreach ($list as $idx => $val) {
-    if ($func($val)) {
-      $result = true;
+  return fold(
+    function (bool $valid, $entry) use ($func) {
+      if ($func($entry)) {
+        return true;
+      }
 
-      break;
-    }
-  }
-
-  return $result;
+      return $valid;
+    },
+    $list,
+    false
+  );
 }
