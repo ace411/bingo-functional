@@ -12,6 +12,7 @@ declare(strict_types=1);
 
 namespace Chemem\Bingo\Functional\Immutable;
 
+use Ds\Vector;
 use Chemem\Bingo\Functional as f;
 
 trait CommonTrait
@@ -25,9 +26,9 @@ trait CommonTrait
   /**
    * Immutable constructor
    *
-   * @param array $list
+   * @param SplFixedArray|Vector $list
    */
-  public function __construct(\SplFixedArray $list)
+  public function __construct($list)
   {
     $this->list = $list;
   }
@@ -38,7 +39,12 @@ trait CommonTrait
    */
   public static function from(array $list): ImmutableDataStructure
   {
-    return new static(\SplFixedArray::fromArray($list));
+    // add support for ext-ds
+    return new static(
+      \extension_loaded('ds') ?
+        new Vector($list) :
+        \SplFixedArray::fromArray($list)
+    );
   }
 
   /**
@@ -52,11 +58,14 @@ trait CommonTrait
 
     for ($idx = 0; $idx < $count; $idx++) {
       $item  = $list[$idx];
-      $acc[] = \is_array($item) ?
-        f\mapDeep(function ($val) use ($element): bool {
-          return $val == $element;
-        }, $item) :
-        $element == $item;
+      $acc[] = \is_object($item) || \is_array($item) ?
+        f\mapDeep(
+          function ($val) use ($element): bool {
+            return f\equals($val, $element, true);// $val == $element;
+          },
+          $item
+        ) :
+        f\equals($element, $item, true);// $element == $item;
     }
 
     return self::checkContains($acc);
@@ -111,7 +120,9 @@ trait CommonTrait
    */
   public function count(): int
   {
-    return ($this->list)->getSize();
+    return $this->list instanceof \SplFixedArray ?
+      $this->list->getSize() :
+      $this->list->count();
   }
 
   /**
