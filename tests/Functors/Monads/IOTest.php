@@ -13,6 +13,20 @@ class IOTest extends \PHPUnit\Framework\TestCase
 {
   use \Eris\TestTrait;
 
+  private static $file;
+
+  public static function setUpBeforeClass(): void
+  {
+    self::$file = __DIR__ . '/foo.txt';
+
+    \file_put_contents(self::$file, 'foo-bar');
+  }
+
+  public static function tearDownAfterClass(): void
+  {
+    unlink(self::$file);
+  }
+
   /**
    * @test
    */
@@ -22,7 +36,7 @@ class IOTest extends \PHPUnit\Framework\TestCase
       ->forAll(
         Generator\map(
           IO\readFile,
-          Generator\constant(__DIR__ . '/../../io.test.txt')
+          Generator\constant(self::$file)
         )
       )
       ->then(function ($impure) {
@@ -73,54 +87,33 @@ class IOTest extends \PHPUnit\Framework\TestCase
       });
   }
 
-  public function readFileProvider()
+  public function testreadFileSafelyReadsFileContents()
   {
-    return [
-      [__DIR__ . '/../../io.test.txt'],
-      [__DIR__ . '/foo.txt'],
-    ];
-  }
-
-  /**
-   * @dataProvider readFileProvider
-   */
-  public function testreadFileSafelyReadsFileContents($path)
-  {
-    $impure = IO\readFile($path);
+    $impure = IO\readFile(self::$file);
 
     $this->assertInstanceOf(IO::class, $impure);
     // $this->assertIsString($impure->exec());
     $this->assertTrue($impure->map('is_string')->exec());
   }
 
-  public function writeFileProvider()
+  public function testappendFileSafelyAppendsDataToFile()
   {
-    return [
-      [__DIR__ . '/foo.txt', 'foo-bar'],
-      [__DIR__ . '/file.php', '2'],
-    ];
-  }
-
-  /**
-   * @dataProvider writeFileProvider
-   */
-  public function testappendFileSafelyAppendsDataToFile($path, $contents)
-  {
-    $append = IO\appendFile($path, $contents);
+    $append = IO\appendFile(self::$file, 'fooz');
 
     $this->assertInstanceOf(IO::class, $append);
-    $this->assertTrue(\is_bool($append->exec()) || \is_int($append->exec()));
+    $this->assertTrue(
+      \is_bool($append->exec()) || \is_int($append->exec())
+    );
   }
 
-  /**
-   * @dataProvider writeFileProvider
-   */
-  public function testwriteFileSafelyWritesContentsToFile($path, $contents)
+  public function testwriteFileSafelyWritesContentsToFile()
   {
-    $write = IO\writeFile($path, $contents);
+    $write = IO\writeFile(self::$file, 'bar');
 
     $this->assertInstanceOf(IO::class, $write);
-    $this->assertTrue(\is_bool($write->exec()) || \is_int($write->exec()));
+    $this->assertTrue(
+      \is_bool($write->exec()) || \is_int($write->exec())
+    );
   }
 
   public function IOExceptionProvider()
