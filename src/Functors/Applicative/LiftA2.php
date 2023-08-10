@@ -1,8 +1,9 @@
 <?php
 
 /**
- * Applicative helper functions.
+ * liftA2
  *
+ * @see https://hackage.haskell.org/package/rio-0.1.22.0/docs/RIO-Prelude.html#v:liftA2
  * @package bingo-functional
  * @author Lochemem Bruno Michael
  * @license Apache-2.0
@@ -11,23 +12,8 @@
 namespace Chemem\Bingo\Functional\Functors\Applicative;
 
 use Chemem\Bingo\Functional\Functors\ApplicativeFunctor;
-use Chemem\Bingo\Functional as f;
 
-const pure = __NAMESPACE__ . '\\pure';
-
-/**
- * pure function
- * Lifts a value.
- *
- * pure :: a -> f a
- *
- * @param mixed $value
- * @return Applicative
- */
-function pure($value): ApplicativeFunctor
-{
-  return ('Chemem\\Bingo\\Functional\\Functors\\Applicative::of')($value);
-}
+use function Chemem\Bingo\Functional\map;
 
 const liftA2 = __NAMESPACE__ . '\\liftA2';
 
@@ -38,14 +24,19 @@ const liftA2 = __NAMESPACE__ . '\\liftA2';
  * liftA2 :: (a -> b -> c) -> f a -> f b -> f c
  *
  * @param callable $function
- * @param ApplicativeFunctor $values
+ * @param ApplicativeFunctor ...$values
  * @return ApplicativeFunctor
  */
 function liftA2(callable $function, ApplicativeFunctor ...$values): ApplicativeFunctor
 {
-  $args = f\map(function (ApplicativeFunctor $val) {
-    return $val->getValue();
-  }, $values);
-
-  return pure($function(...$args));
+  return pure(
+    $function(
+      ...map(
+        function (ApplicativeFunctor $val) {
+          return $val->getValue();
+        },
+        $values
+      )
+    )
+  );
 }
