@@ -20,7 +20,7 @@ const unionWith = __NAMESPACE__ . '\\unionWith';
  * unionWith :: ([a] -> [b] -> Bool) -> [a] -> [b] -> [c]
  *
  * @param callable $function
- * @param array ...$values
+ * @param array|object ...$values
  * @return array
  * @example
  *
@@ -31,12 +31,7 @@ const unionWith = __NAMESPACE__ . '\\unionWith';
  * )
  * => [1, 2, 3, 4, 5]
  */
-function unionWith(callable $function, array ...$values): array
+function unionWith(callable $function, ...$values)
 {
-  $acc = [];
-  if ($function(...$values)) {
-    $acc = union(...$values);
-  }
-
-  return $acc;
+  return $function(...$values) ? union(...$values) : [];
 }
