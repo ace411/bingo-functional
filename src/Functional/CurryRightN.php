@@ -1,7 +1,7 @@
 <?php
 
 /**
- * CurryN* functions
+ * CurryRightN function
  *
  * @package bingo-functional
  * @author Lochemem Bruno Michael
@@ -14,13 +14,13 @@ require_once __DIR__ . '/Internal/_CurryN.php';
 
 use function Chemem\Bingo\Functional\Internal\_curryN;
 
-const curryN = __NAMESPACE__ . '\\curryN';
+const curryRightN = __NAMESPACE__ . '\\curryRightN';
 
 /**
- * curryN
+ * curryRightN
  * converts an uncurried function to a curried one
  *
- * curryN :: Int -> ((a, b) -> c) -> a -> b -> c
+ * curryN :: Int -> ((a, b) -> c) -> b -> a -> c
  *
  * @param integer $paramCount
  * @param callable $function
@@ -30,7 +30,7 @@ const curryN = __NAMESPACE__ . '\\curryN';
  * curryN(fn ($x, $y) => $x + $y)(2)(3)
  * => 5
  */
-function curryN(int $paramCount, callable $function): callable
+function curryRightN(int $paramCount, callable $function): callable
 {
-  return _curryN($paramCount, $function);
+  return _curryN($paramCount, $function, false);
 }
