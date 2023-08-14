@@ -10,8 +10,6 @@
 
 namespace Chemem\Bingo\Functional;
 
-use function Chemem\Bingo\Functional\Internal\_fold;
-
 const indexOf = __NAMESPACE__ . '\\indexOf';
 
 /**
@@ -30,11 +28,15 @@ const indexOf = __NAMESPACE__ . '\\indexOf';
  */
 function indexOf($list, $value, $default = null)
 {
-  return _fold(function ($acc, $val, $idx) use ($value) {
-    if ($val === $value) {
-      $acc = $idx;
-    }
+  return fold(
+    function ($acc, $entry, $idx) use ($value) {
+      if (equals($entry, $value, true)) {
+        $acc = $idx;
+      }
 
-    return $acc;
-  }, $list, $default);
+      return $acc;
+    },
+    $list,
+    $default
+  );
 }
