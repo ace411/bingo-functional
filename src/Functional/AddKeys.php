@@ -39,8 +39,8 @@ function addKeys($list, ...$keys)
       }
 
       return $acc;
-    }, 
-    $list, 
+    },
+    $list,
     $list
   );
 }

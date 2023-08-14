@@ -39,8 +39,8 @@ function filter(callable $func, $list)
       }
 
       return $acc;
-    }, 
-    $list, 
+    },
+    $list,
     $list
   );
 }

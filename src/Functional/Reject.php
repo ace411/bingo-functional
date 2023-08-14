@@ -39,8 +39,8 @@ function reject(callable $func, $list)
       }
 
       return $acc;
-    }, 
-    $list, 
+    },
+    $list,
     $list
   );
 }
