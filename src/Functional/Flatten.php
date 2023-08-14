@@ -18,7 +18,7 @@ const flatten = __NAMESPACE__ . '\\flatten';
  *
  * flatten :: [[a]] -> [a]
  *
- * @param array $list
+ * @param array|object $list
  * @return array
  * @example
  *
