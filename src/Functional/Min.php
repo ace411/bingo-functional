@@ -10,6 +10,10 @@
 
 namespace Chemem\Bingo\Functional;
 
+require_once __DIR__ . '/Internal/_FilterNumeric.php';
+
+use function Chemem\Bingo\Functional\Internal\_filterNumeric;
+
 const min = __NAMESPACE__ . '\\min';
 
 /**
@@ -27,16 +31,14 @@ const min = __NAMESPACE__ . '\\min';
  */
 function min($list)
 {
-  // check if input is a number
-  $numCheck = function ($number) {
-    return \filter_var($number, FILTER_VALIDATE_INT | FILTER_VALIDATE_FLOAT);
-  };
   // extract first element in list
   $fst = head($list);
 
-  return fold(function ($acc, $val) use ($numCheck) {
-    $comp = $numCheck($val);
-
-    return $comp ? ($val < $acc ? $val : $acc) : $acc;
-  }, $list, !$numCheck($fst) ? 0 : $fst);
+  return fold(
+    function ($acc, $val) {
+      return _filterNumeric($val) ? ($val < $acc ? $val : $acc) : $acc;
+    },
+    $list,
+    !_filterNumeric($fst) ? 0 : $fst
+  );
 }
