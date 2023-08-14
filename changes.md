@@ -1,5 +1,18 @@
 # bingo-functional changes
 
+## v2.3.0
+
+- Added `keys`, `values`, and `size` functions
+- Altered file topology in source code directories
+- Created separate entry points for library artifacts
+- Added [`ext-ds` Vector](https://www.php.net/manual/en/class.ds-vector.php) support to `Chemem\Bingo\Functional\Immutable\Collection`
+- Infused `extend`, `dropLeft`, `dropRight`, `flatten`, `filterM`, `filterDeep`, `foldM`, `mapM`, `mapMaybe`, `mapDeep`, `partition`, `partitionBy`, `partitionEithers`, `lefts`, `rights`, `foldRight`, `reduceRight`, `fromPairs`, `isArrayOf`, `head`, `last`, `unique`, `flatten`, `union`, `unionWith`, `zip`, `zipWith` functions with object processing capabilities
+- Fixed anomalous `assocPath` function behavior
+- Added dot notation-encoded path parsing to `pluckPath` and `assocPath` functions
+- Enforced optional interoperability with `ext-mbstring` in the signatures of `startsWith` and `endsWith`
+- Conditioned subsumption of errors in `readFile`, `writeFile`, and `appendFile` functions in an `IOException`
+- Added workarounds for the deprecation of the use of `end` and `reset` - on objects in PHP 8.1 or newer - in `head` and `last` functions
+
 ## v2.2.0
 
 - Added `equals` and `path` helper functions
