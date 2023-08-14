@@ -27,10 +27,13 @@ const compact = __NAMESPACE__ . '\\compact';
  */
 function compact($list)
 {
-  return (filter)(function ($value) {
-    return $value !== false &&
-      !\is_null($value) &&
-      $value !== 0 &&
-      $value !== NAN;
-  }, $list);
+  return filter(
+    function ($value) {
+      return !equals($value, false) &&
+        !\is_null($value) &&
+        !equals($value, 0) &&
+        !equals($value, NAN);
+    },
+    $list
+  );
 }
