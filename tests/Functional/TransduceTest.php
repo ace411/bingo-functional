@@ -38,9 +38,9 @@ class TransduceTest extends \PHPUnit\Framework\TestCase
           t\map('strtoupper'),
           t\reject(function (string $str) {
             return (
-              \function_exists('mb_strlen') ?
-                \mb_strlen($val, 'utf-8') :
-                \strlen($val)
+              \extension_loaded('mbstring') ?
+                \mb_strlen($str, 'utf-8') :
+                \strlen($str)
             ) > 3;
           }),
           t\map(function (string $str) {

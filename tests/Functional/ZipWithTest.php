@@ -12,9 +12,9 @@ class ZipWithTest extends \PHPUnit\Framework\TestCase
       [
         function ($int, $str) {
           return $int + (
-            \function_exists('mb_strlen') ?
-              \mb_strlen($val, 'utf-8') :
-              \strlen($val)
+            \extension_loaded('mbstring') ?
+              \mb_strlen($str, 'utf-8') :
+              \strlen($str)
           );
         },
         [\range(1, 3), ['foo', 'bar', 'baz']],
