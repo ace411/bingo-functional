@@ -198,7 +198,13 @@ class MonadTest extends \PHPUnit\Framework\TestCase
       ],
       [
         function ($val, $monad) {
-          return $monad::of(\mb_strlen($val, 'utf-8') > 3);
+          return $monad::of(
+            (
+              \function_exists('mb_strlen') ?
+                \mb_strlen($val, 'utf-8') :
+                \strlen($val)
+            ) > 3
+          );
         },
         ['foo', 'bar', 'foo-bar'],
         ['foo-bar'],
