@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class FillTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       [\range(1, 4), 'foo', [1, 2], [1, 'foo', 'foo', 4]],

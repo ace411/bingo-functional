@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class RejectTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       [
@@ -18,7 +18,11 @@ class RejectTest extends \PHPUnit\Framework\TestCase
       ],
       [
         function ($val) {
-          return \mb_strlen($val, 'utf-8') > 3;
+          return (
+            \function_exists('mb_strlen') ?
+              \mb_strlen($val, 'utf-8') :
+              \strlen($val)
+          ) > 3;
         },
         (object) ['foo', 'bar', 'foo-bar'],
         (object) [0 => 'foo', 1 => 'bar'],

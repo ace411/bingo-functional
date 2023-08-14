@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class ZipTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       [[\range(1, 2), ['pg', 'sg']], [[1, 'pg'], [2, 'sg']]],

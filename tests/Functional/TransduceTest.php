@@ -7,7 +7,7 @@ use Chemem\Bingo\Functional\Transducer as t;
 
 class TransduceTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       [
@@ -37,7 +37,11 @@ class TransduceTest extends \PHPUnit\Framework\TestCase
         f\flip(f\compose)(
           t\map('strtoupper'),
           t\reject(function (string $str) {
-            return \mb_strlen($str, 'utf-8') > 3;
+            return (
+              \function_exists('mb_strlen') ?
+                \mb_strlen($val, 'utf-8') :
+                \strlen($val)
+            ) > 3;
           }),
           t\map(function (string $str) {
             return f\concat('-', ...\str_split($str));

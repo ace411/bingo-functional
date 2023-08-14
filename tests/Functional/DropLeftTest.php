@@ -6,11 +6,29 @@ use Chemem\Bingo\Functional as f;
 
 class DropLeftTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
-      [\range(1, 7), 3, [4, 5, 6, 7]],
-      [['foo' => 'foo', 'bar' => 'bar'], 1, ['bar' => 'bar']],
+      [
+        \range(1, 7),
+        3,
+        [
+          3 => 4,
+          4 => 5,
+          5 => 6,
+          6 => 7
+        ],
+      ],
+      [
+        ['foo' => 'foo', 'bar' => 'bar'],
+        1,
+        ['bar' => 'bar'],
+      ],
+      [
+        (object) ['foo' => 'foo', 'bar' => 'bar'],
+        1,
+        (object) ['bar' => 'bar'],
+      ],
     ];
   }
 
@@ -22,7 +40,8 @@ class DropLeftTest extends \PHPUnit\Framework\TestCase
     $dropped = f\dropLeft($list, $count);
 
     $this->assertEquals($res, $dropped);
-    // $this->assertIsArray($dropped);
-    $this->assertTrue(\is_array($dropped));
+    $this->assertTrue(
+      \is_array($dropped) || \is_object($dropped)
+    );
   }
 }

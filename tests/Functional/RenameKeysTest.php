@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class RenameKeysTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       [

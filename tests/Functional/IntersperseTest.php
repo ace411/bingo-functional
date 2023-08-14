@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class IntersperseTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       [\range(1, 4), 'foo', [1, 'foo', 2, 'foo', 3, 'foo', 4]],

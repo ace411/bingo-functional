@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class MinTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       [[1, 9, 12.2, 3], 1],

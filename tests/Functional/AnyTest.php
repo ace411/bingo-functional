@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class AnyTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       [['foo', 'bar', 1, 3, \range(5, 9)], 'is_string', true],

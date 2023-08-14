@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class AssocPathTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       [
@@ -20,6 +20,12 @@ class AssocPathTest extends \PHPUnit\Framework\TestCase
         ['foo', 'bar', 'baz'],
         'baz',
         (object) ['foo' => (object) ['bar' => ['baz' => 'baz']]],
+      ],
+      [
+        [],
+        'foo.bar[1]',
+        'bar',
+        ['foo' => ['bar' => [1 => 'bar']]],
       ],
     ];
   }

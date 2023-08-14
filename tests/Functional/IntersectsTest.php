@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class IntersectsTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       [[\range(1, 5), \range(3, 9)], true],

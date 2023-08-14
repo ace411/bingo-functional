@@ -6,11 +6,16 @@ use Chemem\Bingo\Functional as f;
 
 class PluckTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       ['x', ['x' => 2], null,  2],
-      [1, (object) [3, ['foo' => 'baz']], 'undefined', ['foo' => 'baz']],
+      [
+        1,
+        (object) [3, ['foo' => 'baz']],
+        'undefined',
+        ['foo' => 'baz'],
+      ],
       [5, \range(1, 3), 0, 0],
     ];
   }

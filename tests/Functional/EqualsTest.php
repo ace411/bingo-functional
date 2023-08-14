@@ -7,7 +7,7 @@ use Chemem\Bingo\Functional\Functors\Monads as m;
 
 class EqualsTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       // array comparisons
@@ -95,7 +95,7 @@ class EqualsTest extends \PHPUnit\Framework\TestCase
       ],
       [
         [
-          \fopen(f\filePath(0, 'io.test.txt'), 'r'),
+          \fopen(__DIR__ . '/../../io.test.txt', 'r'),
           \curl_init(),
         ],
         false

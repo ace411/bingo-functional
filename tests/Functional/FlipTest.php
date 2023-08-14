@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class FlipTest extends \PHPunit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       [
