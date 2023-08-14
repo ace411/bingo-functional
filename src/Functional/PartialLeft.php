@@ -10,6 +10,8 @@
 
 namespace Chemem\Bingo\Functional;
 
+require_once __DIR__ . '/Internal/_Partial.php';
+
 use function Chemem\Bingo\Functional\Internal\_partial;
 
 const partialLeft = __NAMESPACE__ . '\\partialLeft';
