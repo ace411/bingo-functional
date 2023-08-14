@@ -32,7 +32,7 @@ function zip(array ...$lists): array
     $list = $lists[$idx];
 
     foreach ($list as $index => $val) {
-      if (indexOf($list, $val) == $index) {
+      if (equals(indexOf($list, $val), $index)) {
         $acc[$index][] = $val;
       }
     }
