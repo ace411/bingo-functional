@@ -28,19 +28,19 @@ const has = __NAMESPACE__ . '\\has';
  */
 function has($haystack, $needle): bool
 {
-  $exists = false;
-  foreach ($haystack as $key => $val) {
-    if ($needle === $val) {
-      $exists = true;
-      if ($exists) {
-        break;
+  return fold(
+    function (bool $exists, $entry) use ($needle) {
+      if (equals($needle, $entry, true)) {
+        return true;
       }
-    }
 
-    if (\is_object($val) || \is_array($val)) {
-      $exists = has($val, $needle);
-    }
-  }
+      if (\is_object($entry) || \is_array($entry)) {
+        $exists = has($entry, $needle);
+      }
 
-  return $exists;
+      return $exists;
+    },
+    $haystack,
+    false
+  );
 }
