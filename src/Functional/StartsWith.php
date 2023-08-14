@@ -28,7 +28,7 @@ const startsWith = __NAMESPACE__ . '\\startsWith';
  */
 function startsWith(string $haystack, string $needle): bool
 {
-  $strlen = \function_exists('mb_strlen') ? 
+  $strlen = \function_exists('mb_strlen') ?
     \mb_strlen($needle, 'utf-8') :
     \strlen($needle);
 

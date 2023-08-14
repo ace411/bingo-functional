@@ -28,8 +28,8 @@ const endsWith = __NAMESPACE__ . '\\endsWith';
  */
 function endsWith(string $haystack, string $needle): bool
 {
-  $strlen = \function_exists('mb_strlen') ? 
-    \mb_strlen($needle, 'utf-8') : 
+  $strlen = \function_exists('mb_strlen') ?
+    \mb_strlen($needle, 'utf-8') :
     \strlen($needle);
 
   if (equals($strlen, 0)) {
