@@ -33,13 +33,13 @@ function intersects($first, $second): bool
     $second = \get_object_vars($second);
   }
 
-  $fsize     = \count($first);
-  $ssize     = \count($second);
+  $fsize     = size($first);
+  $ssize     = size($second);
   $intersect = false;
 
   if ($fsize > $ssize) {
     foreach ($second as $val) {
-      if (\in_array($val, $first)) {
+      if (has($first, $val)) {
         $intersect = true;
 
         if ($intersect == true) {
@@ -49,7 +49,7 @@ function intersects($first, $second): bool
     }
   } else {
     foreach ($first as $val) {
-      if (\in_array($val, $second)) {
+      if (has($second, $val)) {
         $intersect = true;
 
         if ($intersect == true) {
