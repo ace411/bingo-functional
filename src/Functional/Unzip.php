@@ -11,8 +11,6 @@
 
 namespace Chemem\Bingo\Functional;
 
-use function Chemem\Bingo\Functional\Internal\_fold;
-
 const unzip = __NAMESPACE__ . '\\unzip';
 
 /**
@@ -30,11 +28,15 @@ const unzip = __NAMESPACE__ . '\\unzip';
  */
 function unzip(array $zipped): array
 {
-  return _fold(function ($acc, $val, $idx) {
-    for ($idx = 0; $idx < \count($val); $idx += 1) {
-      $acc[$idx][] = $val[$idx];
-    }
+  return fold(
+    function ($acc, $val, $idx) {
+      for ($idx = 0; $idx < size($val); $idx += 1) {
+        $acc[$idx][] = $val[$idx];
+      }
 
-    return $acc;
-  }, $zipped, []);
+      return $acc;
+    },
+    $zipped,
+    []
+  );
 }

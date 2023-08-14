@@ -11,8 +11,6 @@
 
 namespace Chemem\Bingo\Functional;
 
-use function Chemem\Bingo\Functional\Internal\_fold;
-
 const assoc = __NAMESPACE__ . '\\assoc';
 
 /**
@@ -32,21 +30,25 @@ const assoc = __NAMESPACE__ . '\\assoc';
  */
 function assoc($key, $val, $list)
 {
-  return _fold(function ($acc, $entry, $idx) use ($key, $val) {
-    if (\is_object($acc)) {
-      if ($key == $idx) {
-        $acc->{$idx} = $entry;
+  return fold(
+    function ($acc, $entry, $idx) use ($key, $val) {
+      if (\is_object($acc)) {
+        if ($key == $idx) {
+          $acc->{$idx} = $entry;
+        }
+
+        $acc->{$key} = $val;
+      } elseif (\is_array($acc)) {
+        if ($key == $idx) {
+          $acc[$idx] = $entry;
+        }
+
+        $acc[$key] = $val;
       }
 
-      $acc->{$key} = $val;
-    } elseif (\is_array($acc)) {
-      if ($key == $idx) {
-        $acc[$idx] = $entry;
-      }
-
-      $acc[$key] = $val;
-    }
-
-    return $acc;
-  }, $list, $list);
+      return $acc;
+    },
+    $list,
+    $list
+  );
 }

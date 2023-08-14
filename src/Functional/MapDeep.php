@@ -10,8 +10,6 @@
 
 namespace Chemem\Bingo\Functional;
 
-use function Chemem\Bingo\Functional\Internal\_fold;
-
 const mapDeep = __NAMESPACE__ . '\\mapDeep';
 
 /**
@@ -21,18 +19,30 @@ const mapDeep = __NAMESPACE__ . '\\mapDeep';
  * mapDeep :: (a -> b) -> [a] -> [b]
  *
  * @param callable $func
- * @param array $list
- * @return array
+ * @param array|object $list
+ * @return array|object
  * @example
  *
  * mapDeep('strtoupper', ['foo', ['bar', 'baz']])
  * => ['FOO', ['BAR', 'BAZ']]
  */
-function mapDeep(callable $func, array $list): array
+function mapDeep(callable $func, $list)
 {
-  return _fold(function ($acc, $val, $idx) use ($func) {
-    $acc[$idx] = \is_array($val) ? mapDeep($func, $val) : $func($val);
+  return fold(
+    function ($acc, $val, $idx) use ($func) {
+      if (\is_object($acc)) {
+        $acc->{$idx} = \is_array($val) || \is_object($val) ?
+          mapDeep($func, $val) :
+          $func($val);
+      } elseif (\is_array($acc)) {
+        $acc[$idx] = \is_array($val) || \is_object($val) ?
+          mapDeep($func, $val) :
+          $func($val);
+      }
 
-    return $acc;
-  }, $list, []);
+      return $acc;
+    },
+    $list,
+    $list
+  );
 }

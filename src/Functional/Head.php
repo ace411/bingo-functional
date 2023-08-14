@@ -27,5 +27,19 @@ const head = __NAMESPACE__ . '\\head';
  */
 function head($list, $def = null)
 {
-  return \reset($list) ?? $def;
+  $count = 0;
+
+  foreach ($list as $val) {
+    if (equals($count, 0)) {
+      return $val;
+    }
+
+    if ($count > 0) {
+      break;
+    }
+
+    $count += 1;
+  }
+
+  return $def;
 }

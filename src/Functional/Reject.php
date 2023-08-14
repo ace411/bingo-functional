@@ -10,8 +10,6 @@
 
 namespace Chemem\Bingo\Functional;
 
-use function Chemem\Bingo\Functional\Internal\_fold;
-
 const reject = __NAMESPACE__ . '\\reject';
 
 /**
@@ -30,15 +28,19 @@ const reject = __NAMESPACE__ . '\\reject';
  */
 function reject(callable $func, $list)
 {
-  return _fold(function ($acc, $val, $idx) use ($func) {
-    if ($func($val)) {
-      if (\is_object($acc)) {
-        unset($acc->{$idx});
-      } elseif (\is_array($acc)) {
-        unset($acc[$idx]);
+  return fold(
+    function ($acc, $val, $idx) use ($func) {
+      if ($func($val)) {
+        if (\is_object($acc)) {
+          unset($acc->{$idx});
+        } elseif (\is_array($acc)) {
+          unset($acc[$idx]);
+        }
       }
-    }
 
-    return $acc;
-  }, $list, $list);
+      return $acc;
+    }, 
+    $list, 
+    $list
+  );
 }
