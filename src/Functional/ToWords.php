@@ -29,9 +29,7 @@ const toWords = __NAMESPACE__ . '\\toWords';
  */
 function toWords(string $string, string $regex = ''): array
 {
-  if ($regex == '') {
-    return \explode(' ', $string);
-  }
-
-  return \preg_split($regex, $string);
+  return empty($regex) ?
+    \explode(' ', $string) :
+    \preg_split($regex, $string);
 }
