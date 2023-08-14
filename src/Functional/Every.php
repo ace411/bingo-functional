@@ -28,14 +28,18 @@ const every = __NAMESPACE__ . '\\every';
  */
 function every($list, callable $func): bool
 {
-  [$filterCount, $valCount] = fold(function ($acc, $val) use ($func) {
-    [$fst, $snd] = $acc;
-    $fst         = $fst + 1;
+  [$filterCount, $valCount] = fold(
+    function ($acc, $val) use ($func) {
+      [$fst, $snd] = $acc;
+      $fst         = $fst + 1;
 
-    $snd += $func($val) ? 1 : 0;
+      $snd += $func($val) ? 1 : 0;
 
-    return [$fst, $snd];
-  }, $list, [0, 0]);
+      return [$fst, $snd];
+    },
+    $list,
+    [0, 0]
+  );
 
-  return $filterCount == $valCount;
+  return equals($filterCount, $valCount);
 }
