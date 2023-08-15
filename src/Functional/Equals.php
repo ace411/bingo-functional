@@ -10,6 +10,8 @@
 
 namespace Chemem\Bingo\Functional;
 
+require_once __DIR__ . '/Internal/_RefObj.php';
+
 use function Chemem\Bingo\Functional\Internal\_refobj;
 
 const equals = __NAMESPACE__ . '\\equals';

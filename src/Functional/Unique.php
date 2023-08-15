@@ -10,8 +10,6 @@
 
 namespace Chemem\Bingo\Functional;
 
-use function Chemem\Bingo\Functional\Internal\_fold;
-
 const unique = __NAMESPACE__ . '\\unique';
 
 /**
@@ -20,20 +18,35 @@ const unique = __NAMESPACE__ . '\\unique';
  *
  * unique :: [a] -> [a]
  *
- * @param array $list
- * @return array
+ * @param array|object $list
+ * @return array|object
  * @example
  *
  * unique(['foo', 3, 'foo', 'baz'])
  * => ['foo', 3, 'baz']
  */
-function unique(array $list): array
+function unique($list)
 {
-  return _fold(function ($acc, $val, $idx) {
-    if (!\in_array($val, $acc)) {
-      $acc[$idx] = $val;
-    }
+  ['result' => $result] = fold(
+    function (array $acc, $val, $idx) {
+      if (!\in_array($val, $acc['count'])) {
+        $acc['count'][$idx] = $val;
+      } else {
+        if (\is_object($acc['result'])) {
+          unset($acc['result']->{$idx});
+        } elseif (\is_array($acc['result'])) {
+          unset($acc['result'][$idx]);
+        }
+      }
 
-    return $acc;
-  }, $list, []);
+      return $acc;
+    },
+    $list,
+    [
+      'result'  => $list,
+      'count'   => [],
+    ]
+  );
+
+  return $result;
 }

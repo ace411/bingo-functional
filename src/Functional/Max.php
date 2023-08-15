@@ -10,6 +10,10 @@
 
 namespace Chemem\Bingo\Functional;
 
+require_once __DIR__ . '/Internal/_FilterNumeric.php';
+
+use function Chemem\Bingo\Functional\Internal\_filterNumeric;
+
 const max = __NAMESPACE__ . '\\max';
 
 /**
@@ -27,10 +31,12 @@ const max = __NAMESPACE__ . '\\max';
  */
 function max($list)
 {
-  return fold(function ($acc, $val) {
-    // check if list value is one of either integer or float
-    $comp = \filter_var($val, FILTER_VALIDATE_FLOAT | FILTER_VALIDATE_INT);
-
-    return $comp ? ($val > $acc ? $val : $acc) : $acc;
-  }, $list, 0);
+  return fold(
+    function ($acc, $val) {
+      // ensure comparisons between numeric types
+      return _filterNumeric($val) ? ($val > $acc ? $val : $acc) : $acc;
+    },
+    $list,
+    0
+  );
 }

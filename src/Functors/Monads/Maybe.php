@@ -13,6 +13,8 @@ namespace Chemem\Bingo\Functional\Functors\Monads;
 use Chemem\Bingo\Functional\Functors\Functor;
 use Chemem\Bingo\Functional\Functors\ApplicativeFunctor;
 
+use function Chemem\Bingo\Functional\equals;
+
 abstract class Maybe implements Monad, Functor, ApplicativeFunctor
 {
   public const just      = __CLASS__ . '::just';
@@ -62,7 +64,9 @@ abstract class Maybe implements Monad, Functor, ApplicativeFunctor
    */
   public static function fromValue($just, $nothing = null): Monad
   {
-    return $just !== $nothing ? self::just($just) : self::nothing();
+    return !equals($just, $nothing, true) ?
+      self::just($just) :
+      self::nothing();
   }
 
   /**

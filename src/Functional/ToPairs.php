@@ -10,8 +10,6 @@
 
 namespace Chemem\Bingo\Functional;
 
-use function Chemem\Bingo\Functional\Internal\_fold;
-
 const toPairs = __NAMESPACE__ . '\\toPairs';
 
 /**
@@ -29,7 +27,7 @@ const toPairs = __NAMESPACE__ . '\\toPairs';
  */
 function toPairs($list): array
 {
-  return _fold(function ($acc, $val, $idx) {
+  return fold(function ($acc, $val, $idx) {
     $acc[] = [$idx, $val];
 
     return $acc;

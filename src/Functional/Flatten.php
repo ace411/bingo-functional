@@ -18,18 +18,18 @@ const flatten = __NAMESPACE__ . '\\flatten';
  *
  * flatten :: [[a]] -> [a]
  *
- * @param array $list
+ * @param array|object $list
  * @return array
  * @example
  *
  * flatten(['foo', range(1, 3)])
  * => ['foo', 1, 2, 3]
  */
-function flatten(array $list): array
+function flatten($list)
 {
   $flattened = fold(
     function ($acc, $value) {
-      return \is_array($value) ?
+      return \is_array($value) || \is_object($value) ?
         extend($acc, flatten($value)) :
         extend($acc, [$value]);
     },

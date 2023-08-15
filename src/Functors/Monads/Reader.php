@@ -44,11 +44,13 @@ class Reader implements Monad, Functor, ApplicativeFunctor
    */
   public static function of($action): Monad
   {
-    return \is_callable($action) ?
-      new static($action) :
-      new static(function ($env) use ($action) {
-        return $action;
-      });
+    return new static(
+      \is_callable($action) ?
+        $action :
+        function ($env) use ($action) {
+          return $action;
+        }
+    );
   }
 
   /**
@@ -56,9 +58,11 @@ class Reader implements Monad, Functor, ApplicativeFunctor
    */
   public function ap(ApplicativeFunctor $app): ApplicativeFunctor
   {
-    return $this->bind(function ($func) use ($app) {
-      return $app->map($func);
-    });
+    return $this->bind(
+      function ($func) use ($app) {
+        return $app->map($func);
+      }
+    );
   }
 
   /**
@@ -66,9 +70,11 @@ class Reader implements Monad, Functor, ApplicativeFunctor
    */
   public function map(callable $function): Functor
   {
-    return $this->bind(function ($env) use ($function) {
-      return self::of($function($env));
-    });
+    return $this->bind(
+      function ($env) use ($function) {
+        return self::of($function($env));
+      }
+    );
   }
 
   /**
@@ -76,9 +82,11 @@ class Reader implements Monad, Functor, ApplicativeFunctor
    */
   public function bind(callable $function): Monad
   {
-    return new self(function ($env) use ($function) {
-      return $function($this->run($env))->run($env);
-    });
+    return new self(
+      function ($env) use ($function) {
+        return $function($this->run($env))->run($env);
+      }
+    );
   }
 
   /**

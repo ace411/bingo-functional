@@ -10,34 +10,24 @@
 
 namespace Chemem\Bingo\Functional;
 
+require_once __DIR__ . '/Internal/_Merge.php';
+
+use function Chemem\Bingo\Functional\Internal\_merge;
+
 const extend = __NAMESPACE__ . '\\extend';
 
 /**
  * extend
  * concatenates lists
  *
- * @param array ...$lists
+ * @param object|array ...$lists
  * @return array
  * @example
  *
- * extend(['foo', 'bar'], ['baz'], ['fooz'])
+ * extend(['foo', 'bar'], (object) ['baz'], ['fooz'])
  * => ['foo', 'bar', 'baz', 'fooz']
  */
-function extend(array ...$lists): array
+function extend(...$lists)
 {
-  $ret = [];
-
-  for ($idx = 0; $idx < \count($lists); ++$idx) {
-    $list = $lists[$idx];
-
-    foreach ($list as $key => $val) {
-      if (\is_string($key)) {
-        $ret[$key] = $val;
-      } else {
-        $ret[] = $val;
-      }
-    }
-  }
-
-  return $ret;
+  return _merge(...$lists);
 }

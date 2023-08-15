@@ -18,20 +18,30 @@ const fromPairs = __NAMESPACE__ . '\\fromPairs';
  *
  * fromPairs :: [[a]] -> [a]
  *
- * @param array $list
- * @return array
+ * @param array|object $list
+ * @return array|object
  * @example
  *
  * fromPairs([['foo', 2], ['bar', 'bar']]);
  * => ['foo' => 2, 'bar' => 'bar']
  */
-function fromPairs(array $list): array
+function fromPairs($list)
 {
-  return fold(function ($acc, $val) {
-    if (\is_array($val) && \count($val) == 2) {
-      $acc[head($val)] = last($val);
-    }
+  return fold(
+    function ($acc, $val, $key) {
+      if (equals(size($val), 2)) {
+        if (\is_object($acc)) {
+          $acc->{head($val)} = last($val);
+          unset($acc->{$key});
+        } elseif (\is_array($acc)) {
+          $acc[head($val)] = last($val);
+          unset($acc[$key]);
+        }
+      }
 
-    return $acc;
-  }, $list, []);
+      return $acc;
+    },
+    $list,
+    $list
+  );
 }

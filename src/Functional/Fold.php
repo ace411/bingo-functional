@@ -1,7 +1,7 @@
 <?php
 
 /**
- * fold function
+ * fold
  *
  * @package bingo-functional
  * @author Lochemem Bruno Michael
@@ -9,6 +9,8 @@
  */
 
 namespace Chemem\Bingo\Functional;
+
+require_once __DIR__ . '/Internal/_Fold.php';
 
 use function Chemem\Bingo\Functional\Internal\_fold;
 
@@ -32,52 +34,4 @@ const fold = __NAMESPACE__ . '\\fold';
 function fold(callable $func, $list, $acc)
 {
   return _fold($func, $list, $acc);
-}
-
-const foldRight = __NAMESPACE__ . '\\foldRight';
-
-/**
- * foldRight
- * version of fold that iterates from back to front
- *
- * fold :: (a -> b -> c) -> [b] -> a -> a
- *
- * @param callable $func
- * @param array|object $list
- * @param mixed $acc
- * @return mixed
- * @example
- *
- * foldRight(fn ($x, $y) => $x . $y, ['foo', 'bar'], 0);
- * => 'barfoo'
- */
-function foldRight(callable $func, $list, $acc)
-{
-  return _fold(
-    $func,
-    \array_reverse(\is_object($list) ? \get_object_vars($list) : $list),
-    $acc
-  );
-}
-
-const reduceRight = __NAMESPACE__ . '\\reduceRight';
-
-/**
- * alias of foldRight
- * @see foldRight
- */
-function reduceRight(callable $func, array $list, $acc)
-{
-  return foldRight($func, $list, $acc);
-}
-
-const reduce = __NAMESPACE__ . '\\reduce';
-
-/**
- * alias of fold
- * @see fold
- */
-function reduce(callable $func, array $list, $acc)
-{
-  return fold($func, $list, $acc);
 }

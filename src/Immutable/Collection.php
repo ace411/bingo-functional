@@ -10,8 +10,9 @@
 
 namespace Chemem\Bingo\Functional\Immutable;
 
-use Chemem\Bingo\Functional as A;
+use Chemem\Bingo\Functional as f;
 use Chemem\Bingo\Functional\Common\Traits\TransientMutator as Transient;
+use Ds\Vector;
 
 class Collection implements
   \JsonSerializable,
@@ -27,10 +28,17 @@ class Collection implements
    */
   public function map(callable $func): ImmutableList
   {
-    $count = $this->count();
-    $list  = new \SplFixedArray($count);
-    for ($idx = 0; $idx < $count; $idx++) {
-      $list[$idx] = $func($this->getList()[$idx]);
+    $count  = $this->count();
+    $list   = \extension_loaded('ds') ?
+      new Vector() :
+      new \SplFixedArray($count);
+
+    if ($this->list instanceof \SplFixedArray) {
+      for ($idx = 0; $idx < $count; $idx++) {
+        $list[$idx] = $func($this->getList()[$idx]);
+      }
+    } else {
+      $list = $list->merge($this->getList()->map($func));
     }
 
     return new static($list);
@@ -41,6 +49,8 @@ class Collection implements
    */
   public function flatMap(callable $func): array
   {
+    // \trigger_error('Please call map instead', E_USER_DEPRECATED);
+
     return $this->map($func)->toArray();
   }
 
@@ -59,11 +69,15 @@ class Collection implements
   {
     $list = $this->getList();
 
-    for ($idx = 0; $idx < $list->count(); $idx++) {
-      $acc = $func($acc, $list[$idx]);
+    if ($list instanceof \SplFixedArray) {
+      for ($idx = 0; $idx < $list->count(); $idx++) {
+        $acc = $func($acc, $list[$idx]);
+      }
+
+      return $acc;
     }
 
-    return $acc;
+    return $list->reduce($func, $acc);
   }
 
   /**
@@ -71,12 +85,20 @@ class Collection implements
    */
   public function slice(int $count): ImmutableList
   {
-    $list       = $this->getList();
-    $listCount  = $list->count();
-    $new        = new \SplFixedArray($listCount - $count);
+    $new = null;
 
-    for ($idx = 0; $idx < $new->count(); $idx++) {
-      $new[$idx] = $list[$idx + $count];
+    if (\extension_loaded('ds')) {
+      $new = $this
+        ->getList()
+        ->slice($count);
+    } else {
+      $list       = $this->getList();
+      $listCount  = $list->count();
+      $new        = new \SplFixedArray($listCount - $count);
+
+      for ($idx = 0; $idx < $new->count(); $idx++) {
+        $new[$idx] = $list[$idx + $count];
+      }
     }
 
     return new static($new);
@@ -90,15 +112,20 @@ class Collection implements
     $oldSize        = $this->getSize();
     $combinedSize   = $oldSize + $list->getSize();
     $old            = $this->list;
-    $old->setSize($combinedSize);
 
-    for ($idx = 0; $idx < $old->count(); $idx++) {
-      if ($idx > ($oldSize - 1)) {
-        $old[$idx] = $list->getList()[($idx - $oldSize)];
+    if ($old instanceof \SplFixedArray) {
+      $old->setSize($combinedSize);
+
+      for ($idx = 0; $idx < $old->count(); $idx++) {
+        if ($idx > ($oldSize - 1)) {
+          $old[$idx] = $list->getList()[($idx - $oldSize)];
+        }
       }
+
+      return $this->update($old);
     }
 
-    return $this->update($old);
+    return $this->update($old->merge($list));
   }
 
   /**
@@ -124,6 +151,13 @@ class Collection implements
   public function reverse(): ImmutableList
   {
     $list   = $this->getList();
+
+    if (\extension_loaded('ds')) {
+      $list->reverse();
+
+      return new static($list);
+    }
+
     $count  = $list->count();
     $new    = new \SplFixedArray($count);
 
@@ -142,7 +176,9 @@ class Collection implements
     $list = $this->getList();
 
     for ($idx = 0; $idx < $list->count(); $idx++) {
-      $list[$idx] = $idx >= $start && $idx <= $end ? $value : $list[$idx];
+      $list[$idx] = $idx >= $start && $idx <= $end ?
+        $value :
+        $list[$idx];
     }
 
     return new static($list);
@@ -155,8 +191,10 @@ class Collection implements
   {
     $list = $this->getList();
     $extr = [];
+
     for ($idx = 0; $idx < $list->count(); $idx++) {
       $item = $list[$idx];
+
       if (\is_array($item) && \key_exists($key, $item)) {
         $extr[] = $item[$key];
       }
@@ -198,7 +236,7 @@ class Collection implements
           $intersect = true;
         }
 
-        if ($intersect === true) {
+        if (f\equals($intersect, true)) {
           break;
         }
       }
@@ -208,7 +246,7 @@ class Collection implements
           $intersect = true;
         }
 
-        if ($intersect === true) {
+        if (f\equals($intersect, true)) {
           break;
         }
       }
@@ -223,7 +261,7 @@ class Collection implements
   public function implode(string $delimiter): string
   {
     return \rtrim($this->fold(function (string $fold, $elem) use ($delimiter) {
-      $fold .= A\concat($delimiter, $elem, '');
+      $fold .= f\concat($delimiter, $elem, '');
 
       return $fold;
     }, ''), $delimiter);
@@ -262,7 +300,7 @@ class Collection implements
    */
   public function every(callable $func): bool
   {
-    return $this->reject($func)->getSize() == 0;
+    return f\equals($this->reject($func)->getSize(), 0);
   }
 
   /**
@@ -284,9 +322,9 @@ class Collection implements
    *
    * getList :: Collection => c [a] -> [a]
    *
-   * @return SplFixedArray $list
+   * @return SplFixedArray|Vector $list
    */
-  public function getList(): \SplFixedArray
+  public function getList()
   {
     return $this->list;
   }
@@ -297,7 +335,7 @@ class Collection implements
    */
   public function jsonSerialize()
   {
-    return $this->list instanceof \SplFixedArray ? $this->list->toArray() : [$this->list];
+    return $this->list;
   }
 
   /**
@@ -320,7 +358,7 @@ class Collection implements
    */
   public function toArray(): array
   {
-    return $this->list instanceof \SplFixedArray ? ($this->list->toArray()) : [$this->list];
+    return $this->list->toArray();
   }
 
   /**
@@ -335,7 +373,7 @@ class Collection implements
   /**
    * {@inheritdoc}
    */
-  private function update(\SplFixedArray $list)
+  private function update($list)
   {
     if ($this->isMutable()) {
       $this->list = $list;
@@ -360,15 +398,24 @@ class Collection implements
   {
     $list   = $this->getList();
     $count  = $list->count();
-    $new    = new \SplFixedArray($list->count());
     $init   = 0;
+    $new    = \extension_loaded('ds') ?
+      new Vector() :
+      new \SplFixedArray($list->count());
 
     for ($idx = 0; $idx < $count; $idx++) {
       if ($pos ? $func($list[$idx]) : !$func($list[$idx])) {
-        $new[$init++] = $list[$idx];
+        if ($list instanceof \SplFixedArray) {
+          $new[$init++] = $list[$idx];
+        } else {
+          $new[] = $list[$idx];
+        }
       }
     }
-    $new->setSize($init);
+
+    if ($list instanceof \SplFixedArray) {
+      $new->setSize($init);
+    }
 
     return new static($new);
   }

@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class CurryTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       [

@@ -32,9 +32,10 @@ function firstIndexOf($list, $value, $def = null)
   $acc = $def;
 
   foreach ($list as $key => $entry) {
-    if ($value == $entry) {
+    if (equals($value, $entry, true)) {
       $acc = $key;
-      if ($acc !== $def) {
+
+      if (!equals($acc, $def, true)) {
         break;
       }
     }

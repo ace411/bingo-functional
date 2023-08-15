@@ -43,9 +43,11 @@ class State implements Monad, Functor, ApplicativeFunctor
    */
   public static function of($initial): Monad
   {
-    return new static(function ($final) use ($initial) {
-      return [$initial, $final];
-    });
+    return new static(
+      function ($final) use ($initial) {
+        return [$initial, $final];
+      }
+    );
   }
 
   /**
@@ -53,9 +55,11 @@ class State implements Monad, Functor, ApplicativeFunctor
    */
   public function ap(ApplicativeFunctor $monad): ApplicativeFunctor
   {
-    return $this->bind(function ($function) use ($monad) {
-      return $monad->map($function);
-    });
+    return $this->bind(
+      function ($function) use ($monad) {
+        return $monad->map($function);
+      }
+    );
   }
 
   /**
@@ -63,11 +67,13 @@ class State implements Monad, Functor, ApplicativeFunctor
    */
   public function bind(callable $function): Monad
   {
-    return new self(function ($state) use ($function) {
-      [$initial, $final] = $this->run($state);
+    return new self(
+      function ($state) use ($function) {
+        [$initial, $final] = $this->run($state);
 
-      return $function($initial)->run($final);
-    });
+        return $function($initial)->run($final);
+      }
+    );
   }
 
   /**
@@ -75,9 +81,11 @@ class State implements Monad, Functor, ApplicativeFunctor
    */
   public function map(callable $function): Functor
   {
-    return $this->bind(function ($state) use ($function) {
-      return self::of($function($state));
-    });
+    return $this->bind(
+      function ($state) use ($function) {
+        return self::of($function($state));
+      }
+    );
   }
 
   /**

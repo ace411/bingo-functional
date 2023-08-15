@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class FlattenTest extends \PHPunit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       [

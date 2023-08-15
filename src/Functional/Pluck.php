@@ -10,8 +10,6 @@
 
 namespace Chemem\Bingo\Functional;
 
-use function Chemem\Bingo\Functional\Internal\_fold;
-
 const pluck = __NAMESPACE__ . '\\pluck';
 
 /**
@@ -30,11 +28,15 @@ const pluck = __NAMESPACE__ . '\\pluck';
  */
 function pluck($values, $search, $default = null)
 {
-  return _fold(function ($acc, $val, $idx) use ($search) {
-    if ($search == $idx) {
-      $acc = $val;
-    }
+  return fold(
+    function ($acc, $val, $idx) use ($search) {
+      if ($search == $idx) {
+        $acc = $val;
+      }
 
-    return $acc;
-  }, $values, $default);
+      return $acc;
+    },
+    $values,
+    $default
+  );
 }

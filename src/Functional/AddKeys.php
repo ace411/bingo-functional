@@ -10,8 +10,6 @@
 
 namespace Chemem\Bingo\Functional;
 
-use function Chemem\Bingo\Functional\Internal\_fold;
-
 const addKeys = __NAMESPACE__ . '\\addKeys';
 
 /**
@@ -30,15 +28,19 @@ const addKeys = __NAMESPACE__ . '\\addKeys';
  */
 function addKeys($list, ...$keys)
 {
-  return _fold(function ($acc, $val, $idx) use ($keys) {
-    if (!\in_array($idx, $keys)) {
-      if (\is_object($acc)) {
-        unset($acc->{$idx});
-      } elseif (\is_array($acc)) {
-        unset($acc[$idx]);
+  return fold(
+    function ($acc, $val, $idx) use ($keys) {
+      if (!\in_array($idx, $keys)) {
+        if (\is_object($acc)) {
+          unset($acc->{$idx});
+        } elseif (\is_array($acc)) {
+          unset($acc[$idx]);
+        }
       }
-    }
 
-    return $acc;
-  }, $list, $list);
+      return $acc;
+    },
+    $list,
+    $list
+  );
 }

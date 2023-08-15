@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class TailTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       [(object) \range(1, 3), (object) [1 => 2, 2 => 3]],

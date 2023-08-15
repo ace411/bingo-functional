@@ -10,8 +10,6 @@
 
 namespace Chemem\Bingo\Functional;
 
-use function Chemem\Bingo\Functional\Internal\_fold as fold;
-
 const groupBy = __NAMESPACE__ . '\\groupBy';
 
 /**
@@ -40,7 +38,7 @@ const groupBy = __NAMESPACE__ . '\\groupBy';
  *  ]
  * ]
  */
-function groupBy(array $list, $key): array
+function groupBy($list, $key): array
 {
   return fold(
     function ($acc, $val, $idx) use ($list, $key) {

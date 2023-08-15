@@ -10,8 +10,6 @@
 
 namespace Chemem\Bingo\Functional;
 
-use function Chemem\Bingo\Functional\Internal\_fold;
-
 const indexesOf = __NAMESPACE__ . '\\indexesOf';
 
 /**
@@ -29,7 +27,7 @@ const indexesOf = __NAMESPACE__ . '\\indexesOf';
  */
 function indexesOf($list, $value): array
 {
-  return _fold(function ($acc, $val, $idx) use ($value) {
+  return fold(function ($acc, $val, $idx) use ($value) {
     if (\is_array($val) || \is_object($val)) {
       $acc[] = indexesOf($val, $value);
     }

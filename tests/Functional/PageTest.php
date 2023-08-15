@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class PageTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider(): array
+  public static function contextProvider(): array
   {
     return [
       [

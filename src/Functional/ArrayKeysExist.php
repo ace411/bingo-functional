@@ -10,8 +10,6 @@
 
 namespace Chemem\Bingo\Functional;
 
-use function Chemem\Bingo\Functional\Internal\_fold;
-
 const arrayKeysExist = __NAMESPACE__ . '\\arrayKeysExist';
 
 /**
@@ -51,13 +49,17 @@ const keysExist = __NAMESPACE__ . '\\keysExist';
  */
 function keysExist($list, ...$keys): bool
 {
-  $check = _fold(function ($acc, $val, $idx) use ($keys) {
-    if (\in_array($idx, $keys)) {
-      $acc[] = $val;
-    }
+  $check = fold(
+    function ($acc, $val, $idx) use ($keys) {
+      if (\in_array($idx, $keys)) {
+        $acc[] = $val;
+      }
 
-    return $acc;
-  }, $list, []);
+      return $acc;
+    },
+    $list,
+    []
+  );
 
-  return \count($check) == \count($keys);
+  return equals(size($check), size($keys));
 }

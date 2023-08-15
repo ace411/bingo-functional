@@ -1,7 +1,8 @@
 {
   "name": "chemem/bingo-functional",
-  "type": "library",
   "description": "A simple functional programming library.",
+  "license": "Apache-2.0",
+  "type": "library",
   "keywords": [
     "functional",
     "pattern matching",
@@ -10,6 +11,7 @@
     "helpers",
     "tuples",
     "zip",
+    "memoize",
     "input-output",
     "unzip",
     "compose",
@@ -40,16 +42,24 @@
     "bingo",
     "Either",
     "Maybe",
+    "either monad",
+    "maybe monad",
     "Applicative",
+    "applicative functor",
+    "identity functor",
     "Functor",
     "fantasy land",
     "collections",
+    "tuples",
+    "over",
     "immutable lists",
     "union types",
     "functors",
-    "applicatives"
+    "applicatives",
+    "transducers",
+    "transduce",
+    "zip"
   ],
-  "license": "Apache-2.0",
   "authors": [
     {
       "name": "Lochemem Bruno Michael",
@@ -58,13 +68,14 @@
     }
   ],
   "require": {
-    "php": "~7 || ~8",
-    "functional-php/pattern-matching": "~1"
+    "php": "^7 || ^8",
+    "functional-php/pattern-matching": "^1"
   },
   "require-dev": {
-    "friendsofphp/php-cs-fixer": "~3",
-    "giorgiosironi/eris": "~0",
-    "phpunit/phpunit": "~7 || ~8 || 9.3.*"
+    "ergebnis/composer-normalize": "^2",
+    "friendsofphp/php-cs-fixer": "^3",
+    "giorgiosironi/eris": "^0",
+    "phpunit/phpunit": "^8 || ^9"
   },
   "suggest": {
     "ext-apcu": "In-memory key-value PHP userland store",
@@ -72,115 +83,37 @@
     "ext-readline": "An interface to the GNU readline library",
     "chemem/bingo-functional-repl": "A simple REPL for the bingo-functional library"
   },
-  "extra": {
-    "branch-alias": {
-      "dev-master": "1.x-dev"
-    }
-  },
+  "minimum-stability": "stable",
   "autoload": {
     "psr-4": {
       "Chemem\\Bingo\\Functional\\": "src/"
     },
     "files": [
-      "src/Functional/Identity.php",
-      "src/Functional/Compose.php",
-      "src/Functional/Curry.php",
-      "src/Functional/CurryN.php",
-      "src/Functional/Pick.php",
-      "src/Functional/Pluck.php",
-      "src/Functional/PluckPath.php",
-      "src/Functional/Zip.php",
-      "src/Functional/Any.php",
-      "src/Functional/Max.php",
-      "src/Functional/Min.php",
-      "src/Functional/Omit.php",
-      "src/Functional/Every.php",
-      "src/Functional/Where.php",
-      "src/Functional/GroupBy.php",
-      "src/Functional/Fill.php",
-      "src/Functional/ToPairs.php",
-      "src/Functional/MapDeep.php",
-      "src/Functional/FromPairs.php",
-      "src/Functional/Trampoline.php",
-      "src/Functional/IndexOf.php",
-      "src/Functional/Unzip.php",
-      "src/Functional/Equals.php",
-      "src/Functional/Paths.php",
-      "src/Functional/PartialLeft.php",
-      "src/Functional/Intersperse.php",
-      "src/Functional/Extend.php",
-      "src/Functional/Memoize.php",
-      "src/Functional/Tail.php",
-      "src/Functional/Concat.php",
-      "src/Functional/AddKeys.php",
-      "src/Functional/Throttle.php",
-      "src/Functional/Head.php",
-      "src/Functional/Map.php",
-      "src/Functional/Last.php",
-      "src/Functional/Flip.php",
-      "src/Functional/Mean.php",
-      "src/Functional/Filter.php",
-      "src/Functional/FilterDeep.php",
-      "src/Functional/Reject.php",
-      "src/Functional/Fold.php",
-      "src/Functional/Has.php",
-      "src/Functional/Unique.php",
-      "src/Functional/Compact.php",
-      "src/Functional/Flatten.php",
-      "src/Functional/Union.php",
-      "src/Functional/FilePath.php",
-      "src/Functional/UnionWith.php",
-      "src/Functional/Contains.php",
-      "src/Functional/StartsWith.php",
-      "src/Functional/EndsWith.php",
-      "src/Functional/DropLeft.php",
-      "src/Functional/ZipWith.php",
-      "src/Functional/DropRight.php",
-      "src/Functional/Partition.php",
-      "src/Functional/Transduce.php",
-      "src/Functional/Transducer/functions.php",
-      "src/Functional/IsArrayOf.php",
-      "src/Functional/ToException.php",
-      "src/Functional/PartialRight.php",
-      "src/Functional/ArrayKeysExist.php",
-      "src/Functional/ConstantFunction.php",
-      "src/Functional/Intersects.php",
-      "src/Functional/Slugify.php",
-      "src/Functional/IndexesOf.php",
-      "src/Functional/FirstIndexOf.php",
-      "src/Functional/LastIndexOf.php",
-      "src/Functional/ToWords.php",
-      "src/Functional/Truncate.php",
-      "src/Functional/Difference.php",
-      "src/Functional/CountOf.php",
-      "src/Functional/RenameKeys.php",
-      "src/Functional/PartitionBy.php",
-      "src/Functional/Assoc.php",
-      "src/Functional/AssocPath.php",
-      "src/Functional/Page.php",
-      "src/Functors/Lens/functions.php",
-      "src/Functors/Monads/functions.php",
-      "src/Functors/Monads/IO/files.php",
-      "src/Functors/Monads/IO/simple.php",
-      "src/Functors/Monads/Reader/functions.php",
-      "src/Functors/Monads/Writer/functions.php",
-      "src/Functors/Monads/State/functions.php",
-      "src/Functors/Monads/ListMonad/functions.php",
-      "src/Functors/Monads/Either/functions.php",
-      "src/Functors/Monads/Maybe/functions.php",
-      "src/Functors/Applicative/functions.php",
-      "src/PatternMatching/functions.php",
-      "src/PatternMatching/Internal/functions.php",
-      "src/Functional/Internal/functions.php",
-      "tests/functions.php"
+      "src/Functional/index.php",
+      "src/Functors/Applicative/index.php",
+      "src/Functors/Lens/index.php",
+      "src/Functors/Monads/index.php",
+      "src/PatternMatching/index.php"
     ]
   },
   "autoload-dev": {
     "psr-4": {
       "Chemem\\Bingo\\Functional\\Tests\\": "tests/"
+    },
+    "files": [
+      "tests/functions.php"
+    ]
+  },
+  "config": {
+    "allow-plugins": {
+      "ergebnis/composer-normalize": true
     }
   },
-  "minimum-stability": "stable",
+  "extra": {
+    "branch-alias": {
+      "dev-master": "1.x-dev"
+    }
+  },
   "scripts": {
     "cs:fix": "php-cs-fixer fix --config=.php-cs-fixer.php --diff --verbose --allow-risky=yes",
     "cs:fix-dry": "php-cs-fixer fix --config=.php-cs-fixer.php --diff --verbose --dry-run --allow-risky=yes",

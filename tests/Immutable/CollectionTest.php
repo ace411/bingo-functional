@@ -260,7 +260,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
       ->then(function ($list) {
         $lst = Collection::from($list)->slice(1);
 
-        $this->assertEquals(2, $lst->count());
+        $this->assertEquals(2, \count($lst));
         $this->assertInstanceOf(Collection::class, $lst);
         $this->assertEquals(\array_slice($list, 1), $lst->toArray());
       });
@@ -282,7 +282,7 @@ class CollectionTest extends \PHPUnit\Framework\TestCase
       ->then(function ($list) {
         $lst = Collection::from($list)->reverse();
 
-        $this->assertEquals(3, $lst->getSize());
+        $this->assertEquals(3, \count($lst));
         $this->assertEquals(\array_reverse($list), $lst->toArray());
       });
   }

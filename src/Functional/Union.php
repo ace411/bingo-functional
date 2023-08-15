@@ -19,16 +19,14 @@ const union = __NAMESPACE__ . '\\union';
  *
  * union :: [a] -> [b] -> [a, b]
  *
- * @param array ...$values
+ * @param array|object ...$values
  * @return array
  * @example
  *
  * union(range(1, 3), range(2, 5))
  * => [1, 2, 3, 4, 5]
  */
-function union(array ...$values): array
+function union(...$values)
 {
-  $res = compose(flatten, unique);
-
-  return $res($values);
+  return compose(flatten, unique)($values);
 }

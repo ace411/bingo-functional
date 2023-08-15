@@ -13,7 +13,7 @@ namespace Chemem\Bingo\Functional\Functors\Monads;
 use Chemem\Bingo\Functional\Functors\Functor;
 use Chemem\Bingo\Functional\Functors\ApplicativeFunctor;
 
-use function Chemem\Bingo\Functional\constantFunction;
+use function Chemem\Bingo\Functional\K;
 
 class IO implements Monad, Functor, ApplicativeFunctor
 {
@@ -46,7 +46,9 @@ class IO implements Monad, Functor, ApplicativeFunctor
    */
   public static function of($unsafe): Monad
   {
-    return new static(\is_callable($unsafe) ? $unsafe : constantFunction($unsafe));
+    return new static(
+      \is_callable($unsafe) ? $unsafe : K($unsafe)
+    );
   }
 
   /**
@@ -62,9 +64,11 @@ class IO implements Monad, Functor, ApplicativeFunctor
    */
   public function map(callable $function): Functor
   {
-    return $this->bind(function ($unsafe) use ($function) {
-      return self::of($function($unsafe));
-    });
+    return $this->bind(
+      function ($unsafe) use ($function) {
+        return self::of($function($unsafe));
+      }
+    );
   }
 
   /**

@@ -6,12 +6,16 @@ use Chemem\Bingo\Functional as f;
 
 class ZipWithTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       [
         function ($int, $str) {
-          return $int + \mb_strlen($str, 'utf-8');
+          return $int + (
+            \extension_loaded('mbstring') ?
+              \mb_strlen($str, 'utf-8') :
+              \strlen($str)
+          );
         },
         [\range(1, 3), ['foo', 'bar', 'baz']],
         \range(4, 6),

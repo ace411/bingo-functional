@@ -10,8 +10,6 @@
 
 namespace Chemem\Bingo\Functional;
 
-use function Chemem\Bingo\Functional\Internal\_fold;
-
 const filterDeep = __NAMESPACE__ . '\\filterDeep';
 
 /**
@@ -28,17 +26,31 @@ const filterDeep = __NAMESPACE__ . '\\filterDeep';
  * filterDeep(fn ($x) => strlen($x) === 3, [2, 'fa', 'foo'])
  * => ['foo']
  */
-function filterDeep(callable $function, array $values): array
+function filterDeep(callable $function, $list)
 {
-  return _fold(function ($acc, $val, $idx) use ($function) {
-    $acc[$idx] = \is_array($val) ?
-            filterDeep($function, $val) :
-      head((filter)($function, [$val]));
+  return fold(
+    function ($acc, $val, $idx) use ($function) {
+      if (\is_object($acc)) {
+        $acc->{$idx} = \is_array($val) || \is_object($val) ?
+          filterDeep($function, $val) :
+          head(filter($function, [$val]));
 
-    if ($acc[$idx] == null) {
-      unset($acc[$idx]);
-    }
+        if (\is_null($acc->{$idx})) {
+          unset($acc->{$idx});
+        }
+      } elseif (\is_array($acc)) {
+        $acc[$idx] = \is_array($val) || \is_object($val) ?
+          filterDeep($function, $val) :
+          head(filter($function, [$val]));
 
-    return $acc;
-  }, $values, []);
+        if (\is_null($acc[$idx])) {
+          unset($acc[$idx]);
+        }
+      }
+
+      return $acc;
+    },
+    $list,
+    $list
+  );
 }

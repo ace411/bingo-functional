@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class ToWordsTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       ['foo-bar:baz', '/([-:])+/', ['foo', 'bar', 'baz']],

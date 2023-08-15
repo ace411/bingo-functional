@@ -20,18 +20,21 @@ const zipWith = __NAMESPACE__ . '\\zipWith';
  * zipWith :: (a -> b -> c) -> [a] -> [b] -> [c]
  *
  * @param callable $function
- * @param array ...$values
+ * @param array|object ...$values
  * @return array
  * @example
  *
  * zipWith(fn ($x, $y) => $x ** $y, range(1, 3), range(0, 2))
  * => [1, 2, 9]
  */
-function zipWith(callable $function, array ...$values): array
+function zipWith(callable $function, ...$values)
 {
   $zipped = zip(...$values);
 
-  return (map)(function ($zip) use ($function) {
-    return $function(...$zip);
-  }, $zipped);
+  return map(
+    function ($zip) use ($function) {
+      return $function(...$zip);
+    },
+    $zipped
+  );
 }

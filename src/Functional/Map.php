@@ -10,8 +10,6 @@
 
 namespace Chemem\Bingo\Functional;
 
-use function Chemem\Bingo\Functional\Internal\_fold;
-
 const map = __NAMESPACE__ . '\\map';
 
 /**
@@ -30,7 +28,7 @@ const map = __NAMESPACE__ . '\\map';
  */
 function map(callable $func, $list)
 {
-  return _fold(function ($acc, $val, $idx) use ($func) {
+  return fold(function ($acc, $val, $idx) use ($func) {
     if (\is_object($acc)) {
       $acc->{$idx} = $func($val);
     } elseif (\is_array($acc)) {

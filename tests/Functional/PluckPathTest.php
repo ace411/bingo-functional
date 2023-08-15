@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class PluckPathTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       [['x', 'y', 1], ['x' => ['y' => \range(1, 3)]], null,  2],

@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Chemem\Bingo\Functional\Immutable;
 
+use function Chemem\Bingo\Functional\equals;
+
 class Tuple implements \Countable, ImmutableDataStructure
 {
   use CommonTrait;
@@ -82,7 +84,7 @@ class Tuple implements \Countable, ImmutableDataStructure
    */
   private function fetchFromPair(int $index)
   {
-    if ($this->count() !== 2) {
+    if (!equals($this->count(), 2)) {
       throw new TupleException(TupleException::PAIR_ERRMSG);
     }
 

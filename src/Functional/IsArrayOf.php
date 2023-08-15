@@ -25,9 +25,17 @@ const isArrayOf = __NAMESPACE__ . '\\isArrayOf';
  * isArrayOf(['foo', 'bar', 'baz'])
  * => 'string'
  */
-function isArrayOf(array $list): string
+function isArrayOf($list): string
 {
-  $types = \array_unique((map)('gettype', $list));
+  $types = fold(
+    function ($types, $entry) {
+      $types[] = \gettype($entry);
 
-  return \count($types) > 1 ? 'mixed' : head($types);
+      return unique($types);
+    },
+    $list,
+    []
+  );
+
+  return size($types) > 1 ? 'mixed' : head($types);
 }

@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class SlugifyTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       ['lorem ipsum dolor', 'lorem-ipsum-dolor'],

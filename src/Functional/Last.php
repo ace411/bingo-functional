@@ -25,9 +25,20 @@ const last = __NAMESPACE__ . '\\last';
  * last(range(4, 7))
  * => 7
  */
-function last($list, $def = null)
+function last($list, $default = null)
 {
-  $last = \end($list);
+  $count  = 0;
+  $size   = size($list);
 
-  return $last ? $last : $def;
+  return fold(
+    function ($acc, $item) use (&$count, $size) {
+      if (equals($count, $size - 1)) {
+        return $item;
+      }
+
+      $count++;
+    },
+    $list,
+    $default
+  );
 }

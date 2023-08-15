@@ -10,6 +10,8 @@
 
 namespace Chemem\Bingo\Functional;
 
+require_once __DIR__ . '/Internal/_Drop.php';
+
 use function Chemem\Bingo\Functional\Internal\_drop;
 
 const dropLeft = __NAMESPACE__ . '\\dropLeft';
@@ -20,15 +22,15 @@ const dropLeft = __NAMESPACE__ . '\\dropLeft';
  *
  * dropLeft :: [a, b] -> Int -> [b]
  *
- * @param array $list
+ * @param array|object $list
  * @param integer $number
- * @return array
+ * @return array|object
  * @example
  *
  * dropLeft(['foo' => 'foo', 'bar' => 'bar'], 1)
  * => ['bar' => 'bar']
  */
-function dropLeft(array $list, int $number = 1): array
+function dropLeft($list, int $number = 1)
 {
   return _drop($list, $number);
 }

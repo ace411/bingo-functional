@@ -6,7 +6,7 @@ use Chemem\Bingo\Functional as f;
 
 class ContainsTest extends \PHPUnit\Framework\TestCase
 {
-  public function contextProvider()
+  public static function contextProvider()
   {
     return [
       ['bingo-functional', 'func', true],

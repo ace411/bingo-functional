@@ -68,9 +68,11 @@ class Right extends Either
    */
   public function ap(ApplicativeFunctor $right): ApplicativeFunctor
   {
-    return $this->bind(function ($function) use ($right) {
-      return $right->map($function);
-    });
+    return $this->bind(
+      function ($function) use ($right) {
+        return $right->map($function);
+      }
+    );
   }
 
   /**
@@ -78,7 +80,9 @@ class Right extends Either
    */
   public function filter(callable $function, $error): Monad
   {
-    return $function($this->value) ? new static($this->getRight()) : new Left($error);
+    return $function($this->value) ?
+      new static($this->getRight()) :
+      new Left($error);
   }
 
   /**

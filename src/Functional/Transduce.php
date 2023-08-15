@@ -10,7 +10,7 @@
 
 namespace Chemem\Bingo\Functional;
 
-use function Chemem\Bingo\Functional\Internal\_fold;
+const transduce = __NAMESPACE__ . '\\transduce';
 
 /**
  * transduce
@@ -20,14 +20,15 @@ use function Chemem\Bingo\Functional\Internal\_fold;
  *
  * @param callable $transducer
  * @param callable $iterator
- * @param array $list
+ * @param array|object $list
  * @param mixed $acc
  * @return mixed
  */
-function transduce(callable $transducer, callable $iterator, array $list, $acc)
-{
-  // create reducer function to be passed to fold operation
-  $reducer = $transducer($iterator);
-
-  return _fold($reducer, $list, $acc);
+function transduce(
+  callable $transducer,
+  callable $iterator,
+  $list,
+  $acc
+) {
+  return fold($transducer($iterator), $list, $acc);
 }
