@@ -17,11 +17,10 @@ class Nothing extends Maybe
 {
   public const of = __CLASS__ . '::of';
 
-  private $nothing;
+  private $nothing = null;
 
   public function __construct()
   {
-    $this->nothing = null;
   }
 
   /**

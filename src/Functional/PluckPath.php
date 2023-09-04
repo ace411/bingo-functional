@@ -35,9 +35,9 @@ function pluckPath($path, $list, $default = null)
   return fold(
     function ($acc, $key) use ($default) {
       if (\is_object($acc)) {
-        $acc = isset($acc->{$key}) ? $acc->{$key} : null;
+        $acc = $acc->{$key} ?? null;
       } elseif (\is_array($acc) || \is_iterable($acc)) {
-        $acc = isset($acc[$key]) ? $acc[$key] : null;
+        $acc = $acc[$key] ?? null;
       }
 
       return \is_null($acc) ? $default : $acc;
