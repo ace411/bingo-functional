@@ -30,7 +30,7 @@ function reject(callable $func, $list)
 {
   return fold(
     function ($acc, $val, $idx) use ($func) {
-      if ($func($val)) {
+      if ($func($val, $idx)) {
         if (\is_object($acc)) {
           unset($acc->{$idx});
         } elseif (\is_array($acc)) {

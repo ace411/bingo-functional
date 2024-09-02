@@ -27,6 +27,50 @@ class RejectTest extends \PHPUnit\Framework\TestCase
         (object) ['foo', 'bar', 'foo-bar'],
         (object) [0 => 'foo', 1 => 'bar'],
       ],
+      [
+        function ($val, $key) {
+          return (
+            (
+              \extension_loaded('mbstring') ?
+                '\mb_strlen' :
+                '\strlen'
+            )($key) > 3
+          ) && f\equals($val % 2, 0);
+        },
+        [
+          'foo'  => 12,
+          'fooz' => 4,
+          'bar'  => 223,
+          'baz'  => 25,
+        ],
+        [
+          'foo' => 12,
+          'bar' => 223,
+          'baz' => 25,
+        ],
+      ],
+      [
+        function ($val, $key) {
+          return (
+            (
+              \extension_loaded('mbstring') ?
+                '\mb_strlen' :
+                '\strlen'
+            )($key) > 3
+          ) && f\equals($val % 2, 0);
+        },
+        (object) [
+          'foo'  => 12,
+          'fooz' => 4,
+          'bar'  => 223,
+          'baz'  => 25,
+        ],
+        (object) [
+          'foo' => 12,
+          'bar' => 223,
+          'baz' => 25,
+        ],
+      ],
     ];
   }
 
