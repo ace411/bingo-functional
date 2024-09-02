@@ -28,9 +28,11 @@ const pluck = __NAMESPACE__ . '\\pluck';
  */
 function pluck($values, $search, $default = null)
 {
+  $search = \sprintf('%s', $search);
+
   return fold(
     function ($acc, $val, $idx) use ($search) {
-      if ($search == $idx) {
+      if (equals($search, \sprintf('%s', $idx))) {
         $acc = $val;
       }
 
