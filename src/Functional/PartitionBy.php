@@ -32,13 +32,27 @@ const partitionBy = __NAMESPACE__ . '\\partitionBy';
  */
 function partitionBy(int $partitionSize, $list)
 {
-  $list = _props($list);
+  $list    = _props($list);
+  $counter = 0;
+  $idx     = 0;
 
-  if (equals($partitionSize, 0)) {
-    return $list;
-  }
+  return fold(
+    function (iterable $acc, $value, $key) use (
+      &$counter,
+      &$idx,
+      $partitionSize
+    ) {
+      $idx++;
 
-  $number = (int) \ceil(size($list) / $partitionSize);
+      $acc[$counter][$key] = $value;
 
-  return partition($number, $list);
+      if ($idx > 0 && ($idx % $partitionSize === 0)) {
+        $counter++;
+      }
+
+      return $acc;
+    },
+    $list,
+    [],
+  );
 }
