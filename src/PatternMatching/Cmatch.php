@@ -1,7 +1,7 @@
 <?php
 
 /**
- * cmatch
+ * cmatch function
  *
  * @package bingo-functional
  * @author Lochemem Bruno Michael
@@ -10,11 +10,14 @@
 
 namespace Chemem\Bingo\Functional\PatternMatching;
 
-require_once __DIR__ . '/Internal/_ExecConsMatch.php';
-require_once __DIR__ . '/Internal/_FilterMatch.php';
+require_once __DIR__ . '/Parser/index.php';
 
-use function Chemem\Bingo\Functional\PatternMatching\Internal\_execConsMatch;
-use function Chemem\Bingo\Functional\PatternMatching\Internal\_filterMatch;
+use function Chemem\Bingo\Functional\PatternMatching\Parser\_tokenize;
+use function Chemem\Bingo\Functional\equals;
+use function Chemem\Bingo\Functional\size;
+
+use const Chemem\Bingo\Functional\PatternMatching\Parser\PM_RULE_CONS;
+use const Chemem\Bingo\Functional\PatternMatching\Parser\PM_WILDCARD;
 
 /**
  * cmatch
@@ -32,16 +35,34 @@ use function Chemem\Bingo\Functional\PatternMatching\Internal\_filterMatch;
  * ])([2])
  * => 12
  */
-function cmatch(array $patterns): callable
+function cmatch(iterable $patterns): callable
 {
-  // extract cons pattern counts
-  $cons = _filterMatch($patterns);
+  return function (iterable $values) use ($patterns) {
+    $size = size($values);
 
-  return function (array $values) use ($patterns, $cons) {
-    // return false on invalid cons data
-    // perform match otherwise
-    return empty($cons) ?
-      false :
-      _execConsMatch($patterns, $cons, $values);
+    foreach ($patterns as $pattern => $action) {
+      if (\preg_match('/^(\(){1}(.*)(\:\_)?(\)){1}$/ix', $pattern, $matches)) {
+        $ptt = isset($matches[2]) ? $matches[2] : [];
+
+        if (!empty($ptt)) {
+          $next  = _tokenize($ptt, PM_RULE_CONS);
+          $final = $next['tokens'][$next['token_count'] - 1];
+
+          // non-strict cons match
+          if (equals($final[0], PM_WILDCARD)) {
+            if (equals($size, ($next['token_count'] - 1))) {
+              return $action(...$values);
+            }
+          } elseif (equals($size, $next['token_count'])) {
+            return $action(...$values);
+          }
+        }
+      }
+    }
+
+    return (
+      $patterns['_']() ??
+      throw new \Exception('Could not find match for provided input')
+    );
   };
 }

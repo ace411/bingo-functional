@@ -10,18 +10,9 @@
 
 namespace Chemem\Bingo\Functional\PatternMatching;
 
-require_once __DIR__ . '/Internal/_BaseFilter.php';
-require_once __DIR__ . '/Internal/_MatchObject.php';
-require_once __DIR__ . '/Internal/_MatchString.php';
+require_once __DIR__ . '/Parser/index.php';
 
-use function Chemem\Bingo\Functional\fold;
-use function Chemem\Bingo\Functional\partial;
-use function Chemem\Bingo\Functional\partialRight;
-use function FunctionalPHP\PatternMatching\pmatch;
-
-use const Chemem\Bingo\Functional\PatternMatching\Internal\_baseFilter;
-use const Chemem\Bingo\Functional\PatternMatching\Internal\_matchObject;
-use const Chemem\Bingo\Functional\PatternMatching\Internal\_matchString;
+use function Chemem\Bingo\Functional\PatternMatching\Parser\_match;
 
 const patternMatch = __NAMESPACE__ . '\\patternMatch';
 
@@ -44,23 +35,18 @@ const patternMatch = __NAMESPACE__ . '\\patternMatch';
  */
 function patternMatch(array $patterns, $value)
 {
-  // operationalize base pattern filter for subsequent matches
-  $match = partialRight(
-    partial(_baseFilter, false, $patterns),
-    // apply value filter to Maybe filter context
-    function ($_) use ($value) {
-      return !empty($value);
-    }
-  );
+  if (!isset($patterns['_'])) {
+    $patterns['_'] = function () {
+      throw new \Exception('Could not find match for provided input');
+    };
+  }
 
-  return \is_array($value) ?
-    // use FunctionalPHP\PatternMatching primitives for array matches
-    pmatch($patterns, $value) :
+  return _match(
+    $patterns,
     (
-      // perform object match on detection of object input
-      // perform string-based search otherwise
       \is_object($value) ?
-        $match(partialRight(_matchObject, $value)) :
-        $match(partialRight(_matchString, $value))
-    );
+        \get_class($value) :
+        $value
+    )
+  );
 }
