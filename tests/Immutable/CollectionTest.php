@@ -5,7 +5,6 @@ namespace Chemem\Bingo\Functional\Tests\Immutable;
 \error_reporting(0);
 
 use Eris\Generator;
-
 use Chemem\Bingo\Functional as f;
 use Chemem\Bingo\Functional\Immutable\Collection;
 

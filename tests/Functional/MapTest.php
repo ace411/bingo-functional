@@ -17,7 +17,7 @@ class MapTest extends \PHPUnit\Framework\TestCase
         ['foo' => 4, 'bar' => 16],
       ],
       [
-        f\partial(f\concat, '', 'foo-'),
+        f\partial('\sprintf', 'foo-%s'),
         (object) ['bar' => 'bar', 'baz'],
         (object) ['bar' => 'foo-bar', 'foo-baz'],
       ],
