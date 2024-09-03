@@ -2,7 +2,7 @@
 
 ## v2.4.0
 
-- Added `jsonDecode` function
+- Added `jsonDecode` and `extract` functions
 - Reworked internals of `partition`, `slugify`, and `partitionBy` functions
 - Infused `startsWith`, `endsWith`, `contains`, and `truncate` functions with multi-byte string processing capabilities
 - Added opt-in key propagation to `filter`, and `reject` functions
