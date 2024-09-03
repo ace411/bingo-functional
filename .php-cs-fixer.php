@@ -16,6 +16,10 @@ return $config
     [
       '@PSR12'                      => true,
       'linebreak_after_opening_tag' => true,
+      'trailing_comma_in_multiline' => [
+        'after_heredoc'             => false,
+        'elements'                  => [],
+      ],
       'binary_operator_spaces'      => [
         'operators'                 => [
           '=>'                      => 'align', 
