@@ -9,5 +9,6 @@
  */
 
 require_once __DIR__ . '/Cmatch.php';
+require_once __DIR__ . '/Extract.php';
 require_once __DIR__ . '/LetIn.php';
 require_once __DIR__ . '/PatternMatch.php';

@@ -116,7 +116,7 @@ class MatchTest extends \PHPUnit\Framework\TestCase
             return 'foo-bar';
           },
           '[a, (x:xs), b]'    => function (...$args) {
-            return f\mean($args);
+            return f\mean(f\flatten($args));
           },
           '[12.224, _]'       => function () {
             return 'float';
@@ -210,5 +210,54 @@ class MatchTest extends \PHPUnit\Framework\TestCase
     $let = p\letIn($pattern, $list);
 
     $this->assertEquals($res, $let($arg, $func));
+  }
+
+  public static function extractProvider(): iterable
+  {
+    return [
+      [
+        '["foo", _, (x:xs)]',
+        ['foo', null, \range(1, 3)],
+        [
+          'x'  => 1,
+          'xs' => [1 => 2, 2 => 3],
+        ],
+      ],
+      [
+        '(x:xs:_)',
+        \range(1, 5),
+        [
+          'x'   => 1,
+          'xs'  => 2,
+        ],
+      ],
+      [
+        '[12.23, 2, _, a]',
+        [12.23, 2, 'bar'],
+        [],
+      ],
+      [
+        'x',
+        12,
+        ['x' => 12],
+      ],
+      [
+        'x',
+        [24.2, ['foo', 'bar']],
+        [
+          'x' => [24.2, ['foo', 'bar']],
+        ],
+      ],
+    ];
+  }
+
+  /**
+   * @dataProvider extractProvider
+   */
+  public function testextractEffectsPatternBasedDestructuring(string $pattern, $input, $result)
+  {
+    $extracts = p\extract($pattern, $input);
+
+    $this->assertEquals($result, $extracts);
   }
 }
