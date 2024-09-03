@@ -53,6 +53,6 @@ function partitionBy(int $partitionSize, $list)
       return $acc;
     },
     $list,
-    [],
+    []
   );
 }
