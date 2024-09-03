@@ -48,6 +48,6 @@ function memoize(callable $function, bool $apc = false): callable
       $cache[$key] = $function(...$args);
     }
 
-    return isset($cache[$key]) ? $cache[$key] : $function(...$args);
+    return $cache[$key] ?? $function(...$args);
   };
 }
