@@ -40,8 +40,7 @@ function truncate(string $string, int $limit): string
       $limit,
       0
     ),
-    partial('\sprintf', '%s...'),
-    // partialRight(partial(concat, '..'), '.')
+    partial('\sprintf', '%s...')
   );
 
   return (
