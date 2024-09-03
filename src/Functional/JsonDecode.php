@@ -44,7 +44,7 @@ function jsonDecode(...$args)
         } elseif (\is_object($acc)) {
           $acc->{$key} = $decoder(
             \sprintf('%s', $value),
-            ...$options,
+            ...$options
           ) ?? $value;
         }
       }
