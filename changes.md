@@ -1,5 +1,15 @@
 # bingo-functional changes
 
+## v2.4.0
+
+- Added `jsonDecode` and `extract` functions
+- Reworked internals of `partition`, `slugify`, and `partitionBy` functions
+- Infused `startsWith`, `endsWith`, `contains`, and `truncate` functions with multi-byte string processing capabilities
+- Added iteration modes to `filter` and `reject` functions
+- Added [ext-eio](https://pecl.php.net/eio)-powered non-blocking file operations for IO monad
+- Replaced pattern matching parser in `functional-php/pattern-matching` with custom parser
+- Replaced cons matching function calls in `cmatch` with custom parser
+
 ## v2.3.0
 
 - Added `keys`, `values`, and `size` functions

@@ -11,8 +11,11 @@
 
 namespace Chemem\Bingo\Functional\Functors\Monads\IO;
 
+require_once __DIR__ . '/Internal/_Eio.php';
+
 use Chemem\Bingo\Functional\Functors\Monads\Monad;
 
+use function Chemem\Bingo\Functional\Functors\Monads\IO\Internal\_eio;
 use function Chemem\Bingo\Functional\toException;
 
 const readFile = __NAMESPACE__ . '\\readFile';
@@ -31,7 +34,21 @@ function readFile(string $file): Monad
   return IO(
     toException(
       function () use ($file) {
-        return \file_get_contents($file);
+        // use ext-eio bindings
+        if (\extension_loaded('eio')) {
+          return _eio()
+            ->read($file)
+            ->exec();
+        }
+
+        $contents = @\file_get_contents($file);
+        $error    = \error_get_last();
+
+        if (!\is_null($error)) {
+          throw new \Exception($error['message']);
+        }
+
+        return $contents;
       },
       function ($err) {
         return IOException($err->getMessage())->exec();

@@ -29,15 +29,28 @@ const truncate = __NAMESPACE__ . '\\truncate';
  */
 function truncate(string $string, int $limit): string
 {
-  $strlen = 0;
-  $strlen += !\function_exists('mb_strlen') ?
-    \strlen($string) :
-    \mb_strlen($string, 'utf-8');
-
+  $lmbstr   = \extension_loaded('mbstring');
   $truncate = compose(
-    partialRight('substr', $limit, 0),
-    partialRight(partial(concat, '..'), '.')
+    partialRight(
+      (
+        $lmbstr ?
+          '\mb_substr' :
+          '\substr'
+      ),
+      $limit,
+      0
+    ),
+    partial('\sprintf', '%s...')
   );
 
-  return $limit > $strlen ? $string : $truncate($string);
+  return (
+    $limit >
+    (
+      $lmbstr ?
+        '\mb_strlen' :
+        '\strlen'
+    )($string)
+  ) ?
+    $string :
+    $truncate($string);
 }

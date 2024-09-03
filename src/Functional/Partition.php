@@ -32,17 +32,10 @@ const partition = __NAMESPACE__ . '\\partition';
  */
 function partition(int $number, $list)
 {
-  $list   = _props($list);
-  $count  = size($list);
+  $list = _props($list);
 
-  if ($number < 2 || $count < 2) {
-    return [$list];
-  }
-
-  $psize = \ceil($count / $number);
-
-  return extend(
-    [\array_slice($list, 0, $psize, true)],
-    partition($number - 1, dropLeft($list, $psize))
+  return partitionBy(
+    (int) \ceil(size($list) / $number),
+    $list
   );
 }

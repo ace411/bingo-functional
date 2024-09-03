@@ -95,7 +95,10 @@ class EqualsTest extends \PHPUnit\Framework\TestCase
       ],
       [
         [
-          \fopen(__DIR__ . '/../../io.test.txt', 'r'),
+          \fopen(
+            \sprintf('%s/../../README.md', __DIR__),
+            'r'
+          ),
           \curl_init(),
         ],
         false
@@ -149,5 +152,17 @@ class EqualsTest extends \PHPUnit\Framework\TestCase
 
     $this->assertIsBool($comp);
     $this->assertEquals($result, $comp);
+
+    foreach ($args as $arg) {
+      if (\is_resource($arg)) {
+        $type = \get_resource_type($arg);
+
+        if (f\equals($type, 'stream')) {
+          \fclose($arg);
+        } elseif (f\equals($type, 'curl')) {
+          \curl_close($arg);
+        }
+      }
+    }
   }
 }
