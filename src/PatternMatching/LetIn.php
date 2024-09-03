@@ -11,7 +11,6 @@
 namespace Chemem\Bingo\Functional\PatternMatching;
 
 use function Chemem\Bingo\Functional\fold;
-use function FunctionalPHP\PatternMatching\extract;
 
 const letIn = __NAMESPACE__ . '\\letIn';
 
@@ -31,7 +30,6 @@ const letIn = __NAMESPACE__ . '\\letIn';
  */
 function letIn(string $pattern, array $items): callable
 {
-  // extract the tokens from the list
   $tokens = extract($pattern, $items);
 
   return function (array $keys, callable $func) use ($tokens) {
