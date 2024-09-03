@@ -60,9 +60,10 @@ function cmatch(iterable $patterns): callable
       }
     }
 
-    return (
-      $patterns['_']() ??
-      throw new \Exception('Could not find match for provided input')
-    );
+    if (!isset($patterns['_'])) {
+      throw new \Exception('Could not find match for provided input');
+    }
+
+    return $patterns['_']();
   };
 }
