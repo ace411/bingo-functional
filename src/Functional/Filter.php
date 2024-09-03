@@ -16,21 +16,30 @@ const filter = __NAMESPACE__ . '\\filter';
  * filter
  * selects list values that conform to a boolean predicate
  *
- * filter :: (a -> Bool) -> [a] -> [a]
+ * filter :: (a -> Bool) -> [a] -> Int -> [a]
  *
  * @param callable $func
  * @param array|object $list
+ * @param int $mode
  * @return array|object
  * @example
  *
  * filter(fn ($x) => $x % 2 === 0, range(4, 8))
  * => [4, 6, 8]
  */
-function filter(callable $func, $list)
+function filter(callable $func, $list, int $mode = 0)
 {
   return fold(
-    function ($acc, $val, $idx) use ($func) {
-      if (!$func($val, $idx)) {
+    function ($acc, $val, $idx) use ($func, $mode) {
+      $filter = equals($mode, ARRAY_FILTER_USE_KEY) ?
+        $func($idx) :
+        (
+          equals($mode, ARRAY_FILTER_USE_BOTH) ?
+            $func($val, $idx) :
+            $func($val)
+        );
+
+      if (!$filter) {
         if (\is_object($acc)) {
           unset($acc->{$idx});
         } elseif (\is_array($acc)) {
