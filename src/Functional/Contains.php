@@ -28,5 +28,12 @@ const contains = __NAMESPACE__ . '\\contains';
  */
 function contains(string $haystack, string $needle): bool
 {
-  return !equals(\strpos($haystack, $needle), false);
+  return !equals(
+    (
+      \extension_loaded('mbstring') ?
+        '\mb_stripos' :
+        '\stripos'
+    )($haystack, $needle),
+    false
+  );
 }

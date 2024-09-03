@@ -27,12 +27,9 @@ const slugify = __NAMESPACE__ . '\\slugify';
  */
 function slugify(string $string): string
 {
-  $slugify = compose(
-    partial('explode', ' '),
-    function (array $words) {
-      return concat('-', ...$words);
-    }
+  return preg_replace(
+    '/(\s){1,}/ix',
+    '-',
+    $string
   );
-
-  return $slugify($string);
 }

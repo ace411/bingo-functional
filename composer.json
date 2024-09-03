@@ -68,8 +68,7 @@
     }
   ],
   "require": {
-    "php": "^7 || ^8",
-    "functional-php/pattern-matching": "^1"
+    "php": "^7 || ^8"
   },
   "require-dev": {
     "ergebnis/composer-normalize": "^2",
@@ -79,6 +78,7 @@
   },
   "suggest": {
     "ext-apcu": "In-memory key-value PHP userland store",
+    "ext-eio": "An interface to the libeio library",
     "ext-mbstring": "PHP extension for accurately determining byte-length of strings",
     "ext-readline": "An interface to the GNU readline library",
     "chemem/bingo-functional-repl": "A simple REPL for the bingo-functional library"
@@ -111,7 +111,7 @@
   },
   "extra": {
     "branch-alias": {
-      "dev-master": "1.x-dev"
+      "dev-master": "2.x-dev"
     }
   },
   "scripts": {

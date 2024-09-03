@@ -28,13 +28,25 @@ const startsWith = __NAMESPACE__ . '\\startsWith';
  */
 function startsWith(string $haystack, string $needle): bool
 {
-  $strlen = \function_exists('mb_strlen') ?
-    \mb_strlen($needle, 'utf-8') :
-    \strlen($needle);
+  $lmbstr = \extension_loaded('mbstring');
+  $strlen = (
+    $lmbstr ?
+      '\mb_strlen' :
+      '\strlen'
+  )($needle);
 
-  if (equals($strlen, 0)) {
-    return false;
-  }
-
-  return equals(\substr($haystack, 0, $strlen), $needle);
+  return $strlen > 0 ?
+    equals(
+      (
+        $lmbstr ?
+          '\mb_substr' :
+          '\substr'
+      )(
+        $haystack,
+        0,
+        $strlen
+      ),
+      $needle
+    ) :
+    false;
 }

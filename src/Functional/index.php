@@ -43,6 +43,7 @@ require_once __DIR__ . '/IndexOf.php';
 require_once __DIR__ . '/Intersects.php';
 require_once __DIR__ . '/Intersperse.php';
 require_once __DIR__ . '/IsArrayOf.php';
+require_once __DIR__ . '/JsonDecode.php';
 require_once __DIR__ . '/K.php';
 require_once __DIR__ . '/Keys.php';
 require_once __DIR__ . '/Last.php';

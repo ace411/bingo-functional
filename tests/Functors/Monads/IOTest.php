@@ -24,7 +24,7 @@ class IOTest extends \PHPUnit\Framework\TestCase
 
   public static function tearDownAfterClass(): void
   {
-    unlink(self::$file);
+    @unlink(self::$file);
   }
 
   /**
@@ -35,7 +35,7 @@ class IOTest extends \PHPUnit\Framework\TestCase
     $this
       ->forAll(
         Generator\map(
-          IO\readFile,
+          f\compose(IO\readFile, IO\catchIO),
           Generator\constant(self::$file)
         )
       )
@@ -89,30 +89,42 @@ class IOTest extends \PHPUnit\Framework\TestCase
 
   public function testreadFileSafelyReadsFileContents()
   {
-    $impure = IO\readFile(self::$file);
+    $impure = IO\catchIO(
+      IO\readFile(self::$file)
+    );
+    $result = $impure->exec();
 
     $this->assertInstanceOf(IO::class, $impure);
     // $this->assertIsString($impure->exec());
-    $this->assertTrue($impure->map('is_string')->exec());
+    $this->assertTrue(
+      \is_string($result)
+    );
   }
 
   public function testappendFileSafelyAppendsDataToFile()
   {
-    $append = IO\appendFile(self::$file, 'fooz');
+    $append = IO\catchIO(
+      IO\appendFile(self::$file, \sprintf("%s\n", 'fooz'))
+    );
+    $rbytes = $append->exec();
 
     $this->assertInstanceOf(IO::class, $append);
     $this->assertTrue(
-      \is_bool($append->exec()) || \is_int($append->exec())
+      \is_string($rbytes) || \is_int($rbytes)
     );
   }
 
   public function testwriteFileSafelyWritesContentsToFile()
   {
-    $write = IO\writeFile(self::$file, 'bar');
+    $write = IO\catchIO(
+      IO\writeFile(self::$file, \sprintf("%s\n", 'bar'))
+    );
+    $rbytes = $write->exec();
 
     $this->assertInstanceOf(IO::class, $write);
     $this->assertTrue(
-      \is_bool($write->exec()) || \is_int($write->exec())
+      \is_string($rbytes) || \is_int($rbytes)
+      // \is_bool($write->exec()) || \is_int($write->exec())
     );
   }
 
