@@ -48,6 +48,7 @@ require_once __DIR__ . '/K.php';
 require_once __DIR__ . '/Keys.php';
 require_once __DIR__ . '/Last.php';
 require_once __DIR__ . '/LastIndexOf.php';
+require_once __DIR__ . '/ListFromPaths.php';
 require_once __DIR__ . '/Map.php';
 require_once __DIR__ . '/MapDeep.php';
 require_once __DIR__ . '/Max.php';
