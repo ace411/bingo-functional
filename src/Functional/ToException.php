@@ -16,10 +16,10 @@ const toException = __NAMESPACE__ . '\\toException';
  * toException
  * enables anomalous situation handling via function application
  *
- * toException :: (a -> b) -> (Throwable -> c) -> b
+ * toException :: (a -> b) -> (Object -> b) -> b
  *
  * @param callable $func
- * @param callable $handler
+ * @param callable|null $handler
  * @return callable
  * @example
  *
@@ -31,7 +31,7 @@ const toException = __NAMESPACE__ . '\\toException';
  * }, fn ($_) => INF)(3, 0)
  * => INF
  */
-function toException(callable $func, callable $handler = null): callable
+function toException(callable $func, ?callable $handler = null): callable
 {
   return function (...$args) use ($func, $handler) {
     try {

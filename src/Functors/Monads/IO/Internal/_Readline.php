@@ -23,10 +23,10 @@ const _readline = __NAMESPACE__ . '\\_readline';
  *
  * @internal
  * @param string $str
- * @param callable $handler
+ * @param callable|null $handler
  * @return IO
  */
-function _readline($str = null, callable $handler = null): Monad
+function _readline($str = null, ?callable $handler = null): Monad
 {
   return IO::of(
     !\is_null($handler) ?

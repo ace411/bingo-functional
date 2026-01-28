@@ -20,14 +20,14 @@ require_once __DIR__ . '/_Fold.php';
  *
  * @internal
  * @param mixed $object
- * @param Reflector $ref
+ * @param Reflector|null $ref
  * @param boolean $recurse
  * @return array
  */
 function _props(
   $object,
-  \Reflector $ref = null,
-  bool $recurse   = false
+  ?\Reflector $ref  = null,
+  bool $recurse     = false
 ): array {
   if (!\is_object($object)) {
     return $object;
@@ -87,7 +87,13 @@ function _props(
 
       return $acc;
     },
-    !empty($props) ? $props : \get_object_vars($object),
+    !empty($props) ?
+      $props :
+      (
+        PHP_VERSION_ID > 70400 ?
+          \get_mangled_object_vars($object) :
+          \get_object_vars($object)
+      ),
     []
   );
 }

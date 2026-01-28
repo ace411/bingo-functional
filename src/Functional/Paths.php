@@ -20,7 +20,7 @@ const paths = __NAMESPACE__ . '\\paths';
  *
  * @param iterable $list
  * @param string $glue
- * @param callable $modify
+ * @param callable|null $modify
  * @param string $prefix
  * @return iterable
  * @example
@@ -31,7 +31,7 @@ const paths = __NAMESPACE__ . '\\paths';
 function paths(
   $list,
   string $glue      = '.',
-  callable $modify  = null,
+  ?callable $modify = null,
   string $prefix    = ''
 ): array {
   return fold(
