@@ -49,17 +49,31 @@ const keysExist = __NAMESPACE__ . '\\keysExist';
  */
 function keysExist($list, ...$keys): bool
 {
-  $check = fold(
-    function ($acc, $val, $idx) use ($keys) {
-      if (\in_array($idx, $keys)) {
-        $acc[] = $val;
+  $exist    = false;
+  $matches  = 0;
+  $idx      = 0;
+
+  while (isset($keys[$idx])) {
+    $next = $keys[$idx];
+
+    if (\is_object($list)) {
+      if (isset($list->{$next})) {
+        $matches += 1;
       }
+    }
 
-      return $acc;
-    },
-    $list,
-    []
-  );
+    if (\is_array($list)) {
+      if (isset($list[$next])) {
+        $matches += 1;
+      }
+    }
 
-  return equals(size($check), size($keys));
+    if (!isset($keys[$idx + 1]) && equals($matches, $idx + 1)) {
+      $exist = true;
+    }
+
+    $idx++;
+  }
+
+  return $exist;
 }

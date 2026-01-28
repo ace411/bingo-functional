@@ -14,13 +14,12 @@ const where = __NAMESPACE__ . '\\where';
 
 /**
  * where
- * searches a multi-dimensional array using a fragment of a sub-array defined in the
- * said composite
+ * searches a multi-dimensional array using a fragment of a sub-array defined in the said composite
  *
  * where :: [[a], [b]] -> [a] -> [[a]]
  *
- * @param array $list
- * @param array $search
+ * @param array|object $list
+ * @param array|object $search
  * @return array
  * @example
  *
@@ -30,22 +29,42 @@ const where = __NAMESPACE__ . '\\where';
  * ], ['name' => 'jordan'])
  * => [['pos' => 'sg', 'name' => 'jordan']]
  */
-function where(array $list, array $search): array
+function where($list, $search): array
 {
-  list($searchKey, $searchVal) = head(toPairs($search));
-
-  $whereFn = function (array $acc = []) use ($searchKey, $searchVal, $list) {
-    foreach ($list as $index => $value) {
-      if (
-        isset($list[$index][$searchKey]) &&
-        $list[$index][$searchKey] == $searchVal
-      ) {
-        $acc[] = $value;
+  return fold(
+    function (
+      array $acc,
+      $value,
+      $key
+    ) use ($search): array {
+      if (!(\is_object($search) || \is_array($search))) {
+        return $acc;
       }
-    }
 
-    return $acc;
-  };
+      foreach ($search as $idx => $nxt) {
+        if (\is_array($value) || \is_object($value)) {
+          foreach ($value as $ikey => $ival) {
+            if (equals($ikey, $idx) && equals($ival, $nxt, true)) {
+              $acc[] = $value;
+            }
 
-  return isArrayOf($list) == 'array' ? $whereFn() : $list;
+            if (\is_array($ival) || \is_object($ival)) {
+              $acc = extend(
+                $acc,
+                where($value, $search)
+              );
+            }
+          }
+        } else {
+          if (equals($key, $idx) && equals($value, $nxt, true)) {
+            $acc[][$key] = $value;
+          }
+        }
+      }
+
+      return $acc;
+    },
+    $list,
+    []
+  );
 }

@@ -52,23 +52,51 @@ trait CommonTrait
    */
   public function contains($element): bool
   {
-    $list   = $this->list;
-    $count  = $list->count();
-    $acc    = [];
+    $exists = false;
 
-    for ($idx = 0; $idx < $count; $idx++) {
-      $item  = $list[$idx];
-      $acc[] = \is_object($item) || \is_array($item) ?
-        f\mapDeep(
-          function ($val) use ($element): bool {
-            return f\equals($val, $element, true);// $val == $element;
-          },
-          $item
-        ) :
-        f\equals($element, $item, true);// $element == $item;
+    if ($this->list instanceof \SplFixedArray) {
+      $iterator = $this->list->getIterator();
+      $iterator->rewind();
+
+      while ($iterator->valid()) {
+        $current = $iterator->current();
+
+        if ($current instanceof ImmutableDataStructure) {
+          $exists = $next->contains($element);
+        } elseif (\is_array($current) || \is_object($current)) {
+          $exists = self::checkContains($current, $element);
+        } else {
+          $exists = f\equals($current, $element, true);
+        }
+
+        if ($exists) {
+          break;
+        }
+
+        $iterator->next();
+      }
+    } else {
+      $idx = 0;
+      while (isset($this->list[$idx])) {
+        $current = $this->list[$idx];
+
+        if ($current instanceof ImmutableDataStructure) {
+          $exists = $next->contains($element);
+        } elseif (\is_array($current) || \is_object($current)) {
+          $exists = self::checkContains($current, $element);
+        } else {
+          $exists = f\equals($current, $element, true);
+        }
+
+        if ($exists) {
+          break;
+        }
+
+        $idx++;
+      }
     }
 
-    return self::checkContains($acc);
+    return $exists;
   }
 
   /**
@@ -76,7 +104,14 @@ trait CommonTrait
    */
   public function head()
   {
-    return $this->list[0];
+    if ($this->list instanceof \SplFixedArray) {
+      $iterator = $this->list->getIterator();
+      $iterator->rewind();
+
+      return $iterator->current();
+    }
+
+    return $this->list->first();
   }
 
   /**
@@ -86,9 +121,26 @@ trait CommonTrait
   {
     $list   = $this->list;
     $acc    = [];
+    $idx    = 1;
 
-    for ($idx = 1; $idx < $list->count(); $idx++) {
-      $acc[] = $list[$idx];
+    if ($this->list instanceof \SplFixedArray) {
+      $iterator = $this->list->getIterator();
+      $iterator->rewind();
+
+      while ($iterator->valid()) {
+        if ($iterator->key() >= $idx) {
+          $acc[] = $iterator->current();
+        }
+
+        $iterator->next();
+      }
+    } else {
+      while (isset($this->list[$idx])) {
+        $value = $this->list[$idx];
+        $acc[] = $value;
+
+        $idx++;
+      }
     }
 
     return self::from($acc);
@@ -99,7 +151,9 @@ trait CommonTrait
    */
   public function last()
   {
-    return $this->list[$this->count() - 1];
+    return $this->list instanceof \SplFixedArray ?
+      $this->list[$this->count() - 1] :
+      $this->list->last();
   }
 
   /**
@@ -130,15 +184,24 @@ trait CommonTrait
    *
    * checkContains :: [a] -> Bool
    *
-   * @param array $list
+   * @param array|object $list
    * @return bool
    */
-  private static function checkContains(array $list): bool
+  private static function checkContains($haystack, $needle): bool
   {
-    $comp = f\compose(f\flatten, function (array $val) {
-      return \in_array(true, $val);
-    });
+    $exists = false;
 
-    return $comp($list);
+    foreach ($haystack as $value) {
+      if (\is_object($value) || \is_array($value)) {
+        $exists = self::checkContains($value, $needle);
+      }
+
+      if (f\equals($needle, $value, true)) {
+        $exists = true;
+        break;
+      }
+    }
+
+    return $exists;
   }
 }
