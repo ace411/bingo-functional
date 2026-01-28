@@ -40,7 +40,7 @@ function memoize(callable $function, bool $apc = false)
       $this->apc      = $apc;
     }
 
-    public function __invoke(mixed ...$args)
+    public function __invoke(...$args)
     {
       $key = \md5(
         \serialize($args),
