@@ -43,7 +43,9 @@ function memoize(callable $function, bool $apc = false)
     public function __invoke(...$args)
     {
       $key = \md5(
-        \serialize($args)
+        \extension_loaded('igbinary') ?
+          \igbinary_serialize($args) :
+          \serialize($args)
       );
 
       if ($this->apc && \extension_loaded('apc')) {
