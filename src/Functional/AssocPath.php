@@ -28,7 +28,7 @@ const assocPath = __NAMESPACE__ . '\\assocPath';
  * @param array|string $path
  * @param mixed $val
  * @param array|object $list
- * @return array|object
+ * @return array
  * @example
  *
  * assocPath(['x', 1], 'foo', ['x' => range(1, 3)])
