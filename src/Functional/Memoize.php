@@ -61,10 +61,8 @@ function memoize(callable $function, bool $apc = false)
         return $ret;
       }
 
-      $result = $GLOBALS[$key] ?? null;
-
-      if ($result) {
-        return $result;
+      if (isset($GLOBALS[$key])) {
+        return $GLOBALS[$key];
       }
 
       $GLOBALS[$key] = ($this->function)(...$args);
