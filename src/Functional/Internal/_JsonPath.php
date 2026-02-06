@@ -20,19 +20,29 @@ const _jsonPath = __NAMESPACE__ . '\\_jsonPath';
  *
  * @internal
  * @param array|string $path
- * @return array
+ * @return mixed
  */
-function _jsonPath($path)
+function _jsonPath($path, string $separator = '.')
 {
-  if (
-    \is_string($path) &&
-    \preg_match('/^(.){1,}|(\[\d\]){1,}$/i', $path)
-  ) {
-    return \explode(
-      '.',
-      \str_replace(['[', ']'], ['.', ''], $path)
-    );
-  }
-
-  return $path;
+  return \is_string($path) ?
+    \preg_split(
+      \sprintf(
+        '/(%s){1}/',
+        \preg_quote($separator, '/')
+      ),
+      \preg_replace(
+        [
+          '/(\[){1}/',
+          '/(\]){1}/',
+          '/(\"){1}/'
+        ],
+        [
+          $separator,
+          '',
+          '',
+        ],
+        $path
+      )
+    ) :
+    $path;
 }
