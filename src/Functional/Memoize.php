@@ -48,7 +48,7 @@ function memoize(callable $function, bool $apc = false)
           \serialize($args)
       );
 
-      if ($this->apc && \extension_loaded('apc')) {
+      if ($this->apc && \extension_loaded('apcu')) {
         $result = \apcu_fetch($key, $exists);
 
         if ($exists) {
