@@ -10,9 +10,9 @@
 
 namespace Chemem\Bingo\Functional;
 
-require_once __DIR__ . '/Internal/_ClonePath.php';
+require_once __DIR__ . '/Internal/_JsonPath.php';
 
-use function Chemem\Bingo\Functional\Internal\_clonePath;
+use function Chemem\Bingo\Functional\Internal\_jsonPath;
 
 const listFromPaths = __NAMESPACE__ . '\\listFromPaths';
 
@@ -28,7 +28,7 @@ const listFromPaths = __NAMESPACE__ . '\\listFromPaths';
  * @example
  *
  * listFromPaths((object) ['foo.bar' => 12, 'foo.baz.qux' => 'foo'])
- * => ['foo' => ['bar' => 12, 'baz' => ['qux' => 'foo']]]
+ * => (object) ['foo' => ['bar' => 12, 'baz' => ['qux' => 'foo']]]
  */
 function listFromPaths($list, string $separator = '.')
 {
@@ -38,11 +38,10 @@ function listFromPaths($list, string $separator = '.')
       $value,
       string $path
     ) use ($separator) {
-      $acc = _clonePath(
-        $acc,
-        $path,
+      $acc = assocPath(
+        _jsonPath($path, $separator),
         $value,
-        $separator
+        $acc
       );
 
       return $acc;
