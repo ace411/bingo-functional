@@ -12,10 +12,8 @@
 namespace Chemem\Bingo\Functional;
 
 require_once __DIR__ . '/Internal/_JsonPath.php';
-require_once __DIR__ . '/Internal/_Props.php';
 
 use function Chemem\Bingo\Functional\Internal\_jsonPath;
-use function Chemem\Bingo\Functional\Internal\_props;
 
 const assocPath = __NAMESPACE__ . '\\assocPath';
 
@@ -28,7 +26,7 @@ const assocPath = __NAMESPACE__ . '\\assocPath';
  * @param array|string $path
  * @param mixed $val
  * @param array|object $list
- * @return array
+ * @return array|object
  * @example
  *
  * assocPath(['x', 1], 'foo', ['x' => range(1, 3)])
@@ -36,9 +34,6 @@ const assocPath = __NAMESPACE__ . '\\assocPath';
  */
 function assocPath($path, $val, $list)
 {
-  $list = \is_object($list) ?
-    _props($list) :
-    $list;
   $keys = _jsonPath($path);
   $tmp  = &$list;
   $idx  = 0;
@@ -46,11 +41,20 @@ function assocPath($path, $val, $list)
   while ($keys) {
     $key = \array_shift($keys);
 
-    if (!\is_array($tmp)) {
-      $tmp = [];
-    }
+    if (\is_array($list)) {
+      if (!\is_array($tmp)) {
+        $tmp = [];
+      }
 
-    $tmp = &$tmp[$key];
+      $tmp = &$tmp[$key];
+    } elseif (\is_object($list)) {
+      if (!\is_object($tmp)) {
+        $tmp = (new \ReflectionClass($list))
+          ->newInstanceWithoutConstructor();
+      }
+
+      $tmp = &$tmp->{$key};
+    }
   }
 
   $tmp = $val;
