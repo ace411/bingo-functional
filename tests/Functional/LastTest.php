@@ -12,6 +12,23 @@ class LastTest extends \PHPunit\Framework\TestCase
       [[\range(1, 20)], 20],
       [[((object) ['foo', 'bar'])], 'bar'],
       [[[], 'undefined'], 'undefined'],
+      [
+        [
+          new class () {
+            public $x = true;
+            public $y = 'foo';
+            public $z = 1.2221;
+          },
+        ],
+        1.2221,
+      ],
+      [
+        [
+          (object) [],
+          0,
+        ],
+        0,
+      ],
     ];
   }
 
