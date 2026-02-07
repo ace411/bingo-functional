@@ -14,7 +14,6 @@ use function Chemem\Bingo\Functional\dropRight;
 use function Chemem\Bingo\Functional\equals;
 use function Chemem\Bingo\Functional\extend;
 use function Chemem\Bingo\Functional\head;
-use function Chemem\Bingo\Functional\size;
 use function Chemem\Bingo\Functional\tail;
 
 const filterM = __NAMESPACE__ . '\\filterM';
@@ -34,7 +33,7 @@ function filterM(callable $function, $list): Monad
   $monad = $function(head($list));
 
   $filter = function ($collection) use (&$filter, $function, $monad) {
-    if (equals(size($collection), 0)) {
+    if (!$collection) {
       return $monad::of($collection);
     }
 

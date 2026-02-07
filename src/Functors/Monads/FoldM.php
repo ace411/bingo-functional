@@ -12,7 +12,6 @@ namespace Chemem\Bingo\Functional\Functors\Monads;
 
 use function Chemem\Bingo\Functional\equals;
 use function Chemem\Bingo\Functional\head;
-use function Chemem\Bingo\Functional\size;
 use function Chemem\Bingo\Functional\tail;
 
 const foldM = __NAMESPACE__ . '\\foldM';
@@ -32,7 +31,7 @@ function foldM(callable $function, $list, $acc): Monad
   $monad = $function($acc, head($list));
 
   $fold = function ($acc, $collection) use (&$fold, $monad, $function) {
-    if (equals(size($collection), 0)) {
+    if (!$collection) {
       return $monad::of($acc);
     }
 
