@@ -115,7 +115,7 @@ class TupleTest extends \PHPUnit\Framework\TestCase
 
         // extract error from failed pair creation
         $this->assertEquals(imm\TupleException::PAIR_ERRMSG, $fst($list));
-        $this->assertEquals('foo', $fst(f\dropLeft($list, 1)));
+        $this->assertEquals('foo', $fst(\array_slice($list, 1)));
       });
   }
 
@@ -138,7 +138,7 @@ class TupleTest extends \PHPUnit\Framework\TestCase
         });
 
         $this->assertEquals(imm\TupleException::PAIR_ERRMSG, $snd($list));
-        $this->assertEquals(9, $snd(f\dropLeft($list, 1)));
+        $this->assertEquals(9, $snd(\array_slice($list, 1)));
       });
   }
 
@@ -159,7 +159,7 @@ class TupleTest extends \PHPUnit\Framework\TestCase
         $swap = f\toException(function ($list) {
           return Tuple::from($list)->swap();
         });
-        $data = $swap(f\dropLeft($list, 1));
+        $data = $swap(\array_slice($list, 1));
 
         $this->assertEquals(imm\TupleException::PAIR_ERRMSG, $swap($list));
         $this->assertEquals('bar', $data->get(0));

@@ -28,20 +28,30 @@ class Collection implements
    */
   public function map(callable $func): ImmutableList
   {
-    $count  = $this->count();
-    $list   = \extension_loaded('ds') ?
-      new Vector() :
-      new \SplFixedArray($count);
+    $list = $this->getList();
+    $acc  = [];
 
-    if ($this->list instanceof \SplFixedArray) {
-      for ($idx = 0; $idx < $count; $idx++) {
-        $list[$idx] = $func($this->getList()[$idx]);
+    if ($list instanceof \SplFixedArray) {
+      $iterator = $list->getIterator();
+      $iterator->rewind();
+
+      while ($iterator->valid()) {
+        $current = $iterator->current();
+        $acc[]   = $func($current);
+
+        $iterator->next();
       }
     } else {
-      $list = $list->merge($this->getList()->map($func));
+      $idx = 0;
+      while (isset($list[$idx])) {
+        $current  = $list[$idx];
+        $acc[]    = $func($current);
+
+        $idx++;
+      }
     }
 
-    return new static($list);
+    return self::from($acc);
   }
 
   /**
@@ -70,8 +80,14 @@ class Collection implements
     $list = $this->getList();
 
     if ($list instanceof \SplFixedArray) {
-      for ($idx = 0; $idx < $list->count(); $idx++) {
-        $acc = $func($acc, $list[$idx]);
+      $iterator = $list->getIterator();
+      $iterator->rewind();
+
+      while ($iterator->valid()) {
+        $current  = $iterator->current();
+        $acc      = $func($acc, $current);
+
+        $iterator->next();
       }
 
       return $acc;
@@ -85,23 +101,31 @@ class Collection implements
    */
   public function slice(int $count): ImmutableList
   {
-    $new = null;
+    $sliced = [];
+    $list   = $this->getList();
 
-    if (\extension_loaded('ds')) {
-      $new = $this
-        ->getList()
-        ->slice($count);
-    } else {
-      $list       = $this->getList();
-      $listCount  = $list->count();
-      $new        = new \SplFixedArray($listCount - $count);
+    if ($list instanceof \SplFixedArray) {
+      $iterator = $list->getIterator();
+      $idx      = 0;
+      $iterator->rewind();
 
-      for ($idx = 0; $idx < $new->count(); $idx++) {
-        $new[$idx] = $list[$idx + $count];
+      while ($iterator->valid()) {
+        $includable = $iterator->key() + $count;
+
+        if (isset($list[$includable])) {
+          $sliced[] = $list[$includable];
+        } else {
+          break;
+        }
+
+        $idx++;
+        $iterator->next();
       }
-    }
 
-    return new static($new);
+      return self::from($sliced);
+    } else {
+      return new static($list->slice($count));
+    }
   }
 
   /**
@@ -109,23 +133,10 @@ class Collection implements
    */
   public function merge(ImmutableList $list): ImmutableList
   {
-    $oldSize        = $this->getSize();
-    $combinedSize   = $oldSize + $list->getSize();
-    $old            = $this->list;
+    $acc  = [];
+    $acc  = f\extend($this->toArray(), $list->toArray());
 
-    if ($old instanceof \SplFixedArray) {
-      $old->setSize($combinedSize);
-
-      for ($idx = 0; $idx < $old->count(); $idx++) {
-        if ($idx > ($oldSize - 1)) {
-          $old[$idx] = $list->getList()[($idx - $oldSize)];
-        }
-      }
-
-      return $this->update($old);
-    }
-
-    return $this->update($old->merge($list));
+    return $this->update(self::from($acc));
   }
 
   /**
@@ -135,13 +146,22 @@ class Collection implements
   {
     return $this->merge(
       \array_shift($lists)
-        ->triggerMutation(function ($list) use ($lists) {
-          for ($idx = 0; $idx < \count($lists); $idx++) {
-            $list->merge($lists[$idx]);
-          }
+        ->triggerMutation(
+          function ($list) use ($lists) {
+            $idx = 0;
 
-          return $list;
-        })
+            while ($next = $lists[$idx] ?? null) {
+              if (!$next instanceof ImmutableList) {
+                break;
+              }
+
+              $list->merge($next);
+              $idx++;
+            }
+
+            return $list;
+          }
+        )
     );
   }
 
@@ -152,7 +172,7 @@ class Collection implements
   {
     $list   = $this->getList();
 
-    if (\extension_loaded('ds')) {
+    if ($list instanceof Vector) {
       $list->reverse();
 
       return new static($list);
@@ -175,10 +195,28 @@ class Collection implements
   {
     $list = $this->getList();
 
-    for ($idx = 0; $idx < $list->count(); $idx++) {
-      $list[$idx] = $idx >= $start && $idx <= $end ?
-        $value :
-        $list[$idx];
+    if ($list instanceof \SplFixedArray) {
+      $iterator = $list->getIterator();
+      $iterator->rewind();
+
+      while ($iterator->valid()) {
+        $key        = $iterator->key();
+        $list[$key] = $key >= $start && $key <= $end ?
+          $value :
+          $iterator->current();
+
+        $iterator->next();
+      }
+    } else {
+      $idx = 0;
+      while (isset($list[$idx])) {
+        $current    = $list[$idx];
+        $list[$idx] = $idx >= $start && $idx <= $end ?
+          $value :
+          $current;
+
+        $idx++;
+      }
     }
 
     return new static($list);
@@ -192,11 +230,35 @@ class Collection implements
     $list = $this->getList();
     $extr = [];
 
-    for ($idx = 0; $idx < $list->count(); $idx++) {
-      $item = $list[$idx];
+    if ($list instanceof \SplFixedArray) {
+      $iterator = $list->getIterator();
+      $iterator->rewind();
 
-      if (\is_array($item) && \key_exists($key, $item)) {
-        $extr[] = $item[$key];
+      while ($iterator->valid()) {
+        $current = $iterator->current();
+
+        if (
+          (\is_array($current) || \is_object($current)) &&
+          f\keysExist($current, $key)
+        ) {
+          $extr[] = f\pluck($current, $key);
+        }
+
+        $iterator->next();
+      }
+    } else {
+      $idx = 0;
+      while (isset($list[$idx])) {
+        $current = $list[$idx];
+
+        if (
+          (\is_array($current) || \is_object($current)) &&
+          f\keysExist($current, $key)
+        ) {
+          $extr[] = f\pluck($current, $key);
+        }
+
+        $idx++;
       }
     }
 
@@ -208,13 +270,31 @@ class Collection implements
    */
   public function unique(): ImmutableList
   {
-    $list   = $this->getList();
-    $acc    = [];
+    $list = $this->getList();
+    $acc  = [];
 
-    for ($idx = 0; $idx < $list->count(); $idx++) {
-      $item = $list[$idx];
-      if (!\in_array($item, $acc)) {
-        $acc[] = $item;
+    if ($list instanceof \SplFixedArray) {
+      $iterator = $list->getIterator();
+      $iterator->rewind();
+
+      while ($iterator->valid()) {
+        $current = $iterator->current();
+        if (!\in_array($current, $acc)) {
+          $acc[] = $current;
+        }
+
+        $iterator->next();
+      }
+    } else {
+      $idx = 0;
+      while (isset($list[$idx])) {
+        $current = $list[$idx];
+
+        if (!\in_array($current, $acc)) {
+          $acc[] = $current;
+        }
+
+        $idx++;
       }
     }
 
@@ -226,29 +306,32 @@ class Collection implements
    */
   public function intersects(ImmutableList $list): bool
   {
+    $current    = $this->getList();
     $intersect  = false;
-    $main       = $this->getSize();
-    $oth        = $list->getSize();
 
-    if ($main > $oth) {
-      for ($idx = 0; $idx < $oth; $idx++) {
-        if (\in_array($list->getList()[$idx], $this->toArray())) {
+    if ($current instanceof \SplFixedArray) {
+      $iterator = $current->getIterator();
+      $iterator->rewind();
+
+      while ($iterator->valid()) {
+        if (\in_array($iterator->current(), $list->toArray())) {
           $intersect = true;
-        }
-
-        if (f\equals($intersect, true)) {
           break;
         }
+
+        $iterator->next();
       }
-    } elseif ($oth > $main) {
-      for ($idx = 0; $idx < $main; $idx++) {
-        if (\in_array($this->getList()[$idx], $list->toArray())) {
-          $intersect = true;
-        }
+    } else {
+      $idx = 0;
+      while (isset($current[$idx])) {
+        $next = $current[$idx];
 
-        if (f\equals($intersect, true)) {
+        if (\in_array($next, $list->toArray())) {
+          $intersect = true;
           break;
         }
+
+        $idx++;
       }
     }
 
@@ -260,11 +343,18 @@ class Collection implements
    */
   public function implode(string $delimiter): string
   {
-    return \rtrim($this->fold(function (string $fold, $elem) use ($delimiter) {
-      $fold .= f\concat($delimiter, $elem, '');
+    return \preg_replace(
+      \sprintf('/%s$/', \preg_quote($delimiter, '/')),
+      '',
+      $this->fold(
+        function (string $fold, $elem) use ($delimiter) {
+          $fold .= f\concat($delimiter, $elem, '');
 
-      return $fold;
-    }, ''), $delimiter);
+          return $fold;
+        },
+        ''
+      )
+    );
   }
 
   /**
@@ -280,19 +370,38 @@ class Collection implements
    */
   public function any(callable $func): bool
   {
-    $list   = $this->getList();
-    $size   = $list->count();
-    $result = false;
+    $any  = false;
+    $list = $this->getList();
 
-    for ($idx = 0; $idx < $size; $idx += 1) {
-      if ($func($list[$idx])) {
-        $result = true;
+    if ($list instanceof \SplFixedArray) {
+      $iterator = $list->getIterator();
+      $iterator->rewind();
 
-        break;
+      while ($iterator->valid()) {
+        $current = $iterator->current();
+
+        if ($func($current)) {
+          $any = true;
+          break;
+        }
+
+        $iterator->next();
+      }
+    } else {
+      $idx = 0;
+      while (isset($list[$idx])) {
+        $current = $list[$idx];
+
+        if ($func($current)) {
+          $any = true;
+          break;
+        }
+
+        $idx++;
       }
     }
 
-    return $result;
+    return $any;
   }
 
   /**
@@ -300,7 +409,38 @@ class Collection implements
    */
   public function every(callable $func): bool
   {
-    return f\equals($this->reject($func)->getSize(), 0);
+    $every  = true;
+    $list   = $this->getList();
+
+    if ($list instanceof \SplFixedArray) {
+      $iterator = $list->getIterator();
+      $iterator->rewind();
+
+      while ($iterator->valid()) {
+        $current = $iterator->current();
+
+        if (!$func($current)) {
+          $every = false;
+          break;
+        }
+
+        $iterator->next();
+      }
+    } else {
+      $idx = 0;
+      while (isset($list[$idx])) {
+        $current = $list[$idx];
+
+        if (!$func($current)) {
+          $every = false;
+          break;
+        }
+
+        $idx++;
+      }
+    }
+
+    return $every;
   }
 
   /**
@@ -393,30 +533,39 @@ class Collection implements
    * @internal template for filtration operations
    * @param callable $func
    * @param bool $pos
+   * @return ImmutableList
    */
   private function filterOperation(callable $func, bool $pos = true): ImmutableList
   {
+    $filter = [];
     $list   = $this->getList();
-    $count  = $list->count();
-    $init   = 0;
-    $new    = \extension_loaded('ds') ?
-      new Vector() :
-      new \SplFixedArray($list->count());
 
-    for ($idx = 0; $idx < $count; $idx++) {
-      if ($pos ? $func($list[$idx]) : !$func($list[$idx])) {
-        if ($list instanceof \SplFixedArray) {
-          $new[$init++] = $list[$idx];
-        } else {
-          $new[] = $list[$idx];
+    if ($list instanceof \SplFixedArray) {
+      $iterator = $list->getIterator();
+      $iterator->rewind();
+
+      while ($iterator->valid()) {
+        $current = $iterator->current();
+
+        if ($pos ? $func($current) : !$func($current)) {
+          $filter[] = $current;
         }
+
+        $iterator->next();
+      }
+    } else {
+      $idx = 0;
+      while (isset($list[$idx])) {
+        $current = $list[$idx];
+
+        if ($pos ? $func($current) : !$func($current)) {
+          $filter[] = $current;
+        }
+
+        $idx++;
       }
     }
 
-    if ($list instanceof \SplFixedArray) {
-      $new->setSize($init);
-    }
-
-    return new static($new);
+    return self::from($filter);
   }
 }

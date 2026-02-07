@@ -10,8 +10,7 @@
 
 namespace Chemem\Bingo\Functional\Internal;
 
-require_once __DIR__ . '/_Merge.php';
-require_once __DIR__ . '/_Size.php';
+require_once __DIR__ . '/_Fold.php';
 
 const _partial = __NAMESPACE__ . '\\_partial';
 
@@ -34,20 +33,54 @@ function _partial(
 ): callable {
   $argCount = (new \ReflectionFunction($func))
     ->getNumberOfRequiredParameters();
+  $merge    = function (...$item): array {
+    return _fold(
+      function (array $acc, $value) {
+        if (\is_array($value)) {
+          foreach ($value as $entry) {
+            $acc['size'] += 1;
+            $acc['acc'][] = $entry;
+          }
+        }
 
-  $acc      = function (...$inner) use (&$acc, $func, $argCount, $left) {
+        return $acc;
+      },
+      $item,
+      [
+        'size'  => 0,
+        'acc'   => [],
+      ]
+    );
+  };
+  $acc      = function (...$inner) use (
+    &$acc,
+    $func,
+    $argCount,
+    $left,
+    $merge
+  ): callable {
     return function (...$innermost) use (
       $inner,
       $acc,
       $func,
       $left,
-      $argCount
+      $argCount,
+      $merge
     ) {
-      $final = $left ?
-        _merge(false, $inner, $innermost) :
-        _merge(false, \array_reverse($innermost), \array_reverse($inner));
+      [
+        'size'  => $size,
+        'acc'   => $final
+      ] = $merge(
+        false,
+        $left ?
+          $inner :
+          \array_reverse($innermost),
+        $left ?
+          $innermost :
+          \array_reverse($inner)
+      );
 
-      if ($argCount <= _size($final)) {
+      if ($argCount <= $size) {
         return $func(...$final);
       }
 

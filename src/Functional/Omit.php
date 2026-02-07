@@ -28,19 +28,23 @@ const omit = __NAMESPACE__ . '\\omit';
  */
 function omit($list, ...$keys)
 {
-  return fold(
-    function ($acc, $val, $idx) use ($keys) {
-      if (has($keys, $idx)) {
-        if (\is_object($acc)) {
-          unset($acc->{$idx});
-        } elseif (\is_array($acc)) {
-          unset($acc[$idx]);
-        }
-      }
+  $idx = 0;
 
-      return $acc;
-    },
-    $list,
-    $list
-  );
+  while (isset($keys[$idx])) {
+    $key = $keys[$idx];
+
+    if (\is_object($list)) {
+      if (isset($list->{$key})) {
+        unset($list->{$key});
+      }
+    } elseif (\is_array($list)) {
+      if (isset($list[$key])) {
+        unset($list[$key]);
+      }
+    }
+
+    $idx++;
+  }
+
+  return $list;
 }

@@ -11,12 +11,49 @@ class WhereTest extends \PHPUnit\Framework\TestCase
     return [
       [
         [
-          ['name' => 'dwayne', 'pos' => 'sg'],
-          ['name' => 'james', 'pos' => 'sf'],
-          ['name' => 'demarcus', 'pos' => 'c'],
+          [
+            'name'  => 'dwayne',
+            'pos'   => 'sg'
+          ],
+          [
+            'name'  => 'james',
+            'pos'   => 'sf',
+          ],
+          [
+            'name'  => 'demarcus',
+            'pos'   => 'c',
+          ],
         ],
         ['pos' => 'c'],
-        [['name' => 'demarcus', 'pos' => 'c']],
+        [
+          [
+            'name'  => 'demarcus',
+            'pos'   => 'c',
+          ],
+        ],
+      ],
+      [
+        (object) [
+          [
+            'name'  => 'michael',
+            'pos'   => 'sg'
+          ],
+          [
+            'name'    => 'olajuwon',
+            'pos'     => 'c',
+            'co-star' => [
+              'name'  => 'drexler',
+              'pos'   => 'sg',
+            ],
+          ],
+        ],
+        ['name' => 'drexler'],
+        [
+          [
+            'name'  => 'drexler',
+            'pos'   => 'sg',
+          ],
+        ],
       ],
     ];
   }

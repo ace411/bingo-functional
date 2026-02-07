@@ -28,7 +28,18 @@ class Tuple implements \Countable, ImmutableDataStructure
    */
   public function fst()
   {
-    return $this->fetchFromPair(0);
+    if (!equals($this->count(), 2)) {
+      throw new TupleException(TupleException::PAIR_ERRMSG);
+    }
+
+    if ($this->list instanceof \SplFixedArray) {
+      $iterator = $this->list->getIterator();
+      $iterator->rewind();
+
+      return $iterator->current();
+    }
+
+    return $this->list->first();
   }
 
   /**
@@ -41,7 +52,27 @@ class Tuple implements \Countable, ImmutableDataStructure
    */
   public function snd()
   {
-    return $this->fetchFromPair(1);
+    if (!equals($this->count(), 2)) {
+      throw new TupleException(TupleException::PAIR_ERRMSG);
+    }
+
+    if ($this->list instanceof \SplFixedArray) {
+      $iterator = $this->list->getIterator();
+      $iterator->rewind();
+      $idx = 0;
+      while ($iterator->valid()) {
+        if (equals($idx, 1)) {
+          break;
+        }
+
+        $idx++;
+        $iterator->next();
+      }
+
+      return $iterator->current();
+    }
+
+    return $this->list->last();
   }
 
   /**
@@ -73,21 +104,5 @@ class Tuple implements \Countable, ImmutableDataStructure
   public function get(int $index)
   {
     return $this->offsetGet($index);
-  }
-
-  /**
-   * fetchFromPair method
-   *
-   * @internal
-   * @param int $index
-   * @return mixed
-   */
-  private function fetchFromPair(int $index)
-  {
-    if (!equals($this->count(), 2)) {
-      throw new TupleException(TupleException::PAIR_ERRMSG);
-    }
-
-    return $this->get($index);
   }
 }

@@ -9,8 +9,14 @@ class TailTest extends \PHPUnit\Framework\TestCase
   public static function contextProvider()
   {
     return [
-      [(object) \range(1, 3), (object) [1 => 2, 2 => 3]],
-      [['foo', 'bar'], [1 => 'bar']],
+      [
+        (object) \range(1, 3),
+        (object) [1 => 2, 2 => 3],
+      ],
+      [
+        ['foo', 'bar'],
+        [1 => 'bar'],
+      ],
     ];
   }
 

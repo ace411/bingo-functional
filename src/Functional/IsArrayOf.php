@@ -18,24 +18,34 @@ const isArrayOf = __NAMESPACE__ . '\\isArrayOf';
  *
  * isArrayOf :: [a] -> String
  *
- * @param array $list
- * @return string
+ * @param array|object $list
+ * @return string|null
  * @example
  *
  * isArrayOf(['foo', 'bar', 'baz'])
  * => 'string'
  */
-function isArrayOf($list): string
+function isArrayOf($list): ?string
 {
-  $types = fold(
-    function ($types, $entry) {
-      $types[] = \gettype($entry);
+  $cache  = [];
+  $type   = null;
+  $idx    = 0;
 
-      return unique($types);
-    },
-    $list,
-    []
-  );
+  foreach ($list as $value) {
+    $tmp = \gettype($value);
 
-  return size($types) > 1 ? 'mixed' : head($types);
+    if ($idx++ > 0) {
+      if (\in_array($tmp, $cache)) {
+        $type = $tmp;
+      } else {
+        $type = 'mixed';
+        break;
+      }
+    } else {
+      $cache[]  = $tmp;
+      $type     = $tmp;
+    }
+  }
+
+  return $type;
 }

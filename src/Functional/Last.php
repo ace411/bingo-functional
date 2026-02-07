@@ -16,7 +16,7 @@ const last = __NAMESPACE__ . '\\last';
  * last
  * Outputs the last element in a list
  *
- * last :: [a] -> a
+ * last :: [a] -> a -> a
  *
  * @param object|array $list
  * @return mixed
@@ -27,18 +27,20 @@ const last = __NAMESPACE__ . '\\last';
  */
 function last($list, $default = null)
 {
-  $count  = 0;
-  $size   = size($list);
+  if (
+    !(
+      \is_object($list) ||
+      \is_array($list)
+    )
+  ) {
+    return $default;
+  }
 
-  return fold(
-    function ($acc, $item) use (&$count, $size) {
-      if (equals($count, $size - 1)) {
-        return $item;
-      }
+  \end($list);
 
-      $count++;
-    },
-    $list,
-    $default
-  );
+  $result = \current($list);
+
+  return equals($result, false) ?
+    $default :
+    $result;
 }

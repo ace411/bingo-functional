@@ -12,10 +12,8 @@
 namespace Chemem\Bingo\Functional;
 
 require_once __DIR__ . '/Internal/_JsonPath.php';
-require_once __DIR__ . '/Internal/_MergeN.php';
 
 use function Chemem\Bingo\Functional\Internal\_jsonPath;
-use function Chemem\Bingo\Functional\Internal\_mergeN;
 
 const assocPath = __NAMESPACE__ . '\\assocPath';
 
@@ -36,78 +34,30 @@ const assocPath = __NAMESPACE__ . '\\assocPath';
  */
 function assocPath($path, $val, $list)
 {
-  $path = _jsonPath($path);
+  $keys = _jsonPath($path);
+  $tmp  = &$list;
+  $idx  = 0;
 
-  if (!\is_null(pluckPath($path, $list))) {
-    $pathc = size($path);
+  while ($keys) {
+    $key = \array_shift($keys);
 
-    if (equals($pathc, 0)) {
-      return $list;
-    }
-
-    $idx = head($path);
-
-    if ($pathc > 1) {
-      $next = pluck($list, $idx);
-
-      if (\is_object($next) || \is_array($next)) {
-        $val = assocPath(dropLeft($path), $val, $next);
+    if (\is_array($list)) {
+      if (!\is_array($tmp)) {
+        $tmp = [];
       }
+
+      $tmp = &$tmp[$key];
+    } elseif (\is_object($list)) {
+      if (!\is_object($tmp)) {
+        $tmp = (new \ReflectionClass($list))
+          ->newInstanceWithoutConstructor();
+      }
+
+      $tmp = &$tmp->{$key};
     }
-
-    return assoc($idx, $val, $list);
-  } else {
-    $listc  = size($list);
-    $lcheck = pluckPath(dropRight($path, 1), $list);
-    $clone  = function ($path, $val, $list) use (
-      &$clone,
-      $listc,
-      $lcheck
-    ) {
-      return fold(
-        function ($acc, $entry) use (
-          &$clone,
-          $lcheck,
-          $list,
-          $listc,
-          $path,
-          $val
-        ) {
-          if (equals(size($acc), 1)) {
-            // preempt extraneous list concatenation
-            return $acc;
-          }
-
-          if (equals(size($path), 1)) {
-            // check if the key exists
-            if (!\is_null($lcheck)) {
-              if (\is_array($lcheck)) {
-                $lcheck[$entry] = $val;
-              } elseif (\is_object($lcheck)) {
-                $lcheck->{$entry} = $val;
-              }
-
-              $acc = (array) $lcheck;
-            } else {
-              $acc[$entry] = $val;
-            }
-
-            $acc[$entry] = $val;
-          } else {
-            $acc[$entry] = $clone(dropLeft($path), $val, $list);
-          }
-
-          return $acc;
-        },
-        $path,
-        []
-      );
-    };
-
-    $result = $clone($path, $val, $list);
-
-    return _mergeN($list, $result);
   }
+
+  $tmp = $val;
 
   return $list;
 }

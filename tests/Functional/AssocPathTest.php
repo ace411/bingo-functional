@@ -19,13 +19,35 @@ class AssocPathTest extends \PHPUnit\Framework\TestCase
         (object) ['foo' => (object) ['bar' => ['baz' => 3]]],
         ['foo', 'bar', 'baz'],
         'baz',
-        (object) ['foo' => (object) ['bar' => ['baz' => 'baz']]],
+        (object) [
+          'foo'     => (object) [
+            'bar'   => (object) [
+              'baz' => 'baz',
+            ],
+          ],
+        ],
       ],
       [
         [],
         'foo.bar[1]',
         'bar',
         ['foo' => ['bar' => [1 => 'bar']]],
+      ],
+      [
+        (object) [
+          'foo' => 12,
+          'bar' => (object) \range(1, 3),
+        ],
+        'foo.bar.qux',
+        'quux',
+        (object) [
+          'foo'     => (object) [
+            'bar'   => (object) [
+              'qux' => 'quux',
+            ],
+          ],
+          'bar'     => (object) \range(1, 3),
+        ],
       ],
     ];
   }

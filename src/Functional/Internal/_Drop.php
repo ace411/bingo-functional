@@ -29,37 +29,40 @@ const _drop = __NAMESPACE__ . '\\_drop';
  */
 function _drop($list, $count, $left = true)
 {
-  $listCount            = _size($list);
-  ['result' => $result] = _fold(
-    function (array $acc, $val, $key) use ($count, $list, $left, $listCount) {
-      if ($left) {
-        if (($acc['count'] + 1) <= $count) {
-          if (\is_object($acc['result'])) {
-            unset($acc['result']->{$key});
-          } elseif (\is_array($acc['result'])) {
-            unset($acc['result'][$key]);
-          }
+  $idx = 0;
+
+  if ($left) {
+    foreach ($list as $key => $value) {
+      if (++$idx <= $count) {
+        if (\is_object($list)) {
+          unset($list->{$key});
+        } elseif (\is_array($list)) {
+          unset($list[$key]);
         }
       } else {
-        if (($listCount - $acc['count']) <= $count) {
-          if (\is_object($list)) {
-            unset($acc['result']->{$key});
-          } elseif (\is_array($acc['result'])) {
-            unset($acc['result'][$key]);
-          }
-        }
+        break;
+      }
+    }
+  } else {
+    \end($list);
+
+    while ($idx < $count) {
+      $key = \key($list);
+      if (\is_object($list)) {
+        unset($list->{$key});
+      } elseif (\is_array($list)) {
+        unset($list[$key]);
       }
 
-      $acc['count'] += 1;
+      $prev = \prev($list);
 
-      return $acc;
-    },
-    $list,
-    [
-      'result'  => $list,
-      'count'   => 0,
-    ]
-  );
+      if (!$prev) {
+        \end($list);
+      }
 
-  return $result;
+      $idx++;
+    }
+  }
+
+  return $list;
 }

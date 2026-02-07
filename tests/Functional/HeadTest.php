@@ -12,6 +12,23 @@ class HeadTest extends \PHPunit\Framework\TestCase
       [[\range(1, 20)], 1],
       [[(object) ['foo', 'bar']], 'foo'],
       [[[], 0], 0],
+      [
+        [
+          new class () {
+            public $x = 12;
+            public $y = 'quux';
+            public $z = false;
+          },
+        ],
+        12,
+      ],
+      [
+        [
+          (object) [],
+          0,
+        ],
+        0,
+      ],
     ];
   }
 

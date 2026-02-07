@@ -28,36 +28,14 @@ const intersects = __NAMESPACE__ . '\\intersects';
  */
 function intersects($first, $second): bool
 {
-  if (\is_object($first) && \is_object($second)) {
-    $first  = \get_object_vars($first);
-    $second = \get_object_vars($second);
-  }
+  $intersects = false;
 
-  $fsize     = size($first);
-  $ssize     = size($second);
-  $intersect = false;
-
-  if ($fsize > $ssize) {
-    foreach ($second as $val) {
-      if (has($first, $val)) {
-        $intersect = true;
-
-        if ($intersect == true) {
-          break;
-        }
-      }
-    }
-  } else {
-    foreach ($first as $val) {
-      if (has($second, $val)) {
-        $intersect = true;
-
-        if ($intersect == true) {
-          break;
-        }
-      }
+  foreach ($first as $value) {
+    if (has($second, $value)) {
+      $intersects = true;
+      break;
     }
   }
 
-  return $intersect;
+  return $intersects;
 }

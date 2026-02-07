@@ -28,26 +28,46 @@ const memoize = __NAMESPACE__ . '\\memoize';
  * memoize($fact)(5);
  * => 120
  */
-function memoize(callable $function, bool $apc = false): callable
+function memoize(callable $function, bool $apc = false)
 {
-  return function (...$args) use ($apc, $function) {
-    static $cache = [];
-    $key          = \md5(
-      \extension_loaded('igbinary') ?
-        \igbinary_serialize($args) :
-        \serialize($args)
-    );
+  return new class ($function, $apc) {
+    private $function;
+    private $apc;
 
-    if ($apc && \extension_loaded('apcu')) {
-      \apcu_add($key, $function(...$args));
-
-      return \apcu_exists($key) ? \apcu_fetch($key) : $function(...$args);
+    public function __construct(callable $function, bool $apc)
+    {
+      $this->function = $function;
+      $this->apc      = $apc;
     }
 
-    if (!isset($cache[$key])) {
-      $cache[$key] = $function(...$args);
-    }
+    public function __invoke(...$args)
+    {
+      $key = \md5(
+        \extension_loaded('igbinary') ?
+          \igbinary_serialize($args) :
+          \serialize($args)
+      );
 
-    return $cache[$key] ?? $function(...$args);
+      if ($this->apc && \extension_loaded('apcu')) {
+        $result = \apcu_fetch($key, $exists);
+
+        if ($exists) {
+          return $result;
+        }
+
+        $ret = ($this->function)(...$args);
+        \apcu_store($key, $ret);
+
+        return $ret;
+      }
+
+      if (isset($GLOBALS[$key])) {
+        return $GLOBALS[$key];
+      }
+
+      $GLOBALS[$key] = ($this->function)(...$args);
+
+      return $GLOBALS[$key];
+    }
   };
 }

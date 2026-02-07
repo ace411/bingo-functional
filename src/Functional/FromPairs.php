@@ -29,13 +29,26 @@ function fromPairs($list)
 {
   return fold(
     function ($acc, $val, $key) {
-      if (equals(size($val), 2)) {
-        if (\is_object($acc)) {
-          $acc->{head($val)} = last($val);
-          unset($acc->{$key});
-        } elseif (\is_array($acc)) {
-          $acc[head($val)] = last($val);
-          unset($acc[$key]);
+      if (\is_array($val) || \is_object($val)) {
+        $list = [];
+
+        foreach ($val as $entry) {
+          $list[] = $entry;
+
+          if (equals(++$count, 2)) {
+            $idx  = pluck($list, 0);
+            $next = pluck($list, 1);
+
+            if (\is_object($acc)) {
+              $acc->{$idx} = $next;
+              unset($acc->{$key});
+            } elseif (\is_array($acc)) {
+              $acc[$idx] = $next;
+              unset($acc[$key]);
+            }
+
+            break;
+          }
         }
       }
 

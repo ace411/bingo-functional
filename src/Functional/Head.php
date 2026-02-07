@@ -16,30 +16,32 @@ const head = __NAMESPACE__ . '\\head';
  * head
  * Outputs the first element in a list
  *
- * head :: [a] -> a
+ * head :: [a] -> a -> a
  *
  * @param object|array $list
+ * @param mixed $default
  * @return mixed
  * @example
  *
  * head(range(4, 7))
  * => 4
  */
-function head($list, $def = null)
+function head($list, $default = null)
 {
-  $count = 0;
-
-  foreach ($list as $val) {
-    if (equals($count, 0)) {
-      return $val;
-    }
-
-    if ($count > 0) {
-      break;
-    }
-
-    $count += 1;
+  if (
+    !(
+      \is_object($list) ||
+      \is_array($list)
+    )
+  ) {
+    return $default;
   }
 
-  return $def;
+  \reset($list);
+
+  $result = \current($list);
+
+  return equals($result, false) ?
+    $default :
+    $result;
 }

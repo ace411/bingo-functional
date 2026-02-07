@@ -28,15 +28,14 @@ const indexOf = __NAMESPACE__ . '\\indexOf';
  */
 function indexOf($list, $value, $default = null)
 {
-  return fold(
-    function ($acc, $entry, $idx) use ($value) {
-      if (equals($entry, $value, true)) {
-        $acc = $idx;
-      }
+  $result = $default;
 
-      return $acc;
-    },
-    $list,
-    $default
-  );
+  foreach ($list as $key => $entry) {
+    if (equals($value, $entry, true)) {
+      $result = $key;
+      break;
+    }
+  }
+
+  return $result;
 }
