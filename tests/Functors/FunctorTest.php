@@ -22,8 +22,9 @@ class FunctorTest extends \PHPUnit\Framework\TestCase
         Generator\constant('foo')
       )
       ->then(function ($list) {
-        $fx = 'strtoupper';
-        $fy = f\partialRight(f\partial(f\concat, '-'), 'bar');
+        $item = null;
+        $fx   = 'strtoupper';
+        $fy   = f\partialRight(f\partial(f\concat, '-'), 'bar');
 
         $this->assertEquals(
           [
@@ -45,8 +46,9 @@ class FunctorTest extends \PHPUnit\Framework\TestCase
         Generator\constant('foo')
       )
       ->then(function ($list) {
-        $fx = 'strtoupper';
-        $fy = f\partialRight(f\partial(f\concat, '-'), 'bar');
+        $item = null;
+        $fx   = 'strtoupper';
+        $fy   = f\partialRight(f\partial(f\concat, '-'), 'bar');
 
         $this->assertEquals(
           [
