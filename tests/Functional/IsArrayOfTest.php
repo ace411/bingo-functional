@@ -14,6 +14,9 @@ class IsArrayOfTest extends \PHPUnit\Framework\TestCase
       [[[2], ['foo']], 'array'],
       [[1.2, 3.2], 'double'],
       [[3, 'foo', new \stdClass(2)], 'mixed'],
+      [(object) [], null],
+      [[], null],
+      [(object) ['foo' => 'qux', 'bar' => 'quux'], 'string'],
     ];
   }
 
