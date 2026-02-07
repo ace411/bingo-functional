@@ -1,5 +1,32 @@
 # bingo-functional changes
 
+## v2.5.0
+
+- Added `Chemem\Bingo\Functional\listFromPaths`
+- Added nullable type definitions to arguments in the following functions
+  - `Chemem\Bingo\Functional\paths`
+  - `Chemem\Bingo\Functional\toException`
+  - `Chemem\Bingo\Functional\Functors\Monads\bind`
+- Reworked the internals of the following functions
+  - `Chemem\Bingo\Functional\memoize`
+  - `Chemem\Bingo\Functional\head`
+  - `Chemem\Bingo\Functional\last`
+  - `Chemem\Bingo\Functional\indexOf`
+  - `Chemem\Bingo\Functional\intersects`
+  - `Chemem\Bingo\Functional\isArrayOf`
+  - `Chemem\Bingo\Functional\omit`
+  - `Chemem\Bingo\Functional\where`
+  - `Chemem\Bingo\Functional\keysExist`
+  - `Chemem\Bingo\Functional\any`
+  - `Chemem\Bingo\Functional\assocPath`
+  - `Chemem\Bingo\Functional\every`
+  - `Chemem\Bingo\Functional\fromPairs`
+  - `Chemem\Bingo\Functional\has`
+  - `Chemem\Bingo\Functional\tail`
+- Improved iteration patterns in functions subsumed in the following classes
+  - `Chemem\Bingo\Functional\Immutable\Collection`
+  - `Chemem\Bingo\Functional\Immutable\Tuple`
+
 ## v2.4.0
 
 - Added `jsonDecode` and `extract` functions
