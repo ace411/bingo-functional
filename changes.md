@@ -24,6 +24,7 @@
   - `Chemem\Bingo\Functional\fromPairs`
   - `Chemem\Bingo\Functional\has`
   - `Chemem\Bingo\Functional\tail`
+  - `Chemem\Bingo\Functional\intersperse`
   - `Chemem\Bingo\Functional\Functors\Monads\mapM`
   - `Chemem\Bingo\Functional\Functors\Monads\filterM`
   - `Chemem\Bingo\Functional\Functors\Monads\foldM`
