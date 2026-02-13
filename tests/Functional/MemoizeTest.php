@@ -10,18 +10,42 @@ class MemoizeTest extends \PHPUnit\Framework\TestCase
   {
     return [
       [
-        $fact = function ($val) use (&$fact) {
-          return $val < 2 ? 1 : $val * $fact($val - 1);
-        },
-        15,
-        1307674368000,
+        [
+          function (int $x): int {
+            return $x * 2;
+          },
+          true,
+        ],
+        [10],
+        20,
       ],
       [
-        $fib = function ($val) use (&$fib) {
-          return $val < 2 ? $val : $fib($val - 2) + $fib($val - 1);
-        },
-        11,
-        89,
+        [
+          function (int $x): int {
+            return $x * 2;
+          },
+          true,
+        ],
+        [10],
+        20,
+      ],
+      [
+        [
+          function (int $x, int $y = 3): int {
+            return $x + $y;
+          },
+        ],
+        [20, 3],
+        23,
+      ],
+      [
+        [
+          function (int $x, int $y = 3): int {
+            return $x + $y;
+          },
+        ],
+        [20, 3],
+        23,
       ],
     ];
   }
@@ -29,10 +53,40 @@ class MemoizeTest extends \PHPUnit\Framework\TestCase
   /**
    * @dataProvider contextProvider
    */
-  public function testmemoizeCachesFunction($func, $arg, $res)
+  public function testmemoizeCachesFunction($memoargs, $fargs, $res)
   {
-    $memoized = f\memoize($func);
+    $memoized = f\memoize(...$memoargs);
 
-    $this->assertEquals($res, $memoized($arg));
+    $this->assertEquals($res, $memoized(...$fargs));
+
+    if (!\extension_loaded('apcu')) {
+      $this->assertNotEmpty(
+        f\filter(
+          function (string $key): bool {
+            return (bool) \preg_match(
+              '/^(Chemem\\\\Bingo\\\\Functional\\\\memoize)/',
+              $key
+            );
+          },
+          $GLOBALS,
+          \ARRAY_FILTER_USE_KEY
+        )
+      );
+    } else {
+      $acc = [];
+
+      foreach (new \APCUIterator() as $key => $value) {
+        if (
+          (bool) \preg_match(
+            '/^(Chemem\\\\Bingo\\\\Functional\\\\memoize)/',
+            $key
+          )
+        ) {
+          $acc[$key] = $value;
+        }
+      }
+
+      $this->assertNotEmpty($acc);
+    }
   }
 }
