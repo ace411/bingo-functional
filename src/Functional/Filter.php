@@ -31,10 +31,10 @@ function filter(callable $func, $list, int $mode = 0)
 {
   return fold(
     function ($acc, $val, $idx) use ($func, $mode) {
-      $filter = equals($mode, ARRAY_FILTER_USE_KEY) ?
+      $filter = equals($mode, \ARRAY_FILTER_USE_KEY) ?
         $func($idx) :
         (
-          equals($mode, ARRAY_FILTER_USE_BOTH) ?
+          equals($mode, \ARRAY_FILTER_USE_BOTH) ?
             $func($val, $idx) :
             $func($val)
         );

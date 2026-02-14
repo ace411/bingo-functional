@@ -28,10 +28,19 @@ const intersperse = __NAMESPACE__ . '\\intersperse';
  * intersperse('foo', range(1, 3));
  * => [1, 'foo', 2, 'foo', 3]
  */
-function intersperse($element, array $list): array
+function intersperse($element, $list): array
 {
-  $elem = \array_pad([], \count($list), $element);
-  $res  = \array_merge(...\array_map(null, $list, $elem));
+  $acc = [];
 
-  return dropRight($res, 1);
+  foreach ($list as $key => $value) {
+    if (\is_string($key) && !\is_numeric($key)) {
+      $acc[$key] = $value;
+    } else {
+      $acc[] = $value;
+    }
+
+    $acc[] = $element;
+  }
+
+  return dropRight($acc, 1);
 }

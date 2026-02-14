@@ -18,6 +18,8 @@ jobs:
         uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php }}
+          extensions: apcu
+          ini-values: apc.enable_cli=1
       - name: Validate composer.json and composer.lock
         run: composer validate
       - name: Get Composer cache directory

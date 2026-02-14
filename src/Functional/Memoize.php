@@ -42,7 +42,9 @@ function memoize(callable $function, bool $apc = false)
 
     public function __invoke(...$args)
     {
-      $key = \md5(
+      $key = \sprintf(
+        '%s\\memoize::%s',
+        __NAMESPACE__,
         \extension_loaded('igbinary') ?
           \igbinary_serialize($args) :
           \serialize($args)

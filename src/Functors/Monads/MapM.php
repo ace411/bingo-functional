@@ -13,7 +13,6 @@ namespace Chemem\Bingo\Functional\Functors\Monads;
 use function Chemem\Bingo\Functional\equals;
 use function Chemem\Bingo\Functional\extend;
 use function Chemem\Bingo\Functional\head;
-use function Chemem\Bingo\Functional\size;
 use function Chemem\Bingo\Functional\tail;
 
 const mapM = __NAMESPACE__ . '\\mapM';
@@ -33,7 +32,7 @@ function mapM(callable $function, $list): Monad
   $monad  = $function(head($list));
 
   $map    = function ($collection) use (&$map, $function, $monad) {
-    if (equals(size($collection), 0)) {
+    if (!$collection) {
       return $monad::of($collection);
     }
 

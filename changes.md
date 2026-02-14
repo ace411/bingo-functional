@@ -2,7 +2,8 @@
 
 ## v2.5.0
 
-- Added `Chemem\Bingo\Functional\listFromPaths`
+- Added the following function(s)
+  - `Chemem\Bingo\Functional\listFromPaths`
 - Added nullable type definitions to arguments in the following functions
   - `Chemem\Bingo\Functional\paths`
   - `Chemem\Bingo\Functional\toException`
@@ -23,6 +24,10 @@
   - `Chemem\Bingo\Functional\fromPairs`
   - `Chemem\Bingo\Functional\has`
   - `Chemem\Bingo\Functional\tail`
+  - `Chemem\Bingo\Functional\intersperse`
+  - `Chemem\Bingo\Functional\Functors\Monads\mapM`
+  - `Chemem\Bingo\Functional\Functors\Monads\filterM`
+  - `Chemem\Bingo\Functional\Functors\Monads\foldM`
 - Improved iteration patterns in functions subsumed in the following classes
   - `Chemem\Bingo\Functional\Immutable\Collection`
   - `Chemem\Bingo\Functional\Immutable\Tuple`
