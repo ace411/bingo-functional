@@ -10,6 +10,10 @@
 
 namespace Chemem\Bingo\Functional;
 
+require_once __DIR__ . '/Internal/_Props.php';
+
+use function Chemem\Bingo\Functional\Internal\_props;
+
 const head = __NAMESPACE__ . '\\head';
 
 /**
@@ -37,11 +41,16 @@ function head($list, $default = null)
     return $default;
   }
 
-  \reset($list);
+  $data = \is_object($list) ?
+    _props($list) :
+    $list;
 
-  $result = \current($list);
+  \reset($data);
 
-  return equals($result, false) ?
-    $default :
-    $result;
+  $result = \current($data);
+  $key    = \key($data);
+
+  return isset($key) ?
+    $result :
+    $default;
 }

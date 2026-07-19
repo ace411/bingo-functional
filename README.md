@@ -7,7 +7,6 @@
 <span style="display:block;text-align:center;" align="center">
 
 [![Join the chat at https://gitter.im/bingo-functional/Lobby](https://badges.gitter.im/bingo-functional/Lobby.svg)](https://gitter.im/bingo-functional/Lobby?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
-[![StyleCI](https://github.styleci.io/repos/102261728/shield?branch=master)](https://github.styleci.io/repos/102261728?branch=master)
 ![bingo-functional CI](https://github.com/ace411/bingo-functional/workflows/bingo-functional%20CI/badge.svg)
 [![codecov](https://codecov.io/gh/ace411/bingo-functional/branch/master/graph/badge.svg)](https://codecov.io/gh/ace411/bingo-functional)
 [![Latest Stable Version](https://poser.pugx.org/chemem/bingo-functional/v/stable)](https://packagist.org/packages/chemem/bingo-functional)
@@ -41,11 +40,11 @@ Endeavor to create an issue on GitHub when the need arises or send an email to l
 
 ## Functional Programming in PHP
 
-I published a book titled - Functional Programming in PHP - which is currently available on LeanPub. The bingo-functional library features extensively in the text as a tool whose potencies demonstrate usage of Functional Programming ideas in PHP. I advise that you purchase a copy for $9.99.
+I collaborated with Apress to release a new edition of Functional Programming in PHP, which you, a prospective reader, can find on the [Apress bookstore](https://tinyurl.com/54ajymku). Featured prominently throughout the book are artifacts in this library whose origins (where necessary) and use cases are explored. I recommend you consider getting yourself a copy so you can further acquaint yourself with the paradigm and set yourself on a path to writing performant, composable code.
 
 <p align="center">
-    <a href="https://leanpub.com/functionalprogramminginphp">
-        <img src="https://s3.amazonaws.com/titlepages.leanpub.com/functionalprogramminginphp/hero?1540289375" width="30%">
+    <a href="https://tinyurl.com/54ajymku">
+        <img src="https://media.springernature.com/w600/springer-static/cover/book/979-8-8688-2468-5.jpg" width="20%">
     </a>
 </p>
 

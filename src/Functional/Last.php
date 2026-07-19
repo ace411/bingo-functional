@@ -10,6 +10,10 @@
 
 namespace Chemem\Bingo\Functional;
 
+require_once __DIR__ . '/Internal/_Props.php';
+
+use function Chemem\Bingo\Functional\Internal\_props;
+
 const last = __NAMESPACE__ . '\\last';
 
 /**
@@ -36,11 +40,16 @@ function last($list, $default = null)
     return $default;
   }
 
-  \end($list);
+  $data = \is_object($list) ?
+    _props($list) :
+    $list;
 
-  $result = \current($list);
+  \end($data);
 
-  return equals($result, false) ?
-    $default :
-    $result;
+  $result = \current($data);
+  $key    = \key($data);
+
+  return isset($key) ?
+    $result :
+    $default;
 }

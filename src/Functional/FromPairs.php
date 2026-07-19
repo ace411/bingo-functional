@@ -29,6 +29,8 @@ function fromPairs($list)
 {
   return fold(
     function ($acc, $val, $key) {
+      $count = 0;
+
       if (\is_array($val) || \is_object($val)) {
         $list = [];
 

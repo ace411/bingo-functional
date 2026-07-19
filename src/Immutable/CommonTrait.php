@@ -12,7 +12,10 @@ declare(strict_types=1);
 
 namespace Chemem\Bingo\Functional\Immutable;
 
-use Ds\Vector;
+use Ds\{
+  Seq,
+  Vector,
+};
 use Chemem\Bingo\Functional as f;
 
 trait CommonTrait
@@ -42,7 +45,11 @@ trait CommonTrait
     // add support for ext-ds
     return new static(
       \extension_loaded('ds') ?
-        new Vector($list) :
+        (
+          \class_exists(Vector::class) ?
+            new Vector($list) :
+            new Seq($list)
+        ) :
         \SplFixedArray::fromArray($list)
     );
   }

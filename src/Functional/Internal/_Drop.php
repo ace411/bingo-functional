@@ -11,6 +11,7 @@
 namespace Chemem\Bingo\Functional\Internal;
 
 require_once __DIR__ . '/_Fold.php';
+require_once __DIR__ . '/_Props.php';
 require_once __DIR__ . '/_Size.php';
 
 const _drop = __NAMESPACE__ . '\\_drop';
@@ -43,26 +44,41 @@ function _drop($list, $count, $left = true)
         break;
       }
     }
-  } else {
-    \end($list);
 
-    while ($idx < $count) {
-      $key = \key($list);
-      if (\is_object($list)) {
-        unset($list->{$key});
-      } elseif (\is_array($list)) {
-        unset($list[$key]);
-      }
-
-      $prev = \prev($list);
-
-      if (!$prev) {
-        \end($list);
-      }
-
-      $idx++;
-    }
+    return $list;
   }
 
-  return $list;
+  $obj = \is_object($list);
+  $tmp = $obj ?
+    _props($list) :
+    $list;
+
+  \end($tmp);
+
+  while ($idx < $count) {
+    $key = \key($tmp);
+
+    unset($tmp[$key]);
+
+    $prev = \prev($tmp);
+
+    if (!$prev) {
+      \end($tmp);
+    }
+
+    $idx++;
+  }
+
+  return $obj ?
+    _fold(
+      function ($acc, $value, $key) {
+        $acc->{$key} = $value;
+
+        return $acc;
+      },
+      $tmp,
+      (new \ReflectionClass($list))
+        ->newInstanceWithoutConstructor()
+    ) :
+    $tmp;
 }

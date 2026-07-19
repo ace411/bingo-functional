@@ -4,6 +4,12 @@
 
 - Added the following function(s)
   - `Chemem\Bingo\Functional\listFromPaths`
+- Preempt deprecation notices that may arise from invoking the following functions
+  - `Chemem\Bingo\Functional\fromPairs`
+  - `Chemem\Bingo\Functional\head`
+  - `Chemem\Bingo\Functional\dropLeft`
+  - `Chemem\Bingo\Functional\dropRight`
+  - `Chemem\Bingo\Functional\last`
 - Added nullable type definitions to arguments in the following functions
   - `Chemem\Bingo\Functional\paths`
   - `Chemem\Bingo\Functional\toException`
@@ -31,6 +37,7 @@
 - Improved iteration patterns in functions subsumed in the following classes
   - `Chemem\Bingo\Functional\Immutable\Collection`
   - `Chemem\Bingo\Functional\Immutable\Tuple`
+- Account for removal of `Ds\Vector` in ext-ds v2.0.0 in artifacts namespaced under `Chemem\Bingo\Functional\Immutable\`
 
 ## v2.4.0
 
